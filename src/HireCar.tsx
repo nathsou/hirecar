@@ -3,6 +3,7 @@ import HcPrimaryButton from './components/HcPrimaryButton';
 import HcSecondaryButton from './components/HcSecondaryButton';
 import HcNavbar from './components/HcNavbar';
 import HcJumbotron from './components/HcJumbotron';
+import Footer from "./components/Footer";
 
 export default class HireCar extends Component {
   render() {
@@ -13,6 +14,7 @@ export default class HireCar extends Component {
         <HcPrimaryButton outlined='true'>LOCATION DE VOITURE</HcPrimaryButton>*/}
         <HcNavbar />
         <HcJumbotron />
+        <Footer />
       </div>
     );
   }
