@@ -15,7 +15,6 @@ export default class HireCar extends Component {
       <Provider store={configureStore()}>
         <BrowserRouter>
           <HcNavbar />
-          <MainContent />
           <Route exact path='/' component={MainContent} />
           <Route exact path='/parking' component={HcParkingSearch} />
           <Footer />
