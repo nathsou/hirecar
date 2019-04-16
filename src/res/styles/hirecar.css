@@ -1,0 +1,154 @@
+/*** Fonts ***/
+
+@font-face {
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 400;
+    src: url('./../fonts/Lato-Regular.ttf'); 
+}
+
+@font-face {
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 600;
+    src: url('./../fonts/Lato-Bold.ttf'); 
+}
+
+@font-face {
+    font-family: 'Oswald';
+    font-style: normal;
+    font-weight: 400;
+    src: url('./../fonts/Oswald-Regular.ttf'); 
+}
+
+@font-face {
+    font-family: 'Oswald';
+    font-style: normal;
+    font-weight: 300;
+    src: url('./../fonts/Oswald-Light.ttf'); 
+}
+
+/*** Variables ***/
+
+:root {
+    --primary-color: #272087;
+    --primary-btn-text-color: white;
+    --secondary-color: #009882;
+    --secondary-btn-text-color: #EBF6DE;
+    --btn-font: 1rem 'Oswald', sans-serif;
+    --text-font: 0.875rem 'Lato', sans-serif;
+}
+
+/*** Global ***/
+
+body {
+    font-family: var(--text-font);
+}
+
+h1 {
+    font-size: 1rem;
+    margin-bottom: 0;
+}
+
+.logo {
+    text-transform: uppercase;
+    font: 1rem 'Oswald', sans-serif;
+    color: var(--primary-color);
+}
+.logo-light {
+    font-weight: 300;
+}
+
+.btn, 
+.navbar-light .navbar-nav .nav-link,
+.nav-pills .nav-link.active,
+.nav-pills .show > .nav-link,
+.nav-pills .nav-link {
+    font: var(--btn-font);
+    border-radius: 1.875rem;
+    text-transform: uppercase;
+    padding: 5px 25px;
+}
+
+.btn-hc-primary {
+    background-color: var(--primary-color);
+    color: var(--primary-btn-text-color);
+}
+
+.btn-hc-primary[outlined] {
+    background-color: var(--primary-btn-text-color);
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+}
+
+.btn-hc-secondary {
+    background-color: var(--secondary-color);
+    color: var(--secondary-btn-text-color);    
+}
+
+.navbar-nav .nav-item {
+    margin-left: 1.875rem;
+}
+
+.navbar-light .navbar-nav .nav-link {
+    color: var(--secondary-color);    
+}
+
+/*** Tabs ***/
+
+.nav-pills .nav-link.active,
+.nav-pills .show > .nav-link {
+    background-color: var(--primary-color);
+}
+
+.nav-item {
+    margin-right: 1.875rem;
+}
+
+.nav-item a {
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+}
+
+.tab-content {
+    margin-top: 1.875rem;
+}
+
+.container-tabs {
+    background-color: var(--primary-btn-text-color);
+    padding: 1.875rem;
+    border-radius: 5px;
+}
+
+/*** Jumbotron ***/
+
+.jumbotron {
+    background-image: url("./../img/home-bg-1.jpg");
+    background-size: cover;    
+    background-color: rgba(255,255,255,.6);
+    backdrop-filter: blur(5px);
+}
+
+.jumbotron-text{
+    color: var(--primary-btn-text-color);
+    text-align: right;
+    text-transform: uppercase;
+    font: 2rem 'Oswald', sans-serif;
+    padding: 1.875rem;
+}
+
+/*** Form ***/
+
+label {
+    font-family: var(--text-font);
+    font-weight: 700;
+    font-size: 0.875rem;
+}
+
+.form-control {
+    font-size: 0.875rem;
+}
+
+.no-label {
+    opacity: 0;
+}

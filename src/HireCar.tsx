@@ -10,8 +10,7 @@ export default class HireCar extends Component {
 
       <div>
         {/* <HcPrimaryButton>LOCATION DE PARKING</HcPrimaryButton>
-        <HcPrimaryButton outlined='true'>LOCATION DE VOITURE</HcPrimaryButton>
-        <HcSecondaryButton>CONNEXION</HcSecondaryButton> */}
+        <HcPrimaryButton outlined='true'>LOCATION DE VOITURE</HcPrimaryButton>*/}
         <HcNavbar />
         <HcJumbotron />
       </div>
