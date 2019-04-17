@@ -5,7 +5,7 @@ export default function footer() {
     return (
         <footer>
             <Logo />
-            <p>© HireCare 2019</p>
+            <p>© HireCar 2019</p>
         </footer>
     );
 }
