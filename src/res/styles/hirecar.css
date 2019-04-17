@@ -43,7 +43,7 @@
 /*** Global ***/
 
 body {
-    font-family: var(--text-font);
+    font: var(--text-font);
 }
 
 h1, h2, h3 {
@@ -53,6 +53,16 @@ h1, h2, h3 {
 h1 {
     font-size: 1rem;
     margin-bottom: 0;
+}
+
+a {
+    color: var(--secondary-color);
+    font: var(--text-font);
+    font-weight: 600;
+}
+
+a:hover {
+    text-decoration: none;
 }
 
 .logo, 
@@ -120,6 +130,10 @@ h1 {
     margin-top: 1.875rem;
 }
 
+.tab-content p {
+    margin: 1.25rem auto 0 auto;
+}
+
 .container-tabs {
     background-color: var(--primary-btn-text-color);
     padding: 1.875rem;
@@ -153,7 +167,7 @@ h1 {
 /*** Form ***/
 
 label {
-    font-family: var(--text-font);
+    font: var(--text-font);
     font-weight: 700;
     font-size: 0.875rem;
 }
@@ -165,6 +179,18 @@ label {
 .no-label {
     opacity: 0;
 }
+
+/*** Modal ***/
+.modal-header {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+.modal-body,
+.modal-content .container-tabs {
+    padding-top: 0;
+}
+
+/*** Record ***/
 
 .records-container {
     text-align: center;
