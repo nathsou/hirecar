@@ -4,7 +4,7 @@ import Nav from "react-bootstrap/Nav";
 import HcSecondaryButton from "./HcSecondaryButton";
 import Logo from "./Logo";
 import HcModal from "./HcModal";
-import Modal from "react-bootstrap/Modal";
+import { NavLink } from 'react-router-dom';
 
 interface MyProps {
 
@@ -36,13 +36,17 @@ export default class HcNavbar extends Component<MyProps, MyState> {
     render() {
         return (
             <header>
-                <Navbar collapseOnSelect expand="lg">
+                <Navbar collapseOnSelect expand="lg" fixed="top">
                     <Navbar.Brand href="#home"><h1><Logo /></h1></Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
                         <Nav>
-                            <Nav.Link href="#home">Location de parkings</Nav.Link>
-                            <Nav.Link href="#link">Location de voitures</Nav.Link>
+                            <Nav.Item>
+                                <NavLink activeClassName='selected' to='/parking'>Location de parkings</NavLink>
+                            </Nav.Item>
+                            <Nav.Item>
+                                <NavLink activeClassName='selected' to='/voiture'>Location de voitures</NavLink>
+                            </Nav.Item>
                             <Nav.Item><HcSecondaryButton handleClick={this.handleClick}>Connexion</HcSecondaryButton></Nav.Item>
                         </Nav>
                     </Navbar.Collapse>
