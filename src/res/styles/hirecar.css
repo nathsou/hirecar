@@ -4,28 +4,28 @@
     font-family: 'Lato';
     font-style: normal;
     font-weight: 400;
-    src: url('./../fonts/Lato-Regular.ttf'); 
+    src: url('./../fonts/Lato-Regular.ttf');
 }
 
 @font-face {
     font-family: 'Lato';
     font-style: normal;
     font-weight: 600;
-    src: url('./../fonts/Lato-Bold.ttf'); 
+    src: url('./../fonts/Lato-Bold.ttf');
 }
 
 @font-face {
     font-family: 'Oswald';
     font-style: normal;
     font-weight: 400;
-    src: url('./../fonts/Oswald-Regular.ttf'); 
+    src: url('./../fonts/Oswald-Regular.ttf');
 }
 
 @font-face {
     font-family: 'Oswald';
     font-style: normal;
     font-weight: 300;
-    src: url('./../fonts/Oswald-Light.ttf'); 
+    src: url('./../fonts/Oswald-Light.ttf');
 }
 
 /*** Variables ***/
@@ -48,7 +48,9 @@ body {
     font: var(--text-font);
 }
 
-h1, h2, h3 {
+h1,
+h2,
+h3 {
     text-transform: uppercase;
 }
 
@@ -67,20 +69,21 @@ a:hover {
     text-decoration: none;
 }
 
-.logo, 
+.logo,
 .records-container h2 {
     text-transform: uppercase;
     font: 1.125rem 'Oswald', sans-serif;
     color: var(--primary-color);
 }
+
 .logo-light {
     font-weight: 300;
 }
 
-.btn, 
+.btn,
 .navbar-light .navbar-nav .nav-link,
 .nav-pills .nav-link.active,
-.nav-pills .show > .nav-link,
+.nav-pills .show>.nav-link,
 .nav-pills .nav-link,
 .navbar .navbar-nav .nav-item a {
     font: var(--btn-font);
@@ -117,7 +120,7 @@ a:hover {
 
 .btn-hc-secondary {
     background-color: var(--secondary-color);
-    color: var(--secondary-btn-text-color);    
+    color: var(--secondary-btn-text-color);
 }
 
 .fixed-top {
@@ -139,7 +142,7 @@ main {
 /*** Tabs ***/
 
 .nav-pills .nav-link.active,
-.nav-pills .show > .nav-link {
+.nav-pills .show>.nav-link {
     background-color: var(--primary-color);
 }
 
@@ -176,14 +179,14 @@ main {
 }
 
 .jumbotron,
-.jumbotron .container{
+.jumbotron .container {
     display: flex;
     flex-direction: column;
     vertical-align: middle;
     justify-content: center;
 }
 
-.jumbotron-text{
+.jumbotron-text {
     color: var(--primary-btn-text-color);
     text-align: right;
     text-transform: uppercase;
@@ -203,7 +206,7 @@ label {
     font-size: 0.875rem;
 }
 
-label[for$="Hour"]{
+label[for$="Hour"] {
     opacity: 0;
 }
 
@@ -223,6 +226,7 @@ label[for$="Hour"]{
     border-bottom: none;
     padding-bottom: 0;
 }
+
 .modal-body,
 .modal-content .container-tabs {
     padding-top: 0;
@@ -236,7 +240,7 @@ label[for$="Hour"]{
     padding: 2rem 0;
 }
 
-.records-container p{
+.records-container p {
     margin-bottom: 0;
 }
 
@@ -244,6 +248,7 @@ label[for$="Hour"]{
     font: 2.5rem 'Oswald', sans-serif;
     color: var(--secondary-color);
 }
+
 .records-container .record-text {
     font: 1rem 'Oswald', sans-serif;
     color: var(--primary-color);
@@ -264,6 +269,58 @@ footer .logo {
     color: var(--primary-btn-text-color);
 }
 
-footer p{
+footer p {
     margin: 5px auto;
+}
+
+.hc-rent-container {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    margin-bottom: 0;
+}
+
+.hc-map {
+    flex: 1 0 0;
+    width: 60%;
+    height: 100%;
+}
+
+.hc-list {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 40%;
+    height: 100%;
+}
+
+.hc-list-item {
+    flex: 1 0 0;
+    min-height: 50px;
+    min-width: 100px;
+    width: 100%;
+    margin: 2px;
+}
+
+.hc-list-item-title {
+    color: var(--primary-color);
+    font-size: 1.6rem;
+}
+
+.hc-list-item-features {
+    color: var(--primary-color);
+}
+
+.hc-rent-price {
+    color: var(--secondary-color);
+}
+
+.hc-list-item-separator {
+    display: block;
+    height: 1px;
+    border: 0;
+    width: 50%;
+    border-top: 2px solid var(--primary-color);
+    margin: 1em 0;
+    padding: 0;
 }

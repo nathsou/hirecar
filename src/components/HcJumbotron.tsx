@@ -7,13 +7,16 @@ import HcNavPills from "./HcNavPills";
 
 export default class HcJumbotron extends Component {
 
-    render() {
+    public render() {
         return (
             <Jumbotron fluid>
                 <Container>
                     <Row>
                         <Col lg={5}>
-                            <h2 className="jumbotron-text">Louez un parking d'aéroport, laissez votre véhicule et faites en profiter quelqu'un pendant votre absence.</h2>
+                            <h2 className="jumbotron-text">
+                                Louez un parking d'aéroport, laissez votre véhicule et faites en profiter
+                                quelqu'un pendant votre absence.
+                            </h2>
                         </Col>
                         <Col lg={7}>
                             <HcNavPills />

@@ -6,7 +6,7 @@ import RentCarTab from "./Form/RentCarTab";
 
 export default class HcNavPills extends Component {
 
-    render() {
+    public render() {
         return (
             <div className="container-tabs">
                 <Tab.Container id="left-tabs-example" defaultActiveKey="rent_parking_spot">
