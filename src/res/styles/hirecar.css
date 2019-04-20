@@ -38,6 +38,7 @@
     --btn-font: 1rem 'Oswald', sans-serif;
     --text-font: 0.875rem 'Lato', sans-serif;
     --dark-grey: #1B1B1B;
+    --error-pink: #FF356F;
     --box-shadow: 1px -4px 6px 0px var(--dark-grey);
 }
 
@@ -202,8 +203,19 @@ label {
     font-size: 0.875rem;
 }
 
-.no-label {
+label[for$="Hour"]{
     opacity: 0;
+}
+
+.was-validated .form-control:invalid,
+.form-control.is-invalid {
+    border-color: var(--error-pink);
+    background-image: url("../img/cross.svg");
+    background-size: 8px 8px;
+}
+
+.invalid-feedback {
+    color: var(--error-pink);
 }
 
 /*** Modal ***/
