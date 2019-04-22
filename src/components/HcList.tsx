@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import HcListItem from "../HcListItem";
+import HcListItem from "./HcListItem";
 
 export default class HcList extends Component {
 

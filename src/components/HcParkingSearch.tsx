@@ -6,8 +6,8 @@ export default class HcParkingSearch extends Component {
 
     public state = {
         viewport: {
-            width: '100%',
-            height: 600,
+            width: '60%',
+            height: '100vh',
             latitude: 47.3,
             longitude: 2.2,
             zoom: 4.8
@@ -16,7 +16,7 @@ export default class HcParkingSearch extends Component {
 
     public render() {
         return (
-            <div className='hc-rent-container'>
+            <main className='hc-rent-container'>
                 <HcList />
 
                 <ReactMapGL
@@ -25,7 +25,7 @@ export default class HcParkingSearch extends Component {
                     mapboxApiAccessToken='pk.eyJ1IjoibmF0aHNvdTMiLCJhIjoiY2p1cHVpN24wMWxrZTQ0bzhrdDN3MHd2aCJ9.X2KA-7edhC_vD3veUEssgA'
                     mapStyle='mapbox://styles/mapbox/streets-v11'
                 />
-            </div>
+            </main>
         );
     }
 }
