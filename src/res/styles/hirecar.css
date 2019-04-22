@@ -39,6 +39,8 @@
     --text-font: 0.875rem 'Lato', sans-serif;
     --dark-grey: #1B1B1B;
     --error-pink: #FF356F;
+    --navbar-height: 52px;
+    --footer-height: 82px;
 }
 
 /*** Global ***/
@@ -272,13 +274,9 @@ footer p {
     margin: 5px auto;
 }
 
-.hc-rent-container {
-    display: flex;
-    flex-direction: row;
-}
-
 .hc-list {
-    width: 40%;
+    min-height: calc(100vh - (var(--navbar-height) + var(--footer-height)));
+    overflow: scroll;
 }
 
 .hc-list p {
@@ -320,3 +318,9 @@ footer p {
 .hc-rent-price {
     color: var(--secondary-color);
 }
+
+@media only screen and (max-width: 991px) {
+    .hc-maps {
+      display: none;
+    }
+  }
