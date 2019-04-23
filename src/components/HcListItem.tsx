@@ -1,16 +1,29 @@
 import React, { Component } from "react";
-import ParkingPicto from "../res/img/parking-picto.svg";
 
-export default class HcListItem extends Component {
+export interface HcListItemProps {
+    picto: string,
+    title: string,
+    features: string[],
+    footer: string
+}
+
+export default class HcListItem extends Component<HcListItemProps> {
+
+    constructor(props: Readonly<HcListItemProps>) {
+        super(props);
+    }
 
     public render() {
+
+        const { picto, title, features, footer } = this.props;
+
         return (
             <div className='hc-list-item'>
-                <img src={ParkingPicto} alt="Picto Parking" width="50" height="50" />
+                <img src={picto} alt="Picto" width="50" height="50" />
                 <div>
-                    <h2 className='hc-list-item-title'>Bâle-Mulhouse</h2>
-                    <p className='hc-list-item-features'>Lavage • Navettes • Sous-terrain • Vidéo-surveillance</p>
-                    <p className='hc-rent-price'>42€ • 12€ / jour</p>
+                    <h2 className='hc-list-item-title'>{title}</h2>
+                    <p className='hc-list-item-features'>{features.join(' • ')}</p>
+                    <p className='hc-list-footer'>{footer}</p>
                     <hr />
                 </div>
             </div>

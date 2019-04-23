@@ -71,7 +71,7 @@ a:hover {
 }
 
 .logo,
-.records-container h2{
+.records-container h2 {
     text-transform: uppercase;
     font: 1.125rem 'Oswald', sans-serif;
     color: var(--primary-color);
@@ -295,6 +295,7 @@ footer p {
 .hc-list-item img {
     margin-right: 2rem;
 }
+
 .hc-list-item hr {
     margin-top: 2rem;
     margin-bottom: 0;
@@ -315,12 +316,12 @@ footer p {
     color: var(--primary-color);
 }
 
-.hc-rent-price {
+.hc-list-footer {
     color: var(--secondary-color);
 }
 
 @media only screen and (max-width: 991px) {
     .hc-maps {
-      display: none;
+        display: none;
     }
-  }
+}
