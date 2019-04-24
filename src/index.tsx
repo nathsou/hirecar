@@ -3,7 +3,9 @@ import ReactDOM from 'react-dom';
 import HireCar from './HireCar';
 import * as serviceWorker from './serviceWorker';
 import 'bootstrap/dist/css/bootstrap.css';
+import 'mapbox-gl/dist/mapbox-gl.css';
 import './res/styles/hirecar.css';
+
 
 ReactDOM.render(<HireCar />, document.getElementById('root'));
 

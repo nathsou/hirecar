@@ -29,13 +29,13 @@ export default class HcParkingList extends Component {
     public render() {
 
         return (
-            <main>
+            <div>
                 <Container>
                     <div className='hc-list'>
                         {this.parkings.map(p => <HcListItem {...p} />)}
                     </div>
                 </Container>
-            </main>
+            </div>
         );
     }
 }
