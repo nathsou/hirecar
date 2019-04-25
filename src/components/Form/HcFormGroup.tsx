@@ -14,7 +14,6 @@ interface HcFormGroupProps {
     onChange: (event: any) => void
 }
 
-
 export default class HcFormGroup extends Component<HcFormGroupProps> {
     render() {
         return (

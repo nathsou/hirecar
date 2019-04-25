@@ -25,10 +25,10 @@ export default class SignUp extends Component<{}, SignUpState>{
                 passwordError: null,
             },
             validForm: true
-        }
+        };
     }
 
-    firstnameHandleChange = (event: any) => {
+    public firstnameHandleChange = (event: any) => {
         const firstname = event.target.value;
         const isValid = firstname.length >= 2;
         this.setState({
@@ -36,7 +36,8 @@ export default class SignUp extends Component<{}, SignUpState>{
             formErrors: { ...this.state.formErrors, firstnameError: isValid ? null : 'Le prénom doit contenir au moins 2 caractères' }
         });
     }
-    lastnameHandleChange = (event: any) => {
+
+    public lastnameHandleChange = (event: any) => {
         const lastname = event.target.value;
         const isValid = lastname.length >= 2;
         this.setState({
@@ -44,7 +45,8 @@ export default class SignUp extends Component<{}, SignUpState>{
             formErrors: { ...this.state.formErrors, lastnameError: isValid ? null : 'Le nom doit contenir au moins 2 caractères' }
         });
     }
-    emailHandleChange = (event: any) => {
+
+    public emailHandleChange = (event: any) => {
         const email = event.target.value;
         const isValid = email.match(/[A-Za-z0-9._-]*@[A-Za-z0-9]*.[A-Za-z]{2,4}/);
         this.setState({
@@ -52,7 +54,8 @@ export default class SignUp extends Component<{}, SignUpState>{
             formErrors: { ...this.state.formErrors, emailError: isValid ? null : 'Veuillez entrer une adresse email valide' }
         });
     }
-    phoneHandleChange = (event: any) => {
+
+    public phoneHandleChange = (event: any) => {
         const phone = event.target.value;
         const isValid = phone.match(/(\d\d){4}\d\d/);
         this.setState({
@@ -60,7 +63,8 @@ export default class SignUp extends Component<{}, SignUpState>{
             formErrors: { ...this.state.formErrors, phoneError: isValid ? null : 'Veuillez entrer un numéro valide' },
         });
     }
-    passwordHandleChange = (event: any) => {
+
+    public passwordHandleChange = (event: any) => {
         const password = event.target.value;
         const isValid = password.length >= 3;
         this.setState({
@@ -69,13 +73,13 @@ export default class SignUp extends Component<{}, SignUpState>{
         });
     }
 
-    handleSubmit = (event: any) => {
+    public handleSubmit = (event: any) => {
         event.preventDefault();
         const isValid = Object.keys(this.state.formErrors).every(key => this.state.formErrors[key] === null);
         isValid ? console.log("Envoyer le form") : console.log("Vérifier les champs avant envoi");
     }
 
-    render() {
+    public render() {
         const { firstnameError, lastnameError, emailError, phoneError, passwordError } = this.state.formErrors;
         return (
             <Form onSubmit={this.handleSubmit}>

@@ -2,9 +2,22 @@ import React, { Component } from "react";
 import Form from 'react-bootstrap/Form';
 import HcSecondaryButton from "../HcSecondaryButton";
 import HcFormGroup from "./HcFormGroup";
+import { connect } from "react-redux";
+import { HcState } from "../../redux/configureStore";
+import { updateParkingSearchInput } from "../../redux/rentParkingTab/actions";
 
-export default class RentParkingTab extends Component {
-    render() {
+export interface RentParkingTabState {
+    parking_search: string,
+    location_start: Date,
+    location_end: Date
+}
+
+interface RentParkingTabProps extends RentParkingTabState {
+    onParkingSearchChange: typeof updateParkingSearchInput
+}
+
+class RentParkingTab extends Component<RentParkingTabProps> {
+    public render() {
         return (
             <Form>
                 <Form.Row>
@@ -12,8 +25,8 @@ export default class RentParkingTab extends Component {
                         size="12" controlId="parkingLocation"
                         className="" label="Lieu de stationnement" type="text"
                         name="parkingLocation" placeholder="Veuillez entrer le nom de l’aéroport"
-                        value=""
-                        onChange={() => { }} />
+                        value={this.props.parking_search}
+                        onChange={this.props.onParkingSearchChange} />
                 </Form.Row>
                 <Form.Row>
                     <HcFormGroup
@@ -48,3 +61,10 @@ export default class RentParkingTab extends Component {
         );
     }
 }
+
+export default connect(
+    (state: HcState) => state.rent_parking_tab,
+    {
+        onParkingSearchChange: (e: any) => updateParkingSearchInput(e.target.value)
+    }
+)(RentParkingTab);

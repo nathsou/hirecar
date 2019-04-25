@@ -2,9 +2,17 @@ import React, { Component } from "react";
 import Form from 'react-bootstrap/Form';
 import HcSecondaryButton from "../HcSecondaryButton";
 import HcFormGroup from "./HcFormGroup";
+import { connect } from "react-redux";
+import { HcState } from "../../redux/configureStore";
+import { updateCarSearchInput } from "../../redux/rentCarTab/actions";
+import { RentCarTabState } from "../../redux/rentCarTab/types";
 
-export default class RentCarTab extends Component {
-    render() {
+interface RentCarTabProps extends RentCarTabState {
+    onCarSearchChange: typeof updateCarSearchInput
+}
+
+export class RentCarTab extends Component<RentCarTabProps> {
+    public render() {
         return (
             <Form>
                 <Form.Row>
@@ -12,8 +20,8 @@ export default class RentCarTab extends Component {
                         size="12" controlId="carLocation"
                         className="" label="Lieu de départ" type="text"
                         name="carLocation" placeholder="Veuillez entrer le nom de l’aéroport"
-                        value=""
-                        onChange={() => { }} />
+                        value={this.props.car_search_input_value}
+                        onChange={this.props.onCarSearchChange} />
                 </Form.Row>
                 <Form.Row>
                     <HcFormGroup
@@ -47,3 +55,10 @@ export default class RentCarTab extends Component {
         );
     }
 }
+
+export default connect(
+    (state: HcState) => state.rent_car_tab,
+    {
+        onCarSearchChange: (e: any) => updateCarSearchInput(e.target.value)
+    }
+)(RentCarTab);

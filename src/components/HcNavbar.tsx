@@ -17,19 +17,18 @@ export default class HcNavbar extends Component<{}, HcNavbarState> {
         this.state = {
             show: false
         };
-        this.handleClick = this.handleClick.bind(this);
-        this.handleClose = this.handleClose.bind(this);
+
     }
 
-    handleClick() {
+    public handleClick = () => {
         this.setState({ show: true });
     }
 
-    handleClose() {
+    public handleClose = () => {
         this.setState({ show: false });
     }
 
-    render() {
+    public render() {
         return (
             <header>
                 <Navbar collapseOnSelect expand="lg" fixed="top">
