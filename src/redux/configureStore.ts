@@ -1,18 +1,16 @@
-import { createStore, combineReducers } from 'redux';
+import { combineReducers, createStore } from 'redux';
+import { rentTabsReducer } from './rentTabs/reducers';
+import { RentTabsState } from './rentTabs/types';
 
-import { RentParkingTabState } from '../components/Form/RentParkingTab';
-import { rentParkingTabReducer } from './rentParkingTab/reducers';
-import { rentCarTabReducer } from './rentCarTab/reducers';
-import { RentCarTabState } from './rentCarTab/types';
 
 export interface HcState {
-    rent_parking_tab: RentParkingTabState,
-    rent_car_tab: RentCarTabState
+    rent_tabs: RentTabsState
+    // rent_parking_tab: RentParkingTabState,
+    // rent_car_tab: RentCarTabState
 }
 
 const root_reducer = combineReducers({
-    rent_parking_tab: rentParkingTabReducer,
-    rent_car_tab: rentCarTabReducer
+    rent_tabs: rentTabsReducer
 });
 
 export default function configureStore() {

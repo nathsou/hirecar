@@ -3,7 +3,7 @@ import Jumbotron from 'react-bootstrap/Jumbotron';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import HcNavPills from "./HcNavPills";
+import HcRentTabs from "./HcRentTabs";
 
 export default class HcJumbotron extends Component {
 
@@ -19,7 +19,7 @@ export default class HcJumbotron extends Component {
                             </h2>
                         </Col>
                         <Col lg={7}>
-                            <HcNavPills />
+                            <HcRentTabs />
                         </Col>
                     </Row>
                 </Container>

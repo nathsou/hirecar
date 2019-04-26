@@ -5,12 +5,8 @@ import HcFormGroup from "./HcFormGroup";
 import { connect } from "react-redux";
 import { HcState } from "../../redux/configureStore";
 import { updateParkingSearchInput } from "../../redux/rentParkingTab/actions";
+import { RentParkingTabState } from "../../redux/rentParkingTab/types";
 
-export interface RentParkingTabState {
-    parking_search: string,
-    location_start: Date,
-    location_end: Date
-}
 
 interface RentParkingTabProps extends RentParkingTabState {
     onParkingSearchChange: typeof updateParkingSearchInput
@@ -25,7 +21,7 @@ class RentParkingTab extends Component<RentParkingTabProps> {
                         size="12" controlId="parkingLocation"
                         className="" label="Lieu de stationnement" type="text"
                         name="parkingLocation" placeholder="Veuillez entrer le nom de l’aéroport"
-                        value={this.props.parking_search}
+                        value={this.props.parking_search_input_value}
                         onChange={this.props.onParkingSearchChange} />
                 </Form.Row>
                 <Form.Row>
@@ -63,7 +59,7 @@ class RentParkingTab extends Component<RentParkingTabProps> {
 }
 
 export default connect(
-    (state: HcState) => state.rent_parking_tab,
+    (state: HcState) => state.rent_tabs.rent_parking_spot_tab,
     {
         onParkingSearchChange: (e: any) => updateParkingSearchInput(e.target.value)
     }

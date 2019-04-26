@@ -57,7 +57,7 @@ export class RentCarTab extends Component<RentCarTabProps> {
 }
 
 export default connect(
-    (state: HcState) => state.rent_car_tab,
+    (state: HcState) => state.rent_tabs.rent_car_tab,
     {
         onCarSearchChange: (e: any) => updateCarSearchInput(e.target.value)
     }
