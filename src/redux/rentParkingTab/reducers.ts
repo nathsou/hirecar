@@ -11,7 +11,8 @@ export function rentParkingTabReducer(
                 ...state,
                 parking_search_input_value: action.value
             };
+        
+        default: 
+            return state;
     }
-
-    return state;
 }

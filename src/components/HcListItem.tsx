@@ -1,17 +1,13 @@
 import React, { Component } from "react";
 
 export interface HcListItemProps {
-    picto: string,
+    picto?: string,
     title: string,
     features: string[],
     footer: string
 }
 
 export default class HcListItem extends Component<HcListItemProps> {
-
-    constructor(props: Readonly<HcListItemProps>) {
-        super(props);
-    }
 
     public render() {
 

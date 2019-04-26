@@ -1,33 +1,26 @@
 import React, { Component } from "react";
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-import ReactMapGL from 'react-map-gl';
+import ReactMapGL, { ViewState } from 'react-map-gl';
+import { connect } from "react-redux";
+import { HcState } from "../redux/configureStore";
+import { updateViewport } from "../redux/parkingSearch/actions";
+import { ParkingSearchState } from "../redux/parkingSearch/types";
 import HcParkingList from "./HcParkingList";
 
-export default class HcParkingSearch extends Component {
+interface HcParkingSearchProps extends ParkingSearchState {
+    onViewportChange: (viewstate: HcMapViewportProps) => any
+}
 
-    private nabvarHeigth: number = 52;
-    private footerHeigth: number = 82;
+export interface HcMapViewportProps extends ViewState {
+    width: number | string,
+    height: number | string
+}
 
-    public state = {
-        viewport: {
-            width: '100%',
-            height: `calc(100vh - ${this.nabvarHeigth + this.footerHeigth}px)`,
-            latitude: 47.3,
-            longitude: 2.2,
-            zoom: 4.8
-        }
-    };
+class HcParkingSearch extends Component<HcParkingSearchProps> {
 
-    public componentDidMount() {
-        window.addEventListener('resize', () => {
-            this.setState({
-                ...this.state,
-                width: window.innerWidth,
-                height: window.innerHeight - (this.nabvarHeigth + this.footerHeigth)
-            });
-        });
-    }
+    // private nabvarHeigth: number = 52;
+    // private footerHeigth: number = 82;
 
     public render() {
         return (
@@ -39,8 +32,8 @@ export default class HcParkingSearch extends Component {
                     <Col lg={7}>
                         <div className="hc-maps">
                             <ReactMapGL
-                                {...this.state.viewport}
-                                onViewportChange={(viewport) => this.setState({ viewport })}
+                                {...this.props.viewport}
+                                onViewportChange={vp => this.props.onViewportChange(vp as HcMapViewportProps)}
                                 mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_API_KEY}
                                 mapStyle='mapbox://styles/mapbox/streets-v11'
                             />
@@ -51,3 +44,10 @@ export default class HcParkingSearch extends Component {
         );
     }
 }
+
+export default connect(
+    (state: HcState) => state.parking_search,
+    {
+        onViewportChange: (viewport: HcMapViewportProps) => updateViewport(viewport)
+    }
+)(HcParkingSearch);

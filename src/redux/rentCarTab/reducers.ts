@@ -11,7 +11,9 @@ export function rentCarTabReducer(
                 ...state,
                 car_search_input_value: action.value
             };
-    }
 
-    return state;
+        default:
+            return state;
+    }
+    
 }

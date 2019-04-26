@@ -1,15 +1,20 @@
 import { combineReducers, createStore } from 'redux';
+import { carSearchReducer } from './carSearch/reducers';
+import { CarSearchState } from './carSearch/types';
+import { parkingSearchReducer } from './parkingSearch/reducers';
+import { ParkingSearchState } from './parkingSearch/types';
 import { rentTabsReducer } from './rentTabs/reducers';
 import { RentTabsState } from './rentTabs/types';
 
-
 export interface HcState {
+    parking_search: ParkingSearchState,
+    car_search: CarSearchState,
     rent_tabs: RentTabsState
-    // rent_parking_tab: RentParkingTabState,
-    // rent_car_tab: RentCarTabState
 }
 
 const root_reducer = combineReducers({
+    parking_search: parkingSearchReducer,
+    car_search: carSearchReducer,
     rent_tabs: rentTabsReducer
 });
 

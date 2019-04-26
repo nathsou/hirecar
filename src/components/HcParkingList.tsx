@@ -2,29 +2,14 @@ import React, { Component } from "react";
 import HcListItem, { HcListItemProps } from "./HcListItem";
 import Container from "react-bootstrap/Container";
 import ParkingPicto from "../res/img/parking-picto.svg";
+import { connect } from "react-redux";
+import { HcState } from "../redux/configureStore";
 
-export default class HcParkingList extends Component {
+export interface HcParkingListProps {
+    parkings: HcListItemProps[]
+}
 
-    private parkings: HcListItemProps[] = [
-        {
-            title: 'Bâle-Mulhouse',
-            picto: ParkingPicto,
-            features: ['Lavage', 'Navettes', 'Sous-terrain', 'Vidéo-surveillance'],
-            footer: '42€ • 12€ / jour'
-        },
-        {
-            title: 'Roissy-Charles-de-Gaulle',
-            picto: ParkingPicto,
-            features: ['Lavage', 'Navettes', 'Sous - terrain', 'Vidéo - surveillance'],
-            footer: '53€ • 15€ / jour'
-        },
-        {
-            title: "Nice Côte d'Azur",
-            picto: ParkingPicto,
-            features: ['Lavage', 'Navettes', 'Sous-terrain', 'Vidéo-surveillance'],
-            footer: '35€ • 10€ / jour'
-        },
-    ];
+class HcParkingList extends Component<HcParkingListProps> {
 
     public render() {
 
@@ -32,10 +17,14 @@ export default class HcParkingList extends Component {
             <div>
                 <Container>
                     <div className='hc-list'>
-                        {this.parkings.map(p => <HcListItem {...p} />)}
+                        {this.props.parkings.map(p => <HcListItem {...p} picto={ParkingPicto} />)}
                     </div>
                 </Container>
             </div>
         );
     }
 }
+
+export default connect(
+    (state: HcState) => ({ parkings: state.parking_search.parkings })
+)(HcParkingList);
