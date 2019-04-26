@@ -9,7 +9,7 @@ import { ParkingSearchState } from "../redux/parkingSearch/types";
 import HcParkingList from "./HcParkingList";
 
 interface HcParkingSearchProps extends ParkingSearchState {
-    onViewportChange: (viewstate: HcMapViewportProps) => any
+    onViewportChange: (viewstate: HcMapViewportProps) => void
 }
 
 export interface HcMapViewportProps extends ViewState {

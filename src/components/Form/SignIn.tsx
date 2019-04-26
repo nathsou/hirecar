@@ -24,7 +24,7 @@ export default class SignIn extends Component {
                 <div style={{ marginTop: "15px" }}>
                     <HcSecondaryButton type="submit">Se connecter</HcSecondaryButton>
                 </div>
-                <p>Vous n'avez pas encore de compte ? <a href="#">Enregistrez-vous.</a></p>
+                <p>Vous n'avez pas encore de compte ? <a href="/">Enregistrez-vous.</a></p>
             </Form>
         );
     }

@@ -17,7 +17,9 @@ class HcCarList extends Component<HcCarListProps> {
             <main>
                 <Container>
                     <div className='hc-list'>
-                        {this.props.cars.map(car => <HcListItem {...car} picto={CarPicto} />)}
+                        {this.props.cars.map((car, i) =>
+                            <HcListItem {...car} picto={CarPicto} key={`rent_car_${i}`} />
+                        )}
                     </div>
                 </Container>
             </main>

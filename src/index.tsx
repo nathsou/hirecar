@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import HireCar from './HireCar';
 import * as serviceWorker from './serviceWorker';
-import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap-css-only/css/bootstrap.css';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import './res/styles/hirecar.css';
 

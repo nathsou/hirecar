@@ -32,7 +32,7 @@ export default class HcNavbar extends Component<{}, HcNavbarState> {
         return (
             <header>
                 <Navbar collapseOnSelect expand="lg" fixed="top">
-                    <Navbar.Brand href="#home"><h1><Logo /></h1></Navbar.Brand>
+                    <Navbar.Brand><h1><Logo /></h1></Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
                         <Nav>

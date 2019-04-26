@@ -122,7 +122,7 @@ export default class SignUp extends Component<{}, SignUpState>{
                     <HcSecondaryButton type="submit">S'inscrire</HcSecondaryButton>
                 </div>
 
-                <p>Vous avez déjà un compte ? <a href="#">Identifiez-vous.</a></p>
+                <p>Vous avez déjà un compte ? <a href="/">Identifiez-vous.</a></p>
             </Form>
         );
     }
