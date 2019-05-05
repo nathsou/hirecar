@@ -1,4 +1,4 @@
-import { defaultSignUpState, SignUpState, UPDATE_FIRSTNAME_INPUT, SignUpActionTypes, UPDATE_LASTNAME_INPUT, UPDATE_EMAIL_INPUT, UPDATE_PHONE_INPUT, UPDATE_PASSWORD_INPUT, SUBMIT_SIGNUP_FORM, UPDATE_CONFIRMPASSWORD_INPUT } from "./types";
+import { defaultSignUpState, SignUpState, UPDATE_FIRSTNAME_INPUT, SignUpActionTypes, UPDATE_LASTNAME_INPUT, UPDATE_EMAIL_INPUT, UPDATE_PHONE_INPUT, UPDATE_PASSWORD_INPUT, SUBMIT_SIGNUP_FORM, UPDATE_CONFIRMPASSWORD_INPUT, CHANGE_SIGNUP_TAB } from "./types";
 
 
 export function signUpReducer(
@@ -69,6 +69,10 @@ export function signUpReducer(
             return {
                 ...state,
                 validForm: isValid ? true : false
+            };
+        case CHANGE_SIGNUP_TAB:
+            return {
+                ...state
             };
         default:
             return state;

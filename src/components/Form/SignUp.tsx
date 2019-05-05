@@ -5,7 +5,7 @@ import HcFormGroup from "./HcFormGroup";
 import { connect } from "react-redux";
 import { HcState } from "../../redux/configureStore";
 import { SignUpState } from "../../redux/signUp/types";
-import { updateFirstnameInput, updateLastnameInput, updateEmailInput, updatePhoneInput, updatePasswordInput, submitSignUpForm, updateConfirmPasswordInput } from "../../redux/signUp/actions";
+import { updateFirstnameInput, updateLastnameInput, updateEmailInput, updatePhoneInput, updatePasswordInput, submitSignUpForm, updateConfirmPasswordInput, changeSignUpTab } from "../../redux/signUp/actions";
 
 interface SignUpProps extends SignUpState {
     onFirstnameChange: typeof updateFirstnameInput,
@@ -14,7 +14,8 @@ interface SignUpProps extends SignUpState {
     onPhoneChange: typeof updatePhoneInput,
     onPasswordChange: typeof updatePasswordInput,
     onConfirmPasswordChange: typeof updateConfirmPasswordInput,
-    onSignUpSubmit: typeof submitSignUpForm
+    onSignUpSubmit: typeof submitSignUpForm,
+    onTabChange: typeof changeSignUpTab
 }
 
 export class SignUp extends Component<SignUpProps>{
@@ -74,14 +75,14 @@ export class SignUp extends Component<SignUpProps>{
                     <HcSecondaryButton type="submit">S'inscrire</HcSecondaryButton>
                 </div>
 
-                <p>Vous avez déjà un compte ? <a href="/">Identifiez-vous.</a></p>
+                <p>Vous avez déjà un compte ? <span className="link" onClick={this.props.onTabChange}>Identifiez-vous.</span></p>
             </Form>
         );
     }
 }
 
 export default connect(
-    (state: HcState) => state.sign_up,
+    (state: HcState) => state.sign_tabs.signup_tab,
     {
         onFirstnameChange: (e: any) => updateFirstnameInput(e.target.value),
         onLastnameChange: (e: any) => updateLastnameInput(e.target.value),
@@ -89,6 +90,7 @@ export default connect(
         onPhoneChange: (e: any) => updatePhoneInput(e.target.value),
         onPasswordChange: (e: any) => updatePasswordInput(e.target.value),
         onConfirmPasswordChange: (e: any) => updateConfirmPasswordInput(e.target.value),
-        onSignUpSubmit: () => submitSignUpForm()
+        onSignUpSubmit: () => submitSignUpForm(),
+        onTabChange: () => changeSignUpTab(),
     }
 )(SignUp);

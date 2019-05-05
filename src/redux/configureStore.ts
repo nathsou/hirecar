@@ -5,21 +5,21 @@ import { parkingSearchReducer } from './parkingSearch/reducers';
 import { ParkingSearchState } from './parkingSearch/types';
 import { rentTabsReducer } from './rentTabs/reducers';
 import { RentTabsState } from './rentTabs/types';
-import { SignUpState } from './signUp/types';
-import { signUpReducer } from './signUp/reducers';
+import { SignTabsState } from './signTabs/types';
+import { signTabsReducer } from './signTabs/reducers';
 
 export interface HcState {
     parking_search: ParkingSearchState,
     car_search: CarSearchState,
     rent_tabs: RentTabsState,
-    sign_up: SignUpState
+    sign_tabs: SignTabsState
 }
 
 const root_reducer = combineReducers({
     parking_search: parkingSearchReducer,
     car_search: carSearchReducer,
     rent_tabs: rentTabsReducer,
-    sign_up: signUpReducer,
+    sign_tabs: signTabsReducer
 });
 
 export default function configureStore() {

@@ -1,4 +1,3 @@
-
 export interface SignUpState {
     firstname: string,
     lastname: string,
@@ -77,5 +76,9 @@ export interface SubmitSignUpAction {
     type: typeof SUBMIT_SIGNUP_FORM
 }
 
+export const CHANGE_SIGNUP_TAB = "CHANGE_SIGNUP_TAB";
+export interface ChangeSignUpTabAction {
+    type: typeof CHANGE_SIGNUP_TAB
+}
 
-export type SignUpActionTypes = UpdateFirstnameAction | UpdateLastnameAction | UpdateEmailAction | UpdatePhoneAction | UpdatePasswordAction | UpdateConfirmPasswordAction | SubmitSignUpAction;
+export type SignUpActionTypes = UpdateFirstnameAction | UpdateLastnameAction | UpdateEmailAction | UpdatePhoneAction | UpdatePasswordAction | UpdateConfirmPasswordAction | SubmitSignUpAction | ChangeSignUpTabAction;
