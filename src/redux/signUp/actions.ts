@@ -1,4 +1,4 @@
-import { UPDATE_FIRSTNAME_INPUT, UpdateFirstnameAction, UpdateLastnameAction, UPDATE_LASTNAME_INPUT, UPDATE_EMAIL_INPUT, UpdateEmailAction, UPDATE_PHONE_INPUT, UpdatePhoneAction, UpdatePasswordAction, UPDATE_PASSWORD_INPUT, SubmitSignUpAction, SUBMIT_SIGNUP_FORM } from "./types";
+import { UPDATE_FIRSTNAME_INPUT, UpdateFirstnameAction, UpdateLastnameAction, UPDATE_LASTNAME_INPUT, UPDATE_EMAIL_INPUT, UpdateEmailAction, UPDATE_PHONE_INPUT, UpdatePhoneAction, UpdatePasswordAction, UPDATE_PASSWORD_INPUT, SubmitSignUpAction, SUBMIT_SIGNUP_FORM, UpdateConfirmPasswordAction, UPDATE_CONFIRMPASSWORD_INPUT } from "./types";
 
 export function updateFirstnameInput(value: string): UpdateFirstnameAction {
     return {
@@ -33,6 +33,13 @@ export function updatePasswordInput(value: string): UpdatePasswordAction {
         type: UPDATE_PASSWORD_INPUT,
         value
     };
+}
+
+export function updateConfirmPasswordInput(value: string): UpdateConfirmPasswordAction {
+    return {
+        type: UPDATE_CONFIRMPASSWORD_INPUT,
+        value
+    }
 }
 
 export function submitSignUpForm(): SubmitSignUpAction {

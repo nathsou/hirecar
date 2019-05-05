@@ -5,12 +5,14 @@ export interface SignUpState {
     email: string,
     phone: string,
     password: string,
+    confirmPassword: string,
     formErrors: {
         firstnameError: string,
         lastnameError: string,
         emailError: string,
         phoneError: string,
         passwordError: string,
+        confirmPasswordError: string,
         [key: string]: string
     },
     validForm: boolean
@@ -22,12 +24,14 @@ export const defaultSignUpState: SignUpState = {
     email: '',
     phone: '',
     password: '',
+    confirmPassword: '',
     formErrors: {
         firstnameError: '',
         lastnameError: '',
         emailError: '',
         phoneError: '',
         passwordError: '',
+        confirmPasswordError: '',
     },
     validForm: false
 }
@@ -62,9 +66,16 @@ export interface UpdatePasswordAction {
     value: string
 }
 
+export const UPDATE_CONFIRMPASSWORD_INPUT = "UPDATE_CONFIRMPASSWORD_INPUT";
+export interface UpdateConfirmPasswordAction {
+    type: typeof UPDATE_CONFIRMPASSWORD_INPUT,
+    value: string
+}
+
 export const SUBMIT_SIGNUP_FORM = "SUBMIT_SIGNUP_FORM";
 export interface SubmitSignUpAction {
     type: typeof SUBMIT_SIGNUP_FORM
 }
 
-export type SignUpActionTypes = UpdateFirstnameAction | UpdateLastnameAction | UpdateEmailAction | UpdatePhoneAction | UpdatePasswordAction | SubmitSignUpAction;
+
+export type SignUpActionTypes = UpdateFirstnameAction | UpdateLastnameAction | UpdateEmailAction | UpdatePhoneAction | UpdatePasswordAction | UpdateConfirmPasswordAction | SubmitSignUpAction;

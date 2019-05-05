@@ -5,7 +5,7 @@ import HcFormGroup from "./HcFormGroup";
 import { connect } from "react-redux";
 import { HcState } from "../../redux/configureStore";
 import { SignUpState } from "../../redux/signUp/types";
-import { updateFirstnameInput, updateLastnameInput, updateEmailInput, updatePhoneInput, updatePasswordInput, submitSignUpForm } from "../../redux/signUp/actions";
+import { updateFirstnameInput, updateLastnameInput, updateEmailInput, updatePhoneInput, updatePasswordInput, submitSignUpForm, updateConfirmPasswordInput } from "../../redux/signUp/actions";
 
 interface SignUpProps extends SignUpState {
     onFirstnameChange: typeof updateFirstnameInput,
@@ -13,18 +13,19 @@ interface SignUpProps extends SignUpState {
     onEmailChange: typeof updateEmailInput,
     onPhoneChange: typeof updatePhoneInput,
     onPasswordChange: typeof updatePasswordInput,
+    onConfirmPasswordChange: typeof updateConfirmPasswordInput,
     onSignUpSubmit: typeof submitSignUpForm
 }
 
 export class SignUp extends Component<SignUpProps>{
 
-    public handleSubmit = (event: any) => {
-        event.preventDefault();
+    public handleSubmit = (e: any) => {
+        e.preventDefault();
         this.props.onSignUpSubmit();
     }
 
     public render() {
-        const { firstnameError, lastnameError, emailError, phoneError, passwordError } = this.props.formErrors;
+        const { firstnameError, lastnameError, emailError, phoneError, passwordError, confirmPasswordError } = this.props.formErrors;
         return (
             <Form onSubmit={this.handleSubmit}>
                 <Form.Row>
@@ -62,6 +63,13 @@ export class SignUp extends Component<SignUpProps>{
                         name="password" placeholder="Veuillez entrer votre mot de passe"
                         value={this.props.password} onChange={this.props.onPasswordChange} />
                 </Form.Row>
+                <Form.Row>
+                    <HcFormGroup
+                        size="12" controlId="signUpConfirmPassword" className={confirmPasswordError}
+                        label="Confirmation du mot de passe" type="password"
+                        name="confirmPassword" placeholder="Veuillez entrer votre mot de passe"
+                        value={this.props.confirmPassword} onChange={this.props.onConfirmPasswordChange} />
+                </Form.Row>
                 <div style={{ marginTop: "15px" }}>
                     <HcSecondaryButton type="submit">S'inscrire</HcSecondaryButton>
                 </div>
@@ -80,6 +88,7 @@ export default connect(
         onEmailChange: (e: any) => updateEmailInput(e.target.value),
         onPhoneChange: (e: any) => updatePhoneInput(e.target.value),
         onPasswordChange: (e: any) => updatePasswordInput(e.target.value),
+        onConfirmPasswordChange: (e: any) => updateConfirmPasswordInput(e.target.value),
         onSignUpSubmit: () => submitSignUpForm()
     }
 )(SignUp);
