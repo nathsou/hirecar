@@ -1,9 +1,9 @@
 export interface SignInTabState {
     email: string,
     password: string,
-    formErrors: {
-        emailError: string,
-        passwordError: string,
+    form_errors: {
+        email_error: string,
+        password_error: string,
         [key: string]: string
     },
     validForm: boolean
@@ -12,9 +12,9 @@ export interface SignInTabState {
 export const defaultSignInTabState: SignInTabState = {
     email: '',
     password: '',
-    formErrors: {
-        emailError: '',
-        passwordError: '',
+    form_errors: {
+        email_error: '',
+        password_error: '',
     },
     validForm: false
 }

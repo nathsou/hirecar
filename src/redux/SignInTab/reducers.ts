@@ -13,20 +13,20 @@ export function signInTabReducer(
             return {
                 ...state,
                 email: action.value,
-                formErrors: { ...state.formErrors, emailError: isValid ? '' : 'Veuillez entrer une adresse email valide' }
+                form_errors: { ...state.form_errors, email_error: isValid ? '' : 'Veuillez entrer une adresse email valide' }
             };
         case UPDATE_SIGNIN_PASSWORD_INPUT:
             isValid = action.value.length >= 3;
             return {
                 ...state,
                 password: action.value,
-                formErrors: { ...state.formErrors, passwordError: isValid ? '' : 'Le mot de passe doit contenir au moins 3 caractères' }
+                form_errors: { ...state.form_errors, password_error: isValid ? '' : 'Le mot de passe doit contenir au moins 3 caractères' }
             };
         case SUBMIT_SIGNIN_FORM:
             const { email, password } = state;
             isValid = (Object
-                .keys(state.formErrors)
-                .every(key => state.formErrors[key] === '')) &&
+                .keys(state.form_errors)
+                .every(key => state.form_errors[key] === '')) &&
                 ([
                     email,
                     password

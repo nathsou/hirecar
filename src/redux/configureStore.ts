@@ -7,8 +7,11 @@ import { rentTabsReducer } from './rentTabs/reducers';
 import { RentTabsState } from './rentTabs/types';
 import { SignTabsState } from './signTabs/types';
 import { signTabsReducer } from './signTabs/reducers';
+import { NavbarState } from './navbar/types';
+import { navbarReducer } from './navbar/reducers';
 
 export interface HcState {
+    navbar: NavbarState,
     parking_search: ParkingSearchState,
     car_search: CarSearchState,
     rent_tabs: RentTabsState,
@@ -16,6 +19,7 @@ export interface HcState {
 }
 
 const root_reducer = combineReducers({
+    navbar: navbarReducer,
     parking_search: parkingSearchReducer,
     car_search: carSearchReducer,
     rent_tabs: rentTabsReducer,

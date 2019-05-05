@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import Form from 'react-bootstrap/Form';
 import HcSecondaryButton from "../HcSecondaryButton";
 import HcFormGroup from "./HcFormGroup";
-import { SignInTabState } from "../../redux/SignInTab/types";
-import { updateSignInEmailInput, updateSignInPasswordInput, submitSignInForm } from "../../redux/SignInTab/actions";
+import { SignInTabState } from "../../redux/signInTab/types";
+import { updateSignInEmailInput, updateSignInPasswordInput, submitSignInForm } from "../../redux/signInTab/actions";
 import { connect } from "react-redux";
 import { HcState } from "../../redux/configureStore";
 import { changeSignTab } from "../../redux/signTabs/actions";
@@ -23,19 +23,19 @@ class SignInTab extends Component<SignInTabProps> {
     }
 
     public render() {
-        const { emailError, passwordError } = this.props.formErrors;
+        const { email_error, password_error } = this.props.form_errors;
         return (
             <Form onSubmit={this.handleSubmit}>
                 <Form.Row>
                     <HcFormGroup
-                        size="12" controlId="signInEmail" className={emailError}
+                        size="12" controlId="signInEmail" className={email_error}
                         label="Email" type="text"
                         name="email" placeholder="Veuillez entrer votre email"
                         value={this.props.email} onChange={this.props.onEmailChange} />
                 </Form.Row>
                 <Form.Row>
                     <HcFormGroup
-                        size="12" controlId="signInPassword" className={passwordError}
+                        size="12" controlId="signInPassword" className={password_error}
                         label="Mot de passe" type="password"
                         name="password" placeholder="Veuillez entrer votre mot de passe"
                         value={this.props.password} onChange={this.props.onPasswordChange} />

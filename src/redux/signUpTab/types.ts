@@ -4,17 +4,17 @@ export interface SignUpTabState {
     email: string,
     phone: string,
     password: string,
-    confirmPassword: string,
-    formErrors: {
-        firstnameError: string,
-        lastnameError: string,
-        emailError: string,
-        phoneError: string,
-        passwordError: string,
-        confirmPasswordError: string,
+    confirm_password: string,
+    form_errors: {
+        firstname_error: string,
+        lastname_error: string,
+        email_error: string,
+        phone_error: string,
+        password_error: string,
+        confirm_password_error: string,
         [key: string]: string
     },
-    validForm: boolean
+    valid_form: boolean
 }
 
 export const defaultSignUpTabState: SignUpTabState = {
@@ -23,16 +23,16 @@ export const defaultSignUpTabState: SignUpTabState = {
     email: '',
     phone: '',
     password: '',
-    confirmPassword: '',
-    formErrors: {
-        firstnameError: '',
-        lastnameError: '',
-        emailError: '',
-        phoneError: '',
-        passwordError: '',
-        confirmPasswordError: '',
+    confirm_password: '',
+    form_errors: {
+        firstname_error: '',
+        lastname_error: '',
+        email_error: '',
+        phone_error: '',
+        password_error: '',
+        confirm_password_error: '',
     },
-    validForm: false
+    valid_form: false
 }
 
 export const UPDATE_SIGNUP_FIRSTNAME_INPUT = "UPDATE_SIGNUP_FIRSTNAME_INPUT";

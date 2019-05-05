@@ -1,6 +1,6 @@
 import { defaultSignTabsState, SignTabsActionTypes, SignTabsState } from "./types";
 import { signUpTabReducer } from "../signUpTab/reducers";
-import { signInTabReducer } from "../SignInTab/reducers";
+import { signInTabReducer } from "../signInTab/reducers";
 
 export function signTabsReducer(
     state = defaultSignTabsState,

@@ -27,7 +27,7 @@ export class SignUpTab extends Component<SignUpTabProps>{
     }
 
     public render() {
-        const { firstnameError, lastnameError, emailError, phoneError, passwordError, confirmPasswordError } = this.props.formErrors;
+        const { firstname_error: firstnameError, lastname_error: lastnameError, email_error: emailError, phone_error: phoneError, password_error: passwordError, confirm_password_error: confirmPasswordError } = this.props.form_errors;
         return (
             <Form onSubmit={this.handleSubmit}>
                 <Form.Row>
@@ -70,7 +70,7 @@ export class SignUpTab extends Component<SignUpTabProps>{
                         size="12" controlId="signUpConfirmPassword" className={confirmPasswordError}
                         label="Confirmation du mot de passe" type="password"
                         name="confirmPassword" placeholder="Veuillez entrer votre mot de passe"
-                        value={this.props.confirmPassword} onChange={this.props.onConfirmPasswordChange} />
+                        value={this.props.confirm_password} onChange={this.props.onConfirmPasswordChange} />
                 </Form.Row>
                 <div style={{ marginTop: "15px" }}>
                     <HcSecondaryButton type="submit">S'inscrire</HcSecondaryButton>

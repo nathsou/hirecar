@@ -1,5 +1,5 @@
 import { SignUpTabState, defaultSignUpTabState } from "../signUpTab/types";
-import { SignInTabState, defaultSignInTabState } from "../SignInTab/types";
+import { SignInTabState, defaultSignInTabState } from "../signInTab/types";
 
 export interface SignTabsState {
     signin_tab: SignInTabState,
