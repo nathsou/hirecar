@@ -1,24 +1,25 @@
 import React, { Component } from "react";
 import Form from 'react-bootstrap/Form';
-import HcSecondaryButton from "../HcSecondaryButton";
-import HcFormGroup from "./HcFormGroup";
 import { connect } from "react-redux";
 import { HcState } from "../../redux/configureStore";
-import { SignUpState } from "../../redux/signUp/types";
-import { updateFirstnameInput, updateLastnameInput, updateEmailInput, updatePhoneInput, updatePasswordInput, submitSignUpForm, updateConfirmPasswordInput, changeSignUpTab } from "../../redux/signUp/actions";
+import { changeSignTab } from "../../redux/signTabs/actions";
+import { submitSignUpForm, updateSignUpConfirmPasswordInput, updateSignUpEmailInput, updateSignUpFirstnameInput, updateSignUpLastnameInput, updateSignUpPasswordInput, updateSignUpPhoneInput } from "../../redux/signUpTab/actions";
+import { SignUpTabState } from "../../redux/signUpTab/types";
+import HcSecondaryButton from "../HcSecondaryButton";
+import HcFormGroup from "./HcFormGroup";
 
-interface SignUpProps extends SignUpState {
-    onFirstnameChange: typeof updateFirstnameInput,
-    onLastnameChange: typeof updateLastnameInput,
-    onEmailChange: typeof updateEmailInput,
-    onPhoneChange: typeof updatePhoneInput,
-    onPasswordChange: typeof updatePasswordInput,
-    onConfirmPasswordChange: typeof updateConfirmPasswordInput,
+interface SignUpTabProps extends SignUpTabState {
+    onFirstnameChange: typeof updateSignUpFirstnameInput,
+    onLastnameChange: typeof updateSignUpLastnameInput,
+    onEmailChange: typeof updateSignUpEmailInput,
+    onPhoneChange: typeof updateSignUpPhoneInput,
+    onPasswordChange: typeof updateSignUpPasswordInput,
+    onConfirmPasswordChange: typeof updateSignUpConfirmPasswordInput,
     onSignUpSubmit: typeof submitSignUpForm,
-    onTabChange: typeof changeSignUpTab
+    onTabChange: typeof changeSignTab
 }
 
-export class SignUp extends Component<SignUpProps>{
+export class SignUpTab extends Component<SignUpTabProps>{
 
     public handleSubmit = (e: any) => {
         e.preventDefault();
@@ -75,7 +76,9 @@ export class SignUp extends Component<SignUpProps>{
                     <HcSecondaryButton type="submit">S'inscrire</HcSecondaryButton>
                 </div>
 
-                <p>Vous avez déjà un compte ? <span className="link" onClick={this.props.onTabChange}>Identifiez-vous.</span></p>
+                <p>Vous avez déjà un compte ?
+                    <span className="link" onClick={() => this.props.onTabChange('sign_in')}> Identifiez-vous.</span>
+                </p>
             </Form>
         );
     }
@@ -84,13 +87,13 @@ export class SignUp extends Component<SignUpProps>{
 export default connect(
     (state: HcState) => state.sign_tabs.signup_tab,
     {
-        onFirstnameChange: (e: any) => updateFirstnameInput(e.target.value),
-        onLastnameChange: (e: any) => updateLastnameInput(e.target.value),
-        onEmailChange: (e: any) => updateEmailInput(e.target.value),
-        onPhoneChange: (e: any) => updatePhoneInput(e.target.value),
-        onPasswordChange: (e: any) => updatePasswordInput(e.target.value),
-        onConfirmPasswordChange: (e: any) => updateConfirmPasswordInput(e.target.value),
+        onFirstnameChange: (e: any) => updateSignUpFirstnameInput(e.target.value),
+        onLastnameChange: (e: any) => updateSignUpLastnameInput(e.target.value),
+        onEmailChange: (e: any) => updateSignUpEmailInput(e.target.value),
+        onPhoneChange: (e: any) => updateSignUpPhoneInput(e.target.value),
+        onPasswordChange: (e: any) => updateSignUpPasswordInput(e.target.value),
+        onConfirmPasswordChange: (e: any) => updateSignUpConfirmPasswordInput(e.target.value),
         onSignUpSubmit: () => submitSignUpForm(),
-        onTabChange: () => changeSignUpTab(),
+        onTabChange: (active_tab_key: string) => changeSignTab(active_tab_key)
     }
-)(SignUp);
+)(SignUpTab);

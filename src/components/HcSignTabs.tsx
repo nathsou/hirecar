@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import Tab from 'react-bootstrap/Tab';
 import Nav from 'react-bootstrap/Nav';
-import SignUp from "./Form/SignUp";
-import SignIn from "./Form/SignIn";
+import SignUpTab from "./Form/SignUpTab";
+import SignInTab from "./Form/SignInTab";
 import { HcState } from "../redux/configureStore";
 import { ChangeSignTabAction } from "../redux/signTabs/types";
 import { changeSignTab } from "../redux/signTabs/actions";
@@ -15,9 +15,10 @@ interface HcSignTabsProps {
 
 class HcSignTabs extends Component<HcSignTabsProps> {
     public render() {
+
         return (
             <div className="container-tabs">
-                <Tab.Container id="sign_tabs" defaultActiveKey={this.props.active_tab_key} onSelect={this.props.onSelect}>
+                <Tab.Container id="sign_tabs" activeKey={this.props.active_tab_key} onSelect={this.props.onSelect}>
                     <Nav variant="pills">
                         <Nav.Item>
                             <Nav.Link eventKey="sign_in">Connexion</Nav.Link>
@@ -28,10 +29,10 @@ class HcSignTabs extends Component<HcSignTabsProps> {
                     </Nav>
                     <Tab.Content>
                         <Tab.Pane eventKey="sign_in">
-                            <SignIn />
+                            <SignInTab />
                         </Tab.Pane>
                         <Tab.Pane eventKey="sign_up">
-                            <SignUp />
+                            <SignUpTab />
                         </Tab.Pane>
                     </Tab.Content>
                 </Tab.Container>

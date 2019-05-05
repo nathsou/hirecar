@@ -1,12 +1,15 @@
-import { SignUpState, defaultSignUpState } from "../signUp/types";
+import { SignUpTabState, defaultSignUpTabState } from "../signUpTab/types";
+import { SignInTabState, defaultSignInTabState } from "../SignInTab/types";
 
 export interface SignTabsState {
-    signup_tab: SignUpState,
+    signin_tab: SignInTabState,
+    signup_tab: SignUpTabState,
     active_tab_key: string
 }
 
 export const defaultSignTabsState: SignTabsState = {
-    signup_tab: defaultSignUpState,
+    signin_tab: defaultSignInTabState,
+    signup_tab: defaultSignUpTabState,
     active_tab_key: 'sign_in'
 }
 
