@@ -7,11 +7,7 @@ interface HcModalProps {
     handleClose: () => void
 }
 
-interface HcModalState {
-    show: boolean
-}
-
-export default class HcModal extends Component<HcModalProps, HcModalState> {
+export default class HcModal extends Component<HcModalProps> {
 
     render() {
         return (
