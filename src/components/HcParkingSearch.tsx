@@ -20,9 +20,6 @@ export interface HcMapViewportProps extends ViewState {
 
 class HcParkingSearch extends Component<HcParkingSearchProps> {
 
-    // private nabvarHeigth: number = 52;
-    // private footerHeigth: number = 82;
-
     constructor(props: HcParkingSearchProps) {
         super(props);
         this.props.fetchParkings();

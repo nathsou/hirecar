@@ -16,10 +16,10 @@ export function requestParkings(): RequestParkingsAction {
     };
 }
 
-export function parkingsReceived(parkings: string): ParkingsReceivedAction {
+export function parkingsReceived(parkings: Parking[]): ParkingsReceivedAction {
     return {
         type: PARKINGS_RECEIVED,
-        parkings: JSON.parse(parkings).airports as Parking[]
+        parkings: parkings
     };
 }
 
@@ -29,22 +29,12 @@ export function fetchParkings() {
 
         dispatch(requestParkings());
 
-        axios.get(
-            `http://localhost:8000/parking_lots?center_lat=47&center_lng=2&radius=300`,
-            {
-                headers: {
-                    'Access-Control-Allow-Origin': '*',
-                },
-                ///@ts-ignore
-                crossdomain: true
-            }
-        )
+        axios.get('http://localhost:8000/parking_lots?center_lat=47&center_lng=2&radius=300')
             .then((res: AxiosResponse<string>) => {
-                console.log(res);
-                dispatch(parkingsReceived(res.data))
+                dispatch(parkingsReceived((res.data as any).airports as Parking[]))
+            })
+            .catch((reason: any) => {
+                console.error(reason);
             });
-        // .catch((reason) => {
-
-        // });
     };
 }

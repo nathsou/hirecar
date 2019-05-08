@@ -29,6 +29,7 @@ export function parkingSearchReducer(
 
             return {
                 ...state,
+                fetching: false,
                 parkings
             };
         default:
