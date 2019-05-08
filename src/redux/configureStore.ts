@@ -1,4 +1,4 @@
-import { combineReducers, createStore } from 'redux';
+import { combineReducers, createStore, applyMiddleware, compose } from 'redux';
 import { carSearchReducer } from './carSearch/reducers';
 import { CarSearchState } from './carSearch/types';
 import { parkingSearchReducer } from './parkingSearch/reducers';
@@ -9,6 +9,7 @@ import { SignTabsState } from './signTabs/types';
 import { signTabsReducer } from './signTabs/reducers';
 import { NavbarState } from './navbar/types';
 import { navbarReducer } from './navbar/reducers';
+import thunkMiddleware from 'redux-thunk'
 
 export interface HcState {
     navbar: NavbarState,
@@ -29,8 +30,10 @@ const root_reducer = combineReducers({
 export default function configureStore() {
     return createStore(
         root_reducer,
-        {},
-        ///@ts-ignore
-        window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+        compose(
+            applyMiddleware(thunkMiddleware),
+            ///@ts-ignore
+            window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+        )
     );
 }

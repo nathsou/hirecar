@@ -4,12 +4,13 @@ import Row from 'react-bootstrap/Row';
 import ReactMapGL, { ViewState } from 'react-map-gl';
 import { connect } from "react-redux";
 import { HcState } from "../redux/configureStore";
-import { updateViewport } from "../redux/parkingSearch/actions";
+import { updateViewport, fetchParkings } from "../redux/parkingSearch/actions";
 import { ParkingSearchState } from "../redux/parkingSearch/types";
 import HcParkingList from "./HcParkingList";
 
 interface HcParkingSearchProps extends ParkingSearchState {
-    onViewportChange: (viewstate: HcMapViewportProps) => void
+    onViewportChange: (viewstate: HcMapViewportProps) => void,
+    fetchParkings: () => void
 }
 
 export interface HcMapViewportProps extends ViewState {
@@ -22,12 +23,24 @@ class HcParkingSearch extends Component<HcParkingSearchProps> {
     // private nabvarHeigth: number = 52;
     // private footerHeigth: number = 82;
 
+    constructor(props: HcParkingSearchProps) {
+        super(props);
+        this.props.fetchParkings();
+    }
+
     public render() {
+
+        const { fetching } = this.props;
+
         return (
             <main>
                 <Row>
                     <Col lg={5}>
-                        <HcParkingList />
+                        {
+                            fetching ?
+                                <p>Recherche des parkings en cours...</p> :
+                                <HcParkingList />
+                        }
                     </Col>
                     <Col lg={7}>
                         <div className="hc-maps">
@@ -48,6 +61,7 @@ class HcParkingSearch extends Component<HcParkingSearchProps> {
 export default connect(
     (state: HcState) => state.parking_search,
     {
-        onViewportChange: (viewport: HcMapViewportProps) => updateViewport(viewport)
+        onViewportChange: (viewport: HcMapViewportProps) => updateViewport(viewport),
+        fetchParkings: () => fetchParkings()
     }
 )(HcParkingSearch);

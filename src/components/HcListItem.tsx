@@ -3,7 +3,7 @@ import React, { Component } from "react";
 export interface HcListItemProps {
     picto?: string,
     title: string,
-    features: string[],
+    features: string,
     footer: string
 }
 
@@ -18,7 +18,7 @@ export default class HcListItem extends Component<HcListItemProps> {
                 <img src={picto} alt="Picto" width="50" height="50" />
                 <div>
                     <h2 className='hc-list-item-title'>{title}</h2>
-                    <p className='hc-list-item-features'>{features.join(' • ')}</p>
+                    <p className='hc-list-item-features'>{features}</p>
                     <p className='hc-list-footer'>{footer}</p>
                     <hr />
                 </div>

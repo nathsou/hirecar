@@ -8,17 +8,17 @@ export const defaultCarSearchState: CarSearchState = {
     cars: [
         {
             title: 'Fiat Punto Evo',
-            features: ['Manuelle', 'SP95', 'Pneus-neige', '5 places', '3 portes'],
+            features: ['Manuelle', 'SP95', 'Pneus-neige', '5 places', '3 portes'].join('•'),
             footer: '42€ • 12€ / jour'
         },
         {
             title: 'Opel Astra',
-            features: ['Manuelle', 'Diesel', '5 places', '5 portes'],
+            features: ['Manuelle', 'Diesel', '5 places', '5 portes'].join('•'),
             footer: '53€ • 15€ / jour'
         },
         {
             title: "Tesla Model 3",
-            features: ['Automatique', 'Electrique', '5 places', '5 portes'],
+            features: ['Automatique', 'Electrique', '5 places', '5 portes'].join('•'),
             footer: '35€ • 10€ / jour'
         },
     ]
