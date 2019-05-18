@@ -24,6 +24,7 @@ class SignInTab extends Component<SignInTabProps> {
 
     public render() {
         const { email_error, password_error } = this.props.form_errors;
+        const { email, password } = this.props.form_data;
         return (
             <Form onSubmit={this.handleSubmit}>
                 <Form.Row>
@@ -31,14 +32,14 @@ class SignInTab extends Component<SignInTabProps> {
                         size="12" controlId="signInEmail" className={email_error}
                         label="Email" type="text"
                         name="email" placeholder="Veuillez entrer votre email"
-                        value={this.props.email} onChange={this.props.onEmailChange} />
+                        value={email} onChange={this.props.onEmailChange} />
                 </Form.Row>
                 <Form.Row>
                     <HcFormGroup
                         size="12" controlId="signInPassword" className={password_error}
                         label="Mot de passe" type="password"
                         name="password" placeholder="Veuillez entrer votre mot de passe"
-                        value={this.props.password} onChange={this.props.onPasswordChange} />
+                        value={password} onChange={this.props.onPasswordChange} />
                 </Form.Row>
                 <div style={{ marginTop: "15px" }}>
                     <HcSecondaryButton type="submit">Se connecter</HcSecondaryButton>

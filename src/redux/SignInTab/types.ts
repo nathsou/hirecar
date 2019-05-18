@@ -1,6 +1,8 @@
 export interface SignInTabState {
-    email: string,
-    password: string,
+    form_data: {
+        email: string,
+        password: string,
+    },
     form_errors: {
         email_error: string,
         password_error: string,
@@ -10,8 +12,10 @@ export interface SignInTabState {
 }
 
 export const defaultSignInTabState: SignInTabState = {
-    email: '',
-    password: '',
+    form_data: {
+        email: '',
+        password: '',
+    },
     form_errors: {
         email_error: '',
         password_error: '',

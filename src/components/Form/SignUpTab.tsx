@@ -3,8 +3,8 @@ import Form from 'react-bootstrap/Form';
 import { connect } from "react-redux";
 import { HcState } from "../../redux/configureStore";
 import { changeSignTab } from "../../redux/signTabs/actions";
-import { submitSignUpForm, updateSignUpConfirmPasswordInput, updateSignUpEmailInput, updateSignUpFirstnameInput, updateSignUpLastnameInput, updateSignUpPasswordInput, updateSignUpPhoneInput } from "../../redux/signUpTab/actions";
-import { SignUpTabState } from "../../redux/signUpTab/types";
+import { submitSignUpForm, updateSignUpConfirmPasswordInput, updateSignUpEmailInput, updateSignUpFirstnameInput, updateSignUpLastnameInput, updateSignUpPasswordInput, updateSignUpPhoneInput, postSignUpForm } from "../../redux/signUpTab/actions";
+import { SignUpTabState, SignUpFormDataState } from "../../redux/signUpTab/types";
 import HcSecondaryButton from "../HcSecondaryButton";
 import HcFormGroup from "./HcFormGroup";
 
@@ -16,7 +16,8 @@ interface SignUpTabProps extends SignUpTabState {
     onPasswordChange: typeof updateSignUpPasswordInput,
     onConfirmPasswordChange: typeof updateSignUpConfirmPasswordInput,
     onSignUpSubmit: typeof submitSignUpForm,
-    onTabChange: typeof changeSignTab
+    onTabChange: typeof changeSignTab,
+    onPostSignUpForm: (data: SignUpFormDataState) => void
 }
 
 export class SignUpTab extends Component<SignUpTabProps>{
@@ -24,10 +25,14 @@ export class SignUpTab extends Component<SignUpTabProps>{
     public handleSubmit = (e: any) => {
         e.preventDefault();
         this.props.onSignUpSubmit();
+        if (this.props.valid_form === true) {
+            this.props.onPostSignUpForm(this.props.form_data);
+        }
     }
 
     public render() {
         const { firstname_error: firstnameError, lastname_error: lastnameError, email_error: emailError, phone_error: phoneError, password_error: passwordError, confirm_password_error: confirmPasswordError } = this.props.form_errors;
+        const { firstname, lastname, email, phone, password, confirm_password } = this.props.form_data;
         return (
             <Form onSubmit={this.handleSubmit}>
                 <Form.Row>
@@ -35,13 +40,13 @@ export class SignUpTab extends Component<SignUpTabProps>{
                         size="6" controlId="fistname" className={firstnameError}
                         label="Prénom" type="text"
                         name="firstname" placeholder="Votre prénom"
-                        value={this.props.firstname}
+                        value={firstname}
                         onChange={this.props.onFirstnameChange} />
                     <HcFormGroup
                         size="6" controlId="lastname" className={lastnameError}
                         label="Nom" type="text"
                         name="lastname" placeholder="Votre nom"
-                        value={this.props.lastname}
+                        value={lastname}
                         onChange={this.props.onLastnameChange} />
                 </Form.Row>
                 <Form.Row>
@@ -49,28 +54,28 @@ export class SignUpTab extends Component<SignUpTabProps>{
                         size="12" controlId="signUpEmail" className={emailError}
                         label="Email" type="text"
                         name="email" placeholder="Veuillez entrer votre email"
-                        value={this.props.email} onChange={this.props.onEmailChange} />
+                        value={email} onChange={this.props.onEmailChange} />
                 </Form.Row>
                 <Form.Row>
                     <HcFormGroup
                         size="12" controlId="telephone" className={phoneError}
                         label="Téléphone" type="tel"
                         name="phone" placeholder="Veuillez entrer votre numéro"
-                        value={this.props.phone} onChange={this.props.onPhoneChange} />
+                        value={phone} onChange={this.props.onPhoneChange} />
                 </Form.Row>
                 <Form.Row>
                     <HcFormGroup
                         size="12" controlId="signUpPassword" className={passwordError}
                         label="Mot de passe" type="password"
                         name="password" placeholder="Veuillez entrer votre mot de passe"
-                        value={this.props.password} onChange={this.props.onPasswordChange} />
+                        value={password} onChange={this.props.onPasswordChange} />
                 </Form.Row>
                 <Form.Row>
                     <HcFormGroup
                         size="12" controlId="signUpConfirmPassword" className={confirmPasswordError}
                         label="Confirmation du mot de passe" type="password"
                         name="confirmPassword" placeholder="Veuillez entrer votre mot de passe"
-                        value={this.props.confirm_password} onChange={this.props.onConfirmPasswordChange} />
+                        value={confirm_password} onChange={this.props.onConfirmPasswordChange} />
                 </Form.Row>
                 <div style={{ marginTop: "15px" }}>
                     <HcSecondaryButton type="submit">S'inscrire</HcSecondaryButton>
@@ -94,6 +99,7 @@ export default connect(
         onPasswordChange: (e: any) => updateSignUpPasswordInput(e.target.value),
         onConfirmPasswordChange: (e: any) => updateSignUpConfirmPasswordInput(e.target.value),
         onSignUpSubmit: () => submitSignUpForm(),
-        onTabChange: (active_tab_key: string) => changeSignTab(active_tab_key)
+        onTabChange: (active_tab_key: string) => changeSignTab(active_tab_key),
+        onPostSignUpForm: (data: SignUpFormDataState) => postSignUpForm(data)
     }
 )(SignUpTab);

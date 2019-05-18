@@ -1,10 +1,15 @@
-export interface SignUpTabState {
+export interface SignUpFormDataState {
+    [index: string]: string;
     firstname: string,
     lastname: string,
     email: string,
     phone: string,
     password: string,
-    confirm_password: string,
+    confirm_password: string
+}
+
+export interface SignUpTabState {
+    form_data: SignUpFormDataState,
     form_errors: {
         firstname_error: string,
         lastname_error: string,
@@ -14,16 +19,19 @@ export interface SignUpTabState {
         confirm_password_error: string,
         [key: string]: string
     },
-    valid_form: boolean
+    valid_form: boolean,
+    sending: boolean
 }
 
 export const defaultSignUpTabState: SignUpTabState = {
-    firstname: '',
-    lastname: '',
-    email: '',
-    phone: '',
-    password: '',
-    confirm_password: '',
+    form_data: {
+        firstname: '',
+        lastname: '',
+        email: '',
+        phone: '',
+        password: '',
+        confirm_password: '',
+    },
     form_errors: {
         firstname_error: '',
         lastname_error: '',
@@ -32,7 +40,8 @@ export const defaultSignUpTabState: SignUpTabState = {
         password_error: '',
         confirm_password_error: '',
     },
-    valid_form: false
+    valid_form: false,
+    sending: false
 }
 
 export const UPDATE_SIGNUP_FIRSTNAME_INPUT = "UPDATE_SIGNUP_FIRSTNAME_INPUT";
@@ -76,4 +85,15 @@ export interface SubmitSignUpAction {
     type: typeof SUBMIT_SIGNUP_FORM
 }
 
-export type SignUpActionTypes = UpdateSignUpFirstnameAction | UpdateSignUpLastnameAction | UpdateSignUpEmailAction | SignUpUpdatePhoneAction | UpdateSignUpPasswordAction | UpdateSignUpConfirmPasswordAction | SubmitSignUpAction;
+export const SIGNUP_FORM_SENT = "SEND_SIGNUP_FORM";
+export interface SignUpSentAction {
+    type: typeof SIGNUP_FORM_SENT
+}
+
+export const SIGNUP_FORM_RECEIVED = "SIGNUP_FORM_RECEIVED";
+export interface SignUpReceivedAction {
+    type: typeof SIGNUP_FORM_RECEIVED,
+}
+
+
+export type SignUpActionTypes = UpdateSignUpFirstnameAction | UpdateSignUpLastnameAction | UpdateSignUpEmailAction | SignUpUpdatePhoneAction | UpdateSignUpPasswordAction | UpdateSignUpConfirmPasswordAction | SubmitSignUpAction | SignUpSentAction | SignUpReceivedAction;

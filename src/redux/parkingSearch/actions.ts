@@ -28,8 +28,7 @@ export function fetchParkings() {
     return (dispatch: Dispatch<ParkingSearchActionTypes>) => {
 
         dispatch(requestParkings());
-
-        axios.get('http://localhost:8000/parking_lots?center_lat=47&center_lng=2&radius=300')
+        axios.get(`${process.env.REACT_APP_HIRECAR_API_URI}/parking_lots?center_lat=47&center_lng=2&radius=300`)
             .then((res: AxiosResponse<string>) => {
                 dispatch(parkingsReceived((res.data as any).airports as Parking[]))
             })
