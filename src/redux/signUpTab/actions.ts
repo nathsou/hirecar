@@ -79,11 +79,9 @@ export function postSignUpForm(data: SignUpFormDataState) {
                     sent_data[key] = key === 'password' ? hashed_pwd : data[key];
                 });
 
-                // console.log(sent_data);
                 axios.post(`${process.env.REACT_APP_HIRECAR_API_URI}/users`, sent_data)
-                    .then(function (res: AxiosResponse<string>) {
+                    .then((res: AxiosResponse<string>) => {
                         dispatch(signUpFormReceived());
-                        console.log(res);
                     }).catch((reason: any) => {
                         console.error(reason);
                     });

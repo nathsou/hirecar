@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/static/css/main.fc27eeb2.chunk.css",
+    "main.js": "/static/js/main.04b38ba7.chunk.js",
+    "main.js.map": "/static/js/main.04b38ba7.chunk.js.map",
+    "runtime~main.js": "/static/js/runtime~main.a8a9905a.js",
+    "runtime~main.js.map": "/static/js/runtime~main.a8a9905a.js.map",
+    "static/css/2.0e35cd44.chunk.css": "/static/css/2.0e35cd44.chunk.css",
+    "static/js/2.9ef58492.chunk.js": "/static/js/2.9ef58492.chunk.js",
+    "static/js/2.9ef58492.chunk.js.map": "/static/js/2.9ef58492.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.251ae06579351fb5fea9ef6fcbfb705e.js": "/precache-manifest.251ae06579351fb5fea9ef6fcbfb705e.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/2.0e35cd44.chunk.css.map": "/static/css/2.0e35cd44.chunk.css.map",
+    "static/css/main.fc27eeb2.chunk.css.map": "/static/css/main.fc27eeb2.chunk.css.map",
+    "static/media/hirecar.css": "/static/media/home-bg-1.c9264c15.jpg",
+    "static/media/car-picto.svg": "/static/media/car-picto.29e9a214.svg",
+    "static/media/parking-picto.svg": "/static/media/parking-picto.aff72231.svg"
+  }
+}
