@@ -1,7 +1,7 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import bcrypt from "bcryptjs";
 import { Dispatch } from "react";
-import { SignUpActionTypes, SignUpReceivedAction, SignUpUpdatePhoneAction, SIGNUP_FORM_RECEIVED, SIGNUP_FORM_SENT, SubmitSignUpAction, SUBMIT_SIGNUP_FORM, UpdateSignUpConfirmPasswordAction, UpdateSignUpEmailAction, UpdateSignUpFirstnameAction, UpdateSignUpLastnameAction, UpdateSignUpPasswordAction, UPDATE_SIGNUP_CONFIRMPASSWORD_INPUT, UPDATE_SIGNUP_EMAIL_INPUT, UPDATE_SIGNUP_FIRSTNAME_INPUT, UPDATE_SIGNUP_LASTNAME_INPUT, UPDATE_SIGNUP_PASSWORD_INPUT, UPDATE_SIGNUP_PHONE_INPUT, SignUpFormDataState, SignUpSentAction } from "./types";
+import { SignUpActionTypes, SignUpReceivedAction, SignUpUpdatePhoneAction, SIGNUP_FORM_RECEIVED, SIGNUP_FORM_SENT, SubmitSignUpAction, SUBMIT_SIGNUP_FORM, UpdateSignUpConfirmPasswordAction, UpdateSignUpEmailAction, UpdateSignUpFirstnameAction, UpdateSignUpLastnameAction, UpdateSignUpPasswordAction, UPDATE_SIGNUP_CONFIRMPASSWORD_INPUT, UPDATE_SIGNUP_EMAIL_INPUT, UPDATE_SIGNUP_FIRSTNAME_INPUT, UPDATE_SIGNUP_LASTNAME_INPUT, UPDATE_SIGNUP_PASSWORD_INPUT, UPDATE_SIGNUP_PHONE_INPUT, SignUpFormDataState, SignUpSentAction, UpdateSignUpEmailErrorAction, UPDATE_SIGNUP_EMAIL_ERROR } from "./types";
 import { changeSignTab } from "../signTabs/actions";
 
 export function updateSignUpFirstnameInput(value: string): UpdateSignUpFirstnameAction {
@@ -46,6 +46,14 @@ export function updateSignUpConfirmPasswordInput(value: string): UpdateSignUpCon
     }
 }
 
+
+export function updateSignUpPasswordErrorInput(error: string): UpdateSignUpEmailErrorAction {
+    return {
+        type: UPDATE_SIGNUP_EMAIL_ERROR,
+        error
+    }
+}
+
 export function submitSignUpForm(): SubmitSignUpAction {
     return {
         type: SUBMIT_SIGNUP_FORM
@@ -85,10 +93,15 @@ export function postSignUpForm(data: SignUpFormDataState) {
                     .then(() => {
                         dispatch(signUpFormReceived());
                         dispatch(changeSignTab('sign_in'));
-                    }).catch((reason: any) => {
-                        console.error(reason);
-                    });
 
+                    }).catch((error: AxiosError) => {
+                        const response = error.response;
+                        if (response !== undefined && response.status === 409) {
+                            if (response.data.email_error) {
+                                dispatch(updateSignUpPasswordErrorInput(response.data.email_error));
+                            }
+                        }
+                    });
             });
     };
 }

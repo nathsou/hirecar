@@ -1,4 +1,4 @@
-import { defaultSignUpTabState, SignUpActionTypes, SignUpTabState, SUBMIT_SIGNUP_FORM, UPDATE_SIGNUP_CONFIRMPASSWORD_INPUT, UPDATE_SIGNUP_EMAIL_INPUT, UPDATE_SIGNUP_FIRSTNAME_INPUT, UPDATE_SIGNUP_LASTNAME_INPUT, UPDATE_SIGNUP_PASSWORD_INPUT, UPDATE_SIGNUP_PHONE_INPUT, SIGNUP_FORM_RECEIVED, SIGNUP_FORM_SENT } from "./types";
+import { defaultSignUpTabState, SignUpActionTypes, SignUpTabState, SUBMIT_SIGNUP_FORM, UPDATE_SIGNUP_CONFIRMPASSWORD_INPUT, UPDATE_SIGNUP_EMAIL_INPUT, UPDATE_SIGNUP_FIRSTNAME_INPUT, UPDATE_SIGNUP_LASTNAME_INPUT, UPDATE_SIGNUP_PASSWORD_INPUT, UPDATE_SIGNUP_PHONE_INPUT, SIGNUP_FORM_RECEIVED, SIGNUP_FORM_SENT, UPDATE_SIGNUP_EMAIL_ERROR } from "./types";
 
 export function signUpTabReducer(
     state = defaultSignUpTabState,
@@ -50,6 +50,12 @@ export function signUpTabReducer(
                 ...state,
                 form_data: { ...state.form_data, confirm_password: action.value },
                 form_errors: { ...state.form_errors, confirm_password_error: isValid ? '' : 'Le mot de passe n\'est pas identique au précédent' }
+            };
+
+        case UPDATE_SIGNUP_EMAIL_ERROR:
+            return {
+                ...state,
+                form_errors: { ...state.form_errors, email_error: action.error }
             };
         case SUBMIT_SIGNUP_FORM:
             const { firstname, lastname, email, phone, password, confirm_password } = state.form_data;
