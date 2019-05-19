@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import Form from 'react-bootstrap/Form';
 import HcSecondaryButton from "../HcSecondaryButton";
 import HcFormGroup from "./HcFormGroup";
-import { SignInTabState } from "../../redux/signInTab/types";
-import { updateSignInEmailInput, updateSignInPasswordInput, submitSignInForm } from "../../redux/signInTab/actions";
+import { SignInTabState, SignInFormDataState } from "../../redux/signInTab/types";
+import { updateSignInEmailInput, updateSignInPasswordInput, submitSignInForm, postSignInForm } from "../../redux/signInTab/actions";
 import { connect } from "react-redux";
 import { HcState } from "../../redux/configureStore";
 import { changeSignTab } from "../../redux/signTabs/actions";
@@ -12,7 +12,8 @@ interface SignInTabProps extends SignInTabState {
     onEmailChange: typeof updateSignInEmailInput,
     onPasswordChange: typeof updateSignInPasswordInput,
     onSignInSubmit: typeof submitSignInForm,
-    onTabChange: typeof changeSignTab
+    onTabChange: typeof changeSignTab,
+    onPostSignInForm: (data: SignInFormDataState) => void
 }
 
 class SignInTab extends Component<SignInTabProps> {
@@ -20,6 +21,9 @@ class SignInTab extends Component<SignInTabProps> {
     public handleSubmit = (e: any) => {
         e.preventDefault();
         this.props.onSignInSubmit();
+        if (this.props.validForm === true) {
+            this.props.onPostSignInForm(this.props.form_data);
+        }
     }
 
     public render() {
@@ -58,6 +62,7 @@ export default connect(
         onEmailChange: (e: any) => updateSignInEmailInput(e.target.value),
         onPasswordChange: (e: any) => updateSignInPasswordInput(e.target.value),
         onSignInSubmit: () => submitSignInForm(),
-        onTabChange: (active_tab_key: string) => changeSignTab(active_tab_key)
+        onTabChange: (active_tab_key: string) => changeSignTab(active_tab_key),
+        onPostSignInForm: (data: SignInFormDataState) => postSignInForm(data)
     }
 )(SignInTab);

@@ -1,3 +1,5 @@
+import { ChangeSignTabAction } from "../signTabs/types";
+
 export interface SignUpFormDataState {
     [index: string]: string;
     firstname: string,
@@ -96,4 +98,4 @@ export interface SignUpReceivedAction {
 }
 
 
-export type SignUpActionTypes = UpdateSignUpFirstnameAction | UpdateSignUpLastnameAction | UpdateSignUpEmailAction | SignUpUpdatePhoneAction | UpdateSignUpPasswordAction | UpdateSignUpConfirmPasswordAction | SubmitSignUpAction | SignUpSentAction | SignUpReceivedAction;
+export type SignUpActionTypes = UpdateSignUpFirstnameAction | UpdateSignUpLastnameAction | UpdateSignUpEmailAction | SignUpUpdatePhoneAction | UpdateSignUpPasswordAction | UpdateSignUpConfirmPasswordAction | SubmitSignUpAction | SignUpSentAction | SignUpReceivedAction | ChangeSignTabAction;

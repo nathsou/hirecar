@@ -1,8 +1,11 @@
+export interface SignInFormDataState {
+    [index: string]: string;
+    email: string,
+    password: string
+}
+
 export interface SignInTabState {
-    form_data: {
-        email: string,
-        password: string,
-    },
+    form_data: SignInFormDataState,
     form_errors: {
         email_error: string,
         password_error: string,
@@ -40,5 +43,14 @@ export interface SubmitSignInAction {
     type: typeof SUBMIT_SIGNIN_FORM
 }
 
+export const SIGNIN_FORM_SENT = "SIGNIN_FORM_SENT";
+export interface SignInSentAction {
+    type: typeof SIGNIN_FORM_SENT
+}
 
-export type SignInActionTypes = UpdateSignInEmailAction | UpdateSignInPasswordAction | SubmitSignInAction;
+export const SIGNIN_FORM_RECEIVED = "SIGNIN_FORM_RECEIVED";
+export interface SignInReceivedAction {
+    type: typeof SIGNIN_FORM_RECEIVED,
+}
+
+export type SignInActionTypes = UpdateSignInEmailAction | UpdateSignInPasswordAction | SubmitSignInAction | SignInSentAction | SignInReceivedAction;
