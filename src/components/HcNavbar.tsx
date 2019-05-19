@@ -17,10 +17,6 @@ interface HcNavbarProps extends NavbarState {
 
 class HcNavbar extends Component<HcNavbarProps> {
 
-    private handleClose = () => {
-        this.props.toggleModal();
-    }
-
     public render() {
 
         return (
@@ -38,11 +34,13 @@ class HcNavbar extends Component<HcNavbarProps> {
                             <Nav.Item>
                                 <NavLink activeClassName='selected' to='/voiture'>Location de voitures</NavLink>
                             </Nav.Item>
-                            <Nav.Item><HcSecondaryButton type="button" handleClick={this.handleClose}>Connexion</HcSecondaryButton></Nav.Item>
+                            <Nav.Item>
+                                <HcSecondaryButton handleClick={this.props.toggleModal}>Connexion</HcSecondaryButton>
+                            </Nav.Item>
                         </Nav>
                     </Navbar.Collapse>
                 </Navbar>
-                <HcModal show={this.props.show_modal} handleClose={this.handleClose} />
+                <HcModal show={this.props.show_modal} handleClose={this.props.toggleModal} />
             </header>
         );
     }

@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import bcrypt from "bcryptjs";
 import { Dispatch } from "react";
 import { SignUpActionTypes, SignUpReceivedAction, SignUpUpdatePhoneAction, SIGNUP_FORM_RECEIVED, SIGNUP_FORM_SENT, SubmitSignUpAction, SUBMIT_SIGNUP_FORM, UpdateSignUpConfirmPasswordAction, UpdateSignUpEmailAction, UpdateSignUpFirstnameAction, UpdateSignUpLastnameAction, UpdateSignUpPasswordAction, UPDATE_SIGNUP_CONFIRMPASSWORD_INPUT, UPDATE_SIGNUP_EMAIL_INPUT, UPDATE_SIGNUP_FIRSTNAME_INPUT, UPDATE_SIGNUP_LASTNAME_INPUT, UPDATE_SIGNUP_PASSWORD_INPUT, UPDATE_SIGNUP_PHONE_INPUT, SignUpFormDataState, SignUpSentAction } from "./types";
@@ -64,7 +64,7 @@ export function signUpFormReceived(): SignUpReceivedAction {
     };
 }
 
-// TODO: email already exist 
+// TODO: email already exists
 export function postSignUpForm(data: SignUpFormDataState) {
     const salt = (process.env.REACT_APP_BCRYPT_SALT as string).replace(/_/g, '$');
 
@@ -82,7 +82,7 @@ export function postSignUpForm(data: SignUpFormDataState) {
                 });
 
                 axios.post(`${process.env.REACT_APP_HIRECAR_API_URI}/users`, sent_data)
-                    .then(() => {
+                    .then((res: AxiosResponse) => {
                         dispatch(signUpFormReceived());
                         dispatch(changeSignTab('sign_in'));
                     }).catch((reason: any) => {

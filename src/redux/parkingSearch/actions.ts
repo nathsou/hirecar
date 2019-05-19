@@ -1,7 +1,8 @@
 import { HcMapViewportProps } from "../../components/HcParkingSearch";
 import { UpdateMapViewportAction, UPDATE_MAP_VIEWPORT, RequestParkingsAction, REQUEST_PARKINGS, ParkingsReceivedAction, Parking, PARKINGS_RECEIVED, ParkingSearchActionTypes } from "./types";
 import { Dispatch } from "redux";
-import axios, { AxiosResponse } from 'axios';
+import axios, { AxiosResponse, AxiosError } from 'axios';
+import { propsToURIParams } from "../../Utils";
 
 export function updateViewport(viewport: HcMapViewportProps): UpdateMapViewportAction {
     return {
@@ -23,17 +24,21 @@ export function parkingsReceived(parkings: Parking[]): ParkingsReceivedAction {
     };
 }
 
+export interface ParkingSearchParams {
+    airport_name?: string
+}
+
 //TODO: Handle request errors
-export function fetchParkings() {
+export function fetchParkings(params: ParkingSearchParams) {
     return (dispatch: Dispatch<ParkingSearchActionTypes>) => {
 
         dispatch(requestParkings());
-        axios.get(`${process.env.REACT_APP_HIRECAR_API_URI}/parking_lots?center_lat=47&center_lng=2&radius=300`)
-            .then((res: AxiosResponse<string>) => {
-                dispatch(parkingsReceived((res.data as any).airports as Parking[]))
+        axios.get(`${process.env.REACT_APP_HIRECAR_API_URI}/parking_lots${propsToURIParams(params)}`)
+            .then((res: AxiosResponse) => {
+                dispatch(parkingsReceived((res.data).airports as Parking[]))
             })
-            .catch((reason: any) => {
-                console.error(reason);
+            .catch((error: AxiosError) => {
+                console.error(error);
             });
     };
 }

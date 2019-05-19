@@ -1,7 +1,6 @@
-import { UpdateSignInEmailAction, UPDATE_SIGNIN_EMAIL_INPUT, UpdateSignInPasswordAction, UPDATE_SIGNIN_PASSWORD_INPUT, SubmitSignInAction, SUBMIT_SIGNIN_FORM, SignInSentAction, SIGNIN_FORM_SENT, SIGNIN_FORM_RECEIVED, SignInReceivedAction, SignInActionTypes, SignInFormDataState } from "./types";
-import { Dispatch } from "react";
 import Axios from "axios";
-import bcrypt from "bcryptjs";
+import { Dispatch } from "react";
+import { SignInActionTypes, SignInFormDataState, SignInReceivedAction, SignInSentAction, SIGNIN_FORM_RECEIVED, SIGNIN_FORM_SENT, SubmitSignInAction, SUBMIT_SIGNIN_FORM, UpdateSignInEmailAction, UpdateSignInPasswordAction, UPDATE_SIGNIN_EMAIL_INPUT, UPDATE_SIGNIN_PASSWORD_INPUT } from "./types";
 
 export function updateSignInEmailInput(value: string): UpdateSignInEmailAction {
     return {
