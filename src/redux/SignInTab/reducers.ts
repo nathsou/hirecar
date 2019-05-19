@@ -1,4 +1,4 @@
-import { defaultSignInTabState, SignInActionTypes, SignInTabState, UPDATE_SIGNIN_EMAIL_INPUT, UPDATE_SIGNIN_PASSWORD_INPUT, SUBMIT_SIGNIN_FORM } from "./types";
+import { defaultSignInTabState, SignInActionTypes, SignInTabState, UPDATE_SIGNIN_EMAIL_INPUT, SUBMIT_SIGNIN_FORM, UPDATE_SIGNIN_PASSWORD_ERROR, UPDATE_SIGNIN_EMAIL_ERROR, UPDATE_SIGNIN_PASSWORD_INPUT, RESET_SIGNIN_FORM } from "./types";
 
 export function signInTabReducer(
     state = defaultSignInTabState,
@@ -17,6 +17,16 @@ export function signInTabReducer(
             return {
                 ...state,
                 form_data: { ...state.form_data, password: action.value }
+            };
+        case UPDATE_SIGNIN_EMAIL_ERROR:
+            return {
+                ...state,
+                form_errors: { ...state.form_errors, email_error: action.error }
+            };
+        case UPDATE_SIGNIN_PASSWORD_ERROR:
+            return {
+                ...state,
+                form_errors: { ...state.form_errors, password_error: 'Le mot de passe saisi est incorrect' }
             };
         case SUBMIT_SIGNIN_FORM:
             const { email, password } = state.form_data;
@@ -40,6 +50,8 @@ export function signInTabReducer(
                         (password.length >= 3 ? '' : 'Le mot de passe contient au moins 3 caractères')
                 }
             };
+        case RESET_SIGNIN_FORM:
+            return defaultSignInTabState
         default:
             return state;
     }

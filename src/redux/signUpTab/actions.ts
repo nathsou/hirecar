@@ -1,7 +1,7 @@
 import axios, { AxiosError } from "axios";
 import bcrypt from "bcryptjs";
 import { Dispatch } from "react";
-import { SignUpActionTypes, SignUpReceivedAction, SignUpUpdatePhoneAction, SIGNUP_FORM_RECEIVED, SIGNUP_FORM_SENT, SubmitSignUpAction, SUBMIT_SIGNUP_FORM, UpdateSignUpConfirmPasswordAction, UpdateSignUpEmailAction, UpdateSignUpFirstnameAction, UpdateSignUpLastnameAction, UpdateSignUpPasswordAction, UPDATE_SIGNUP_CONFIRMPASSWORD_INPUT, UPDATE_SIGNUP_EMAIL_INPUT, UPDATE_SIGNUP_FIRSTNAME_INPUT, UPDATE_SIGNUP_LASTNAME_INPUT, UPDATE_SIGNUP_PASSWORD_INPUT, UPDATE_SIGNUP_PHONE_INPUT, SignUpFormDataState, SignUpSentAction, UpdateSignUpEmailErrorAction, UPDATE_SIGNUP_EMAIL_ERROR } from "./types";
+import { SignUpActionTypes, SignUpReceivedAction, SignUpUpdatePhoneAction, SIGNUP_FORM_RECEIVED, SIGNUP_FORM_SENT, SubmitSignUpAction, SUBMIT_SIGNUP_FORM, UpdateSignUpConfirmPasswordAction, UpdateSignUpEmailAction, UpdateSignUpFirstnameAction, UpdateSignUpLastnameAction, UpdateSignUpPasswordAction, UPDATE_SIGNUP_CONFIRMPASSWORD_INPUT, UPDATE_SIGNUP_EMAIL_INPUT, UPDATE_SIGNUP_FIRSTNAME_INPUT, UPDATE_SIGNUP_LASTNAME_INPUT, UPDATE_SIGNUP_PASSWORD_INPUT, UPDATE_SIGNUP_PHONE_INPUT, SignUpFormDataState, SignUpSentAction, UpdateSignUpEmailErrorAction, UPDATE_SIGNUP_EMAIL_ERROR, ResetSignUpAction, RESET_SIGNUP_FORM } from "./types";
 import { changeSignTab } from "../signTabs/actions";
 
 export function updateSignUpFirstnameInput(value: string): UpdateSignUpFirstnameAction {
@@ -72,7 +72,13 @@ export function signUpFormReceived(): SignUpReceivedAction {
     };
 }
 
-// TODO: email already exist 
+export function resetSignUpForm(): ResetSignUpAction {
+    return {
+        type: RESET_SIGNUP_FORM
+    }
+}
+
+
 export function postSignUpForm(data: SignUpFormDataState) {
     const salt = (process.env.REACT_APP_BCRYPT_SALT as string).replace(/_/g, '$');
 
@@ -92,6 +98,7 @@ export function postSignUpForm(data: SignUpFormDataState) {
                 axios.post(`${process.env.REACT_APP_HIRECAR_API_URI}/users`, sent_data)
                     .then(() => {
                         dispatch(signUpFormReceived());
+                        dispatch(resetSignUpForm());
                         dispatch(changeSignTab('sign_in'));
 
                     }).catch((error: AxiosError) => {

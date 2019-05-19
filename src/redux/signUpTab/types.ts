@@ -27,12 +27,12 @@ export interface SignUpTabState {
 
 export const defaultSignUpTabState: SignUpTabState = {
     form_data: {
-        firstname: 'Myriam',
-        lastname: 'Martin',
-        email: 'myriam.martin@gmail.com',
-        phone: '0325345346',
-        password: 'lecid',
-        confirm_password: 'lecid',
+        firstname: '',
+        lastname: '',
+        email: '',
+        phone: '',
+        password: '',
+        confirm_password: '',
     },
     form_errors: {
         firstname_error: '',
@@ -100,7 +100,12 @@ export interface SignUpSentAction {
 
 export const SIGNUP_FORM_RECEIVED = "SIGNUP_FORM_RECEIVED";
 export interface SignUpReceivedAction {
-    type: typeof SIGNUP_FORM_RECEIVED,
+    type: typeof SIGNUP_FORM_RECEIVED
 }
 
-export type SignUpActionTypes = UpdateSignUpFirstnameAction | UpdateSignUpLastnameAction | UpdateSignUpEmailAction | SignUpUpdatePhoneAction | UpdateSignUpPasswordAction | UpdateSignUpConfirmPasswordAction | UpdateSignUpEmailErrorAction | SubmitSignUpAction | SignUpSentAction | SignUpReceivedAction | ChangeSignTabAction;
+export const RESET_SIGNUP_FORM = "RESET_SIGNUP_FORM";
+export interface ResetSignUpAction {
+    type: typeof RESET_SIGNUP_FORM
+}
+
+export type SignUpActionTypes = UpdateSignUpFirstnameAction | UpdateSignUpLastnameAction | UpdateSignUpEmailAction | SignUpUpdatePhoneAction | UpdateSignUpPasswordAction | UpdateSignUpConfirmPasswordAction | UpdateSignUpEmailErrorAction | SubmitSignUpAction | SignUpSentAction | SignUpReceivedAction | ResetSignUpAction | ChangeSignTabAction;

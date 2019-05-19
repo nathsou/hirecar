@@ -1,7 +1,8 @@
-import { UpdateSignInEmailAction, UPDATE_SIGNIN_EMAIL_INPUT, UpdateSignInPasswordAction, UPDATE_SIGNIN_PASSWORD_INPUT, SubmitSignInAction, SUBMIT_SIGNIN_FORM, SignInSentAction, SIGNIN_FORM_SENT, SIGNIN_FORM_RECEIVED, SignInReceivedAction, SignInActionTypes, SignInFormDataState } from "./types";
+import { UpdateSignInEmailAction, UPDATE_SIGNIN_EMAIL_INPUT, UpdateSignInPasswordAction, UPDATE_SIGNIN_PASSWORD_INPUT, SubmitSignInAction, SUBMIT_SIGNIN_FORM, SignInSentAction, SIGNIN_FORM_SENT, SIGNIN_FORM_RECEIVED, SignInReceivedAction, SignInActionTypes, SignInFormDataState, UpdateSignInPasswordErrorAction, UPDATE_SIGNIN_PASSWORD_ERROR, UpdateSignInEmailErrorAction, UPDATE_SIGNIN_EMAIL_ERROR, ResetSignInAction, RESET_SIGNIN_FORM } from "./types";
 import { Dispatch } from "react";
-import Axios from "axios";
+import Axios, { AxiosResponse, AxiosError } from "axios";
 import bcrypt from "bcryptjs";
+import { toggleShowModal } from "../navbar/actions";
 
 export function updateSignInEmailInput(value: string): UpdateSignInEmailAction {
     return {
@@ -14,6 +15,19 @@ export function updateSignInPasswordInput(value: string): UpdateSignInPasswordAc
     return {
         type: UPDATE_SIGNIN_PASSWORD_INPUT,
         value
+    }
+}
+
+export function updateSignInEmailErrorInput(error: string): UpdateSignInEmailErrorAction {
+    return {
+        type: UPDATE_SIGNIN_EMAIL_ERROR,
+        error
+    }
+}
+
+export function updateSignInPasswordErrorInput(): UpdateSignInPasswordErrorAction {
+    return {
+        type: UPDATE_SIGNIN_PASSWORD_ERROR
     }
 }
 
@@ -35,14 +49,38 @@ export function signUpFormReceived(): SignInReceivedAction {
     };
 }
 
+export function resetSignUpForm(): ResetSignInAction {
+    return {
+        type: RESET_SIGNIN_FORM
+    }
+}
+
+// TODO : User interface after sign in
 export function postSignInForm(data: SignInFormDataState) {
     return (dispatch: Dispatch<SignInActionTypes>) => {
         dispatch(signInFormSent());
+
         Axios.post(`${process.env.REACT_APP_HIRECAR_API_URI}/login`, data)
-            .then(() => {
+            .then((res: AxiosResponse) => {
+                const hash = res.data.hashed_pwd;
+                bcrypt.compare(data.password, hash)
+                    .then((res) => {
+                        if (res) {
+                            dispatch(toggleShowModal());
+                            dispatch(resetSignUpForm())
+                        } else {
+                            dispatch(updateSignInPasswordErrorInput());
+                        }
+                    });
                 dispatch(signUpFormReceived());
-            }).catch((reason: any) => {
-                console.error(reason);
+            }).catch((error: AxiosError) => {
+                const response = error.response;
+                if (response !== undefined && response.status === 400) {
+                    if (response.data.email_error) {
+                        dispatch(updateSignInEmailErrorInput(response.data.email_error));
+                    }
+                }
+
             });
     }
 }

@@ -1,4 +1,4 @@
-import { defaultSignUpTabState, SignUpActionTypes, SignUpTabState, SUBMIT_SIGNUP_FORM, UPDATE_SIGNUP_CONFIRMPASSWORD_INPUT, UPDATE_SIGNUP_EMAIL_INPUT, UPDATE_SIGNUP_FIRSTNAME_INPUT, UPDATE_SIGNUP_LASTNAME_INPUT, UPDATE_SIGNUP_PASSWORD_INPUT, UPDATE_SIGNUP_PHONE_INPUT, SIGNUP_FORM_RECEIVED, SIGNUP_FORM_SENT, UPDATE_SIGNUP_EMAIL_ERROR } from "./types";
+import { defaultSignUpTabState, SignUpActionTypes, SignUpTabState, SUBMIT_SIGNUP_FORM, UPDATE_SIGNUP_CONFIRMPASSWORD_INPUT, UPDATE_SIGNUP_EMAIL_INPUT, UPDATE_SIGNUP_FIRSTNAME_INPUT, UPDATE_SIGNUP_LASTNAME_INPUT, UPDATE_SIGNUP_PASSWORD_INPUT, UPDATE_SIGNUP_PHONE_INPUT, SIGNUP_FORM_RECEIVED, SIGNUP_FORM_SENT, UPDATE_SIGNUP_EMAIL_ERROR, RESET_SIGNUP_FORM } from "./types";
 
 export function signUpTabReducer(
     state = defaultSignUpTabState,
@@ -43,7 +43,6 @@ export function signUpTabReducer(
                 form_data: { ...state.form_data, password: action.value },
                 form_errors: { ...state.form_errors, password_error: isValid ? '' : 'Le mot de passe doit contenir au moins 3 caractères' }
             };
-
         case UPDATE_SIGNUP_CONFIRMPASSWORD_INPUT:
             isValid = action.value === state.form_data.password ? true : false
             return {
@@ -51,7 +50,6 @@ export function signUpTabReducer(
                 form_data: { ...state.form_data, confirm_password: action.value },
                 form_errors: { ...state.form_errors, confirm_password_error: isValid ? '' : 'Le mot de passe n\'est pas identique au précédent' }
             };
-
         case UPDATE_SIGNUP_EMAIL_ERROR:
             return {
                 ...state,
@@ -106,6 +104,8 @@ export function signUpTabReducer(
                 ...state,
                 sending: false
             };
+        case RESET_SIGNUP_FORM:
+            return defaultSignUpTabState;
         default:
             return state;
     }

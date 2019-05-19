@@ -1,3 +1,5 @@
+import { ToggleSignModalAction } from "../navbar/types";
+
 export interface SignInFormDataState {
     [index: string]: string;
     email: string,
@@ -38,6 +40,17 @@ export interface UpdateSignInPasswordAction {
     value: string
 }
 
+export const UPDATE_SIGNIN_EMAIL_ERROR = "UPDATE_SIGNIN_EMAIL_ERROR";
+export interface UpdateSignInEmailErrorAction {
+    type: typeof UPDATE_SIGNIN_EMAIL_ERROR,
+    error: string
+}
+
+export const UPDATE_SIGNIN_PASSWORD_ERROR = "UPDATE_SIGNIN_PASSWORD_ERROR";
+export interface UpdateSignInPasswordErrorAction {
+    type: typeof UPDATE_SIGNIN_PASSWORD_ERROR
+}
+
 export const SUBMIT_SIGNIN_FORM = "SUBMIT_SIGNIN_FORM";
 export interface SubmitSignInAction {
     type: typeof SUBMIT_SIGNIN_FORM
@@ -53,4 +66,9 @@ export interface SignInReceivedAction {
     type: typeof SIGNIN_FORM_RECEIVED,
 }
 
-export type SignInActionTypes = UpdateSignInEmailAction | UpdateSignInPasswordAction | SubmitSignInAction | SignInSentAction | SignInReceivedAction;
+export const RESET_SIGNIN_FORM = "RESET_SIGNIN_FORM";
+export interface ResetSignInAction {
+    type: typeof RESET_SIGNIN_FORM
+}
+
+export type SignInActionTypes = UpdateSignInEmailAction | UpdateSignInPasswordAction | UpdateSignInEmailErrorAction | UpdateSignInPasswordErrorAction | SubmitSignInAction | SignInSentAction | SignInReceivedAction | ResetSignInAction | ToggleSignModalAction;
