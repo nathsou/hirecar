@@ -1,8 +1,8 @@
-import { defaultRentParkingTabState, RentParkingTabState, UpdateParkingSearchAction, UPDATE_PARKING_SEARCH_INPUT } from "./types";
+import { AIRPORTS_RECEIVED, defaultRentParkingTabState, RentParkingTabActionTypes, RentParkingTabState, UPDATE_PARKING_SEARCH_INPUT } from "./types";
 
 export function rentParkingTabReducer(
     state = defaultRentParkingTabState,
-    action: UpdateParkingSearchAction
+    action: RentParkingTabActionTypes
 ): RentParkingTabState {
 
     switch (action.type) {
@@ -11,8 +11,14 @@ export function rentParkingTabReducer(
                 ...state,
                 parking_search_input_value: action.value
             };
-        
-        default: 
+
+        case AIRPORTS_RECEIVED:
+            return {
+                ...state,
+                autocomplete_airports: action.airports
+            };
+
+        default:
             return state;
     }
 }

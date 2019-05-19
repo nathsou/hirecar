@@ -1,12 +1,13 @@
 {
   "name": "hirecar",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "dependencies": {
     "@types/bcryptjs": "^2.4.2",
     "@types/jest": "24.0.11",
     "@types/node": "11.13.4",
     "@types/react": "16.8.13",
+    "@types/react-bootstrap-typeahead": "^3.4.5",
     "@types/react-dom": "16.8.4",
     "@types/react-map-gl": "^4.1.1",
     "@types/react-redux": "^7.0.8",
@@ -15,6 +16,7 @@
     "bootstrap-css-only": "^4.3.1",
     "react": "^16.8.6",
     "react-bootstrap": "^1.0.0-beta.8",
+    "react-bootstrap-typeahead": "^4.0.0-alpha.10",
     "react-dom": "^16.8.6",
     "react-map-gl": "^4.1.2",
     "react-paypal-express-checkout": "^1.0.5",

@@ -1,28 +1,49 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import Form from 'react-bootstrap/Form';
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+import { HcState } from "../../redux/configureStore";
+import { searchAirports, updateParkingSearchInput } from "../../redux/rentParkingTab/actions";
+import { RentParkingTabState } from "../../redux/rentParkingTab/types";
 import HcSecondaryButton from "../HcSecondaryButton";
 import HcFormGroup from "./HcFormGroup";
-import { connect } from "react-redux";
-import { HcState } from "../../redux/configureStore";
-import { updateParkingSearchInput } from "../../redux/rentParkingTab/actions";
-import { RentParkingTabState } from "../../redux/rentParkingTab/types";
+import { Typeahead } from 'react-bootstrap-typeahead';
 
 
 interface RentParkingTabProps extends RentParkingTabState {
-    onParkingSearchChange: typeof updateParkingSearchInput
+    onParkingSearchChange: typeof updateParkingSearchInput,
+    searchAirports: (input: string) => void
 }
 
 class RentParkingTab extends Component<RentParkingTabProps> {
+
+    public onInput = (input: string) => {
+        this.props.onParkingSearchChange(input);
+        this.props.searchAirports(input);
+    }
+
+    public onSelected = (selected: string[]) => {
+        this.onInput(selected[0]);
+    }
+
     public render() {
+
+        const { autocomplete_airports, parking_search_input_value } = this.props;
+
         return (
             <Form>
                 <Form.Row>
-                    <HcFormGroup
-                        size="12" controlId="parkingLocation"
-                        className="" label="Lieu de stationnement" type="text"
-                        name="parkingLocation" placeholder="Veuillez entrer le nom de l’aéroport"
-                        value={this.props.parking_search_input_value}
-                        onChange={this.props.onParkingSearchChange} />
+
+                    <Fragment>
+                        <Typeahead
+                            id='airport'
+                            multiple={false}
+                            options={autocomplete_airports}
+                            placeholder="Lieu de stationnement"
+                            onInputChange={this.onInput}
+                            onChange={this.onSelected}
+                        />
+                    </Fragment>
                 </Form.Row>
                 <Form.Row>
                     <HcFormGroup
@@ -51,7 +72,9 @@ class RentParkingTab extends Component<RentParkingTabProps> {
                         onChange={() => { }} />
                 </Form.Row>
                 <div style={{ textAlign: "right", marginTop: "15px" }}>
-                    <HcSecondaryButton type="submit">Rechercher</HcSecondaryButton>
+                    <Link to={`parking/${parking_search_input_value}`}>
+                        <HcSecondaryButton>Rechercher</HcSecondaryButton>
+                    </Link>
                 </div>
             </Form>
         );
@@ -61,6 +84,7 @@ class RentParkingTab extends Component<RentParkingTabProps> {
 export default connect(
     (state: HcState) => state.rent_tabs.rent_parking_spot_tab,
     {
-        onParkingSearchChange: (e: any) => updateParkingSearchInput(e.target.value)
+        onParkingSearchChange: (value: string) => updateParkingSearchInput(value),
+        searchAirports: (input: string) => searchAirports(input)
     }
 )(RentParkingTab);

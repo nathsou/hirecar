@@ -7,10 +7,16 @@ import { HcState } from "../redux/configureStore";
 import { updateViewport, fetchParkings } from "../redux/parkingSearch/actions";
 import { ParkingSearchState } from "../redux/parkingSearch/types";
 import HcParkingList from "./HcParkingList";
+import { RouteComponentProps, withRouter, match } from "react-router";
 
-interface HcParkingSearchProps extends ParkingSearchState {
+interface HcParkingSearchPropsMatchParams {
+    airport: string
+}
+
+interface HcParkingSearchProps extends RouteComponentProps, ParkingSearchState {
     onViewportChange: (viewstate: HcMapViewportProps) => void,
-    fetchParkings: () => void
+    fetchParkings: (input: string) => void,
+    match: match<HcParkingSearchPropsMatchParams>
 }
 
 export interface HcMapViewportProps extends ViewState {
@@ -22,7 +28,7 @@ class HcParkingSearch extends Component<HcParkingSearchProps> {
 
     constructor(props: HcParkingSearchProps) {
         super(props);
-        this.props.fetchParkings();
+        this.props.fetchParkings(props.match.params.airport);
     }
 
     public render() {
@@ -55,10 +61,13 @@ class HcParkingSearch extends Component<HcParkingSearchProps> {
     }
 }
 
-export default connect(
-    (state: HcState) => state.parking_search,
-    {
-        onViewportChange: (viewport: HcMapViewportProps) => updateViewport(viewport),
-        fetchParkings: () => fetchParkings()
-    }
-)(HcParkingSearch);
+export default
+    withRouter(
+        connect(
+            (state: HcState) => state.parking_search,
+            {
+                onViewportChange: (viewport: HcMapViewportProps) => updateViewport(viewport),
+                fetchParkings: (input: string) => fetchParkings({ airport_name: input })
+            }
+        )(HcParkingSearch)
+    );

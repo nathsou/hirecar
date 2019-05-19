@@ -13,14 +13,20 @@ class HcParkingList extends Component<HcParkingListProps> {
 
     public render() {
 
+        const { parkings } = this.props;
+
         return (
             <div>
                 <Container>
-                    <div className='hc-list'>
-                        {this.props.parkings.map(p =>
-                            <HcListItem {...p} picto={ParkingPicto} key={p.title} />
-                        )}
-                    </div>
+                    {
+                        parkings.length !== 0 ?
+                            (<div className='hc-list'>
+                                {parkings.map(p =>
+                                    <HcListItem {...p} picto={ParkingPicto} key={p.title} />
+                                )}
+                            </div>)
+                            : (<p>No parking lots found</p>)
+                    }
                 </Container>
             </div>
         );
