@@ -27,12 +27,12 @@ export interface SignUpTabState {
 
 export const defaultSignUpTabState: SignUpTabState = {
     form_data: {
-        firstname: '',
-        lastname: '',
-        email: '',
-        phone: '',
-        password: '',
-        confirm_password: '',
+        firstname: 'Myriam',
+        lastname: 'Martin',
+        email: 'myriam.martin@gmail.com',
+        phone: '0325345346',
+        password: 'lecid',
+        confirm_password: 'lecid',
     },
     form_errors: {
         firstname_error: '',
@@ -82,6 +82,12 @@ export interface UpdateSignUpConfirmPasswordAction {
     value: string
 }
 
+export const UPDATE_SIGNUP_EMAIL_ERROR = "UDAPTE_SIGNUP_PASSWORD_ERROR";
+export interface UpdateSignUpEmailErrorAction {
+    type: typeof UPDATE_SIGNUP_EMAIL_ERROR,
+    error: string
+}
+
 export const SUBMIT_SIGNUP_FORM = "SUBMIT_SIGNUP_FORM";
 export interface SubmitSignUpAction {
     type: typeof SUBMIT_SIGNUP_FORM
@@ -97,5 +103,4 @@ export interface SignUpReceivedAction {
     type: typeof SIGNUP_FORM_RECEIVED,
 }
 
-
-export type SignUpActionTypes = UpdateSignUpFirstnameAction | UpdateSignUpLastnameAction | UpdateSignUpEmailAction | SignUpUpdatePhoneAction | UpdateSignUpPasswordAction | UpdateSignUpConfirmPasswordAction | SubmitSignUpAction | SignUpSentAction | SignUpReceivedAction | ChangeSignTabAction;
+export type SignUpActionTypes = UpdateSignUpFirstnameAction | UpdateSignUpLastnameAction | UpdateSignUpEmailAction | SignUpUpdatePhoneAction | UpdateSignUpPasswordAction | UpdateSignUpConfirmPasswordAction | UpdateSignUpEmailErrorAction | SubmitSignUpAction | SignUpSentAction | SignUpReceivedAction | ChangeSignTabAction;
