@@ -1,4 +1,5 @@
 import { ToggleSignModalAction } from "../navbar/types";
+import { SetUserSignedAction } from "../user/types";
 
 export interface SignInFormDataState {
     [index: string]: string;
@@ -71,4 +72,4 @@ export interface ResetSignInAction {
     type: typeof RESET_SIGNIN_FORM
 }
 
-export type SignInActionTypes = UpdateSignInEmailAction | UpdateSignInPasswordAction | UpdateSignInEmailErrorAction | UpdateSignInPasswordErrorAction | SubmitSignInAction | SignInSentAction | SignInReceivedAction | ResetSignInAction | ToggleSignModalAction;
+export type SignInActionTypes = UpdateSignInEmailAction | UpdateSignInPasswordAction | UpdateSignInEmailErrorAction | UpdateSignInPasswordErrorAction | SubmitSignInAction | SignInSentAction | SignInReceivedAction | ResetSignInAction | ToggleSignModalAction | SetUserSignedAction;

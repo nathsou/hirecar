@@ -10,8 +10,11 @@ import { signTabsReducer } from './signTabs/reducers';
 import { NavbarState } from './navbar/types';
 import { navbarReducer } from './navbar/reducers';
 import thunkMiddleware from 'redux-thunk'
+import { UserState } from './user/types';
+import { userReducer } from './user/reducers';
 
 export interface HcState {
+    user: UserState,
     navbar: NavbarState,
     parking_search: ParkingSearchState,
     car_search: CarSearchState,
@@ -20,6 +23,7 @@ export interface HcState {
 }
 
 const root_reducer = combineReducers({
+    user: userReducer,
     navbar: navbarReducer,
     parking_search: parkingSearchReducer,
     car_search: carSearchReducer,

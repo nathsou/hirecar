@@ -3,6 +3,8 @@ import { Dispatch } from "react";
 import Axios, { AxiosResponse, AxiosError } from "axios";
 import bcrypt from "bcryptjs";
 import { toggleShowModal } from "../navbar/actions";
+import { setUserSigned } from "../user/actions";
+import { UserDataState } from "../user/types";
 
 export function updateSignInEmailInput(value: string): UpdateSignInEmailAction {
     return {
@@ -62,12 +64,29 @@ export function postSignInForm(data: SignInFormDataState) {
 
         Axios.post(`${process.env.REACT_APP_HIRECAR_API_URI}/login`, data)
             .then((res: AxiosResponse) => {
-                const hash = res.data.hashed_pwd;
+                const hash = res.data.password;
+
+                const filtered_keys = Object.keys(res.data)
+                    .filter(key => key !== "password");
+
+                const sent_data = {} as UserDataState;
+
+                filtered_keys.forEach(key => {
+                    sent_data[key as keyof UserDataState] = res.data[key];
+                });
+
+                // const send_data: UserDataState = {
+                //     firstname: res.data['firstname'],
+                //     lastname: res.data['lastname']
+                // };
+
+                console.log(sent_data);
                 bcrypt.compare(data.password, hash)
                     .then((res) => {
                         if (res) {
+                            dispatch(setUserSigned(sent_data));
                             dispatch(toggleShowModal());
-                            dispatch(resetSignUpForm())
+                            dispatch(resetSignUpForm());
                         } else {
                             dispatch(updateSignInPasswordErrorInput());
                         }
@@ -80,7 +99,6 @@ export function postSignInForm(data: SignInFormDataState) {
                         dispatch(updateSignInEmailErrorInput(response.data.email_error));
                     }
                 }
-
             });
     }
 }

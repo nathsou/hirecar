@@ -8,6 +8,7 @@ import { RentParkingTabState } from "../../redux/rentParkingTab/types";
 import HcSecondaryButton from "../HcSecondaryButton";
 import HcFormGroup from "./HcFormGroup";
 import { Typeahead } from 'react-bootstrap-typeahead';
+import Col from "react-bootstrap/Col";
 
 
 interface RentParkingTabProps extends RentParkingTabState {
@@ -33,17 +34,19 @@ class RentParkingTab extends Component<RentParkingTabProps> {
         return (
             <Form>
                 <Form.Row>
-
-                    <Fragment>
-                        <Typeahead
-                            id='airport'
-                            multiple={false}
-                            options={autocomplete_airports}
-                            placeholder="Lieu de stationnement"
-                            onInputChange={this.onInput}
-                            onChange={this.onSelected}
-                        />
-                    </Fragment>
+                    <Form.Group as={Col} controlId="parkingLocation">
+                        <Form.Label className="">Lieu de stationnement</Form.Label>
+                        <Fragment>                    
+                            <Typeahead
+                                id='airport'
+                                multiple={false}
+                                options={autocomplete_airports}
+                                placeholder="Lieu de stationnement"
+                                onInputChange={this.onInput}
+                                onChange={this.onSelected}
+                            />
+                        </Fragment>
+                    </Form.Group>                
                 </Form.Row>
                 <Form.Row>
                     <HcFormGroup

@@ -9,16 +9,19 @@ import { ToggleSignModalAction, NavbarState } from "../redux/navbar/types";
 import { connect } from "react-redux";
 import { HcState } from "../redux/configureStore";
 import { toggleShowModal } from "../redux/navbar/actions";
+import HcPrimaryButton from "./HcPrimaryButton";
+import { UserState } from "../redux/user/types";
 
-interface HcNavbarProps extends NavbarState {
-    show_modal: boolean,
+interface HcNavbarProps {
+    navbar: NavbarState,
+    user: UserState,
     toggleModal: () => ToggleSignModalAction
 }
 
 class HcNavbar extends Component<HcNavbarProps> {
 
     public render() {
-
+        const { logged_in, data } = this.props.user;
         return (
             <header>
                 <Navbar collapseOnSelect expand="lg" fixed="top">
@@ -34,13 +37,18 @@ class HcNavbar extends Component<HcNavbarProps> {
                             <Nav.Item>
                                 <NavLink activeClassName='selected' to='/voiture'>Location de voitures</NavLink>
                             </Nav.Item>
+                            {logged_in ? (
+                                <Nav.Item>
+                                    <HcPrimaryButton outlined="true">{logged_in ? `${data.firstname} ${data.lastname[0]}.` : ""}</HcPrimaryButton>
+                                </Nav.Item>
+                            ) : null}
                             <Nav.Item>
-                                <HcSecondaryButton handleClick={this.props.toggleModal}>Connexion</HcSecondaryButton>
+                                <HcSecondaryButton handleClick={this.props.toggleModal}>{logged_in ? "Déconnexion" : "Connexion"}</HcSecondaryButton>
                             </Nav.Item>
                         </Nav>
                     </Navbar.Collapse>
                 </Navbar>
-                <HcModal show={this.props.show_modal} handleClose={this.props.toggleModal} />
+                <HcModal show={this.props.navbar.show_modal} handleClose={this.props.toggleModal} />
             </header>
         );
     }
@@ -48,7 +56,7 @@ class HcNavbar extends Component<HcNavbarProps> {
 
 
 export default connect(
-    (state: HcState) => state.navbar,
+    (state: HcState) => ({ navbar: state.navbar, user: state.user }),
     {
         toggleModal: toggleShowModal
     }
