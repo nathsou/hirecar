@@ -4,7 +4,7 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import Footer from './components/Footer';
 import HcCarSearch from './components/HcCarSearch';
 import HcNavbar from './components/HcNavbar';
-import HcParkingSearch from './components/HcParkingSearch';
+import HcParkingSearch from './components/ParkingSearch/HcParkingSearch';
 import MainContent from './components/MainContent';
 import { store } from './redux/configureStore';
 

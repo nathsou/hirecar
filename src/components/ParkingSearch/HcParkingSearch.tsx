@@ -1,15 +1,16 @@
 import React, { Component } from "react";
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-import ReactMapGL, { FlyToInterpolator, InteractiveMapProps, Marker } from 'react-map-gl';
+import { FlyToInterpolator, InteractiveMapProps } from 'react-map-gl';
 import { connect } from "react-redux";
 import { match, RouteComponentProps, withRouter } from "react-router";
 import WebMercatorViewport, { WebMercatorViewportOptions } from "viewport-mercator-project";
-import { HcState } from "../redux/configureStore";
-import { fetchParkings, updateViewport } from "../redux/parkingSearch/actions";
-import { ParkingSearchState } from "../redux/parkingSearch/types";
-import MarkerImg from "../res/img/marker.png";
-import HcParkingList from "./HcParkingList";
+import { HcState } from "../../redux/configureStore";
+import { fetchParkings, updateViewport } from "../../redux/parkingSearch/actions";
+import { ParkingSearchState } from "../../redux/parkingSearch/types";
+import HcParkingList from "../HcParkingList";
+import HcMap from "./HcMap";
+import HcParkingSearchBox from "./HcParkingSearchBox";
 
 interface HcParkingSearchPropsMatchParams {
     airport: string
@@ -21,10 +22,7 @@ interface HcParkingSearchProps extends RouteComponentProps, ParkingSearchState {
     match: match<HcParkingSearchPropsMatchParams>
 }
 
-export interface HcMapViewportProps extends InteractiveMapProps {
-    width: number | string,
-    height: number | string
-}
+export interface HcMapViewportProps extends InteractiveMapProps { };
 
 class HcParkingSearch extends Component<HcParkingSearchProps> {
 
@@ -59,7 +57,7 @@ class HcParkingSearch extends Component<HcParkingSearchProps> {
             ...viewport,
             latitude,
             longitude,
-            zoom: zoom - 1,
+            zoom,
             transitionInterpolator: new FlyToInterpolator(),
             transitionDuration: 3000
         });
@@ -73,6 +71,10 @@ class HcParkingSearch extends Component<HcParkingSearchProps> {
 
         return (
             <main>
+                <HcParkingSearchBox
+                    show_labels={!fetching && parkings.length === 0}
+                    multiple_rows={false}
+                />
                 <Row>
                     <Col lg={5}>
                         {fetching ?
@@ -80,32 +82,11 @@ class HcParkingSearch extends Component<HcParkingSearchProps> {
                             <HcParkingList />}
                     </Col>
                     <Col lg={7}>
-                        <div className="hc-maps">
-                            <ReactMapGL
-                                {...viewport}
-                                width='100%'
-                                // height='100%'
-                                onViewportChange={vp => onViewportChange(vp as HcMapViewportProps)}
-                                mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_API_KEY}
-                                mapStyle='mapbox://styles/mapbox/streets-v11'
-                            >
-                                {parkings.map(p => (
-                                    <Marker
-                                        key={p.id}
-                                        latitude={p.lat}
-                                        longitude={p.lng}
-                                        offsetTop={-23}
-                                        offsetLeft={-15}
-                                    >
-                                        <div className='hc-tooltip'>
-                                            <img src={MarkerImg} draggable={false} alt={p.label} />
-                                            <span className='hc-tooltiptext'>{p.label}</span>
-                                        </div>
-
-                                    </Marker>
-                                ))}
-                            </ReactMapGL>
-                        </div>
+                        <HcMap
+                            viewport={viewport}
+                            onViewportChange={onViewportChange}
+                            parkings={parkings}
+                        />
                     </Col>
                 </Row>
             </main>

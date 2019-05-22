@@ -1,4 +1,4 @@
-import { HcMapViewportProps } from "../../components/HcParkingSearch";
+import { HcMapViewportProps } from "../../components/ParkingSearch/HcParkingSearch";
 
 export interface ParkingSearchState {
     parkings: Parking[],
@@ -20,8 +20,8 @@ export interface Parking {
 export const defaultParkingSearchState: ParkingSearchState = {
     parkings: [],
     viewport: {
-        width: 400,
-        height: 400,
+        width: '100%',
+        height: '100%',
         latitude: 47.3,
         longitude: 2.2,
         zoom: 4.8

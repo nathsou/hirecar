@@ -372,8 +372,9 @@ footer p {
     opacity: 1;
 }
 
+
 @media only screen and (max-width: 991px) {
-    .hc-maps {
+    .hc-map {
         display: none;
     }
 }

@@ -1,4 +1,4 @@
-import { HcMapViewportProps } from "../../components/HcParkingSearch";
+import { HcMapViewportProps } from "../../components/ParkingSearch/HcParkingSearch";
 import { UpdateMapViewportAction, UPDATE_MAP_VIEWPORT, RequestParkingsAction, REQUEST_PARKINGS, ParkingsReceivedAction, Parking, PARKINGS_RECEIVED, ParkingSearchActionTypes } from "./types";
 import { Dispatch } from "redux";
 import axios, { AxiosResponse, AxiosError } from 'axios';
