@@ -60,13 +60,14 @@ h1 {
     margin-bottom: 0;
 }
 
-a, 
+a,
 .link {
     color: var(--secondary-color);
     font: var(--text-font);
     font-weight: 600;
     cursor: pointer;
 }
+
 .link:hover {
     color: var(--primary-color);    
     transition: all .2s;
@@ -366,8 +367,54 @@ footer p {
     color: var(--secondary-color);
 }
 
+/* https://www.w3schools.com/howto/howto_css_tooltip.asp */
+.hc-tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.hc-tooltip .hc-tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+
+    /* Position the tooltip text */
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+
+    /* Fade in tooltip */
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+/* Tooltip arrow */
+.hc-tooltip .hc-tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.hc-tooltip:hover .hc-tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+
 @media only screen and (max-width: 991px) {
-    .hc-maps {
+    .hc-map {
         display: none;
     }
 }

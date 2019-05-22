@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 interface HcFormGroupProps {
@@ -7,18 +8,24 @@ interface HcFormGroupProps {
     controlId: string,
     className: string,
     label: string,
+    showLabel?: boolean,
     type: string,
     name: string,
     placeholder: string,
     value: string,
+    as?: typeof Col | typeof Row,
     onChange: (event: any) => void
 }
 
 export default class HcFormGroup extends Component<HcFormGroupProps> {
-    render() {
+    public render() {
+
+        const dir = this.props.as ? this.props.as : Col;
+        const show_label = this.props.showLabel !== undefined ? this.props.showLabel : true;
+
         return (
-            <Form.Group as={Col} md={this.props.size} controlId={this.props.controlId}>
-                <Form.Label className={this.props.className}>{this.props.label}</Form.Label>
+            <Form.Group as={dir} md={this.props.size} controlId={this.props.controlId}>
+                {show_label ? <Form.Label className={this.props.className}>{this.props.label}</Form.Label> : null}
                 <Form.Control
                     className={`form-control ${this.props.className ? 'is-invalid' : ''}`}
                     type={this.props.type}
