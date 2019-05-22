@@ -35,7 +35,24 @@ export function fetchParkings(params: ParkingSearchParams) {
         dispatch(requestParkings());
         axios.get(`${process.env.REACT_APP_HIRECAR_API_URI}/parking_lots${propsToURIParams(params)}`)
             .then((res: AxiosResponse) => {
-                dispatch(parkingsReceived((res.data).airports as Parking[]))
+                const parkings = (res.data).airports as { [P in keyof Parking]: string }[];
+
+                const parsed_parkings: Parking[] = parkings.map(p => {
+                    const parking: Parking = {
+                        id: parseInt(p.id),
+                        label: p.label,
+                        lat: parseFloat(p.lat),
+                        lng: parseFloat(p.lng),
+                        price_per_day: parseFloat(p.price_per_day),
+                        airport_id: parseInt(p.airport_id),
+                        parking_lot_id: parseInt(p.parking_lot_id),
+                        nb_places: parseInt(p.nb_places)
+                    };
+
+                    return parking;
+                });
+
+                dispatch(parkingsReceived(parsed_parkings));
             })
             .catch((error: AxiosError) => {
                 console.error(error);

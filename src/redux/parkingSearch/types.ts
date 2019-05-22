@@ -1,21 +1,20 @@
-import { HcListItemProps } from "../../components/HcListItem";
 import { HcMapViewportProps } from "../../components/HcParkingSearch";
 
 export interface ParkingSearchState {
-    parkings: HcListItemProps[],
+    parkings: Parking[],
     fetching: boolean,
     viewport: HcMapViewportProps
 }
 
 export interface Parking {
-    id: string;
-    label: string;
-    lat: string;
-    lng: string;
-    price_per_day: string;
-    airport_id: string;
-    parking_lot_id: string;
-    nb_places: string;
+    id: number,
+    label: string,
+    lat: number,
+    lng: number,
+    price_per_day: number,
+    airport_id: number,
+    parking_lot_id: number,
+    nb_places: number
 }
 
 export const defaultParkingSearchState: ParkingSearchState = {

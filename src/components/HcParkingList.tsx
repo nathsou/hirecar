@@ -1,13 +1,12 @@
 import React, { Component } from "react";
-import HcListItem, { HcListItemProps } from "./HcListItem";
 import Container from "react-bootstrap/Container";
-import ParkingPicto from "../res/img/parking-picto.svg";
 import { connect } from "react-redux";
 import { HcState } from "../redux/configureStore";
+import { ParkingSearchState } from "../redux/parkingSearch/types";
+import ParkingPicto from "../res/img/parking-picto.svg";
+import HcListItem from "./HcListItem";
 
-export interface HcParkingListProps {
-    parkings: HcListItemProps[]
-}
+export type HcParkingListProps = Pick<ParkingSearchState, 'parkings'>;
 
 class HcParkingList extends Component<HcParkingListProps> {
 
@@ -15,14 +14,20 @@ class HcParkingList extends Component<HcParkingListProps> {
 
         const { parkings } = this.props;
 
+        const items = parkings.map(p => ({
+            title: p.label,
+            features: `${p.nb_places} places`,
+            footer: `${p.price_per_day} € / jour`
+        }));
+
         return (
             <div>
                 <Container>
                     {
                         parkings.length !== 0 ?
                             (<div className='hc-list'>
-                                {parkings.map(p =>
-                                    <HcListItem {...p} picto={ParkingPicto} key={p.title} />
+                                {items.map(item =>
+                                    <HcListItem {...item} picto={ParkingPicto} key={item.title} />
                                 )}
                             </div>)
                             : (<p>No parking lots found</p>)
