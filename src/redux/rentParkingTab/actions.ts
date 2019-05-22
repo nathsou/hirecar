@@ -3,7 +3,7 @@ import { Dispatch } from "redux";
 import { propsToURIParams } from "../../Utils";
 import { RentParkingTabActionTypes, UpdateParkingSearchAction, UPDATE_PARKING_SEARCH_INPUT, Airport, AirportsReceivedAction, AIRPORTS_RECEIVED } from "./types";
 
-export function updateParkingSearchInput(value: string): UpdateParkingSearchAction {
+export function updateAirportSearchInput(value: string): UpdateParkingSearchAction {
     return {
         type: UPDATE_PARKING_SEARCH_INPUT,
         value
@@ -13,7 +13,7 @@ export function updateParkingSearchInput(value: string): UpdateParkingSearchActi
 export function airportsReceived(airports: Airport[]): AirportsReceivedAction {
     return {
         type: AIRPORTS_RECEIVED,
-        airports: airports.map(({ name }) => name)
+        airports
     };
 }
 

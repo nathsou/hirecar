@@ -1,25 +1,35 @@
-import { HcListItemProps } from "../../components/HcListItem";
+
+export interface Car {
+    id: number,
+    model: string,
+    nb_places: number,
+    nb_doors: number,
+    owner_id: number,
+    gearbox_id: number,
+    fuel_id: number,
+    price_per_day: number
+}
 
 export interface CarSearchState {
-    cars: HcListItemProps[],
+    cars: Car[],
+    fetching: boolean
 }
 
 export const defaultCarSearchState: CarSearchState = {
-    cars: [
-        {
-            title: 'Fiat Punto Evo',
-            features: ['Manuelle', 'SP95', 'Pneus-neige', '5 places', '3 portes'].join('•'),
-            footer: '42€ • 12€ / jour'
-        },
-        {
-            title: 'Opel Astra',
-            features: ['Manuelle', 'Diesel', '5 places', '5 portes'].join('•'),
-            footer: '53€ • 15€ / jour'
-        },
-        {
-            title: "Tesla Model 3",
-            features: ['Automatique', 'Electrique', '5 places', '5 portes'].join('•'),
-            footer: '35€ • 10€ / jour'
-        },
-    ]
+    cars: [],
+    fetching: false
 };
+
+export const REQUEST_CARS = 'REQUEST_CARS';
+export const CARS_RECEIVED = 'CARS_RECEIVED';
+
+export interface RequestCarsAction {
+    type: typeof REQUEST_CARS
+}
+
+export interface CarsReceivedAction {
+    type: typeof CARS_RECEIVED,
+    cars: Car[]
+}
+
+export type CarSearchActionTypes = RequestCarsAction | CarsReceivedAction;

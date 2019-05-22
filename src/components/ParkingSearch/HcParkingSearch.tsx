@@ -11,6 +11,7 @@ import { ParkingSearchState } from "../../redux/parkingSearch/types";
 import HcParkingList from "../HcParkingList";
 import HcMap from "./HcMap";
 import HcParkingSearchBox from "./HcParkingSearchBox";
+import { updateAirportSearchInput } from "../../redux/rentParkingTab/actions";
 
 interface HcParkingSearchPropsMatchParams {
     airport: string
@@ -18,7 +19,8 @@ interface HcParkingSearchPropsMatchParams {
 
 interface HcParkingSearchProps extends RouteComponentProps, ParkingSearchState {
     onViewportChange: (viewstate: HcMapViewportProps) => void,
-    fetchParkings: (input: string) => void,
+    fetchParkings: (airport_name: string) => void,
+    onParkingSearchChange: (value: string) => void,
     match: match<HcParkingSearchPropsMatchParams>
 }
 
@@ -26,58 +28,67 @@ export interface HcMapViewportProps extends InteractiveMapProps { };
 
 class HcParkingSearch extends Component<HcParkingSearchProps> {
 
-    private zoomed = false;
-
     constructor(props: HcParkingSearchProps) {
         super(props);
-        this.props.fetchParkings(props.match.params.airport);
+        const airport = props.match.params.airport || '';
+        this.props.fetchParkings(airport);
+        this.props.onParkingSearchChange(airport);
     }
 
-    public componentDidUpdate() {
-        const { parkings, viewport, onViewportChange, fetching } = this.props;
+    public componentDidUpdate(prev_props: Readonly<HcParkingSearchProps>) {
 
-        if (this.zoomed || fetching || parkings.length === 0) return;
+        const { parkings } = this.props;
 
-        let min_lng = Infinity, min_lat = Infinity;
-        let max_lng = -Infinity, max_lat = -Infinity;
+        if (
+            (parkings.length !== 0) && (
+                (prev_props.parkings.length !== parkings.length) ||
+                (parkings.some((p, i) => p.id !== prev_props.parkings[i].id))
+            )
+        ) {
 
-        parkings.forEach(({ lat, lng }) => {
-            if (lat < min_lat) min_lat = lat;
-            if (lat > max_lat) max_lat = lat;
-            if (lng < min_lng) min_lng = lng;
-            if (lng > max_lng) max_lng = lng;
-        });
+            const { viewport, onViewportChange } = this.props;
 
-        const vp = new WebMercatorViewport(viewport as WebMercatorViewportOptions);
-        const { longitude, latitude, zoom } = vp.fitBounds(
-            [[min_lng, min_lat], [max_lng, max_lat]]
-        );
+            let min_lng = Infinity, min_lat = Infinity;
+            let max_lng = -Infinity, max_lat = -Infinity;
 
-        onViewportChange({
-            ...viewport,
-            latitude,
-            longitude,
-            zoom,
-            transitionInterpolator: new FlyToInterpolator(),
-            transitionDuration: 3000
-        });
+            parkings.forEach(({ lat, lng }) => {
+                if (lat < min_lat) min_lat = lat;
+                if (lat > max_lat) max_lat = lat;
+                if (lng < min_lng) min_lng = lng;
+                if (lng > max_lng) max_lng = lng;
+            });
 
-        this.zoomed = true;
+            const vp = new WebMercatorViewport(viewport as WebMercatorViewportOptions);
+            const { longitude, latitude, zoom } = vp.fitBounds(
+                [[min_lng, min_lat], [max_lng, max_lat]]
+            );
+
+            onViewportChange({
+                ...viewport,
+                latitude,
+                longitude,
+                zoom,
+                transitionInterpolator: new FlyToInterpolator(),
+                transitionDuration: 2500
+            });
+
+        }
     }
 
     public render() {
 
-        const { fetching, viewport, onViewportChange, parkings } = this.props;
+        const { fetching, viewport, onViewportChange, parkings, fetchParkings } = this.props;
 
         return (
             <main>
                 <HcParkingSearchBox
                     show_labels={!fetching && parkings.length === 0}
-                    multiple_rows={false}
+                    box_mode={false}
+                    onInputChange={fetchParkings}
                 />
                 <Row>
                     <Col lg={5}>
-                        {fetching ?
+                        {(fetching && parkings.length === 0) ?
                             <p>Recherche des parkings en cours...</p> :
                             <HcParkingList />}
                     </Col>
@@ -100,7 +111,8 @@ export default
             (state: HcState) => state.parking_search,
             {
                 onViewportChange: (viewport: HcMapViewportProps) => updateViewport(viewport),
-                fetchParkings: (input: string) => fetchParkings({ airport_name: input })
+                fetchParkings: (airport_name: string) => fetchParkings({ airport_name }),
+                onParkingSearchChange: (value: string) => updateAirportSearchInput(value)
             }
         )(HcParkingSearch)
     );
