@@ -7,6 +7,7 @@ import HcNavbar from './components/HcNavbar';
 import HcParkingSearch from './components/HcParkingSearch';
 import MainContent from './components/MainContent';
 import { store } from './redux/configureStore';
+import HcUserProfile from './components/HcUserProfile';
 
 
 export default class HireCar extends Component {
@@ -18,6 +19,7 @@ export default class HireCar extends Component {
           <Route exact path='/' component={MainContent} />
           <Route exact path='/parking/:airport' component={HcParkingSearch} />
           <Route exact path='/voiture' component={HcCarSearch} />
+          <Route exact path='/profil' component={HcUserProfile} />
           <Footer />
         </BrowserRouter>
       </Provider>

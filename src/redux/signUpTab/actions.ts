@@ -1,7 +1,7 @@
 import axios, { AxiosError } from "axios";
 import bcrypt from "bcryptjs";
 import { Dispatch } from "react";
-import { SignUpActionTypes, SignUpReceivedAction, SignUpUpdatePhoneAction, SIGNUP_FORM_RECEIVED, SIGNUP_FORM_SENT, SubmitSignUpAction, SUBMIT_SIGNUP_FORM, UpdateSignUpConfirmPasswordAction, UpdateSignUpEmailAction, UpdateSignUpFirstnameAction, UpdateSignUpLastnameAction, UpdateSignUpPasswordAction, UPDATE_SIGNUP_CONFIRMPASSWORD_INPUT, UPDATE_SIGNUP_EMAIL_INPUT, UPDATE_SIGNUP_FIRSTNAME_INPUT, UPDATE_SIGNUP_LASTNAME_INPUT, UPDATE_SIGNUP_PASSWORD_INPUT, UPDATE_SIGNUP_PHONE_INPUT, SignUpFormDataState, SignUpSentAction, UpdateSignUpEmailErrorAction, UPDATE_SIGNUP_EMAIL_ERROR, ResetSignUpAction, RESET_SIGNUP_FORM } from "./types";
+import { SignUpActionTypes, SignUpReceivedAction, UpdateSignUpPhoneAction, SIGNUP_FORM_RECEIVED, SIGNUP_FORM_SENT, SubmitSignUpAction, SUBMIT_SIGNUP_FORM, UpdateSignUpConfirmPasswordAction, UpdateSignUpEmailAction, UpdateSignUpFirstnameAction, UpdateSignUpLastnameAction, UpdateSignUpPasswordAction, UPDATE_SIGNUP_CONFIRMPASSWORD_INPUT, UPDATE_SIGNUP_EMAIL_INPUT, UPDATE_SIGNUP_FIRSTNAME_INPUT, UPDATE_SIGNUP_LASTNAME_INPUT, UPDATE_SIGNUP_PASSWORD_INPUT, UPDATE_SIGNUP_PHONE_INPUT, SignUpFormDataState, SignUpSentAction, UpdateSignUpEmailErrorAction, UPDATE_SIGNUP_EMAIL_ERROR, ResetSignUpAction, RESET_SIGNUP_FORM } from "./types";
 import { changeSignTab } from "../signTabs/actions";
 
 export function updateSignUpFirstnameInput(value: string): UpdateSignUpFirstnameAction {
@@ -25,7 +25,7 @@ export function updateSignUpEmailInput(value: string): UpdateSignUpEmailAction {
     };
 }
 
-export function updateSignUpPhoneInput(value: string): SignUpUpdatePhoneAction {
+export function updateSignUpPhoneInput(value: string): UpdateSignUpPhoneAction {
     return {
         type: UPDATE_SIGNUP_PHONE_INPUT,
         value
