@@ -10,7 +10,9 @@ export function userReducer(
             return {
                 ...state,
                 logged_in: true,
-                data: { firstname: firstname, lastname: lastname }
+                data: {
+                    firstname, lastname
+                }
             };
         case RESET_USER_LOGGED:
             return defaultUserState

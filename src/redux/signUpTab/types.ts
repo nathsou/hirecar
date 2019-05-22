@@ -65,7 +65,7 @@ export interface UpdateSignUpEmailAction {
 }
 
 export const UPDATE_SIGNUP_PHONE_INPUT = "UPDATE_SIGNUP_PHONE_INPUT";
-export interface SignUpUpdatePhoneAction {
+export interface UpdateSignUpPhoneAction {
     type: typeof UPDATE_SIGNUP_PHONE_INPUT,
     value: string
 }
@@ -108,4 +108,4 @@ export interface ResetSignUpAction {
     type: typeof RESET_SIGNUP_FORM
 }
 
-export type SignUpActionTypes = UpdateSignUpFirstnameAction | UpdateSignUpLastnameAction | UpdateSignUpEmailAction | SignUpUpdatePhoneAction | UpdateSignUpPasswordAction | UpdateSignUpConfirmPasswordAction | UpdateSignUpEmailErrorAction | SubmitSignUpAction | SignUpSentAction | SignUpReceivedAction | ResetSignUpAction | ChangeSignTabAction;
+export type SignUpActionTypes = UpdateSignUpFirstnameAction | UpdateSignUpLastnameAction | UpdateSignUpEmailAction | UpdateSignUpPhoneAction | UpdateSignUpPasswordAction | UpdateSignUpConfirmPasswordAction | UpdateSignUpEmailErrorAction | SubmitSignUpAction | SignUpSentAction | SignUpReceivedAction | ResetSignUpAction | ChangeSignTabAction;

@@ -4,7 +4,7 @@ import Nav from "react-bootstrap/Nav";
 import HcSecondaryButton from "./HcSecondaryButton";
 import Logo from "./Logo";
 import HcModal from './HcModal';
-import { NavLink } from 'react-router-dom';
+import { NavLink, withRouter, RouteComponentProps } from 'react-router-dom';
 import { ToggleSignModalAction, NavbarState } from "../redux/navbar/types";
 import { connect } from "react-redux";
 import { HcState } from "../redux/configureStore";
@@ -13,7 +13,7 @@ import HcPrimaryButton from "./HcPrimaryButton";
 import { UserState, ResetUserLoggedAction } from "../redux/user/types";
 import { resetUserLogged } from "../redux/user/actions";
 
-interface HcNavbarProps {
+interface HcNavbarProps extends RouteComponentProps {
     navbar: NavbarState,
     user: UserState,
     toggleModal: () => ToggleSignModalAction,
@@ -21,6 +21,11 @@ interface HcNavbarProps {
 }
 
 class HcNavbar extends Component<HcNavbarProps> {
+
+    public loggedOut = () => {
+        this.props.history.push("/");
+        this.props.resetUser();
+    }
 
     public render() {
         const { logged_in, data } = this.props.user;
@@ -40,12 +45,18 @@ class HcNavbar extends Component<HcNavbarProps> {
                                 <NavLink activeClassName='selected' to='/voiture'>Location de voitures</NavLink>
                             </Nav.Item>
                             {logged_in ? (
-                                <Nav.Item>
-                                    <HcPrimaryButton outlined="true">{logged_in ? `${data.firstname} ${data.lastname[0]}.` : ""}</HcPrimaryButton>
-                                </Nav.Item>
+                                <NavLink activeClassName='selected' to='/profil'>
+                                    <Nav.Item>
+                                        <HcPrimaryButton outlined="true">
+                                            {logged_in ? `${data.firstname} ${data.lastname[0]}.` : ""}
+                                        </HcPrimaryButton>
+                                    </Nav.Item>
+                                </NavLink>
                             ) : null}
                             <Nav.Item>
-                                <HcSecondaryButton handleClick={logged_in ? this.props.resetUser : this.props.toggleModal}>{logged_in ? "Déconnexion" : "Connexion"}</HcSecondaryButton>
+                                <HcSecondaryButton handleClick={logged_in ? this.loggedOut : this.props.toggleModal}>
+                                    {logged_in ? "Déconnexion" : "Connexion"}
+                                </HcSecondaryButton>
                             </Nav.Item>
                         </Nav>
                     </Navbar.Collapse>
@@ -56,11 +67,13 @@ class HcNavbar extends Component<HcNavbarProps> {
     }
 }
 
-
-export default connect(
-    (state: HcState) => ({ navbar: state.navbar, user: state.user }),
-    {
-        toggleModal: toggleShowModal,
-        resetUser: resetUserLogged
-    }
-)(HcNavbar)
+export default
+    withRouter(
+        connect(
+            (state: HcState) => ({ navbar: state.navbar, user: state.user }),
+            {
+                toggleModal: toggleShowModal,
+                resetUser: resetUserLogged
+            }
+        )(HcNavbar)
+    );

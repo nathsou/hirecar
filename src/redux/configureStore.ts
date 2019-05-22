@@ -13,6 +13,9 @@ import thunkMiddleware from 'redux-thunk'
 import { UserState } from './user/types';
 import { userReducer } from './user/reducers';
 import { loadState, saveState } from './localStorage';
+import throttle from "lodash.throttle";
+import { UserProfileTabState } from './userProfileTab/types';
+import { userProfileTabReducer } from './userProfileTab/reducers';
 
 export interface HcState {
     user: UserState,
@@ -20,7 +23,8 @@ export interface HcState {
     parking_search: ParkingSearchState,
     car_search: CarSearchState,
     rent_tabs: RentTabsState,
-    sign_tabs: SignTabsState
+    sign_tabs: SignTabsState,
+    user_profile_tab: UserProfileTabState
 }
 
 const root_reducer = combineReducers({
@@ -29,7 +33,8 @@ const root_reducer = combineReducers({
     parking_search: parkingSearchReducer,
     car_search: carSearchReducer,
     rent_tabs: rentTabsReducer,
-    sign_tabs: signTabsReducer
+    sign_tabs: signTabsReducer,
+    user_profile_tab: userProfileTabReducer
 });
 const persistedState = loadState();
 
@@ -47,6 +52,9 @@ export function configureStore() {
 
 export const store = configureStore();
 
-store.subscribe(() => saveState({
-    user: store.getState().user
-}));
+store.subscribe(throttle(() => {
+    saveState({
+        user: store.getState().user,
+        user_profile_tab: store.getState().user_profile_tab
+    });
+}, 1000));

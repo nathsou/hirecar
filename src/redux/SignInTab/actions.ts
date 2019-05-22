@@ -5,6 +5,8 @@ import bcrypt from "bcryptjs";
 import { toggleShowModal } from "../navbar/actions";
 import { setUserLogged } from "../user/actions";
 import { UserDataState } from "../user/types";
+import { setUserProfile } from "../userProfileTab/actions";
+import { UserProfileFormDataState } from "../userProfileTab/types";
 
 export function updateSignInEmailInput(value: string): UpdateSignInEmailAction {
     return {
@@ -57,7 +59,6 @@ export function resetSignUpForm(): ResetSignInAction {
     }
 }
 
-// TODO : User interface after sign in
 export function postSignInForm(data: SignInFormDataState) {
     return (dispatch: Dispatch<SignInActionTypes>) => {
         dispatch(signInFormSent());
@@ -74,6 +75,12 @@ export function postSignInForm(data: SignInFormDataState) {
                     sent_data[key as keyof UserDataState] = res.data[key];
                 });
 
+                const user_profile_data = {} as UserProfileFormDataState;
+                filtered_keys.forEach(key => {
+                    user_profile_data[key as keyof UserProfileFormDataState] = res.data[key];
+                });
+
+
                 // const send_data: UserDataState = {
                 //     firstname: res.data['firstname'],
                 //     lastname: res.data['lastname']
@@ -83,6 +90,7 @@ export function postSignInForm(data: SignInFormDataState) {
                     .then((res) => {
                         if (res) {
                             dispatch(setUserLogged(sent_data));
+                            dispatch(setUserProfile(user_profile_data));
                             dispatch(toggleShowModal());
                             dispatch(resetSignUpForm());
                         } else {
