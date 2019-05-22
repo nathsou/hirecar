@@ -10,12 +10,14 @@ import { connect } from "react-redux";
 import { HcState } from "../redux/configureStore";
 import { toggleShowModal } from "../redux/navbar/actions";
 import HcPrimaryButton from "./HcPrimaryButton";
-import { UserState } from "../redux/user/types";
+import { UserState, ResetUserLoggedAction } from "../redux/user/types";
+import { resetUserLogged } from "../redux/user/actions";
 
 interface HcNavbarProps {
     navbar: NavbarState,
     user: UserState,
-    toggleModal: () => ToggleSignModalAction
+    toggleModal: () => ToggleSignModalAction,
+    resetUser: () => ResetUserLoggedAction
 }
 
 class HcNavbar extends Component<HcNavbarProps> {
@@ -43,7 +45,7 @@ class HcNavbar extends Component<HcNavbarProps> {
                                 </Nav.Item>
                             ) : null}
                             <Nav.Item>
-                                <HcSecondaryButton handleClick={this.props.toggleModal}>{logged_in ? "Déconnexion" : "Connexion"}</HcSecondaryButton>
+                                <HcSecondaryButton handleClick={logged_in ? this.props.resetUser : this.props.toggleModal}>{logged_in ? "Déconnexion" : "Connexion"}</HcSecondaryButton>
                             </Nav.Item>
                         </Nav>
                     </Navbar.Collapse>
@@ -58,6 +60,7 @@ class HcNavbar extends Component<HcNavbarProps> {
 export default connect(
     (state: HcState) => ({ navbar: state.navbar, user: state.user }),
     {
-        toggleModal: toggleShowModal
+        toggleModal: toggleShowModal,
+        resetUser: resetUserLogged
     }
 )(HcNavbar)

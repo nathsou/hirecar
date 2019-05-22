@@ -21,7 +21,10 @@ class SignInTab extends Component<SignInTabProps> {
     public handleSubmit = (e: any) => {
         e.preventDefault();
         this.props.onSignInSubmit();
-        if (this.props.validForm === true) {
+    }
+
+    public componentDidUpdate() {
+        if (this.props.validForm) {
             this.props.onPostSignInForm(this.props.form_data);
         }
     }

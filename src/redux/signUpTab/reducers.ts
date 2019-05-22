@@ -71,7 +71,6 @@ export function signUpTabReducer(
             return {
                 ...state,
                 valid_form: isValid ? true : false,
-
                 form_errors: {
                     ...state.form_errors,
                     firstname_error:

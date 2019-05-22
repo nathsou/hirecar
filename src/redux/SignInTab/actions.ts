@@ -3,7 +3,7 @@ import { Dispatch } from "react";
 import Axios, { AxiosResponse, AxiosError } from "axios";
 import bcrypt from "bcryptjs";
 import { toggleShowModal } from "../navbar/actions";
-import { setUserSigned } from "../user/actions";
+import { setUserLogged } from "../user/actions";
 import { UserDataState } from "../user/types";
 
 export function updateSignInEmailInput(value: string): UpdateSignInEmailAction {
@@ -70,7 +70,6 @@ export function postSignInForm(data: SignInFormDataState) {
                     .filter(key => key !== "password");
 
                 const sent_data = {} as UserDataState;
-
                 filtered_keys.forEach(key => {
                     sent_data[key as keyof UserDataState] = res.data[key];
                 });
@@ -80,11 +79,10 @@ export function postSignInForm(data: SignInFormDataState) {
                 //     lastname: res.data['lastname']
                 // };
 
-                console.log(sent_data);
                 bcrypt.compare(data.password, hash)
                     .then((res) => {
                         if (res) {
-                            dispatch(setUserSigned(sent_data));
+                            dispatch(setUserLogged(sent_data));
                             dispatch(toggleShowModal());
                             dispatch(resetSignUpForm());
                         } else {
