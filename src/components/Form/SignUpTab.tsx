@@ -25,7 +25,10 @@ export class SignUpTab extends Component<SignUpTabProps>{
     public handleSubmit = (e: any) => {
         e.preventDefault();
         this.props.onSignUpSubmit();
-        if (this.props.valid_form === true) {
+    }
+
+    public componentDidUpdate() {
+        if (this.props.valid_form) {
             this.props.onPostSignUpForm(this.props.form_data);
         }
     }

@@ -12,6 +12,7 @@ import { navbarReducer } from './navbar/reducers';
 import thunkMiddleware from 'redux-thunk'
 import { UserState } from './user/types';
 import { userReducer } from './user/reducers';
+import { loadState, saveState } from './localStorage';
 
 export interface HcState {
     user: UserState,
@@ -30,14 +31,22 @@ const root_reducer = combineReducers({
     rent_tabs: rentTabsReducer,
     sign_tabs: signTabsReducer
 });
+const persistedState = loadState();
 
-export default function configureStore() {
+export function configureStore() {
     return createStore(
         root_reducer,
+        persistedState,
         compose(
             applyMiddleware(thunkMiddleware),
             ///@ts-ignore
             window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-        )
+        ),
     );
 }
+
+export const store = configureStore();
+
+store.subscribe(() => saveState({
+    user: store.getState().user
+}));

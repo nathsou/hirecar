@@ -1,4 +1,4 @@
-import { defaultUserState, UserActionTypes, UserState, SET_USER_LOGGED } from "./types";
+import { defaultUserState, RESET_USER_LOGGED, SET_USER_LOGGED, UserActionTypes, UserState } from "./types";
 
 export function userReducer(
     state = defaultUserState,
@@ -12,6 +12,9 @@ export function userReducer(
                 logged_in: true,
                 data: { firstname: firstname, lastname: lastname }
             };
+        case RESET_USER_LOGGED:
+            return defaultUserState
+
         default:
             return state;
     }
