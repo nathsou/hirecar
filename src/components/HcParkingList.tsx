@@ -6,17 +6,17 @@ import { ParkingSearchState } from "../redux/parkingSearch/types";
 import ParkingPicto from "../res/img/parking-picto.svg";
 import HcListItem from "./HcListItem";
 
-export type HcParkingListProps = Pick<ParkingSearchState, 'parkings'>;
+export type HcParkingListProps = Pick<ParkingSearchState, 'parking_lots'>;
 
 class HcParkingList extends Component<HcParkingListProps> {
 
     public render() {
 
-        const { parkings } = this.props;
+        const { parking_lots } = this.props;
 
-        const items = parkings.map(p => ({
+        const items = parking_lots.map(p => ({
             title: p.label,
-            features: `${p.nb_places} places`,
+            features: `${p.capacity} places`,
             footer: `${p.price_per_day} € / jour`
         }));
 
@@ -24,7 +24,7 @@ class HcParkingList extends Component<HcParkingListProps> {
             <div>
                 <Container>
                     {
-                        parkings.length !== 0 ?
+                        parking_lots.length !== 0 ?
                             (<div className='hc-list'>
                                 {items.map(item =>
                                     <HcListItem {...item} picto={ParkingPicto} key={item.title} />
@@ -39,5 +39,5 @@ class HcParkingList extends Component<HcParkingListProps> {
 }
 
 export default connect(
-    (state: HcState) => ({ parkings: state.parking_search.parkings })
+    (state: HcState) => ({ parking_lots: state.parking_search.parking_lots })
 )(HcParkingList);

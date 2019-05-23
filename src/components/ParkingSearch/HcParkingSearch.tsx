@@ -37,12 +37,12 @@ class HcParkingSearch extends Component<HcParkingSearchProps> {
 
     public componentDidUpdate(prev_props: Readonly<HcParkingSearchProps>) {
 
-        const { parkings } = this.props;
+        const { parking_lots } = this.props;
 
         if (
-            (parkings.length !== 0) && (
-                (prev_props.parkings.length !== parkings.length) ||
-                (parkings.some((p, i) => p.id !== prev_props.parkings[i].id))
+            (parking_lots.length !== 0) && (
+                (prev_props.parking_lots.length !== parking_lots.length) ||
+                (parking_lots.some((p, i) => p.id !== prev_props.parking_lots[i].id))
             )
         ) {
 
@@ -51,7 +51,7 @@ class HcParkingSearch extends Component<HcParkingSearchProps> {
             let min_lng = Infinity, min_lat = Infinity;
             let max_lng = -Infinity, max_lat = -Infinity;
 
-            parkings.forEach(({ lat, lng }) => {
+            parking_lots.forEach(({ lat, lng }) => {
                 if (lat < min_lat) min_lat = lat;
                 if (lat > max_lat) max_lat = lat;
                 if (lng < min_lng) min_lng = lng;
@@ -67,7 +67,7 @@ class HcParkingSearch extends Component<HcParkingSearchProps> {
                 ...viewport,
                 latitude,
                 longitude,
-                zoom,
+                zoom: zoom - 1,
                 transitionInterpolator: new FlyToInterpolator(),
                 transitionDuration: 2500
             });
@@ -77,18 +77,18 @@ class HcParkingSearch extends Component<HcParkingSearchProps> {
 
     public render() {
 
-        const { fetching, viewport, onViewportChange, parkings, fetchParkings } = this.props;
+        const { fetching, viewport, onViewportChange, parking_lots, fetchParkings } = this.props;
 
         return (
             <main>
                 <HcParkingSearchBox
-                    show_labels={!fetching && parkings.length === 0}
+                    show_labels={!fetching && parking_lots.length === 0}
                     box_mode={false}
                     onInputChange={fetchParkings}
                 />
                 <Row>
                     <Col lg={5}>
-                        {(fetching && parkings.length === 0) ?
+                        {(fetching && parking_lots.length === 0) ?
                             <p>Recherche des parkings en cours...</p> :
                             <HcParkingList />}
                     </Col>
@@ -96,7 +96,7 @@ class HcParkingSearch extends Component<HcParkingSearchProps> {
                         <HcMap
                             viewport={viewport}
                             onViewportChange={onViewportChange}
-                            parkings={parkings}
+                            parking_lots={parking_lots}
                         />
                     </Col>
                 </Row>

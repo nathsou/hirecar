@@ -1,8 +1,8 @@
 import { HcMapViewportProps } from "../../components/ParkingSearch/HcParkingSearch";
-import { UpdateMapViewportAction, UPDATE_MAP_VIEWPORT, RequestParkingsAction, REQUEST_PARKINGS, ParkingsReceivedAction, Parking, PARKINGS_RECEIVED, ParkingSearchActionTypes } from "./types";
+import { UpdateMapViewportAction, UPDATE_MAP_VIEWPORT, RequestParkingsAction, REQUEST_PARKINGS, ParkingsReceivedAction, PARKINGS_RECEIVED, ParkingSearchActionTypes, ParkingLot } from "./types";
 import { Dispatch } from "redux";
 import axios, { AxiosResponse, AxiosError } from 'axios';
-import { propsToURIParams } from "../../Utils";
+import { propsToURIParams, parseParkingLot, RawParkingLot } from "../../Utils";
 
 export function updateViewport(viewport: HcMapViewportProps): UpdateMapViewportAction {
     return {
@@ -17,10 +17,10 @@ export function requestParkings(): RequestParkingsAction {
     };
 }
 
-export function parkingsReceived(parkings: Parking[]): ParkingsReceivedAction {
+export function parkingsReceived(parkings: ParkingLot[]): ParkingsReceivedAction {
     return {
         type: PARKINGS_RECEIVED,
-        parkings: parkings
+        parkings_lots: parkings
     };
 }
 
@@ -35,22 +35,8 @@ export function fetchParkings(params: ParkingSearchParams) {
         dispatch(requestParkings());
         axios.get(`${process.env.REACT_APP_HIRECAR_API_URI}/parking_lots${propsToURIParams(params)}`)
             .then((res: AxiosResponse) => {
-                const parkings = (res.data).airports as { [P in keyof Parking]: string }[];
-
-                const parsed_parkings: Parking[] = parkings.map(p => {
-                    const parking: Parking = {
-                        id: parseInt(p.id),
-                        label: p.label,
-                        lat: parseFloat(p.lat),
-                        lng: parseFloat(p.lng),
-                        price_per_day: parseFloat(p.price_per_day),
-                        airport_id: parseInt(p.airport_id),
-                        parking_lot_id: parseInt(p.parking_lot_id),
-                        nb_places: parseInt(p.nb_places)
-                    };
-
-                    return parking;
-                });
+                const parkings = (res.data).parking_lots as RawParkingLot[];
+                const parsed_parkings = parkings.map(parseParkingLot);
 
                 dispatch(parkingsReceived(parsed_parkings));
             })

@@ -4,8 +4,8 @@ import HcFormGroup from "./HcFormGroup";
 import HcSecondaryButton from "../HcSecondaryButton";
 import { connect } from "react-redux";
 import { HcState } from "../../redux/configureStore";
-import { updateUserProfileFirstnameInput, updateUserProfileLastnameInput, updateUserProfilePhoneInput, updateUserProfileEmailInput, postUserProfileForm, submitUserProfileForm } from "../../redux/userProfileTab/actions";
-import { UserProfileTabState, UserProfileFormDataState } from "../../redux/userProfileTab/types";
+import { updateUserProfileFirstnameInput, updateUserProfileLastnameInput, updateUserProfilePhoneInput, updateUserProfileEmailInput } from "../../redux/userProfileTab/actions";
+import { UserProfileTabState } from "../../redux/userProfileTab/types";
 
 interface UserProfileTabProps {
     user_profile_tab: UserProfileTabState,
