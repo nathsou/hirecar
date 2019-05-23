@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { HcState } from "../../redux/configureStore";
 import { searchAirports, updateAirportSearchInput } from "../../redux/rentParkingTab/actions";
 import { RentParkingTabState } from "../../redux/rentParkingTab/types";
-import HcSecondaryButton from "../HcSecondaryButton";
+import HcSecondaryButton from "../Button/HcSecondaryButton";
 import HcParkingSearchBox from "../ParkingSearch/HcParkingSearchBox";
 
 

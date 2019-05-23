@@ -5,8 +5,8 @@ import { HcState } from "../../redux/configureStore";
 import { changeSignTab } from "../../redux/signTabs/actions";
 import { submitSignUpForm, updateSignUpConfirmPasswordInput, updateSignUpEmailInput, updateSignUpFirstnameInput, updateSignUpLastnameInput, updateSignUpPasswordInput, updateSignUpPhoneInput, postSignUpForm } from "../../redux/signUpTab/actions";
 import { SignUpTabState, SignUpFormDataState } from "../../redux/signUpTab/types";
-import HcSecondaryButton from "../HcSecondaryButton";
-import HcFormGroup from "./HcFormGroup";
+import HcSecondaryButton from "../Button/HcSecondaryButton";
+import HcInputFormGroup from "./HcInputFormGroup";
 
 interface SignUpTabProps extends SignUpTabState {
     onFirstnameChange: typeof updateSignUpFirstnameInput,
@@ -39,13 +39,13 @@ export class SignUpTab extends Component<SignUpTabProps>{
         return (
             <Form onSubmit={this.handleSubmit}>
                 <Form.Row>
-                    <HcFormGroup
+                    <HcInputFormGroup
                         size="6" controlId="fistname" className={firstnameError}
                         label="Prénom" type="text"
                         name="firstname" placeholder="Votre prénom"
                         value={firstname}
                         onChange={this.props.onFirstnameChange} />
-                    <HcFormGroup
+                    <HcInputFormGroup
                         size="6" controlId="lastname" className={lastnameError}
                         label="Nom" type="text"
                         name="lastname" placeholder="Votre nom"
@@ -53,28 +53,28 @@ export class SignUpTab extends Component<SignUpTabProps>{
                         onChange={this.props.onLastnameChange} />
                 </Form.Row>
                 <Form.Row>
-                    <HcFormGroup
+                    <HcInputFormGroup
                         size="12" controlId="signUpEmail" className={emailError}
                         label="Email" type="text"
                         name="email" placeholder="Veuillez entrer votre email"
                         value={email} onChange={this.props.onEmailChange} />
                 </Form.Row>
                 <Form.Row>
-                    <HcFormGroup
+                    <HcInputFormGroup
                         size="12" controlId="telephone" className={phoneError}
                         label="Téléphone" type="tel"
                         name="phone" placeholder="Veuillez entrer votre numéro"
                         value={phone} onChange={this.props.onPhoneChange} />
                 </Form.Row>
                 <Form.Row>
-                    <HcFormGroup
+                    <HcInputFormGroup
                         size="12" controlId="signUpPassword" className={passwordError}
                         label="Mot de passe" type="password"
                         name="password" placeholder="Veuillez entrer votre mot de passe"
                         value={password} onChange={this.props.onPasswordChange} />
                 </Form.Row>
                 <Form.Row>
-                    <HcFormGroup
+                    <HcInputFormGroup
                         size="12" controlId="signUpConfirmPassword" className={confirmPasswordError}
                         label="Confirmation du mot de passe" type="password"
                         name="confirmPassword" placeholder="Veuillez entrer votre mot de passe"

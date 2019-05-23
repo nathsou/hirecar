@@ -14,8 +14,8 @@ import { UserState } from './user/types';
 import { userReducer } from './user/reducers';
 import { loadState, saveState } from './localStorage';
 import throttle from "lodash.throttle";
-import { UserProfileTabState } from './userProfileTab/types';
-import { userProfileTabReducer } from './userProfileTab/reducers';
+import { UserProfileInfoTabState } from './userProfile/userProfileInfo/types';
+import { userProfileTabReducer } from './userProfile/userProfileInfo/reducers';
 
 export interface HcState {
     user: UserState,
@@ -24,7 +24,7 @@ export interface HcState {
     car_search: CarSearchState,
     rent_tabs: RentTabsState,
     sign_tabs: SignTabsState,
-    user_profile_tab: UserProfileTabState
+    user_profile_tab: UserProfileInfoTabState
 }
 
 const root_reducer = combineReducers({

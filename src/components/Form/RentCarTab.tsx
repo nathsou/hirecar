@@ -4,7 +4,7 @@ import { HcState } from "../../redux/configureStore";
 import { updateCarSearchInput } from "../../redux/rentCarTab/actions";
 import { RentCarTabState } from "../../redux/rentCarTab/types";
 import HcCarSearchBox from "../CarSearch/HcCarSearchBox";
-import HcSecondaryButton from "../HcSecondaryButton";
+import HcSecondaryButton from "../Button/HcSecondaryButton";
 import { Link } from "react-router-dom";
 
 interface RentCarTabProps extends RentCarTabState {

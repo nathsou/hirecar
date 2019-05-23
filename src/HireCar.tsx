@@ -7,7 +7,7 @@ import HcNavbar from './components/HcNavbar';
 import HcParkingSearch from './components/ParkingSearch/HcParkingSearch';
 import MainContent from './components/MainContent';
 import { store } from './redux/configureStore';
-import HcUserProfile from './components/HcUserProfile';
+import HcUserProfile from './components/UserProfile/HcUserProfile';
 
 
 export default class HireCar extends Component {
