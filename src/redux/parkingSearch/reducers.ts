@@ -24,7 +24,7 @@ export function parkingSearchReducer(
             return {
                 ...state,
                 fetching: false,
-                parkings: action.parkings
+                parkings: action.parkings.sort((a, b) => b.airport_id - a.airport_id)
             };
         default:
             return state;

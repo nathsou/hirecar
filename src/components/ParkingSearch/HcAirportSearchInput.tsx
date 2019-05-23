@@ -2,18 +2,35 @@ import React, { Component } from "react";
 import { Typeahead } from 'react-bootstrap-typeahead';
 import { connect } from "react-redux";
 import { HcState } from "../../redux/configureStore";
-import { searchAirports, updateParkingSearchInput } from "../../redux/rentParkingTab/actions";
+import { searchAirports, updateAirportSearchInput } from "../../redux/rentParkingTab/actions";
+import { Airport } from "../../redux/rentParkingTab/types";
 import { RentParkingTabProps } from "../Form/RentParkingTab";
 
-class HcParkingSearchInput extends Component<RentParkingTabProps> {
+export interface HcAirportSearchInputProps extends RentParkingTabProps {
+    onAirportsReceived?: (parkings: Airport[]) => void,
+    onInputChange?: (input: string) => void
+}
+
+class HcAirportSearchInput extends Component<HcAirportSearchInputProps> {
 
     public onInput = (input: string) => {
         this.props.onParkingSearchChange(input);
         this.props.searchAirports(input);
+
+        if (this.props.onInputChange) {
+            this.props.onInputChange(input);
+        }
     }
 
     public onSelected = (selected: string[]) => {
         this.onInput(selected[0]);
+    }
+
+    public componentDidUpdate(prev_props: Readonly<HcAirportSearchInputProps>) {
+        const { autocomplete_airports: airports, onAirportsReceived } = this.props;
+        if (onAirportsReceived && prev_props.autocomplete_airports.length !== airports.length) {
+            onAirportsReceived(airports);
+        }
     }
 
     public render() {
@@ -24,7 +41,7 @@ class HcParkingSearchInput extends Component<RentParkingTabProps> {
             <Typeahead
                 id='airport'
                 multiple={false}
-                options={autocomplete_airports}
+                options={autocomplete_airports.map(({ name }) => name)}
                 placeholder="Lieu de stationnement"
                 onInputChange={this.onInput}
                 onChange={this.onSelected}
@@ -37,7 +54,7 @@ class HcParkingSearchInput extends Component<RentParkingTabProps> {
 export default connect(
     (state: HcState) => state.rent_tabs.rent_parking_spot_tab,
     {
-        onParkingSearchChange: (value: string) => updateParkingSearchInput(value),
+        onParkingSearchChange: (value: string) => updateAirportSearchInput(value),
         searchAirports: (input: string) => searchAirports(input)
     }
-)(HcParkingSearchInput);
+)(HcAirportSearchInput);

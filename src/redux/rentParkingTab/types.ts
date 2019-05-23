@@ -10,7 +10,7 @@ export interface RentParkingTabState {
     parking_search_input_value: string,
     start_date: Date | null,
     end_date: Date | null,
-    autocomplete_airports: string[]
+    autocomplete_airports: Airport[]
 }
 
 export const defaultRentParkingTabState: RentParkingTabState = {
@@ -32,7 +32,7 @@ export interface UpdateParkingSearchAction {
 
 export interface AirportsReceivedAction {
     type: typeof AIRPORTS_RECEIVED,
-    airports: string[]
+    airports: Airport[]
 }
 
 export type RentParkingTabActionTypes = UpdateParkingSearchAction | AirportsReceivedAction;
