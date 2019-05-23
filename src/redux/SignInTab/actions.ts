@@ -5,8 +5,8 @@ import bcrypt from "bcryptjs";
 import { toggleShowModal } from "../navbar/actions";
 import { setUserLogged } from "../user/actions";
 import { UserDataState } from "../user/types";
-import { setUserProfile } from "../userProfileTab/actions";
-import { UserProfileFormDataState } from "../userProfileTab/types";
+import { setUserProfile } from "../userProfile/userProfileInfo/actions";
+import { UserProfileInfoFormDataState } from "../userProfile/userProfileInfo/types";
 
 export function updateSignInEmailInput(value: string): UpdateSignInEmailAction {
     return {
@@ -75,9 +75,9 @@ export function postSignInForm(data: SignInFormDataState) {
                     sent_data[key as keyof UserDataState] = res.data[key];
                 });
 
-                const user_profile_data = {} as UserProfileFormDataState;
+                const user_profile_data = {} as UserProfileInfoFormDataState;
                 filtered_keys.forEach(key => {
-                    user_profile_data[key as keyof UserProfileFormDataState] = res.data[key];
+                    user_profile_data[key as keyof UserProfileInfoFormDataState] = res.data[key];
                 });
 
                 // const send_data: UserDataState = {

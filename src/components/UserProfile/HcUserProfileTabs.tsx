@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Tab from "react-bootstrap/Tab";
 import Nav from "react-bootstrap/Nav";
-import UserProfileTab from "./Form/UserProfileTab";
+import HcUserProfileTab from "./HcUserProfileTab";
 
 export default class HcUserProfileTabs extends Component {
 
@@ -22,7 +22,7 @@ export default class HcUserProfileTabs extends Component {
                     </Nav>
                     <Tab.Content>
                         <Tab.Pane eventKey="user_profile">
-                            <UserProfileTab />
+                            <HcUserProfileTab />
                         </Tab.Pane>
                         <Tab.Pane eventKey="user_profile_car">
                         </Tab.Pane>

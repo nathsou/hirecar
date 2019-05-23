@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Form from 'react-bootstrap/Form';
-import HcSecondaryButton from "../HcSecondaryButton";
-import HcFormGroup from "./HcFormGroup";
+import HcSecondaryButton from "../Button/HcSecondaryButton";
+import HcInputFormGroup from "./HcInputFormGroup";
 import { SignInTabState, SignInFormDataState } from "../../redux/signInTab/types";
 import { updateSignInEmailInput, updateSignInPasswordInput, submitSignInForm, postSignInForm } from "../../redux/signInTab/actions";
 import { connect } from "react-redux";
@@ -35,14 +35,14 @@ class SignInTab extends Component<SignInTabProps> {
         return (
             <Form onSubmit={this.handleSubmit}>
                 <Form.Row>
-                    <HcFormGroup
+                    <HcInputFormGroup
                         size="12" controlId="signInEmail" className={email_error}
                         label="Email" type="text"
                         name="email" placeholder="Veuillez entrer votre email"
                         value={email} onChange={this.props.onEmailChange} />
                 </Form.Row>
                 <Form.Row>
-                    <HcFormGroup
+                    <HcInputFormGroup
                         size="12" controlId="signInPassword" className={password_error}
                         label="Mot de passe" type="password"
                         name="password" placeholder="Veuillez entrer votre mot de passe"

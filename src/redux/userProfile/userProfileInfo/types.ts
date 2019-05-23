@@ -1,6 +1,6 @@
-import { SetUserLoggedAction } from "../user/types";
+import { SetUserLoggedAction } from "../../user/types";
 
-export interface UserProfileFormDataState {
+export interface UserProfileInfoFormDataState {
     [index: string]: string;
     id: string,
     firstname: string,
@@ -11,8 +11,8 @@ export interface UserProfileFormDataState {
     confirm_new_password: string
 }
 
-export interface UserProfileTabState {
-    form_data: UserProfileFormDataState,
+export interface UserProfileInfoTabState {
+    form_data: UserProfileInfoFormDataState,
     form_errors: {
         firstname_error: string,
         lastname_error: string,
@@ -28,7 +28,7 @@ export interface UserProfileTabState {
     saving: boolean,
 }
 
-export const defaultUserProfileTabState: UserProfileTabState = {
+export const defaultUserProfileInfoTabState: UserProfileInfoTabState = {
     form_data: {
         id: '',
         firstname: '',
@@ -55,7 +55,7 @@ export const defaultUserProfileTabState: UserProfileTabState = {
 export const SET_USER_PROFILE = "SET_USER_PROFILE";
 export interface SetUserProfileAction {
     type: typeof SET_USER_PROFILE,
-    user: UserProfileFormDataState
+    user: UserProfileInfoFormDataState
 }
 
 export const UPDATE_USER_PROFILE_FIRSTNAME_INPUT = "UPDATE_USER_PROFILE_FIRSTNAME_INPUT";

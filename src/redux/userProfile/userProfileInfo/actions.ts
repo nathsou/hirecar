@@ -1,11 +1,11 @@
-import { UpdateUserProfileFirstnameAction, UPDATE_USER_PROFILE_FIRSTNAME_INPUT, SET_USER_PROFILE, SetUserProfileAction, UserProfileFormDataState, UpdateUserProfileLastnameAction, UPDATE_USER_PROFILE_LASTNAME_INPUT, UpdateUserProfilePhoneAction, UPDATE_USER_PROFILE_PHONE_INPUT, UpdateUserProfileEmailAction, UPDATE_USER_PROFILE_EMAIL_INPUT, UserProfileActionTypes, UserProfileReceivedAction, USER_PROFILE_FORM_RECEIVED, UserProfileSentAction, USER_PROFILE_FORM_SENT, SubmitUserProfileAction, SUMBIT_USER_PROFILE, UPDATE_USER_PROFILE_NEW_PASSWORD_INPUT, UpdateUserProfileNewPasswordAction, UpdateUserProfileConfirmNewPasswordAction, UPDATE_USER_PROFILE_CONFIRM_NEW_PASSWORD_INPUT, UserProfileSavedAction, USER_PROFILE_SAVED } from "./types";
+import { UpdateUserProfileFirstnameAction, UPDATE_USER_PROFILE_FIRSTNAME_INPUT, SET_USER_PROFILE, SetUserProfileAction, UserProfileInfoFormDataState, UpdateUserProfileLastnameAction, UPDATE_USER_PROFILE_LASTNAME_INPUT, UpdateUserProfilePhoneAction, UPDATE_USER_PROFILE_PHONE_INPUT, UpdateUserProfileEmailAction, UPDATE_USER_PROFILE_EMAIL_INPUT, UserProfileActionTypes, UserProfileReceivedAction, USER_PROFILE_FORM_RECEIVED, UserProfileSentAction, USER_PROFILE_FORM_SENT, SubmitUserProfileAction, SUMBIT_USER_PROFILE, UPDATE_USER_PROFILE_NEW_PASSWORD_INPUT, UpdateUserProfileNewPasswordAction, UpdateUserProfileConfirmNewPasswordAction, UPDATE_USER_PROFILE_CONFIRM_NEW_PASSWORD_INPUT, UserProfileSavedAction, USER_PROFILE_SAVED } from "./types";
 import { Dispatch } from "react";
-import Axios, { AxiosError, AxiosResponse } from "axios";
+import Axios, { AxiosError } from "axios";
 import bcrypt from "bcryptjs";
-import { UserDataState } from "../user/types";
-import { setUserLogged } from "../user/actions";
+import { UserDataState } from "../../user/types";
+import { setUserLogged } from "../../user/actions";
 
-export function setUserProfile(user: UserProfileFormDataState): SetUserProfileAction {
+export function setUserProfile(user: UserProfileInfoFormDataState): SetUserProfileAction {
     return {
         type: SET_USER_PROFILE,
         user
@@ -77,7 +77,7 @@ export function userProfileSaved(): UserProfileSavedAction {
     }
 }
 
-export function postUserProfileForm(data: UserProfileFormDataState) {
+export function postUserProfileForm(data: UserProfileInfoFormDataState) {
     const salt = (process.env.REACT_APP_BCRYPT_SALT as string).replace(/_/g, '$');
 
     return (dispatch: Dispatch<UserProfileActionTypes>) => {
@@ -130,7 +130,9 @@ export function postUserProfileForm(data: UserProfileFormDataState) {
 
                     dispatch(setUserLogged(sent_data));
                     dispatch(userProfileFormReceived());
-
+                    setTimeout(() => {
+                        dispatch(userProfileSaved());
+                    }, 3000);
                 }).catch((error: AxiosError) => {
                     const response = error.response;
                     console.log(response);

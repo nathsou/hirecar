@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
-import HcSecondaryButton from "./HcSecondaryButton";
+import HcSecondaryButton from "./Button/HcSecondaryButton";
 import Logo from "./Logo";
 import HcModal from './HcModal';
 import { NavLink, withRouter, RouteComponentProps } from 'react-router-dom';
@@ -9,7 +9,7 @@ import { ToggleSignModalAction, NavbarState } from "../redux/navbar/types";
 import { connect } from "react-redux";
 import { HcState } from "../redux/configureStore";
 import { toggleShowModal } from "../redux/navbar/actions";
-import HcPrimaryButton from "./HcPrimaryButton";
+import HcPrimaryButton from "./Button/HcPrimaryButton";
 import { UserState, ResetUserLoggedAction } from "../redux/user/types";
 import { resetUserLogged } from "../redux/user/actions";
 

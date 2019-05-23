@@ -2,7 +2,7 @@ import React, { FunctionComponent } from "react";
 import Col from "react-bootstrap/Col";
 import Form from 'react-bootstrap/Form';
 import Row from "react-bootstrap/Row";
-import HcFormGroup from "../Form/HcFormGroup";
+import HcInputFormGroup from "../Form/HcInputFormGroup";
 import HcAirportSearchInput from "../ParkingSearch/HcAirportSearchInput";
 import { HcParkingSearchBoxProps } from "../ParkingSearch/HcParkingSearchBox";
 
@@ -23,7 +23,7 @@ const HcCarSearchBox: FunctionComponent<HcParkingSearchBoxProps> = (
                     />
                 </Form.Group>
 
-                <HcFormGroup
+                <HcInputFormGroup
                     size="4"
                     controlId="carStartDate"
                     className=""
@@ -37,7 +37,7 @@ const HcCarSearchBox: FunctionComponent<HcParkingSearchBoxProps> = (
                     onChange={() => { }}
                 />
 
-                <HcFormGroup
+                <HcInputFormGroup
                     size="2"
                     controlId="carStartHour"
                     className=""
@@ -51,7 +51,7 @@ const HcCarSearchBox: FunctionComponent<HcParkingSearchBoxProps> = (
                     onChange={() => { }}
                 />
 
-                <HcFormGroup
+                <HcInputFormGroup
                     size="4"
                     controlId="carEndDate"
                     className=""
@@ -65,7 +65,7 @@ const HcCarSearchBox: FunctionComponent<HcParkingSearchBoxProps> = (
                     onChange={() => { }}
                 />
 
-                <HcFormGroup
+                <HcInputFormGroup
                     size="2"
                     controlId="carEndHour"
                     className=""
