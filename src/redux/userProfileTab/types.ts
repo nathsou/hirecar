@@ -1,11 +1,14 @@
+import { SetUserLoggedAction } from "../user/types";
+
 export interface UserProfileFormDataState {
-    id: number,
+    [index: string]: string;
+    id: string,
     firstname: string,
     lastname: string,
     email: string,
     phone: string,
-    password: string,
-    confirm_password: string
+    new_password: string,
+    confirm_new_password: string
 }
 
 export interface UserProfileTabState {
@@ -15,36 +18,38 @@ export interface UserProfileTabState {
         lastname_error: string,
         email_error: string,
         phone_error: string,
-        password_error: string,
-        confirm_password_error: string,
+        new_password_error: string,
+        confirm_new_password_error: string,
         [key: string]: string
     },
     valid_form: boolean,
     sending: boolean,
-    editing: boolean
+    editing: boolean,
+    saving: boolean,
 }
 
 export const defaultUserProfileTabState: UserProfileTabState = {
     form_data: {
-        id: 0,
+        id: '',
         firstname: '',
         lastname: '',
         email: '',
         phone: '',
-        password: '',
-        confirm_password: ''
+        new_password: '',
+        confirm_new_password: ''
     },
     form_errors: {
         firstname_error: '',
         lastname_error: '',
         email_error: '',
         phone_error: '',
-        password_error: '',
-        confirm_password_error: '',
+        new_password_error: '',
+        confirm_new_password_error: '',
     },
     valid_form: false,
     sending: false,
-    editing: false
+    editing: false,
+    saving: false
 }
 
 export const SET_USER_PROFILE = "SET_USER_PROFILE";
@@ -77,15 +82,15 @@ export interface UpdateUserProfilePhoneAction {
     value: string
 }
 
-export const UPDATE_USER_PROFILE_PASSWORD_INPUT = "UPDATE_USER_PROFILE_PASSWORD_INPUT";
-export interface UpdateUserProfilePasswordAction {
-    type: typeof UPDATE_USER_PROFILE_PASSWORD_INPUT,
+export const UPDATE_USER_PROFILE_NEW_PASSWORD_INPUT = "UPDATE_USER_PROFILE_NEW_PASSWORD_INPUT";
+export interface UpdateUserProfileNewPasswordAction {
+    type: typeof UPDATE_USER_PROFILE_NEW_PASSWORD_INPUT,
     value: string
 }
 
-export const UPDATE_USER_PROFILE_CONFIRMPASSWORD_INPUT = "UPDATE_USER_PROFILE_CONFIRMPASSWORD_INPUT";
-export interface UpdateUserProfileConfirmPasswordAction {
-    type: typeof UPDATE_USER_PROFILE_CONFIRMPASSWORD_INPUT,
+export const UPDATE_USER_PROFILE_CONFIRM_NEW_PASSWORD_INPUT = "UPDATE_USER_PROFILE_CONFIRM_NEW_PASSWORD_INPUT";
+export interface UpdateUserProfileConfirmNewPasswordAction {
+    type: typeof UPDATE_USER_PROFILE_CONFIRM_NEW_PASSWORD_INPUT,
     value: string
 }
 
@@ -104,5 +109,9 @@ export interface UserProfileReceivedAction {
     type: typeof USER_PROFILE_FORM_RECEIVED
 }
 
+export const USER_PROFILE_SAVED = "USER_PROFILE_SAVED";
+export interface UserProfileSavedAction {
+    type: typeof USER_PROFILE_SAVED
+}
 
-export type UserProfileActionTypes = SetUserProfileAction | UpdateUserProfileFirstnameAction | UpdateUserProfileLastnameAction | UpdateUserProfileEmailAction | UpdateUserProfilePhoneAction | UpdateUserProfilePasswordAction | UpdateUserProfileConfirmPasswordAction | SubmitUserProfileAction | UserProfileSentAction | UserProfileReceivedAction;
+export type UserProfileActionTypes = SetUserProfileAction | UpdateUserProfileFirstnameAction | UpdateUserProfileLastnameAction | UpdateUserProfileEmailAction | UpdateUserProfilePhoneAction | UpdateUserProfileNewPasswordAction | UpdateUserProfileConfirmNewPasswordAction | SubmitUserProfileAction | UserProfileSentAction | UserProfileReceivedAction | SetUserLoggedAction | UserProfileSavedAction;

@@ -302,6 +302,11 @@ label[for$="Hour"] {
     margin: 1rem auto;
 }
 
+.error-message {
+    color: var(--secondary-color);
+    padding-bottom: 2rem;
+}
+
 /*** Footer ***/
 
 footer {

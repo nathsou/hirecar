@@ -4,7 +4,7 @@ import HcFormGroup from "./HcFormGroup";
 import HcSecondaryButton from "../HcSecondaryButton";
 import { connect } from "react-redux";
 import { HcState } from "../../redux/configureStore";
-import { updateUserProfileFirstnameInput, updateUserProfileLastnameInput, updateUserProfilePhoneInput, updateUserProfileEmailInput, postUserProfileForm, submitUserProfileForm } from "../../redux/userProfileTab/actions";
+import { updateUserProfileFirstnameInput, updateUserProfileLastnameInput, updateUserProfilePhoneInput, updateUserProfileEmailInput, postUserProfileForm, submitUserProfileForm, updateUserProfileNewPasswordInput, updateUserProfileConfirmNewPasswordInput } from "../../redux/userProfileTab/actions";
 import { UserProfileTabState, UserProfileFormDataState } from "../../redux/userProfileTab/types";
 
 interface UserProfileTabProps {
@@ -13,22 +13,26 @@ interface UserProfileTabProps {
     onLastnameChange: typeof updateUserProfileLastnameInput,
     onPhoneChange: typeof updateUserProfilePhoneInput,
     onEmailChange: typeof updateUserProfileEmailInput,
-    //onUserProfileSubmit: typeof submitUserProfileForm
-    //onPostUserProfileForm: (data: UserProfileFormDataState) => void
+    onNewPasswordChange: typeof updateUserProfileNewPasswordInput,
+    onConfirmNewPasswordChange: typeof updateUserProfileConfirmNewPasswordInput,
+    onUserProfileSubmit: typeof submitUserProfileForm,
+    onPostUserProfileForm: (data: UserProfileFormDataState) => void
 }
 
 class UserProfileTab extends Component<UserProfileTabProps> {
 
     public handleSubmit = (e: any) => {
         e.preventDefault();
-        console.log("Envoyer les données !");
-        //this.props.onUserProfileSubmit();
+        this.props.onUserProfileSubmit();
+        if (this.props.user_profile_tab.editing && this.props.user_profile_tab.valid_form) {
+            this.props.onPostUserProfileForm(this.props.user_profile_tab.form_data);
+        }
     }
 
     public render() {
 
-        const { firstname, lastname, email, phone } = this.props.user_profile_tab.form_data;
-        const { firstname_error: firstnameError, lastname_error: lastnameError, email_error: emailError, phone_error: phoneError } = this.props.user_profile_tab.form_errors;
+        const { firstname, lastname, email, phone, new_password, confirm_new_password } = this.props.user_profile_tab.form_data;
+        const { firstname_error: firstnameError, lastname_error: lastnameError, email_error: emailError, phone_error: phoneError, new_password_error: newPasswordError, confirm_new_password_error: confirmNewPasswordError } = this.props.user_profile_tab.form_errors;
 
         return (
             <Form onSubmit={this.handleSubmit}>
@@ -61,12 +65,21 @@ class UserProfileTab extends Component<UserProfileTabProps> {
                         value={email}
                         onChange={this.props.onEmailChange} />
                     <HcFormGroup
-                        size="4" controlId="userProfilePassword" className=""
+                        size="4" controlId="userProfileNewPassword" className={newPasswordError}
                         label="Nouveau mot de passe" type="password"
-                        name="password" placeholder="Votre nouveau mot de passe"
-                        value=""
-                        onChange={() => { }} />
+                        name="password" placeholder="Entrez votre nouveau mot de passe"
+                        value={new_password}
+                        onChange={this.props.onNewPasswordChange} />
+                    <HcFormGroup
+                        size="4" controlId="userProfileConfirmNewPassword" className={confirmNewPasswordError}
+                        label="Confirmation du mot de passe" type="password"
+                        name="password" placeholder="Confirmez votre nouveau mot de passe"
+                        value={confirm_new_password}
+                        onChange={this.props.onConfirmNewPasswordChange} />
                 </Form.Row>
+                {this.props.user_profile_tab.saving ? (
+                    <p className="error-message">Les données ont été sauvegardés.</p>
+                ) : null}
                 <h2 className="user-profile-text">Mes voitures enregistrées</h2>
                 <p>Vous n'avez pas encore déclaré de véhicules ?
                     <span className="link" onClick={() => { }}> Enregistrez vos véhicules.</span>
@@ -88,7 +101,9 @@ export default connect(
         onLastnameChange: (e: any) => updateUserProfileLastnameInput(e.target.value),
         onPhoneChange: (e: any) => updateUserProfilePhoneInput(e.target.value),
         onEmailChange: (e: any) => updateUserProfileEmailInput(e.target.value),
-        //onUserProfilSubmit: () => submitUserProfileForm
-        ///onPostUserProfileForm: (data: UserProfileFormDataState) => postUserProfileForm(data)
+        onNewPasswordChange: (e: any) => updateUserProfileNewPasswordInput(e.target.value),
+        onConfirmNewPasswordChange: (e: any) => updateUserProfileConfirmNewPasswordInput(e.target.value),
+        onUserProfileSubmit: () => submitUserProfileForm(),
+        onPostUserProfileForm: (data: UserProfileFormDataState) => postUserProfileForm(data)
     }
 )(UserProfileTab)

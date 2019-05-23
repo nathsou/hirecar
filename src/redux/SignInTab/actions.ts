@@ -80,7 +80,6 @@ export function postSignInForm(data: SignInFormDataState) {
                     user_profile_data[key as keyof UserProfileFormDataState] = res.data[key];
                 });
 
-
                 // const send_data: UserDataState = {
                 //     firstname: res.data['firstname'],
                 //     lastname: res.data['lastname']
