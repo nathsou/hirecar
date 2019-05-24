@@ -6,17 +6,19 @@ import { HcState } from "../redux/configureStore";
 import CarPicto from "../res/img/car-picto.svg";
 import HcListItem, { HcListItemProps } from "./HcListItem";
 
-export interface HcCarListProps extends Pick<CarSearchState, 'cars'> { }
+export interface HcCarListProps extends Pick<CarSearchState, 'car_rentals'> { }
 
 class HcCarList extends Component<HcCarListProps> {
 
     public render() {
 
-        const cars: HcListItemProps[] = this.props.cars.map(c => {
+        const cars: HcListItemProps[] = this.props.car_rentals.map(rental => {
+            const c = rental.parking_spot.car;
+            const { start_date, end_date } = rental;
             return {
                 title: c.model,
-                features: `${c.fuel_id} - ${c.nb_places} places - ${c.nb_doors} portes`,
-                footer: `${c.price_per_day} € / jour`
+                features: `${c.fuel.type} - ${c.seats} places - ${c.doors} portes`,
+                footer: `${c.price_per_day} € / jour - ${start_date} > ${end_date}`
             };
         })
 

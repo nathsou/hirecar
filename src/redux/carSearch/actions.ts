@@ -1,18 +1,18 @@
-import { RequestCarsAction, REQUEST_CARS, CarsReceivedAction, Car, CARS_RECEIVED, CarSearchActionTypes } from "./types";
-import { propsToURIParams } from "../../Utils";
+import axios, { AxiosError, AxiosResponse } from "axios";
 import { Dispatch } from "react";
-import axios, { AxiosResponse, AxiosError } from "axios";
+import { parseCarRental, propsToURIParams, RawCarRental } from "../../Utils";
+import { CarRental, CarRentalSearchActionTypes, CarRentalsReceivedAction, CAR_RENTALS_RECEIVED, RequestCarRentalsAction, REQUEST_CAR_RENTALS } from "./types";
 
-export function requestCars(): RequestCarsAction {
+export function requestCars(): RequestCarRentalsAction {
     return {
-        type: REQUEST_CARS
+        type: REQUEST_CAR_RENTALS
     };
 }
 
-export function carsReceived(cars: Car[]): CarsReceivedAction {
+export function carRentalsReceived(car_rentals: CarRental[]): CarRentalsReceivedAction {
     return {
-        type: CARS_RECEIVED,
-        cars
+        type: CAR_RENTALS_RECEIVED,
+        car_rentals: car_rentals
     };
 }
 
@@ -22,29 +22,15 @@ export interface CarSearchParams {
 
 //TODO: Handle request errors
 export function fetchCars(params: CarSearchParams) {
-    return (dispatch: Dispatch<CarSearchActionTypes>) => {
+    return (dispatch: Dispatch<CarRentalSearchActionTypes>) => {
 
         dispatch(requestCars());
-        axios.get(`${process.env.REACT_APP_HIRECAR_API_URI}/cars${propsToURIParams(params)}`)
+        axios.get(`${process.env.REACT_APP_HIRECAR_API_URI}/car_rentals${propsToURIParams(params)}`)
             .then((res: AxiosResponse) => {
-                const cars = (res.data).cars as { [P in keyof Car]: string }[];
+                const car_rentals = (res.data).car_rentals as RawCarRental[];
+                const parsed_car_rentals = car_rentals.map(parseCarRental);
 
-                const parsed_cars: Car[] = cars.map(c => {
-                    const car: Car = {
-                        id: parseInt(c.id),
-                        model: c.model,
-                        nb_places: parseInt(c.nb_places),
-                        nb_doors: parseInt(c.nb_doors),
-                        owner_id: parseInt(c.owner_id),
-                        gearbox_id: parseInt(c.gearbox_id),
-                        fuel_id: parseInt(c.fuel_id),
-                        price_per_day: parseInt(c.price_per_day)
-                    };
-
-                    return car;
-                });
-
-                dispatch(carsReceived(parsed_cars));
+                dispatch(carRentalsReceived(parsed_car_rentals));
             })
             .catch((error: AxiosError) => {
                 console.error(error);

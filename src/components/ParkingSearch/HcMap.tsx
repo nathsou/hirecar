@@ -4,12 +4,12 @@ import { ParkingSearchState } from "../../redux/parkingSearch/types";
 import HcMapMarker from "./HcMapMarker";
 import { HcMapViewportProps } from "./HcParkingSearch";
 
-export interface HcMapProps extends Pick<ParkingSearchState, 'parkings'> {
+export interface HcMapProps extends Pick<ParkingSearchState, 'parking_lots'> {
     viewport: HcMapViewportProps,
     onViewportChange: (viewstate: HcMapViewportProps) => void
 }
 
-const HcMap: FunctionComponent<HcMapProps> = ({ viewport, onViewportChange, parkings }) => {
+const HcMap: FunctionComponent<HcMapProps> = ({ viewport, onViewportChange, parking_lots }) => {
     return (
         <ReactMapGL
             className='hc-map'
@@ -20,7 +20,7 @@ const HcMap: FunctionComponent<HcMapProps> = ({ viewport, onViewportChange, park
             mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_API_KEY}
             mapStyle='mapbox://styles/mapbox/streets-v11'
         >
-            {parkings.map(p => <HcMapMarker key={p.id} parking={p} />)}
+            {parking_lots.map(p => <HcMapMarker key={p.id} parking_lot={p} />)}
         </ReactMapGL>
     );
 };

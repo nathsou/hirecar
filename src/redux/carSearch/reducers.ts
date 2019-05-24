@@ -1,24 +1,24 @@
-import { CarSearchState, defaultCarSearchState, CarSearchActionTypes, REQUEST_CARS, CARS_RECEIVED } from "./types";
+import { CarRentalSearchActionTypes, CarSearchState, defaultCarSearchState, REQUEST_CAR_RENTALS, CAR_RENTALS_RECEIVED } from "./types";
 
 export function carSearchReducer(
     state = defaultCarSearchState,
-    action: CarSearchActionTypes
+    action: CarRentalSearchActionTypes
 ): CarSearchState {
 
     switch (action.type) {
-        case REQUEST_CARS:
+        case REQUEST_CAR_RENTALS:
             return {
                 ...state,
                 fetching: true
             };
 
-        case CARS_RECEIVED:
+        case CAR_RENTALS_RECEIVED:
 
 
             return {
                 ...state,
                 fetching: false,
-                cars: action.cars
+                car_rentals: action.car_rentals
             };
 
         default:

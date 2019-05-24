@@ -1,6 +1,7 @@
-import { ToggleUserProfileCarFormAction, TOGGLE_USER_PROFILE_CAR_FORM, UpdateUserProfileCarModelAction, UPDATE_USER_PROFILE_CAR_MODEL_INPUT, UpdateUserProfileCarPriceAction, UPDATE_USER_PROFILE_CAR_PRICE_INPUT, GetUserProfileCarFeaturesSentAction, GET_USER_PROFILE_CAR_FEATURES_SENT, GetUserProfileCarFeaturesReceivedAction, GET_USER_PROFILE_CAR_FEATURES_RECEIVED, UserProfileCarActionTypes, SET_USER_PROFILE_CAR_FEATURES as SET_USER_PROFILE_CAR_FEATURES, SetUserProfileCarFeaturesAction, UserProfileCarFeaturesState } from "./types";
 import Axios, { AxiosError, AxiosResponse } from "axios";
 import { Dispatch } from "react";
+import { parseIdentifiedType, RawIdentifiedType } from "../../../Utils";
+import { GetUserProfileCarFeaturesReceivedAction, GetUserProfileCarFeaturesSentAction, GET_USER_PROFILE_CAR_FEATURES_RECEIVED, GET_USER_PROFILE_CAR_FEATURES_SENT, SetUserProfileCarFeaturesAction, SET_USER_PROFILE_CAR_FEATURES, ToggleUserProfileCarFormAction, TOGGLE_USER_PROFILE_CAR_FORM, UpdateUserProfileCarModelAction, UpdateUserProfileCarPriceAction, UPDATE_USER_PROFILE_CAR_MODEL_INPUT, UPDATE_USER_PROFILE_CAR_PRICE_INPUT, UserProfileCarActionTypes, UserProfileCarFeaturesState } from "./types";
 
 export function toggleUserProfileCarForm(): ToggleUserProfileCarFormAction {
     return {
@@ -49,8 +50,12 @@ export function getUserProfileCarFeaturesForm() {
 
         Axios.get(`${process.env.REACT_APP_HIRECAR_API_URI}/cars/features`)
             .then((res: AxiosResponse) => {
-                console.log(res.data);
-                dispatch(setUserProfilCarFeatures(res.data));
+                const data: UserProfileCarFeaturesState = {
+                    fuel: (res.data.fuel as RawIdentifiedType[]).map(parseIdentifiedType),
+                    gearbox: (res.data.gearbox as RawIdentifiedType[]).map(parseIdentifiedType),
+                };
+
+                dispatch(setUserProfilCarFeatures(data));
                 dispatch(getUserProfileCarFeaturesReceived());
             }).catch((error: AxiosError) => {
                 const response = error.response;

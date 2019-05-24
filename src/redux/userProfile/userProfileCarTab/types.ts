@@ -1,18 +1,10 @@
+import { Fuel, Gearbox } from "../../carSearch/types";
+
 export interface UserProfileCarFormDataState {
     [index: string]: string;
     id: string,
     model: string,
     price: string,
-}
-
-export interface Fuel {
-    id: string,
-    type: string
-}
-
-export interface Gearbox {
-    id: string,
-    type: string
 }
 
 export interface UserProfileCarFeaturesState {
@@ -43,33 +35,33 @@ export const defaultUserProfileCarTabState: UserProfileCarTabState = {
     car_features: {
         fuel: [
             {
-                id: '1',
+                id: 1,
                 type: 'Essence'
             },
             {
-                id: '2',
+                id: 2,
                 type: 'Diesel'
             },
             {
-                id: '3',
+                id: 3,
                 type: 'GPL'
             },
             {
-                id: '4',
+                id: 4,
                 type: 'Électrique'
             },
             {
-                id: '5',
+                id: 5,
                 type: 'Hybride'
             }
         ],
         gearbox: [
             {
-                id: '1',
+                id: 1,
                 type: 'automatique'
             },
             {
-                id: '2',
+                id: 2,
                 type: 'manuelle'
             }
         ]

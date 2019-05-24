@@ -1,35 +1,60 @@
+import { ParkingLot } from "../parkingSearch/types";
 
 export interface Car {
-    id: number,
-    model: string,
-    nb_places: number,
-    nb_doors: number,
-    owner_id: number,
-    gearbox_id: number,
-    fuel_id: number,
-    price_per_day: number
+    id: number;
+    model: string;
+    seats: number;
+    doors: number;
+    owner_id: number;
+    price_per_day?: number;
+    gearbox: Gearbox;
+    fuel: Fuel;
 }
 
+export interface CarRental {
+    id: number;
+    start_date: string;
+    end_date: string;
+    user_id: number;
+    parking_spot: ParkingSpot;
+}
+
+export interface ParkingSpot {
+    id: number;
+    start_date: string;
+    end_date: string;
+    car: Car;
+    parking_lot: ParkingLot;
+}
+
+export interface IdentifiedType {
+    id: number,
+    type: string
+}
+
+export type Gearbox = IdentifiedType;
+export type Fuel = IdentifiedType;
+
 export interface CarSearchState {
-    cars: Car[],
+    car_rentals: CarRental[],
     fetching: boolean
 }
 
 export const defaultCarSearchState: CarSearchState = {
-    cars: [],
+    car_rentals: [],
     fetching: false
 };
 
-export const REQUEST_CARS = 'REQUEST_CARS';
-export const CARS_RECEIVED = 'CARS_RECEIVED';
+export const REQUEST_CAR_RENTALS = 'REQUEST_CAR_RENTALS';
+export const CAR_RENTALS_RECEIVED = 'CAR_RENTALSS_RECEIVED';
 
-export interface RequestCarsAction {
-    type: typeof REQUEST_CARS
+export interface RequestCarRentalsAction {
+    type: typeof REQUEST_CAR_RENTALS
 }
 
-export interface CarsReceivedAction {
-    type: typeof CARS_RECEIVED,
-    cars: Car[]
+export interface CarRentalsReceivedAction {
+    type: typeof CAR_RENTALS_RECEIVED,
+    car_rentals: CarRental[]
 }
 
-export type CarSearchActionTypes = RequestCarsAction | CarsReceivedAction;
+export type CarRentalSearchActionTypes = RequestCarRentalsAction | CarRentalsReceivedAction;

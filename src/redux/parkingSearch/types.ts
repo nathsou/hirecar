@@ -1,24 +1,30 @@
 import { HcMapViewportProps } from "../../components/ParkingSearch/HcParkingSearch";
 
 export interface ParkingSearchState {
-    parkings: Parking[],
+    parking_lots: ParkingLot[],
     fetching: boolean,
     viewport: HcMapViewportProps
 }
 
-export interface Parking {
-    id: number,
-    label: string,
-    lat: number,
-    lng: number,
-    price_per_day: number,
-    airport_id: number,
-    parking_lot_id: number,
-    nb_places: number
+export interface ParkingLot {
+    id: number;
+    label: string;
+    lat: number;
+    lng: number;
+    capacity: number;
+    price_per_day: number;
+    airport: Airport;
+}
+
+export interface Airport {
+    id: number;
+    name: string;
+    lat: number;
+    lng: number;
 }
 
 export const defaultParkingSearchState: ParkingSearchState = {
-    parkings: [],
+    parking_lots: [],
     viewport: {
         width: '100%',
         height: '100%',
@@ -44,7 +50,7 @@ export interface RequestParkingsAction {
 
 export interface ParkingsReceivedAction {
     type: typeof PARKINGS_RECEIVED,
-    parkings: Parking[]
+    parkings_lots: ParkingLot[]
 }
 
 export type ParkingSearchActionTypes = UpdateMapViewportAction | RequestParkingsAction | ParkingsReceivedAction;
