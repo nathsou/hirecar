@@ -27,8 +27,8 @@ export class SignUpTab extends Component<SignUpTabProps>{
         this.props.onSignUpSubmit();
     }
 
-    public componentDidUpdate() {
-        if (this.props.valid_form) {
+    public componentDidUpdate(prev_props: Readonly<SignUpTabProps>) {
+        if (this.props.valid_form !== prev_props.valid_form) {
             this.props.onPostSignUpForm(this.props.form_data);
         }
     }

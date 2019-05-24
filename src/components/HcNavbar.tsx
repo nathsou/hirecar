@@ -12,6 +12,7 @@ import { toggleShowModal } from "../redux/navbar/actions";
 import HcPrimaryButton from "./Button/HcPrimaryButton";
 import { UserState, ResetUserLoggedAction } from "../redux/user/types";
 import { resetUserLogged } from "../redux/user/actions";
+import { emptyLocalStorage } from "../Utils";
 
 interface HcNavbarProps extends RouteComponentProps {
     navbar: NavbarState,
@@ -25,6 +26,7 @@ class HcNavbar extends Component<HcNavbarProps> {
     public loggedOut = () => {
         this.props.history.push("/");
         this.props.resetUser();
+        emptyLocalStorage();
     }
 
     public render() {

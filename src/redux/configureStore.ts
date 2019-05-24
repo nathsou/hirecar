@@ -1,4 +1,4 @@
-import { combineReducers, createStore, applyMiddleware, compose } from 'redux';
+import { combineReducers, createStore, applyMiddleware, compose, Action } from 'redux';
 import { carSearchReducer } from './carSearch/reducers';
 import { CarSearchState } from './carSearch/types';
 import { parkingSearchReducer } from './parkingSearch/reducers';
@@ -10,7 +10,7 @@ import { signTabsReducer } from './signTabs/reducers';
 import { NavbarState } from './navbar/types';
 import { navbarReducer } from './navbar/reducers';
 import thunkMiddleware from 'redux-thunk'
-import { UserState } from './user/types';
+import { UserState, RESET_USER_LOGGED } from './user/types';
 import { userReducer } from './user/reducers';
 import { loadState, saveState } from './localStorage';
 import throttle from "lodash.throttle";
@@ -30,7 +30,7 @@ export interface HcState {
     user_profile_car_tab: UserProfileCarTabState
 }
 
-const root_reducer = combineReducers({
+const reducers = combineReducers({
     user: userReducer,
     navbar: navbarReducer,
     parking_search: parkingSearchReducer,
@@ -40,6 +40,15 @@ const root_reducer = combineReducers({
     user_profile_info_tab: userProfileInfoTabReducer,
     user_profile_car_tab: userProfileCarTabReducer
 });
+
+const root_reducer = (state: HcState | undefined, action: Action) => {
+    if (action.type === RESET_USER_LOGGED) {
+        return reducers(undefined, action);
+    }
+
+    return reducers(state, action);
+};
+
 const persistedState = loadState();
 
 export function configureStore() {

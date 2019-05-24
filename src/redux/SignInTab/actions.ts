@@ -29,9 +29,10 @@ export function updateSignInEmailErrorInput(error: string): UpdateSignInEmailErr
     }
 }
 
-export function updateSignInPasswordErrorInput(): UpdateSignInPasswordErrorAction {
+export function updateSignInPasswordErrorInput(error: string): UpdateSignInPasswordErrorAction {
     return {
-        type: UPDATE_SIGNIN_PASSWORD_ERROR
+        type: UPDATE_SIGNIN_PASSWORD_ERROR,
+        error
     }
 }
 
@@ -60,50 +61,55 @@ export function resetSignUpForm(): ResetSignInAction {
 }
 
 export function postSignInForm(data: SignInFormDataState) {
+    const salt = (process.env.REACT_APP_BCRYPT_SALT as string).replace(/_/g, '$');
+
+
     return (dispatch: Dispatch<SignInActionTypes>) => {
         dispatch(signInFormSent());
 
-        Axios.post(`${process.env.REACT_APP_HIRECAR_API_URI}/login`, data)
-            .then((res: AxiosResponse) => {
-                const hash = res.data.password;
+        bcrypt.hash(data.password, salt as string)
+            .then(hashed_pwd => {
 
-                const filtered_keys = Object.keys(res.data)
-                    .filter(key => key !== "password");
+                const user_data: { [index: string]: string; } = {};
 
-                const sent_data = {} as UserDataState;
-                filtered_keys.forEach(key => {
-                    sent_data[key as keyof UserDataState] = res.data[key];
+                Object.keys(data).forEach(key => {
+                    user_data[key] = key === 'password' ? hashed_pwd : data[key];
                 });
 
-                const user_profile_data = {} as UserProfileInfoFormDataState;
-                filtered_keys.forEach(key => {
-                    user_profile_data[key as keyof UserProfileInfoFormDataState] = res.data[key];
-                });
+                Axios.post(`${process.env.REACT_APP_HIRECAR_API_URI}/login`, user_data)
+                    .then((res: AxiosResponse) => {
 
-                // const send_data: UserDataState = {
-                //     firstname: res.data['firstname'],
-                //     lastname: res.data['lastname']
-                // };
+                        const filtered_keys = Object.keys(res.data)
+                            .filter(key => key !== "password");
 
-                bcrypt.compare(data.password, hash)
-                    .then((res) => {
-                        if (res) {
-                            dispatch(setUserLogged(sent_data));
-                            dispatch(setUserProfileInfo(user_profile_data));
-                            dispatch(toggleShowModal());
-                            dispatch(resetSignUpForm());
-                        } else {
-                            dispatch(updateSignInPasswordErrorInput());
+                        const sent_data = {} as UserDataState;
+                        filtered_keys.forEach(key => {
+                            sent_data[key as keyof UserDataState] = res.data[key];
+                        });
+
+                        const user_profile_data = {} as UserProfileInfoFormDataState;
+                        filtered_keys.forEach(key => {
+                            user_profile_data[key as keyof UserProfileInfoFormDataState] = res.data[key];
+                        });
+
+                        dispatch(setUserLogged(sent_data));
+                        dispatch(setUserProfileInfo(user_profile_data));
+                        dispatch(toggleShowModal());
+                        dispatch(resetSignUpForm());
+                        dispatch(signUpFormReceived());
+
+                    }).catch((error: AxiosError) => {
+                        const response = error.response;
+                        if (response !== undefined && response.status === 400) {
+                            const { email_error, password_error } = response.data;
+                            if (email_error) {
+                                dispatch(updateSignInEmailErrorInput(email_error));
+                            }
+                            if (password_error) {
+                                dispatch(updateSignInPasswordErrorInput(password_error));
+                            }
                         }
                     });
-                dispatch(signUpFormReceived());
-            }).catch((error: AxiosError) => {
-                const response = error.response;
-                if (response !== undefined && response.status === 400) {
-                    if (response.data.email_error) {
-                        dispatch(updateSignInEmailErrorInput(response.data.email_error));
-                    }
-                }
-            });
+            })
     }
 }

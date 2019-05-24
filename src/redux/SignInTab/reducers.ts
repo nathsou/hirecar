@@ -26,7 +26,7 @@ export function signInTabReducer(
         case UPDATE_SIGNIN_PASSWORD_ERROR:
             return {
                 ...state,
-                form_errors: { ...state.form_errors, password_error: 'Le mot de passe saisi est incorrect' }
+                form_errors: { ...state.form_errors, password_error: action.error }
             };
         case SUBMIT_SIGNIN_FORM:
             const { email, password } = state.form_data;

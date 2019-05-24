@@ -46,7 +46,7 @@ class HcUserProfileTab extends Component<HcUserProfileTabProps> {
                 <div>
                     <h2 className="user-profile-text">Information générale</h2>
                     <UserProfileInfoTab />
-                    {saving ? (<p className="error-message">Vos données ont été sauvegardés.</p>) : null}
+                    {saving ? (<p className="error-message">Vos données ont été sauvegardées.</p>) : null}
                     {editing ? (
                         <div style={{ marginTop: "15px", textAlign: "right" }}>
                             <HcSecondaryButton type="submit">Enregistrer</HcSecondaryButton>

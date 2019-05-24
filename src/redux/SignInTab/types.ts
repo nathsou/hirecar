@@ -50,7 +50,8 @@ export interface UpdateSignInEmailErrorAction {
 
 export const UPDATE_SIGNIN_PASSWORD_ERROR = "UPDATE_SIGNIN_PASSWORD_ERROR";
 export interface UpdateSignInPasswordErrorAction {
-    type: typeof UPDATE_SIGNIN_PASSWORD_ERROR
+    type: typeof UPDATE_SIGNIN_PASSWORD_ERROR,
+    error: string
 }
 
 export const SUBMIT_SIGNIN_FORM = "SUBMIT_SIGNIN_FORM";

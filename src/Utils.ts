@@ -11,6 +11,10 @@ export function capitalize(str: string): string {
     return `${str[0].toUpperCase()}${str.slice(1).toLowerCase()}`;
 }
 
+export function emptyLocalStorage() {
+    localStorage.setItem('state', '');
+}
+
 export type RawAirport = { [K in keyof Airport]: string };
 
 export function parseAirport(airport: RawAirport): Airport {

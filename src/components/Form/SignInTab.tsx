@@ -23,8 +23,8 @@ class SignInTab extends Component<SignInTabProps> {
         this.props.onSignInSubmit();
     }
 
-    public componentDidUpdate() {
-        if (this.props.validForm) {
+    public componentDidUpdate(prev_props: Readonly<SignInTabProps>) {
+        if (this.props.validForm !== prev_props.validForm) {
             this.props.onPostSignInForm(this.props.form_data);
         }
     }
