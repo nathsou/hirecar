@@ -114,4 +114,4 @@ export interface UserProfileSavedAction {
     type: typeof USER_PROFILE_SAVED
 }
 
-export type UserProfileActionTypes = SetUserProfileAction | UpdateUserProfileFirstnameAction | UpdateUserProfileLastnameAction | UpdateUserProfileEmailAction | UpdateUserProfilePhoneAction | UpdateUserProfileNewPasswordAction | UpdateUserProfileConfirmNewPasswordAction | SubmitUserProfileAction | UserProfileSentAction | UserProfileReceivedAction | SetUserLoggedAction | UserProfileSavedAction;
+export type UserProfileInfoActionTypes = SetUserProfileAction | UpdateUserProfileFirstnameAction | UpdateUserProfileLastnameAction | UpdateUserProfileEmailAction | UpdateUserProfilePhoneAction | UpdateUserProfileNewPasswordAction | UpdateUserProfileConfirmNewPasswordAction | SubmitUserProfileAction | UserProfileSentAction | UserProfileReceivedAction | SetUserLoggedAction | UserProfileSavedAction;

@@ -239,11 +239,11 @@ label {
 
 .form-control {
     font-size: 0.875rem;
-    /* border-width: 0 0 2px 0;
+    border-width: 0 0 2px 0;
     border-style: solid;
     border-color: var(--primary-color);
     border-radius: 0;
-    padding-left: 0; */
+    padding-left: 0;
     color: var(--dark-grey);
 }
 
@@ -260,6 +260,13 @@ label[for$="Hour"] {
 
 .invalid-feedback {
     color: var(--error-pink);
+}
+
+select {
+    -webkit-appearance: none;
+    background-image: url(../img/form-select-arrow.svg);
+    background-position: right;
+    background-repeat:no-repeat;
 }
 
 /*** Modal ***/
@@ -321,8 +328,13 @@ label[for$="Hour"] {
 }
 
 .error-message {
-    color: var(--secondary-color);
+    color: var(--error-pink);
     padding-bottom: 2rem;
+    font-weight: bold;
+}
+
+.car-form-container {
+    margin-top: 2rem;
 }
 
 /*** Footer ***/

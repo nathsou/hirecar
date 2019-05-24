@@ -2,12 +2,12 @@ import React, { Component } from "react";
 import HcInputFormGroup from "./HcInputFormGroup";
 import { connect } from "react-redux";
 import { HcState } from "../../redux/configureStore";
-import { updateUserProfileFirstnameInput, updateUserProfileLastnameInput, updateUserProfilePhoneInput, updateUserProfileEmailInput, updateUserProfileNewPasswordInput, updateUserProfileConfirmNewPasswordInput } from "../../redux/userProfile/userProfileInfo/actions";
-import { UserProfileInfoTabState } from "../../redux/userProfile/userProfileInfo/types";
+import { updateUserProfileFirstnameInput, updateUserProfileLastnameInput, updateUserProfilePhoneInput, updateUserProfileEmailInput, updateUserProfileNewPasswordInput, updateUserProfileConfirmNewPasswordInput } from "../../redux/userProfile/userProfileInfoTab/actions";
+import { UserProfileInfoTabState } from "../../redux/userProfile/userProfileInfoTab/types";
 import Form from "react-bootstrap/Form";
 
 interface UserProfileInfoTabProps {
-    user_profile_tab: UserProfileInfoTabState,
+    user_profile_info_tab: UserProfileInfoTabState,
     onFirstnameChange: typeof updateUserProfileFirstnameInput,
     onLastnameChange: typeof updateUserProfileLastnameInput,
     onPhoneChange: typeof updateUserProfilePhoneInput,
@@ -19,8 +19,9 @@ interface UserProfileInfoTabProps {
 class UserProfileInfoTab extends Component<UserProfileInfoTabProps> {
     public render() {
 
-        const { firstname, lastname, email, phone, new_password, confirm_new_password } = this.props.user_profile_tab.form_data;
-        const { firstname_error: firstnameError, lastname_error: lastnameError, email_error: emailError, phone_error: phoneError, new_password_error: newPasswordError, confirm_new_password_error: confirmNewPasswordError } = this.props.user_profile_tab.form_errors;
+        const { firstname, lastname, email, phone, new_password, confirm_new_password } = this.props.user_profile_info_tab.form_data;
+
+        const { firstname_error: firstnameError, lastname_error: lastnameError, email_error: emailError, phone_error: phoneError, new_password_error: newPasswordError, confirm_new_password_error: confirmNewPasswordError } = this.props.user_profile_info_tab.form_errors;
 
         return (
             <div>
@@ -70,7 +71,7 @@ class UserProfileInfoTab extends Component<UserProfileInfoTabProps> {
 }
 
 export default connect(
-    (state: HcState) => ({ user_profile_tab: state.user_profile_tab }),
+    (state: HcState) => ({ user_profile_info_tab: state.user_profile_info_tab }),
     {
         onFirstnameChange: (e: any) => updateUserProfileFirstnameInput(e.target.value),
         onLastnameChange: (e: any) => updateUserProfileLastnameInput(e.target.value),

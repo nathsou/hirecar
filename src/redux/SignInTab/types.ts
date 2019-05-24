@@ -1,6 +1,6 @@
 import { ToggleSignModalAction } from "../navbar/types";
 import { SetUserLoggedAction } from "../user/types";
-import { SetUserProfileAction } from "../userProfile/userProfileInfo/types";
+import { SetUserProfileAction } from "../userProfile/userProfileInfoTab/types";
 
 export interface SignInFormDataState {
     [index: string]: string;

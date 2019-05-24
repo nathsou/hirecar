@@ -5,8 +5,8 @@ import bcrypt from "bcryptjs";
 import { toggleShowModal } from "../navbar/actions";
 import { setUserLogged } from "../user/actions";
 import { UserDataState } from "../user/types";
-import { setUserProfile } from "../userProfile/userProfileInfo/actions";
-import { UserProfileInfoFormDataState } from "../userProfile/userProfileInfo/types";
+import { setUserProfileInfo } from "../userProfile/userProfileInfoTab/actions";
+import { UserProfileInfoFormDataState } from "../userProfile/userProfileInfoTab/types";
 
 export function updateSignInEmailInput(value: string): UpdateSignInEmailAction {
     return {
@@ -89,7 +89,7 @@ export function postSignInForm(data: SignInFormDataState) {
                     .then((res) => {
                         if (res) {
                             dispatch(setUserLogged(sent_data));
-                            dispatch(setUserProfile(user_profile_data));
+                            dispatch(setUserProfileInfo(user_profile_data));
                             dispatch(toggleShowModal());
                             dispatch(resetSignUpForm());
                         } else {

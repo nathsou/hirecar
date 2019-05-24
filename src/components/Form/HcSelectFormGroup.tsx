@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import { Gearbox, Fuel } from "../../redux/userProfile/userProfileCarTab/types";
+import { capitalize } from "../../Utils";
 
 interface HcSelectFormGroupProps {
     size: string,
@@ -11,7 +13,7 @@ interface HcSelectFormGroupProps {
     showLabel?: boolean,
     name: string,
     as?: typeof Col | typeof Row,
-    values: Array<string>
+    values: (number | Gearbox | Fuel)[]
 }
 
 export default class HcSelectFormGroup extends Component<HcSelectFormGroupProps> {
@@ -26,9 +28,11 @@ export default class HcSelectFormGroup extends Component<HcSelectFormGroupProps>
             <Form.Group as={dir} md={this.props.size} controlId={this.props.controlId}>
                 {show_label ? <Form.Label className={this.props.className}>{this.props.label}</Form.Label> : null}
                 <Form.Control as="select" name={this.props.name}>
-                    {values.map((value, index) => {
-                        return <option key={index}>{value}</option>
-                    })}
+                    {values.map((value, index) =>
+                        (<option value={typeof value === 'number' ? value : value.id} key={index}>
+                            {typeof value === 'number' ? value : capitalize(value.type)}
+                        </option>)
+                    )}
                 </Form.Control>
             </Form.Group>
         );

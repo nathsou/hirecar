@@ -14,8 +14,10 @@ import { UserState } from './user/types';
 import { userReducer } from './user/reducers';
 import { loadState, saveState } from './localStorage';
 import throttle from "lodash.throttle";
-import { UserProfileInfoTabState } from './userProfile/userProfileInfo/types';
-import { userProfileTabReducer } from './userProfile/userProfileInfo/reducers';
+import { UserProfileInfoTabState } from './userProfile/userProfileInfoTab/types';
+import { userProfileInfoTabReducer } from './userProfile/userProfileInfoTab/reducers';
+import { UserProfileCarTabState } from './userProfile/userProfileCarTab/types';
+import { userProfileCarTabReducer } from './userProfile/userProfileCarTab/reducers';
 
 export interface HcState {
     user: UserState,
@@ -24,7 +26,8 @@ export interface HcState {
     car_search: CarSearchState,
     rent_tabs: RentTabsState,
     sign_tabs: SignTabsState,
-    user_profile_tab: UserProfileInfoTabState
+    user_profile_info_tab: UserProfileInfoTabState,
+    user_profile_car_tab: UserProfileCarTabState
 }
 
 const root_reducer = combineReducers({
@@ -34,7 +37,8 @@ const root_reducer = combineReducers({
     car_search: carSearchReducer,
     rent_tabs: rentTabsReducer,
     sign_tabs: signTabsReducer,
-    user_profile_tab: userProfileTabReducer
+    user_profile_info_tab: userProfileInfoTabReducer,
+    user_profile_car_tab: userProfileCarTabReducer
 });
 const persistedState = loadState();
 
@@ -55,6 +59,6 @@ export const store = configureStore();
 store.subscribe(throttle(() => {
     saveState({
         user: store.getState().user,
-        user_profile_tab: store.getState().user_profile_tab
+        user_profile_info_tab: store.getState().user_profile_info_tab
     });
 }, 1000));
