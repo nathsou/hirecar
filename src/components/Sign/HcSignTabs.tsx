@@ -4,9 +4,9 @@ import Tab from 'react-bootstrap/Tab';
 import Nav from 'react-bootstrap/Nav';
 import SignUpTab from "./Form/SignUpTab";
 import SignInTab from "./Form/SignInTab";
-import { HcState } from "../redux/configureStore";
-import { ChangeSignTabAction } from "../redux/signTabs/types";
-import { changeSignTab } from "../redux/signTabs/actions";
+import { HcState } from "../../redux/configureStore";
+import { ChangeSignTabAction } from "../../redux/signTabs/types";
+import { changeSignTab } from "../../redux/signTabs/actions";
 
 interface HcSignTabsProps {
     active_tab_key: string,

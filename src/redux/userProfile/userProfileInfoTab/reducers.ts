@@ -1,4 +1,4 @@
-import { UserProfileInfoActionTypes, UPDATE_USER_PROFILE_FIRSTNAME_INPUT, UserProfileInfoTabState, defaultUserProfileInfoTabState, SET_USER_PROFILE, UPDATE_USER_PROFILE_LASTNAME_INPUT, UPDATE_USER_PROFILE_EMAIL_INPUT, UPDATE_USER_PROFILE_PHONE_INPUT, SUMBIT_USER_PROFILE, USER_PROFILE_FORM_SENT, USER_PROFILE_FORM_RECEIVED, UPDATE_USER_PROFILE_NEW_PASSWORD_INPUT, UPDATE_USER_PROFILE_CONFIRM_NEW_PASSWORD_INPUT, USER_PROFILE_SAVED } from "./types";
+import { UserProfileInfoActionTypes, UPDATE_USER_PROFILE_FIRSTNAME_INPUT, UserProfileInfoTabState, defaultUserProfileInfoTabState, SET_USER_PROFILE, UPDATE_USER_PROFILE_LASTNAME_INPUT, UPDATE_USER_PROFILE_EMAIL_INPUT, UPDATE_USER_PROFILE_PHONE_INPUT, SUMBIT_USER_PROFILE, USER_PROFILE_FORM_SENT, USER_PROFILE_FORM_RECEIVED, UPDATE_USER_PROFILE_NEW_PASSWORD_INPUT, USER_PROFILE_SAVED, UPDATE_USER_PROFILE_PASSWORD_INPUT, UPDATE_USER_PROFILE_PASSWORD_ERROR, RESET_USER_PROFILE_PASSWORD } from "./types";
 
 export function userProfileInfoTabReducer(
     state = defaultUserProfileInfoTabState,
@@ -53,6 +53,14 @@ export function userProfileInfoTabReducer(
                 form_errors: { ...state.form_errors, phone_error: isValid ? '' : 'Veuillez entrer un numéro valide' },
                 editing: true
             };
+        case UPDATE_USER_PROFILE_PASSWORD_INPUT:
+            isValid = action.value.length >= 3;
+            return {
+                ...state,
+                form_data: { ...state.form_data, password: action.value },
+                form_errors: { ...state.form_errors, password_error: isValid ? '' : 'Le mot de passe doit contenir au moins 3 caractères' },
+                editing: true
+            };
         case UPDATE_USER_PROFILE_NEW_PASSWORD_INPUT:
             isValid = action.value.length >= 3;
             return {
@@ -61,16 +69,13 @@ export function userProfileInfoTabReducer(
                 form_errors: { ...state.form_errors, new_password_error: isValid ? '' : 'Le mot de passe doit contenir au moins 3 caractères' },
                 editing: true
             };
-        case UPDATE_USER_PROFILE_CONFIRM_NEW_PASSWORD_INPUT:
-            isValid = action.value === state.form_data.new_password ? true : false
+        case UPDATE_USER_PROFILE_PASSWORD_ERROR:
             return {
                 ...state,
-                form_data: { ...state.form_data, confirm_new_password: action.value },
-                form_errors: { ...state.form_errors, confirm_new_password_error: isValid ? '' : 'Le mot de passe n\'est pas identique au précédent' },
-                editing: true
+                form_errors: { ...state.form_errors, password_error: action.error }
             };
         case SUMBIT_USER_PROFILE:
-            const { firstname, lastname, email, phone } = state.form_data;
+            const { firstname, lastname, email, phone, password } = state.form_data;
             isValid = (Object
                 .keys(state.form_errors)
                 .every(key => state.form_errors[key] === '')) &&
@@ -78,7 +83,8 @@ export function userProfileInfoTabReducer(
                     firstname,
                     lastname,
                     email,
-                    phone
+                    phone,
+                    password
                 ].every(field => field !== ''));
             return {
                 ...state,
@@ -96,7 +102,10 @@ export function userProfileInfoTabReducer(
                         (/[A-Za-z0-9._-]*@[A-Za-z0-9]*.[A-Za-z]{2,4}/.test(email) ? '' : 'Veuillez entrer une adresse email valide'),
                     phone_error:
                         (phone === '' ? 'Le téléphone n\'est pas indiqué' : '') ||
-                        (/(\d\d){4}\d\d/.test(phone) ? '' : 'Veuillez entrer un numéro valide')
+                        (/(\d\d){4}\d\d/.test(phone) ? '' : 'Veuillez entrer un numéro valide'),
+                    password_error:
+                        (password === '' ? 'Le mot de passe n\'est pas indiqué' : '') ||
+                        (password.length >= 3 ? '' : 'Le mot de passe contient au moins 3 caractères')
                 }
             };
         case USER_PROFILE_FORM_SENT:
@@ -116,6 +125,11 @@ export function userProfileInfoTabReducer(
                 ...state,
                 saving: false
             };
+        case RESET_USER_PROFILE_PASSWORD:
+            return {
+                ...state,
+                form_data: { ...state.form_data, password: '', new_password: '' }
+            }
         default:
             return state;
     }

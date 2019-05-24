@@ -7,8 +7,8 @@ export interface UserProfileInfoFormDataState {
     lastname: string,
     email: string,
     phone: string,
+    password: string,
     new_password: string,
-    confirm_new_password: string
 }
 
 export interface UserProfileInfoTabState {
@@ -18,8 +18,8 @@ export interface UserProfileInfoTabState {
         lastname_error: string,
         email_error: string,
         phone_error: string,
+        password_error: string,
         new_password_error: string,
-        confirm_new_password_error: string,
         [key: string]: string
     },
     valid_form: boolean,
@@ -35,16 +35,16 @@ export const defaultUserProfileInfoTabState: UserProfileInfoTabState = {
         lastname: '',
         email: '',
         phone: '',
+        password: '',
         new_password: '',
-        confirm_new_password: ''
     },
     form_errors: {
         firstname_error: '',
         lastname_error: '',
         email_error: '',
         phone_error: '',
+        password_error: '',
         new_password_error: '',
-        confirm_new_password_error: '',
     },
     valid_form: false,
     sending: false,
@@ -82,16 +82,22 @@ export interface UpdateUserProfilePhoneAction {
     value: string
 }
 
+export const UPDATE_USER_PROFILE_PASSWORD_INPUT = "UPDATE_USER_PROFILE_PASSWORD_INPUT";
+export interface UpdateUserProfilePasswordAction {
+    type: typeof UPDATE_USER_PROFILE_PASSWORD_INPUT,
+    value: string
+}
+
 export const UPDATE_USER_PROFILE_NEW_PASSWORD_INPUT = "UPDATE_USER_PROFILE_NEW_PASSWORD_INPUT";
 export interface UpdateUserProfileNewPasswordAction {
     type: typeof UPDATE_USER_PROFILE_NEW_PASSWORD_INPUT,
     value: string
 }
 
-export const UPDATE_USER_PROFILE_CONFIRM_NEW_PASSWORD_INPUT = "UPDATE_USER_PROFILE_CONFIRM_NEW_PASSWORD_INPUT";
-export interface UpdateUserProfileConfirmNewPasswordAction {
-    type: typeof UPDATE_USER_PROFILE_CONFIRM_NEW_PASSWORD_INPUT,
-    value: string
+export const UPDATE_USER_PROFILE_PASSWORD_ERROR = "UPDATE_USER_PROFILE_PASSWORD_ERROR";
+export interface UpdateUserProfilePasswordErrorAction {
+    type: typeof UPDATE_USER_PROFILE_PASSWORD_ERROR,
+    error: string
 }
 
 export const SUMBIT_USER_PROFILE = "SUMBIT_USER_PROFILE";
@@ -114,4 +120,9 @@ export interface UserProfileSavedAction {
     type: typeof USER_PROFILE_SAVED
 }
 
-export type UserProfileInfoActionTypes = SetUserProfileAction | UpdateUserProfileFirstnameAction | UpdateUserProfileLastnameAction | UpdateUserProfileEmailAction | UpdateUserProfilePhoneAction | UpdateUserProfileNewPasswordAction | UpdateUserProfileConfirmNewPasswordAction | SubmitUserProfileAction | UserProfileSentAction | UserProfileReceivedAction | SetUserLoggedAction | UserProfileSavedAction;
+export const RESET_USER_PROFILE_PASSWORD = "RESET_USER_PROFILE_PASSWORD";
+export interface ResetUserProfilePasswordAction {
+    type: typeof RESET_USER_PROFILE_PASSWORD
+}
+
+export type UserProfileInfoActionTypes = SetUserProfileAction | UpdateUserProfileFirstnameAction | UpdateUserProfileLastnameAction | UpdateUserProfileEmailAction | UpdateUserProfilePhoneAction | UpdateUserProfilePasswordAction | UpdateUserProfileNewPasswordAction | UpdateUserProfilePasswordErrorAction | SubmitUserProfileAction | UserProfileSentAction | UserProfileReceivedAction | SetUserLoggedAction | UserProfileSavedAction | ResetUserProfilePasswordAction;

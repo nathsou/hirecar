@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import Form from 'react-bootstrap/Form';
 import { connect } from "react-redux";
-import { HcState } from "../../redux/configureStore";
-import { changeSignTab } from "../../redux/signTabs/actions";
-import { submitSignUpForm, updateSignUpConfirmPasswordInput, updateSignUpEmailInput, updateSignUpFirstnameInput, updateSignUpLastnameInput, updateSignUpPasswordInput, updateSignUpPhoneInput, postSignUpForm } from "../../redux/signUpTab/actions";
-import { SignUpTabState, SignUpFormDataState } from "../../redux/signUpTab/types";
-import HcSecondaryButton from "../Button/HcSecondaryButton";
-import HcInputFormGroup from "./HcInputFormGroup";
+import { HcState } from "../../../redux/configureStore";
+import { changeSignTab } from "../../../redux/signTabs/actions";
+import { submitSignUpForm, updateSignUpConfirmPasswordInput, updateSignUpEmailInput, updateSignUpFirstnameInput, updateSignUpLastnameInput, updateSignUpPasswordInput, updateSignUpPhoneInput, postSignUpForm } from "../../../redux/signUpTab/actions";
+import { SignUpTabState, SignUpFormDataState } from "../../../redux/signUpTab/types";
+import HcSecondaryButton from "../../Button/HcSecondaryButton";
+import HcInputFormGroup from "../../Form/HcInputFormGroup";
 
 interface SignUpTabProps extends SignUpTabState {
     onFirstnameChange: typeof updateSignUpFirstnameInput,
@@ -28,7 +28,8 @@ export class SignUpTab extends Component<SignUpTabProps>{
     }
 
     public componentDidUpdate(prev_props: Readonly<SignUpTabProps>) {
-        if (this.props.valid_form !== prev_props.valid_form) {
+        const { valid_form } = this.props;
+        if (prev_props.valid_form !== valid_form) {
             this.props.onPostSignUpForm(this.props.form_data);
         }
     }

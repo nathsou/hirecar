@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import HcInputFormGroup from "./HcInputFormGroup";
+import HcInputFormGroup from "../../Form/HcInputFormGroup";
 import { connect } from "react-redux";
-import { HcState } from "../../redux/configureStore";
-import { updateUserProfileFirstnameInput, updateUserProfileLastnameInput, updateUserProfilePhoneInput, updateUserProfileEmailInput, updateUserProfileNewPasswordInput, updateUserProfileConfirmNewPasswordInput } from "../../redux/userProfile/userProfileInfoTab/actions";
-import { UserProfileInfoTabState } from "../../redux/userProfile/userProfileInfoTab/types";
+import { HcState } from "../../../redux/configureStore";
+import { updateUserProfileFirstnameInput, updateUserProfileLastnameInput, updateUserProfilePhoneInput, updateUserProfileEmailInput, updateUserProfileNewPasswordInput, updateUserProfilePasswordInput } from "../../../redux/userProfile/userProfileInfoTab/actions";
+import { UserProfileInfoTabState } from "../../../redux/userProfile/userProfileInfoTab/types";
 import Form from "react-bootstrap/Form";
 
 interface UserProfileInfoTabProps {
@@ -12,16 +12,16 @@ interface UserProfileInfoTabProps {
     onLastnameChange: typeof updateUserProfileLastnameInput,
     onPhoneChange: typeof updateUserProfilePhoneInput,
     onEmailChange: typeof updateUserProfileEmailInput,
+    onPasswordChange: typeof updateUserProfilePasswordInput,
     onNewPasswordChange: typeof updateUserProfileNewPasswordInput,
-    onConfirmNewPasswordChange: typeof updateUserProfileConfirmNewPasswordInput,
 }
 
 class UserProfileInfoTab extends Component<UserProfileInfoTabProps> {
     public render() {
 
-        const { firstname, lastname, email, phone, new_password, confirm_new_password } = this.props.user_profile_info_tab.form_data;
+        const { firstname, lastname, email, phone, password, new_password } = this.props.user_profile_info_tab.form_data;
 
-        const { firstname_error: firstnameError, lastname_error: lastnameError, email_error: emailError, phone_error: phoneError, new_password_error: newPasswordError, confirm_new_password_error: confirmNewPasswordError } = this.props.user_profile_info_tab.form_errors;
+        const { firstname_error: firstnameError, lastname_error: lastnameError, email_error: emailError, phone_error: phoneError, password_error: passwordError, new_password_error: newPasswordError } = this.props.user_profile_info_tab.form_errors;
 
         return (
             <div>
@@ -53,17 +53,24 @@ class UserProfileInfoTab extends Component<UserProfileInfoTabProps> {
                         value={email}
                         onChange={this.props.onEmailChange} />
                     <HcInputFormGroup
+                        size="4" controlId="userProfilePassword" className={passwordError}
+                        label="Mot de passe actuel" type="password"
+                        name="password" placeholder="Entrez votre mot de passe actuel"
+                        value={password}
+                        onChange={this.props.onPasswordChange} />
+                    <HcInputFormGroup
                         size="4" controlId="userProfileNewPassword" className={newPasswordError}
                         label="Nouveau mot de passe" type="password"
-                        name="password" placeholder="Entrez votre nouveau mot de passe"
+                        name="new_password" placeholder="Entrez votre nouveau mot de passe"
                         value={new_password}
                         onChange={this.props.onNewPasswordChange} />
-                    <HcInputFormGroup
+
+                    {/* <HcInputFormGroup
                         size="4" controlId="userProfileConfirmNewPassword" className={confirmNewPasswordError}
                         label="Confirmation du mot de passe" type="password"
                         name="password" placeholder="Confirmez votre nouveau mot de passe"
                         value={confirm_new_password}
-                        onChange={this.props.onConfirmNewPasswordChange} />
+                        onChange={this.props.onConfirmNewPasswordChange} /> */}
                 </Form.Row>
             </div>
         );
@@ -77,7 +84,7 @@ export default connect(
         onLastnameChange: (e: any) => updateUserProfileLastnameInput(e.target.value),
         onPhoneChange: (e: any) => updateUserProfilePhoneInput(e.target.value),
         onEmailChange: (e: any) => updateUserProfileEmailInput(e.target.value),
-        onNewPasswordChange: (e: any) => updateUserProfileNewPasswordInput(e.target.value),
-        onConfirmNewPasswordChange: (e: any) => updateUserProfileConfirmNewPasswordInput(e.target.value),
+        onPasswordChange: (e: any) => updateUserProfilePasswordInput(e.target.value),
+        onNewPasswordChange: (e: any) => updateUserProfileNewPasswordInput(e.target.value)
     }
 )(UserProfileInfoTab)

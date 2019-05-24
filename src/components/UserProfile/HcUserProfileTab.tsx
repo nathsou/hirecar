@@ -5,9 +5,9 @@ import { connect } from "react-redux";
 import { HcState } from "../../redux/configureStore";
 import { postUserProfileForm, submitUserProfileForm } from "../../redux/userProfile/userProfileInfoTab/actions";
 import { UserProfileInfoTabState, UserProfileInfoFormDataState } from "../../redux/userProfile/userProfileInfoTab/types";
-import UserProfileCar from "../Form/UserProfileCarTab";
+import UserProfileCar from "./Form/UserProfileCarTab";
 import HcCircleButton from "../Button/HcCircleButton";
-import UserProfileInfoTab from "../Form/UserProfileInfoTab";
+import UserProfileInfoTab from "./Form/UserProfileInfoTab";
 import { toggleUserProfileCarForm, getUserProfileCarFeaturesForm } from "../../redux/userProfile/userProfileCarTab/actions";
 import { UserProfileCarTabState } from "../../redux/userProfile/userProfileCarTab/types";
 

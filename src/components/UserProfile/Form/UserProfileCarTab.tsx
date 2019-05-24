@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import Form from "react-bootstrap/Form";
-import HcInputFormGroup from "./HcInputFormGroup";
-import HcSelectFormGroup from "./HcSelectFormGroup";
-import { updateUserProfileCarModelInput, updateUserProfileCarPriceInput } from "../../redux/userProfile/userProfileCarTab/actions";
+import HcInputFormGroup from "../../Form/HcInputFormGroup";
+import HcSelectFormGroup from "../../Form/HcSelectFormGroup";
+import { updateUserProfileCarModelInput, updateUserProfileCarPriceInput } from "../../../redux/userProfile/userProfileCarTab/actions";
 import { connect } from "react-redux";
-import { HcState } from "../../redux/configureStore";
-import { UserProfileCarTabState } from "../../redux/userProfile/userProfileCarTab/types";
+import { HcState } from "../../../redux/configureStore";
+import { UserProfileCarTabState } from "../../../redux/userProfile/userProfileCarTab/types";
 
 interface UserProfileCarTabProps {
     user_profile_car_tab: UserProfileCarTabState

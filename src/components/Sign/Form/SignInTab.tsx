@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import Form from 'react-bootstrap/Form';
-import HcSecondaryButton from "../Button/HcSecondaryButton";
-import HcInputFormGroup from "./HcInputFormGroup";
-import { SignInTabState, SignInFormDataState } from "../../redux/signInTab/types";
-import { updateSignInEmailInput, updateSignInPasswordInput, submitSignInForm, postSignInForm } from "../../redux/signInTab/actions";
+import HcSecondaryButton from "../../Button/HcSecondaryButton";
+import HcInputFormGroup from "../../Form/HcInputFormGroup";
+import { SignInTabState, SignInFormDataState } from "../../../redux/signInTab/types";
+import { updateSignInEmailInput, updateSignInPasswordInput, submitSignInForm, postSignInForm } from "../../../redux/signInTab/actions";
 import { connect } from "react-redux";
-import { HcState } from "../../redux/configureStore";
-import { changeSignTab } from "../../redux/signTabs/actions";
+import { HcState } from "../../../redux/configureStore";
+import { changeSignTab } from "../../../redux/signTabs/actions";
 
 interface SignInTabProps extends SignInTabState {
     onEmailChange: typeof updateSignInEmailInput,
@@ -24,7 +24,8 @@ class SignInTab extends Component<SignInTabProps> {
     }
 
     public componentDidUpdate(prev_props: Readonly<SignInTabProps>) {
-        if (this.props.validForm !== prev_props.validForm) {
+        const { validForm } = this.props;
+        if (validForm && prev_props.validForm !== validForm) {
             this.props.onPostSignInForm(this.props.form_data);
         }
     }

@@ -1,4 +1,4 @@
-import { UpdateUserProfileFirstnameAction, UPDATE_USER_PROFILE_FIRSTNAME_INPUT, SET_USER_PROFILE, SetUserProfileAction, UserProfileInfoFormDataState, UpdateUserProfileLastnameAction, UPDATE_USER_PROFILE_LASTNAME_INPUT, UpdateUserProfilePhoneAction, UPDATE_USER_PROFILE_PHONE_INPUT, UpdateUserProfileEmailAction, UPDATE_USER_PROFILE_EMAIL_INPUT, UserProfileInfoActionTypes, UserProfileReceivedAction, USER_PROFILE_FORM_RECEIVED, UserProfileSentAction, USER_PROFILE_FORM_SENT, SubmitUserProfileAction, SUMBIT_USER_PROFILE, UPDATE_USER_PROFILE_NEW_PASSWORD_INPUT, UpdateUserProfileNewPasswordAction, UpdateUserProfileConfirmNewPasswordAction, UPDATE_USER_PROFILE_CONFIRM_NEW_PASSWORD_INPUT, UserProfileSavedAction, USER_PROFILE_SAVED } from "./types";
+import { UpdateUserProfileFirstnameAction, UPDATE_USER_PROFILE_FIRSTNAME_INPUT, SET_USER_PROFILE, SetUserProfileAction, UserProfileInfoFormDataState, UpdateUserProfileLastnameAction, UPDATE_USER_PROFILE_LASTNAME_INPUT, UpdateUserProfilePhoneAction, UPDATE_USER_PROFILE_PHONE_INPUT, UpdateUserProfileEmailAction, UPDATE_USER_PROFILE_EMAIL_INPUT, UserProfileInfoActionTypes, UserProfileReceivedAction, USER_PROFILE_FORM_RECEIVED, UserProfileSentAction, USER_PROFILE_FORM_SENT, SubmitUserProfileAction, SUMBIT_USER_PROFILE, UPDATE_USER_PROFILE_NEW_PASSWORD_INPUT, UpdateUserProfileNewPasswordAction, UserProfileSavedAction, USER_PROFILE_SAVED, UpdateUserProfilePasswordAction, UPDATE_USER_PROFILE_PASSWORD_INPUT, UPDATE_USER_PROFILE_PASSWORD_ERROR, UpdateUserProfilePasswordErrorAction, ResetUserProfilePasswordAction, RESET_USER_PROFILE_PASSWORD } from "./types";
 import { Dispatch } from "react";
 import Axios, { AxiosError } from "axios";
 import bcrypt from "bcryptjs";
@@ -39,6 +39,13 @@ export function updateUserProfileEmailInput(value: string): UpdateUserProfileEma
     };
 }
 
+export function updateUserProfilePasswordInput(value: string): UpdateUserProfilePasswordAction {
+    return {
+        type: UPDATE_USER_PROFILE_PASSWORD_INPUT,
+        value
+    };
+}
+
 export function updateUserProfileNewPasswordInput(value: string): UpdateUserProfileNewPasswordAction {
     return {
         type: UPDATE_USER_PROFILE_NEW_PASSWORD_INPUT,
@@ -46,12 +53,13 @@ export function updateUserProfileNewPasswordInput(value: string): UpdateUserProf
     };
 }
 
-export function updateUserProfileConfirmNewPasswordInput(value: string): UpdateUserProfileConfirmNewPasswordAction {
+export function updateUserProfilePasswordErrorInput(error: string): UpdateUserProfilePasswordErrorAction {
     return {
-        type: UPDATE_USER_PROFILE_CONFIRM_NEW_PASSWORD_INPUT,
-        value
+        type: UPDATE_USER_PROFILE_PASSWORD_ERROR,
+        error
     };
 }
+
 
 export function submitUserProfileForm(): SubmitUserProfileAction {
     return {
@@ -77,66 +85,72 @@ export function userProfileSaved(): UserProfileSavedAction {
     }
 }
 
+export function resetUserProfilePassword(): ResetUserProfilePasswordAction {
+    return {
+        type: RESET_USER_PROFILE_PASSWORD
+    }
+}
+
 export function postUserProfileForm(data: UserProfileInfoFormDataState) {
-    const salt = (process.env.REACT_APP_BCRYPT_SALT as string).replace(/_/g, '$');
+    const salt: string = (process.env.REACT_APP_BCRYPT_SALT as string).replace(/_/g, '$');
 
     return (dispatch: Dispatch<UserProfileInfoActionTypes>) => {
         dispatch(userProfileFormSent());
 
-        if (data.new_password) {
-            bcrypt.hash(data.new_password, salt as string)
-                .then(hashed_pwd => {
+        bcrypt.hash(data.password, salt)
+            .then(hashed_pwd => {
+                const sent_pwd_data: { [index: string]: string; } = {};
+                Object.keys(data).forEach(key => {
+                    sent_pwd_data[key] = key === 'password' ? hashed_pwd : data[key]
+                });
 
-                    const filtered_keys = Object.keys(data)
-                        .filter(key => key !== "confirm_new_password");
-                    const sent_data: { [index: string]: string; } = {};
+                if (data.new_password) {
+                    bcrypt.hash(data.new_password, salt)
+                        .then(hashed_new_pwd => {
 
-                    filtered_keys.forEach(key => {
-                        sent_data[key] = key === 'new_password' ? hashed_pwd : data[key];
-                    });
-
-                    Axios.put(`${process.env.REACT_APP_HIRECAR_API_URI}/users/${data.id}`, sent_data)
-                        .then(() => {
-
-                            const filtered_keys = Object.keys(data)
-                                .filter(key => key === "firstname" || key === "lastname");
-
-                            const sent_data = {} as UserDataState;
-                            filtered_keys.forEach(key => {
-                                sent_data[key as keyof UserDataState] = data[key];
+                            const sent_new_pwd_data: { [index: string]: string; } = {};
+                            Object.keys(sent_pwd_data).forEach(key => {
+                                sent_new_pwd_data[key] = key === 'new_password' ? hashed_new_pwd : sent_pwd_data[key]
                             });
+                            sentUserProfileForm(dispatch, data, sent_new_pwd_data);
+                        })
+                } else {
+                    sentUserProfileForm(dispatch, data, sent_pwd_data);
+                }
+            });
+    }
+}
 
-                            dispatch(setUserLogged(sent_data));
-                            dispatch(userProfileFormReceived());
-                            setTimeout(() => {
-                                dispatch(userProfileSaved());
-                            }, 3000);
-                        }).catch((error: AxiosError) => {
-                            const response = error.response;
-                            console.log(response);
-                        });
-                });
+export function sentUserProfileForm(
+    dispatch: Dispatch<UserProfileInfoActionTypes>,
+    data: UserProfileInfoFormDataState,
+    sent_pwd_data: { [index: string]: string; }
+) {
+    Axios.put(`${process.env.REACT_APP_HIRECAR_API_URI}/users/${data.id}`, sent_pwd_data)
+        .then(() => {
 
-        } else {
-            Axios.put(`${process.env.REACT_APP_HIRECAR_API_URI}/users/${data.id}`, data)
-                .then(() => {
-                    const filtered_keys = Object.keys(data)
-                        .filter(key => key === "firstname" || key === "lastname");
+            const filtered_keys = Object.keys(data)
+                .filter(key => key === "firstname" || key === "lastname");
 
-                    const sent_data = {} as UserDataState;
-                    filtered_keys.forEach(key => {
-                        sent_data[key as keyof UserDataState] = data[key];
-                    });
+            const sent_data = {} as UserDataState;
+            filtered_keys.forEach(key => {
+                sent_data[key as keyof UserDataState] = data[key];
+            });
 
-                    dispatch(setUserLogged(sent_data));
-                    dispatch(userProfileFormReceived());
-                    setTimeout(() => {
-                        dispatch(userProfileSaved());
-                    }, 3000);
-                }).catch((error: AxiosError) => {
-                    const response = error.response;
-                    console.log(response);
-                });
-        }
-    };
+            dispatch(setUserLogged(sent_data));
+            dispatch(userProfileFormReceived());
+            dispatch(resetUserProfilePassword());
+            setTimeout(() => {
+                dispatch(userProfileSaved());
+            }, 3000);
+
+        }).catch((error: AxiosError) => {
+            const response = error.response;
+            if (response !== undefined && response.status === 400) {
+                const { password_error } = response.data;
+                if (password_error) {
+                    dispatch(updateUserProfilePasswordErrorInput(password_error));
+                }
+            }
+        });
 }

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Modal from "react-bootstrap/Modal";
-import HcSignTabs from "./HcSignTabs";
+import HcSignTabs from "./Sign/HcSignTabs";
 
 interface HcModalProps {
     show: boolean,
