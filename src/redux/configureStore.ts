@@ -68,6 +68,7 @@ export const store = configureStore();
 store.subscribe(throttle(() => {
     saveState({
         user: store.getState().user,
-        user_profile_info_tab: store.getState().user_profile_info_tab
+        user_profile_info_tab: store.getState().user_profile_info_tab,
+        user_profile_car_tab: store.getState().user_profile_car_tab
     });
 }, 1000));

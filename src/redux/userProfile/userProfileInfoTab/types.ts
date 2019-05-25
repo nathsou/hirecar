@@ -100,24 +100,24 @@ export interface UpdateUserProfilePasswordErrorAction {
     error: string
 }
 
-export const SUMBIT_USER_PROFILE = "SUMBIT_USER_PROFILE";
-export interface SubmitUserProfileAction {
-    type: typeof SUMBIT_USER_PROFILE
+export const SUMBIT_USER_PROFILE_INFO = "SUMBIT_USER_PROFILE_INFO";
+export interface SubmitUserProfileInfoAction {
+    type: typeof SUMBIT_USER_PROFILE_INFO
 }
 
-export const USER_PROFILE_FORM_SENT = "USER_PROFILE_FORM_SENT";
-export interface UserProfileSentAction {
-    type: typeof USER_PROFILE_FORM_SENT
+export const USER_PROFILE_INFO_FORM_SENT = "USER_PROFILE_INFO_FORM_SENT";
+export interface UserProfileInfoSentAction {
+    type: typeof USER_PROFILE_INFO_FORM_SENT
 }
 
-export const USER_PROFILE_FORM_RECEIVED = "USER_PROFILE_FORM_RECEIVED";
-export interface UserProfileReceivedAction {
-    type: typeof USER_PROFILE_FORM_RECEIVED
+export const USER_PROFILE_INFO_FORM_RECEIVED = "USER_PROFILE_INFO_FORM_RECEIVED";
+export interface UserProfileInfoReceivedAction {
+    type: typeof USER_PROFILE_INFO_FORM_RECEIVED
 }
 
-export const USER_PROFILE_SAVED = "USER_PROFILE_SAVED";
-export interface UserProfileSavedAction {
-    type: typeof USER_PROFILE_SAVED
+export const USER_PROFILE_INFO_SAVED = "USER_PROFILE_INFO_SAVED";
+export interface UserProfileInfoSavedAction {
+    type: typeof USER_PROFILE_INFO_SAVED
 }
 
 export const RESET_USER_PROFILE_PASSWORD = "RESET_USER_PROFILE_PASSWORD";
@@ -125,4 +125,4 @@ export interface ResetUserProfilePasswordAction {
     type: typeof RESET_USER_PROFILE_PASSWORD
 }
 
-export type UserProfileInfoActionTypes = SetUserProfileAction | UpdateUserProfileFirstnameAction | UpdateUserProfileLastnameAction | UpdateUserProfileEmailAction | UpdateUserProfilePhoneAction | UpdateUserProfilePasswordAction | UpdateUserProfileNewPasswordAction | UpdateUserProfilePasswordErrorAction | SubmitUserProfileAction | UserProfileSentAction | UserProfileReceivedAction | SetUserLoggedAction | UserProfileSavedAction | ResetUserProfilePasswordAction;
+export type UserProfileInfoActionTypes = SetUserProfileAction | UpdateUserProfileFirstnameAction | UpdateUserProfileLastnameAction | UpdateUserProfileEmailAction | UpdateUserProfilePhoneAction | UpdateUserProfilePasswordAction | UpdateUserProfileNewPasswordAction | UpdateUserProfilePasswordErrorAction | SubmitUserProfileInfoAction | UserProfileInfoSentAction | UserProfileInfoReceivedAction | SetUserLoggedAction | UserProfileInfoSavedAction | ResetUserProfilePasswordAction;

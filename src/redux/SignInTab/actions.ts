@@ -7,6 +7,7 @@ import { setUserLogged } from "../user/actions";
 import { UserDataState } from "../user/types";
 import { setUserProfileInfo } from "../userProfile/userProfileInfoTab/actions";
 import { UserProfileInfoFormDataState } from "../userProfile/userProfileInfoTab/types";
+import { setUserProfileCarOwner } from "../userProfile/userProfileCarTab/actions";
 
 export function updateSignInEmailInput(value: string): UpdateSignInEmailAction {
     return {
@@ -94,6 +95,7 @@ export function postSignInForm(data: SignInFormDataState) {
 
                         dispatch(setUserLogged(sent_data));
                         dispatch(setUserProfileInfo(user_profile_data));
+                        dispatch(setUserProfileCarOwner(user_profile_data.id));
                         dispatch(toggleShowModal());
                         dispatch(resetSignUpForm());
                         dispatch(signUpFormReceived());

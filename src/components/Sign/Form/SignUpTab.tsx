@@ -29,7 +29,7 @@ export class SignUpTab extends Component<SignUpTabProps>{
 
     public componentDidUpdate(prev_props: Readonly<SignUpTabProps>) {
         const { valid_form } = this.props;
-        if (prev_props.valid_form !== valid_form) {
+        if (valid_form && prev_props.valid_form !== valid_form) {
             this.props.onPostSignUpForm(this.props.form_data);
         }
     }

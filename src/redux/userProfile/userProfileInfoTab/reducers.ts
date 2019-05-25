@@ -1,4 +1,4 @@
-import { UserProfileInfoActionTypes, UPDATE_USER_PROFILE_FIRSTNAME_INPUT, UserProfileInfoTabState, defaultUserProfileInfoTabState, SET_USER_PROFILE, UPDATE_USER_PROFILE_LASTNAME_INPUT, UPDATE_USER_PROFILE_EMAIL_INPUT, UPDATE_USER_PROFILE_PHONE_INPUT, SUMBIT_USER_PROFILE, USER_PROFILE_FORM_SENT, USER_PROFILE_FORM_RECEIVED, UPDATE_USER_PROFILE_NEW_PASSWORD_INPUT, USER_PROFILE_SAVED, UPDATE_USER_PROFILE_PASSWORD_INPUT, UPDATE_USER_PROFILE_PASSWORD_ERROR, RESET_USER_PROFILE_PASSWORD } from "./types";
+import { UserProfileInfoActionTypes, UPDATE_USER_PROFILE_FIRSTNAME_INPUT, UserProfileInfoTabState, defaultUserProfileInfoTabState, SET_USER_PROFILE, UPDATE_USER_PROFILE_LASTNAME_INPUT, UPDATE_USER_PROFILE_EMAIL_INPUT, UPDATE_USER_PROFILE_PHONE_INPUT, SUMBIT_USER_PROFILE_INFO, USER_PROFILE_INFO_FORM_SENT, USER_PROFILE_INFO_FORM_RECEIVED, UPDATE_USER_PROFILE_NEW_PASSWORD_INPUT, USER_PROFILE_INFO_SAVED, UPDATE_USER_PROFILE_PASSWORD_INPUT, UPDATE_USER_PROFILE_PASSWORD_ERROR, RESET_USER_PROFILE_PASSWORD } from "./types";
 
 export function userProfileInfoTabReducer(
     state = defaultUserProfileInfoTabState,
@@ -74,7 +74,7 @@ export function userProfileInfoTabReducer(
                 ...state,
                 form_errors: { ...state.form_errors, password_error: action.error }
             };
-        case SUMBIT_USER_PROFILE:
+        case SUMBIT_USER_PROFILE_INFO:
             const { firstname, lastname, email, phone, password } = state.form_data;
             isValid = (Object
                 .keys(state.form_errors)
@@ -108,19 +108,19 @@ export function userProfileInfoTabReducer(
                         (password.length >= 3 ? '' : 'Le mot de passe contient au moins 3 caractères')
                 }
             };
-        case USER_PROFILE_FORM_SENT:
+        case USER_PROFILE_INFO_FORM_SENT:
             return {
                 ...state,
                 sending: true,
                 editing: false
             };
-        case USER_PROFILE_FORM_RECEIVED:
+        case USER_PROFILE_INFO_FORM_RECEIVED:
             return {
                 ...state,
                 sending: false,
                 saving: true
             };
-        case USER_PROFILE_SAVED:
+        case USER_PROFILE_INFO_SAVED:
             return {
                 ...state,
                 saving: false

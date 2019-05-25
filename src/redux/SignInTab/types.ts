@@ -1,6 +1,7 @@
 import { ToggleSignModalAction } from "../navbar/types";
 import { SetUserLoggedAction } from "../user/types";
 import { SetUserProfileAction } from "../userProfile/userProfileInfoTab/types";
+import { SetUserProfileCarOwnerAction } from "../userProfile/userProfileCarTab/types";
 
 export interface SignInFormDataState {
     [index: string]: string;
@@ -74,4 +75,4 @@ export interface ResetSignInAction {
     type: typeof RESET_SIGNIN_FORM
 }
 
-export type SignInActionTypes = UpdateSignInEmailAction | UpdateSignInPasswordAction | UpdateSignInEmailErrorAction | UpdateSignInPasswordErrorAction | SubmitSignInAction | SignInSentAction | SignInReceivedAction | ResetSignInAction | ToggleSignModalAction | SetUserLoggedAction | SetUserProfileAction;
+export type SignInActionTypes = UpdateSignInEmailAction | UpdateSignInPasswordAction | UpdateSignInEmailErrorAction | UpdateSignInPasswordErrorAction | SubmitSignInAction | SignInSentAction | SignInReceivedAction | ResetSignInAction | ToggleSignModalAction | SetUserLoggedAction | SetUserProfileAction | SetUserProfileCarOwnerAction;

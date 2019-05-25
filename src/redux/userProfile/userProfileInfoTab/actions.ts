@@ -1,4 +1,4 @@
-import { UpdateUserProfileFirstnameAction, UPDATE_USER_PROFILE_FIRSTNAME_INPUT, SET_USER_PROFILE, SetUserProfileAction, UserProfileInfoFormDataState, UpdateUserProfileLastnameAction, UPDATE_USER_PROFILE_LASTNAME_INPUT, UpdateUserProfilePhoneAction, UPDATE_USER_PROFILE_PHONE_INPUT, UpdateUserProfileEmailAction, UPDATE_USER_PROFILE_EMAIL_INPUT, UserProfileInfoActionTypes, UserProfileReceivedAction, USER_PROFILE_FORM_RECEIVED, UserProfileSentAction, USER_PROFILE_FORM_SENT, SubmitUserProfileAction, SUMBIT_USER_PROFILE, UPDATE_USER_PROFILE_NEW_PASSWORD_INPUT, UpdateUserProfileNewPasswordAction, UserProfileSavedAction, USER_PROFILE_SAVED, UpdateUserProfilePasswordAction, UPDATE_USER_PROFILE_PASSWORD_INPUT, UPDATE_USER_PROFILE_PASSWORD_ERROR, UpdateUserProfilePasswordErrorAction, ResetUserProfilePasswordAction, RESET_USER_PROFILE_PASSWORD } from "./types";
+import { UpdateUserProfileFirstnameAction, UPDATE_USER_PROFILE_FIRSTNAME_INPUT, SET_USER_PROFILE, SetUserProfileAction, UserProfileInfoFormDataState, UpdateUserProfileLastnameAction, UPDATE_USER_PROFILE_LASTNAME_INPUT, UpdateUserProfilePhoneAction, UPDATE_USER_PROFILE_PHONE_INPUT, UpdateUserProfileEmailAction, UPDATE_USER_PROFILE_EMAIL_INPUT, UserProfileInfoActionTypes, UserProfileInfoReceivedAction, USER_PROFILE_INFO_FORM_RECEIVED, UserProfileInfoSentAction, USER_PROFILE_INFO_FORM_SENT, SubmitUserProfileInfoAction, SUMBIT_USER_PROFILE_INFO, UPDATE_USER_PROFILE_NEW_PASSWORD_INPUT, UpdateUserProfileNewPasswordAction, UserProfileInfoSavedAction, USER_PROFILE_INFO_SAVED, UpdateUserProfilePasswordAction, UPDATE_USER_PROFILE_PASSWORD_INPUT, UPDATE_USER_PROFILE_PASSWORD_ERROR, UpdateUserProfilePasswordErrorAction, ResetUserProfilePasswordAction, RESET_USER_PROFILE_PASSWORD } from "./types";
 import { Dispatch } from "react";
 import Axios, { AxiosError } from "axios";
 import bcrypt from "bcryptjs";
@@ -61,27 +61,27 @@ export function updateUserProfilePasswordErrorInput(error: string): UpdateUserPr
 }
 
 
-export function submitUserProfileForm(): SubmitUserProfileAction {
+export function submitUserProfileInfoForm(): SubmitUserProfileInfoAction {
     return {
-        type: SUMBIT_USER_PROFILE
+        type: SUMBIT_USER_PROFILE_INFO
     }
 }
 
-export function userProfileFormSent(): UserProfileSentAction {
+export function userProfileInfoFormSent(): UserProfileInfoSentAction {
     return {
-        type: USER_PROFILE_FORM_SENT
+        type: USER_PROFILE_INFO_FORM_SENT
     };
 }
 
-export function userProfileFormReceived(): UserProfileReceivedAction {
+export function userProfileInfoFormReceived(): UserProfileInfoReceivedAction {
     return {
-        type: USER_PROFILE_FORM_RECEIVED
+        type: USER_PROFILE_INFO_FORM_RECEIVED
     };
 }
 
-export function userProfileSaved(): UserProfileSavedAction {
+export function userProfileInfoSaved(): UserProfileInfoSavedAction {
     return {
-        type: USER_PROFILE_SAVED
+        type: USER_PROFILE_INFO_SAVED
     }
 }
 
@@ -91,11 +91,11 @@ export function resetUserProfilePassword(): ResetUserProfilePasswordAction {
     }
 }
 
-export function postUserProfileForm(data: UserProfileInfoFormDataState) {
+export function postUserProfileInfoForm(data: UserProfileInfoFormDataState) {
     const salt: string = (process.env.REACT_APP_BCRYPT_SALT as string).replace(/_/g, '$');
 
     return (dispatch: Dispatch<UserProfileInfoActionTypes>) => {
-        dispatch(userProfileFormSent());
+        dispatch(userProfileInfoFormSent());
 
         bcrypt.hash(data.password, salt)
             .then(hashed_pwd => {
@@ -138,10 +138,10 @@ export function sentUserProfileForm(
             });
 
             dispatch(setUserLogged(sent_data));
-            dispatch(userProfileFormReceived());
+            dispatch(userProfileInfoFormReceived());
             dispatch(resetUserProfilePassword());
             setTimeout(() => {
-                dispatch(userProfileSaved());
+                dispatch(userProfileInfoSaved());
             }, 3000);
 
         }).catch((error: AxiosError) => {

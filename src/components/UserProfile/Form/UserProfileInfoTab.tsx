@@ -64,13 +64,6 @@ class UserProfileInfoTab extends Component<UserProfileInfoTabProps> {
                         name="new_password" placeholder="Entrez votre nouveau mot de passe"
                         value={new_password}
                         onChange={this.props.onNewPasswordChange} />
-
-                    {/* <HcInputFormGroup
-                        size="4" controlId="userProfileConfirmNewPassword" className={confirmNewPasswordError}
-                        label="Confirmation du mot de passe" type="password"
-                        name="password" placeholder="Confirmez votre nouveau mot de passe"
-                        value={confirm_new_password}
-                        onChange={this.props.onConfirmNewPasswordChange} /> */}
                 </Form.Row>
             </div>
         );

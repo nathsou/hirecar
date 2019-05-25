@@ -13,7 +13,9 @@ interface HcSelectFormGroupProps {
     showLabel?: boolean,
     name: string,
     as?: typeof Col | typeof Row,
-    values: (number | Gearbox | Fuel)[]
+    value: string,
+    values: (number | Gearbox | Fuel)[],
+    onChange: (event: any) => void
 }
 
 export default class HcSelectFormGroup extends Component<HcSelectFormGroupProps> {
@@ -27,7 +29,11 @@ export default class HcSelectFormGroup extends Component<HcSelectFormGroupProps>
         return (
             <Form.Group as={dir} md={this.props.size} controlId={this.props.controlId}>
                 {show_label ? <Form.Label className={this.props.className}>{this.props.label}</Form.Label> : null}
-                <Form.Control as="select" name={this.props.name}>
+                <Form.Control as="select"
+                    name={this.props.name}
+                    value={this.props.value}
+                    onChange={this.props.onChange}
+                >
                     {values.map((value, index) =>
                         (<option value={typeof value === 'number' ? value : value.id} key={index}>
                             {typeof value === 'number' ? value : capitalize(value.type)}
