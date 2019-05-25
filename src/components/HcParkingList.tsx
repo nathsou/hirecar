@@ -5,19 +5,23 @@ import { HcState } from "../redux/configureStore";
 import { ParkingSearchState } from "../redux/parkingSearch/types";
 import ParkingPicto from "../res/img/parking-picto.svg";
 import HcListItem from "./HcListItem";
+import { setSelectedParkingLot } from "../redux/parkingSearch/actions";
 
-export type HcParkingListProps = Pick<ParkingSearchState, 'parking_lots'>;
+export interface HcParkingListProps extends Pick<ParkingSearchState, 'parking_lots'> {
+    setSelectedParkingLot: (pl: number | null) => void
+}
 
 class HcParkingList extends Component<HcParkingListProps> {
 
     public render() {
 
-        const { parking_lots } = this.props;
+        const { parking_lots, setSelectedParkingLot } = this.props;
 
         const items = parking_lots.map(p => ({
             title: p.label,
             features: `${p.capacity} places`,
-            footer: `${p.price_per_day} € / jour`
+            footer: `${p.price_per_day} € / jour`,
+            id: p.id
         }));
 
         return (
@@ -27,7 +31,12 @@ class HcParkingList extends Component<HcParkingListProps> {
                         parking_lots.length !== 0 ?
                             (<div className='hc-list'>
                                 {items.map(item =>
-                                    <HcListItem {...item} picto={ParkingPicto} key={item.title} />
+                                    <HcListItem
+                                        {...item}
+                                        onHover={setSelectedParkingLot}
+                                        picto={ParkingPicto}
+                                        key={item.title}
+                                    />
                                 )}
                             </div>)
                             : (<p>No parking lots found</p>)
@@ -39,5 +48,8 @@ class HcParkingList extends Component<HcParkingListProps> {
 }
 
 export default connect(
-    (state: HcState) => ({ parking_lots: state.parking_search.parking_lots })
+    (state: HcState) => ({ parking_lots: state.parking_search.parking_lots }),
+    {
+        setSelectedParkingLot: (pl: number | null) => setSelectedParkingLot(pl)
+    }
 )(HcParkingList);

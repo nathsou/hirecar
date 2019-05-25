@@ -41,13 +41,13 @@ export class SignUpTab extends Component<SignUpTabProps>{
             <Form onSubmit={this.handleSubmit}>
                 <Form.Row>
                     <HcInputFormGroup
-                        size="6" controlId="fistname" className={firstnameError}
+                        size={6} controlId="fistname" className={firstnameError}
                         label="Prénom" type="text"
                         name="firstname" placeholder="Votre prénom"
                         value={firstname}
                         onChange={this.props.onFirstnameChange} />
                     <HcInputFormGroup
-                        size="6" controlId="lastname" className={lastnameError}
+                        size={6} controlId="lastname" className={lastnameError}
                         label="Nom" type="text"
                         name="lastname" placeholder="Votre nom"
                         value={lastname}
@@ -55,28 +55,28 @@ export class SignUpTab extends Component<SignUpTabProps>{
                 </Form.Row>
                 <Form.Row>
                     <HcInputFormGroup
-                        size="12" controlId="signUpEmail" className={emailError}
+                        size={12} controlId="signUpEmail" className={emailError}
                         label="Email" type="text"
                         name="email" placeholder="Veuillez entrer votre email"
                         value={email} onChange={this.props.onEmailChange} />
                 </Form.Row>
                 <Form.Row>
                     <HcInputFormGroup
-                        size="12" controlId="telephone" className={phoneError}
+                        size={12} controlId="telephone" className={phoneError}
                         label="Téléphone" type="tel"
                         name="phone" placeholder="Veuillez entrer votre numéro"
                         value={phone} onChange={this.props.onPhoneChange} />
                 </Form.Row>
                 <Form.Row>
                     <HcInputFormGroup
-                        size="12" controlId="signUpPassword" className={passwordError}
+                        size={12} controlId="signUpPassword" className={passwordError}
                         label="Mot de passe" type="password"
                         name="password" placeholder="Veuillez entrer votre mot de passe"
                         value={password} onChange={this.props.onPasswordChange} />
                 </Form.Row>
                 <Form.Row>
                     <HcInputFormGroup
-                        size="12" controlId="signUpConfirmPassword" className={confirmPasswordError}
+                        size={12} controlId="signUpConfirmPassword" className={confirmPasswordError}
                         label="Confirmation du mot de passe" type="password"
                         name="confirmPassword" placeholder="Veuillez entrer votre mot de passe"
                         value={confirm_password} onChange={this.props.onConfirmPasswordChange} />

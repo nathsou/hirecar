@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import HcJumbotron from './HcJumbotron';
 import Records from './Records';
+import Footer from '../components/Footer';
 
 export default class MainContent extends Component {
     render() {
@@ -8,6 +9,7 @@ export default class MainContent extends Component {
             <main>
                 <HcJumbotron />
                 <Records />
+                <Footer />
             </main>
         );
     }

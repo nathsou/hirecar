@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { HcState } from "../../redux/configureStore";
-import { updateCarSearchInput } from "../../redux/rentCarTab/actions";
+import { setCarSearchInput } from "../../redux/rentCarTab/actions";
 import { RentCarTabState } from "../../redux/rentCarTab/types";
 import HcCarSearchBox from "../CarSearch/HcCarSearchBox";
 import HcSecondaryButton from "../Button/HcSecondaryButton";
 import { Link } from "react-router-dom";
 
 interface RentCarTabProps extends RentCarTabState {
-    onCarSearchChange: typeof updateCarSearchInput
+    onCarSearchChange: typeof setCarSearchInput
 }
 
 export class RentCarTab extends Component<RentCarTabProps> {
@@ -30,6 +30,6 @@ export class RentCarTab extends Component<RentCarTabProps> {
 export default connect(
     (state: HcState) => state.rent_tabs.rent_car_tab,
     {
-        onCarSearchChange: (input: string) => updateCarSearchInput(input)
+        onCarSearchChange: (input: string) => setCarSearchInput(input)
     }
 )(RentCarTab);

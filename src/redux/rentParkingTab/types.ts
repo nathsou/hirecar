@@ -8,31 +8,55 @@ export interface Airport {
 
 export interface RentParkingTabState {
     parking_search_input_value: string,
-    start_date: Date | null,
-    end_date: Date | null,
-    autocomplete_airports: Airport[]
+    start_day: string | null,
+    start_time: string | null,
+    end_day: string | null,
+    end_time: string | null
 }
 
 export const defaultRentParkingTabState: RentParkingTabState = {
     parking_search_input_value: '',
-    start_date: null,
-    end_date: null,
-    autocomplete_airports: []
+    start_day: null,
+    start_time: null,
+    end_time: null,
+    end_day: null
 };
 
-export const UPDATE_PARKING_SEARCH_INPUT = "UPDATE_PARKING_SEARCH_INPUT";
-export const AIRPORTS_RECEIVED = "AIRPORTS_RECEIVED";
+export const SET_RENT_PARKING_SPOT_SEARCH_INPUT = "SET_RENT_PARKING_SPOT_SEARCH_INPUT";
+export const SET_RENT_PARKING_SPOT_SEARCH_START_DAY = "SET_RENT_PARKING_SPOT_SEARCH_START_DAY";
+export const SET_RENT_PARKING_SPOT_SEARCH_END_DAY = "SET_RENT_PARKING_SPOT_SEARCH_END_DAY";
+export const SET_RENT_PARKING_SPOT_SEARCH_START_TIME = 'SET_RENT_PARKING_SPOT_SEARCH_START_TIME';
+export const SET_RENT_PARKING_SPOT_SEARCH_END_TIME = 'SET_RENT_PARKING_SPOT_SEARCH_END_TIME';
 
 
-export interface UpdateParkingSearchAction {
-    type: typeof UPDATE_PARKING_SEARCH_INPUT,
+export interface SetParkingSearchAction {
+    type: typeof SET_RENT_PARKING_SPOT_SEARCH_INPUT,
     value: string
 }
 
-
-export interface AirportsReceivedAction {
-    type: typeof AIRPORTS_RECEIVED,
-    airports: Airport[]
+export interface SetRentParkingSearchStartDayAction {
+    type: typeof SET_RENT_PARKING_SPOT_SEARCH_START_DAY,
+    day: string | null
 }
 
-export type RentParkingTabActionTypes = UpdateParkingSearchAction | AirportsReceivedAction;
+export interface SetRentParkingSearchEndDayAction {
+    type: typeof SET_RENT_PARKING_SPOT_SEARCH_END_DAY,
+    day: string | null
+}
+
+export interface SetRentParkingSearchStartTimeAction {
+    type: typeof SET_RENT_PARKING_SPOT_SEARCH_START_TIME,
+    time: string | null
+}
+
+export interface SetRentParkingSearchEndTimeAction {
+    type: typeof SET_RENT_PARKING_SPOT_SEARCH_END_TIME,
+    time: string | null
+}
+
+export type RentParkingTabActionTypes =
+    SetParkingSearchAction |
+    SetRentParkingSearchStartDayAction |
+    SetRentParkingSearchEndDayAction |
+    SetRentParkingSearchStartTimeAction |
+    SetRentParkingSearchEndTimeAction;

@@ -2,12 +2,30 @@ import React, { FunctionComponent } from "react";
 import Col from "react-bootstrap/Col";
 import Form from 'react-bootstrap/Form';
 import Row from "react-bootstrap/Row";
+import { connect } from "react-redux";
+import { HcState } from "../../redux/configureStore";
+import { setRentCarSearchEndDay, setRentCarSearchEndTime, setRentCarSearchStartDay, setRentCarSearchStartTime } from "../../redux/rentCarTab/actions";
+import { RentCarTabState } from "../../redux/rentCarTab/types";
 import HcInputFormGroup from "../Form/HcInputFormGroup";
 import HcAirportSearchInput from "../ParkingSearch/HcAirportSearchInput";
 import { HcParkingSearchBoxProps } from "../ParkingSearch/HcParkingSearchBox";
 
-const HcCarSearchBox: FunctionComponent<HcParkingSearchBoxProps> = (
-    { box_mode, show_labels, children, onAirportsReceived, onInputChange }) => {
+
+const HcCarSearchBox: FunctionComponent<HcParkingSearchBoxProps & RentCarTabState> = (
+    {
+        box_mode,
+        show_labels,
+        children,
+        onInputChange,
+        start_day,
+        end_day,
+        start_time,
+        end_time,
+        setStartDay,
+        setEndDay,
+        setStartTime,
+        setEndTime
+    }) => {
 
     const dir = box_mode ? Col : Row;
 
@@ -17,14 +35,11 @@ const HcCarSearchBox: FunctionComponent<HcParkingSearchBoxProps> = (
 
                 <Form.Group as={Col} md={box_mode ? 12 : 4} controlId="carLocation">
                     {show_labels ? <Form.Label>Aéroport de départ</Form.Label> : null}
-                    <HcAirportSearchInput
-                        onAirportsReceived={onAirportsReceived}
-                        onInputChange={onInputChange}
-                    />
+                    <HcAirportSearchInput onInputChange={onInputChange} />
                 </Form.Group>
 
                 <HcInputFormGroup
-                    size="4"
+                    size={4}
                     controlId="carStartDate"
                     className=""
                     label="Date de départ"
@@ -32,13 +47,13 @@ const HcCarSearchBox: FunctionComponent<HcParkingSearchBoxProps> = (
                     name="carStartDate"
                     type="date"
                     placeholder=""
-                    value=""
+                    value={start_day || ''}
                     as={dir}
-                    onChange={() => { }}
+                    onChange={e => setStartDay(e.target.value)}
                 />
 
                 <HcInputFormGroup
-                    size="2"
+                    size={2}
                     controlId="carStartHour"
                     className=""
                     label="Heure"
@@ -46,13 +61,13 @@ const HcCarSearchBox: FunctionComponent<HcParkingSearchBoxProps> = (
                     type="time"
                     name="carStartHour"
                     placeholder=""
-                    value=""
+                    value={start_time || ''}
                     as={dir}
-                    onChange={() => { }}
+                    onChange={e => setStartTime(e.target.value)}
                 />
 
                 <HcInputFormGroup
-                    size="4"
+                    size={4}
                     controlId="carEndDate"
                     className=""
                     label="Date de retour"
@@ -60,13 +75,13 @@ const HcCarSearchBox: FunctionComponent<HcParkingSearchBoxProps> = (
                     type="date"
                     name="carEndDate"
                     placeholder=""
-                    value=""
+                    value={end_day || ''}
                     as={dir}
-                    onChange={() => { }}
+                    onChange={e => setEndDay(e.target.value)}
                 />
 
                 <HcInputFormGroup
-                    size="2"
+                    size={2}
                     controlId="carEndHour"
                     className=""
                     label="Heure"
@@ -74,9 +89,9 @@ const HcCarSearchBox: FunctionComponent<HcParkingSearchBoxProps> = (
                     type="time"
                     name="carEndHour"
                     placeholder=""
-                    value=""
+                    value={end_time || ''}
                     as={dir}
-                    onChange={() => { }}
+                    onChange={e => setEndTime(e.target.value)}
                 />
             </Form.Row>
 
@@ -85,4 +100,13 @@ const HcCarSearchBox: FunctionComponent<HcParkingSearchBoxProps> = (
     );
 };
 
-export default HcCarSearchBox;
+
+export default connect(
+    (state: HcState) => state.rent_tabs.rent_car_tab,
+    {
+        setStartDay: (day: string | null) => setRentCarSearchStartDay(day),
+        setEndDay: (day: string | null) => setRentCarSearchEndDay(day),
+        setStartTime: (time: string | null) => setRentCarSearchStartTime(time),
+        setEndTime: (time: string | null) => setRentCarSearchEndTime(time)
+    }
+)(HcCarSearchBox);

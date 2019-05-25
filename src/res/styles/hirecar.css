@@ -31,15 +31,16 @@
 /*** Variables ***/
 
 :root {
-    --primary-color: #272087;
+    --primary-color: rgb(39, 32, 135);
     --primary-btn-text-color: #FFFFFF;
     --secondary-color: #009882;
     --secondary-btn-text-color: #EBF6DE;
     --btn-font: 1rem 'Oswald', sans-serif;
     --text-font: 0.875rem 'Lato', sans-serif;
     --dark-grey: #1B1B1B;
+    --light-grey: #f0f0f0;
     --error-pink: #FF356F;
-    --navbar-height: 52px;
+    --navbar-height: 68px;
     --footer-height: 82px;
 }
 
@@ -74,7 +75,7 @@ a,
 }
 
 .link:hover {
-    color: var(--primary-color);    
+    color: var(--primary-color);
     transition: all .2s;
 }
 
@@ -162,7 +163,7 @@ a:hover {
 }
 
 main {
-    margin-top: 52px;
+    margin-top: var(--navbar-height);
 }
 
 
@@ -266,7 +267,7 @@ select {
     -webkit-appearance: none;
     background-image: url(../img/form-select-arrow.svg);
     background-position: right;
-    background-repeat:no-repeat;
+    background-repeat: no-repeat;
 }
 
 /*** Modal ***/
@@ -302,12 +303,41 @@ select {
     color: var(--primary-color);
 }
 
+/*** Parking ***/
+
+.search-page .search-box-container {
+    background-image: url("./../img/home-bg-1.jpg");
+    padding: 2rem 10rem;
+}
+
+.search-page .search-box-container .search-box-form {
+    background-color: var(--primary-btn-text-color);
+    padding: 2rem;
+    border-radius: 6px;
+}
+
+.search-page .search-list {
+    background-color: var(--primary-btn-text-color);
+    /* background-image: url("./../img/home-bg-1.jpg"); */
+    padding: 2rem;
+}
+
+.search-page .search-map {
+    padding: 0;
+}
+
+.search-page .search-list .search-list-container {
+    background-color: var(--primary-btn-text-color);
+    border-radius: 6px;
+}
+
 /*** User Profile ***/
 .bg-img {
     background-image: url("./../img/home-bg-1.jpg");
     background-size: cover;
     min-height: 80vh;
 }
+
 .user-profile-text {
     font: 1rem 'Oswald', sans-serif;
     color: var(--primary-color);
@@ -321,7 +351,7 @@ select {
     border-radius: 1.5rem;
     text-align: center;
     background-color: var(--secondary-color);
-    color: var(--primary-btn-text-color);   
+    color: var(--primary-btn-text-color);
     margin-left: 1rem;
     cursor: pointer;
     font: .6rem 'Oswald', sans-serif;
@@ -373,8 +403,16 @@ footer p {
     margin-bottom: 2em;
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: left;
     align-items: center;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 5px;
+}
+
+.hc-list-item:hover {
+    border: 2px solid var(--primary-color);
+    background-color: rgba(39, 32, 135, 0.1);
 }
 
 .hc-list-item img {
@@ -448,6 +486,10 @@ footer p {
 .hc-tooltip:hover .hc-tooltiptext {
     visibility: visible;
     opacity: 1;
+}
+
+.hc-map {
+    min-height: 100%;
 }
 
 

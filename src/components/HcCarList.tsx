@@ -18,9 +18,10 @@ class HcCarList extends Component<HcCarListProps> {
             return {
                 title: c.model,
                 features: `${c.fuel.type} - ${c.seats} places - ${c.doors} portes`,
-                footer: `${c.price_per_day} € / jour - ${start_date} > ${end_date}`
+                footer: `${c.price_per_day} € / jour - ${start_date} > ${end_date}`,
+                id: c.id
             };
-        })
+        });
 
         return (
             <main>

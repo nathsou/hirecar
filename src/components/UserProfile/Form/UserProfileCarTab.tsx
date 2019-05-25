@@ -68,6 +68,7 @@ class UserProfileCarTab extends Component<UserProfileCarTabProps> {
                         <HcCircleButton
                         onClick={this.props.toggleCarForm}
                         icon={show_form ? "minus" : "plus"}
+
                     />
                 </h2>
                 {saving ? (<p className="error-message">Votre véhicule a été ajouté.</p>) : null}
@@ -77,13 +78,13 @@ class UserProfileCarTab extends Component<UserProfileCarTabProps> {
                             <div className="car-form-container">
                                 <Form.Row>
                                     <HcInputFormGroup
-                                        size="6" controlId="userProfileCarModel" className={modelError}
+                                        size={6} controlId="userProfileCarModel" className={modelError}
                                         label="Modèle" type="text"
                                         name="model" placeholder="Nom du modèle de la voiture"
                                         value={model}
                                         onChange={this.props.onModelChange} />
                                     <HcInputFormGroup
-                                        size="4" controlId="userProfileCarPrice" className={priceError}
+                                        size={4} controlId="userProfileCarPrice" className={priceError}
                                         label="Prix en €/jour " type="text"
                                         name="price_per_day" placeholder="Prix de la location"
                                         value={price_per_day}

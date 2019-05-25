@@ -1,10 +1,10 @@
 import React, { Component } from "react";
+import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 
 interface HcInputFormGroupProps {
-    size: string,
+    size: number,
     controlId: string,
     className: string,
     label: string,
@@ -32,7 +32,8 @@ export default class HcInputFormGroup extends Component<HcInputFormGroupProps> {
                     name={this.props.name}
                     placeholder={this.props.placeholder}
                     value={this.props.value}
-                    onChange={this.props.onChange} />
+                    onChange={this.props.onChange}
+                />
                 {this.props.className ? <div className='invalid-feedback'>{this.props.className}</div> : null}
             </Form.Group>
         );
