@@ -324,7 +324,10 @@ select {
     color: var(--primary-btn-text-color);   
     margin-left: 1rem;
     cursor: pointer;
-    font: 1rem 'Oswald', sans-serif;
+    font: .6rem 'Oswald', sans-serif;
+    line-height: 1.5rem;
+    position: relative;
+    bottom: 3px;
 }
 
 .error-message {

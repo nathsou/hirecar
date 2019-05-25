@@ -10,6 +10,9 @@ import HcCircleButton from "../Button/HcCircleButton";
 import UserProfileInfoTab from "./Form/UserProfileInfoTab";
 import { toggleUserProfileCarForm, getUserProfileCarFeaturesForm, submitUserProfileCarForm, postUserProfileCarForm } from "../../redux/userProfile/userProfileCarTab/actions";
 import { UserProfileCarTabState, UserProfileCarFormDataState } from "../../redux/userProfile/userProfileCarTab/types";
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons'
+library.add(faPlus, faMinus);
 
 interface HcUserProfileTabProps {
     user_profile_info_tab: UserProfileInfoTabState,
@@ -70,7 +73,10 @@ class HcUserProfileTab extends Component<HcUserProfileTabProps> {
                 <Form onSubmit={this.handleCarSubmit}>
                     <h2 className="user-profile-text">
                         Mes voitures enregistrées
-                    <HcCircleButton onClick={this.props.toggleCarForm} value={show_form ? "-" : "+"} />
+                        <HcCircleButton
+                            onClick={this.props.toggleCarForm}
+                            icon={show_form ? "minus" : "plus"}
+                        />
                     </h2>
                     {show_form ?
                         <div>

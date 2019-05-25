@@ -9,7 +9,6 @@ import MainContent from './components/MainContent';
 import { store } from './redux/configureStore';
 import HcUserProfile from './components/UserProfile/HcUserProfile';
 
-
 export default class HireCar extends Component {
   public render() {
     return (
