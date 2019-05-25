@@ -27,6 +27,7 @@ export interface UserProfileCarTabState {
     show_form: boolean,
     valid_form: boolean,
     sending: boolean,
+    saving: boolean,
 }
 
 export const defaultUserProfileCarTabState: UserProfileCarTabState = {
@@ -79,7 +80,8 @@ export const defaultUserProfileCarTabState: UserProfileCarTabState = {
     },
     show_form: false,
     valid_form: false,
-    sending: false
+    sending: false,
+    saving: false
 }
 
 export const TOGGLE_USER_PROFILE_CAR_FORM = "TOGGLE_USER_PROFILE_CAR_FORM";
@@ -160,9 +162,15 @@ export interface SetUserProfileCarFeaturesAction {
     data: UserProfileCarFeaturesState
 }
 
+export const USER_PROFILE_CAR_SAVED = "USER_PROFILE_CAR_SAVED";
+export interface UserProfileCarSavedAction {
+    type: typeof USER_PROFILE_CAR_SAVED
+}
+
 export const RESET_USER_PROFILE_CAR_FORM = "RESET_USER_PROFILE_CAR_FORM";
 export interface ResetUserProfileCarFormAction {
     type: typeof RESET_USER_PROFILE_CAR_FORM
 }
 
-export type UserProfileCarActionTypes = ToggleUserProfileCarFormAction | UpdateUserProfileCarModelAction | UpdateUserProfileCarPriceAction | UpdateUserProfileCarGearboxAction | UpdateUserProfileCarFuelAction | UpdateUserProfileCarSeatsAction | UpdateUserProfileCarDoorsAction | SubmitUserProfileCarAction | UserProfileCarSentAction | UserProfileCarReceivedAction | SetUserProfileCarOwnerAction | GetUserProfileCarFeaturesSentAction | GetUserProfileCarFeaturesReceivedAction | SetUserProfileCarFeaturesAction | ResetUserProfileCarFormAction;
+
+export type UserProfileCarActionTypes = ToggleUserProfileCarFormAction | UpdateUserProfileCarModelAction | UpdateUserProfileCarPriceAction | UpdateUserProfileCarGearboxAction | UpdateUserProfileCarFuelAction | UpdateUserProfileCarSeatsAction | UpdateUserProfileCarDoorsAction | SubmitUserProfileCarAction | UserProfileCarSentAction | UserProfileCarReceivedAction | SetUserProfileCarOwnerAction | GetUserProfileCarFeaturesSentAction | GetUserProfileCarFeaturesReceivedAction | SetUserProfileCarFeaturesAction | UserProfileCarSavedAction | ResetUserProfileCarFormAction;

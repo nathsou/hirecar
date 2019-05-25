@@ -142,7 +142,7 @@ export function sentUserProfileForm(
             dispatch(resetUserProfilePassword());
             setTimeout(() => {
                 dispatch(userProfileInfoSaved());
-            }, 3000);
+            }, 2000);
 
         }).catch((error: AxiosError) => {
             const response = error.response;

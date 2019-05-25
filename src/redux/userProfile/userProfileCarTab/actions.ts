@@ -1,7 +1,7 @@
 import Axios, { AxiosError, AxiosResponse } from "axios";
 import { Dispatch } from "react";
 import { parseIdentifiedType, RawIdentifiedType } from "../../../Utils";
-import { GetUserProfileCarFeaturesReceivedAction, GetUserProfileCarFeaturesSentAction, GET_USER_PROFILE_CAR_FEATURES_RECEIVED, GET_USER_PROFILE_CAR_FEATURES_SENT, SetUserProfileCarFeaturesAction, SET_USER_PROFILE_CAR_FEATURES, ToggleUserProfileCarFormAction, TOGGLE_USER_PROFILE_CAR_FORM, UpdateUserProfileCarModelAction, UpdateUserProfileCarPriceAction, UPDATE_USER_PROFILE_CAR_MODEL_INPUT, UPDATE_USER_PROFILE_CAR_PRICE_INPUT, UserProfileCarActionTypes, UserProfileCarFeaturesState, UpdateUserProfileCarGearboxAction, UPDATE_USER_PROFILE_CAR_GEARBOX_SELECT, UpdateUserProfileCarFuelAction, UPDATE_USER_PROFILE_CAR_FUEL_SELECT, UpdateUserProfileCarSeatsAction, UPDATE_USER_PROFILE_CAR_SEATS_SELECT, UpdateUserProfileCarDoorsAction, UPDATE_USER_PROFILE_CAR_DOORS_SELECT, SubmitUserProfileCarAction, SUMBIT_USER_PROFILE_CAR, UserProfileCarSentAction, USER_PROFILE_CAR_FORM_SENT, USER_PROFILE_CAR_FORM_RECEIVED, UserProfileCarReceivedAction, UserProfileCarFormDataState, SET_USER_PROFILE_CAR_OWNER, SetUserProfileCarOwnerAction, ResetUserProfileCarFormAction, RESET_USER_PROFILE_CAR_FORM } from "./types";
+import { GetUserProfileCarFeaturesReceivedAction, GetUserProfileCarFeaturesSentAction, GET_USER_PROFILE_CAR_FEATURES_RECEIVED, GET_USER_PROFILE_CAR_FEATURES_SENT, SetUserProfileCarFeaturesAction, SET_USER_PROFILE_CAR_FEATURES, ToggleUserProfileCarFormAction, TOGGLE_USER_PROFILE_CAR_FORM, UpdateUserProfileCarModelAction, UpdateUserProfileCarPriceAction, UPDATE_USER_PROFILE_CAR_MODEL_INPUT, UPDATE_USER_PROFILE_CAR_PRICE_INPUT, UserProfileCarActionTypes, UserProfileCarFeaturesState, UpdateUserProfileCarGearboxAction, UPDATE_USER_PROFILE_CAR_GEARBOX_SELECT, UpdateUserProfileCarFuelAction, UPDATE_USER_PROFILE_CAR_FUEL_SELECT, UpdateUserProfileCarSeatsAction, UPDATE_USER_PROFILE_CAR_SEATS_SELECT, UpdateUserProfileCarDoorsAction, UPDATE_USER_PROFILE_CAR_DOORS_SELECT, SubmitUserProfileCarAction, SUMBIT_USER_PROFILE_CAR, UserProfileCarSentAction, USER_PROFILE_CAR_FORM_SENT, USER_PROFILE_CAR_FORM_RECEIVED, UserProfileCarReceivedAction, UserProfileCarFormDataState, SET_USER_PROFILE_CAR_OWNER, SetUserProfileCarOwnerAction, ResetUserProfileCarFormAction, RESET_USER_PROFILE_CAR_FORM, UserProfileCarSavedAction, USER_PROFILE_CAR_SAVED } from "./types";
 
 export function toggleUserProfileCarForm(): ToggleUserProfileCarFormAction {
     return {
@@ -69,6 +69,13 @@ export function userProfileCarFormReceived(): UserProfileCarReceivedAction {
     };
 }
 
+export function userProfileCarSaved(): UserProfileCarSavedAction {
+    return {
+        type: USER_PROFILE_CAR_SAVED
+    }
+}
+
+
 export function resetUserProfileCarForm(): ResetUserProfileCarFormAction {
     return {
         type: RESET_USER_PROFILE_CAR_FORM
@@ -82,7 +89,10 @@ export function postUserProfileCarForm(data: UserProfileCarFormDataState) {
             .then(() => {
                 dispatch(resetUserProfileCarForm());
                 dispatch(setUserProfileCarOwner(data.owner_id));
-                dispatch(getUserProfileCarFeaturesReceived());
+                dispatch(userProfileCarFormReceived());
+                setTimeout(() => {
+                    dispatch(userProfileCarSaved());
+                }, 2000);
             }).catch((error: AxiosError) => {
                 const response = error.response;
                 console.log(response);
