@@ -1,5 +1,5 @@
-import { RentCarTabState, defaultRentCarTabState, UpdateCarSearchAction } from "../rentCarTab/types";
-import { defaultRentParkingTabState, RentParkingTabState, UpdateParkingSearchAction } from "../rentParkingTab/types";
+import { RentCarTabState, defaultRentCarTabState, SetCarSearchAction } from "../rentCarTab/types";
+import { defaultRentParkingTabState, RentParkingTabState, SetParkingSearchAction } from "../rentParkingTab/types";
 
 export interface RentTabsState {
     rent_parking_spot_tab: RentParkingTabState,
@@ -20,4 +20,4 @@ export interface ChangeRentTabAction {
     active_tab_key: string
 }
 
-export type RentTabsActionTypes = ChangeRentTabAction | UpdateParkingSearchAction | UpdateCarSearchAction;
+export type RentTabsActionTypes = ChangeRentTabAction | SetParkingSearchAction | SetCarSearchAction;

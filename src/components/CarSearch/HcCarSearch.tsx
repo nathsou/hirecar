@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { HcState } from "../../redux/configureStore";
 import { CarSearchState } from "../../redux/carSearch/types";
 import { fetchCars } from "../../redux/carSearch/actions";
-import { updateCarSearchInput } from "../../redux/rentCarTab/actions";
+import { setCarSearchInput } from "../../redux/rentCarTab/actions";
 
 interface HcCarSearchPropsMatchParams {
     airport: string
@@ -38,7 +38,7 @@ export default
             (state: HcState) => state.car_search,
             {
                 fetchCars: (airport_name: string) => fetchCars({ airport_name }),
-                updateCarSearchInput: (input: string) => updateCarSearchInput(input)
+                updateCarSearchInput: (input: string) => setCarSearchInput(input)
             }
         )(HcCarSearch)
     );

@@ -1,21 +1,22 @@
 import React, { FunctionComponent } from "react";
 import { Marker } from 'react-map-gl';
 import { ParkingLot } from "../../redux/parkingSearch/types";
-import MarkerImg from "../../res/img/marker.png";
+import MarkerImg from "../../res/img/parking_lot_marker.svg";
 
-export interface HcMapMarkerProps {
-    parking_lot: ParkingLot
+export interface HcMapParkingLotMarkerProps {
+    parking_lot: ParkingLot,
+    onClick?: () => void
 }
 
-const HcMapMarker: FunctionComponent<HcMapMarkerProps> = ({ parking_lot }) => {
+const HcMapParkingLotMarker: FunctionComponent<HcMapParkingLotMarkerProps> = ({ parking_lot, onClick }) => {
     return (
         <Marker
             latitude={parking_lot.lat}
             longitude={parking_lot.lng}
-            offsetTop={-23}
-            offsetLeft={-15}
+            offsetTop={-20}
+            offsetLeft={-20}
         >
-            <div className='hc-tooltip'>
+            <div className='hc-tooltip' onClick={onClick}>
                 <img src={MarkerImg} draggable={false} alt={parking_lot.label} />
                 <span className='hc-tooltiptext'>{parking_lot.label}</span>
             </div>
@@ -24,4 +25,4 @@ const HcMapMarker: FunctionComponent<HcMapMarkerProps> = ({ parking_lot }) => {
     );
 };
 
-export default HcMapMarker;
+export default HcMapParkingLotMarker;

@@ -2,11 +2,13 @@ import React, { Component } from "react";
 import { Typeahead } from 'react-bootstrap-typeahead';
 import { connect } from "react-redux";
 import { HcState } from "../../redux/configureStore";
-import { searchAirports, updateAirportSearchInput } from "../../redux/rentParkingTab/actions";
+import { fetchAirports } from "../../redux/parkingSearch/actions";
+import { setAirportSearchInput } from "../../redux/rentParkingTab/actions";
 import { Airport } from "../../redux/rentParkingTab/types";
 import { RentParkingTabProps } from "../Form/RentParkingTab";
+import { ParkingSearchState } from "../../redux/parkingSearch/types";
 
-export interface HcAirportSearchInputProps extends RentParkingTabProps {
+export interface HcAirportSearchInputProps extends RentParkingTabProps, Pick<ParkingSearchState, 'airports'> {
     onAirportsReceived?: (parkings: Airport[]) => void,
     onInputChange?: (input: string) => void
 }
@@ -27,21 +29,21 @@ class HcAirportSearchInput extends Component<HcAirportSearchInputProps> {
     }
 
     public componentDidUpdate(prev_props: Readonly<HcAirportSearchInputProps>) {
-        const { autocomplete_airports: airports, onAirportsReceived } = this.props;
-        if (onAirportsReceived && prev_props.autocomplete_airports.length !== airports.length) {
+        const { airports, onAirportsReceived } = this.props;
+        if (onAirportsReceived && prev_props.airports.length !== airports.length) {
             onAirportsReceived(airports);
         }
     }
 
     public render() {
 
-        const { autocomplete_airports, parking_search_input_value: value } = this.props;
+        const { parking_search_input_value: value, airports } = this.props;
 
         return (
             <Typeahead
                 id='airport'
                 multiple={false}
-                options={autocomplete_airports.map(({ name }) => name)}
+                options={airports.map(({ name }) => name)}
                 placeholder="Lieu de stationnement"
                 onInputChange={this.onInput}
                 onChange={this.onSelected}
@@ -52,9 +54,9 @@ class HcAirportSearchInput extends Component<HcAirportSearchInputProps> {
 }
 
 export default connect(
-    (state: HcState) => state.rent_tabs.rent_parking_spot_tab,
+    (state: HcState) => ({ ...state.rent_tabs.rent_parking_spot_tab, airports: state.parking_search.airports }),
     {
-        onParkingSearchChange: (value: string) => updateAirportSearchInput(value),
-        searchAirports: (input: string) => searchAirports(input)
+        onParkingSearchChange: (value: string) => setAirportSearchInput(value),
+        searchAirports: (name: string) => fetchAirports({ name })
     }
 )(HcAirportSearchInput);

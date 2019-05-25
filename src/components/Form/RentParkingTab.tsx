@@ -2,14 +2,15 @@ import React, { FunctionComponent } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { HcState } from "../../redux/configureStore";
-import { searchAirports, updateAirportSearchInput } from "../../redux/rentParkingTab/actions";
+import { fetchAirports } from "../../redux/parkingSearch/actions";
+import { setAirportSearchInput } from "../../redux/rentParkingTab/actions";
 import { RentParkingTabState } from "../../redux/rentParkingTab/types";
 import HcSecondaryButton from "../Button/HcSecondaryButton";
 import HcParkingSearchBox from "../ParkingSearch/HcParkingSearchBox";
 
 
 export interface RentParkingTabProps extends RentParkingTabState {
-    onParkingSearchChange: typeof updateAirportSearchInput,
+    onParkingSearchChange: typeof setAirportSearchInput,
     searchAirports: (input: string) => void
 }
 
@@ -29,7 +30,7 @@ const RentParkingTab: FunctionComponent<RentParkingTabProps> = ({ parking_search
 export default connect(
     (state: HcState) => state.rent_tabs.rent_parking_spot_tab,
     {
-        onParkingSearchChange: (value: string) => updateAirportSearchInput(value),
-        searchAirports: (input: string) => searchAirports(input)
+        onParkingSearchChange: (value: string) => setAirportSearchInput(value),
+        searchAirports: (name: string) => fetchAirports({ name })
     }
 )(RentParkingTab);

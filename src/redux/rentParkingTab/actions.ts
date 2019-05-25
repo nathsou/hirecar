@@ -1,30 +1,36 @@
-import axios, { AxiosResponse, AxiosError } from "axios";
-import { Dispatch } from "redux";
-import { propsToURIParams } from "../../Utils";
-import { RentParkingTabActionTypes, UpdateParkingSearchAction, UPDATE_PARKING_SEARCH_INPUT, Airport, AirportsReceivedAction, AIRPORTS_RECEIVED } from "./types";
+import { SetParkingSearchAction, SET_RENT_PARKING_SPOT_SEARCH_END_DAY, SET_RENT_PARKING_SPOT_SEARCH_INPUT, SET_RENT_PARKING_SPOT_SEARCH_START_DAY, SetRentParkingSearchStartDayAction, SetRentParkingSearchEndDayAction, SET_RENT_PARKING_SPOT_SEARCH_START_TIME, SetRentParkingSearchStartTimeAction, SetRentParkingSearchEndTimeAction, SET_RENT_PARKING_SPOT_SEARCH_END_TIME } from "./types";
 
-export function updateAirportSearchInput(value: string): UpdateParkingSearchAction {
+export function setAirportSearchInput(value: string): SetParkingSearchAction {
     return {
-        type: UPDATE_PARKING_SEARCH_INPUT,
+        type: SET_RENT_PARKING_SPOT_SEARCH_INPUT,
         value
     };
 }
 
-export function airportsReceived(airports: Airport[]): AirportsReceivedAction {
+export function setRentParkingSearchStartDay(day: string | null): SetRentParkingSearchStartDayAction {
     return {
-        type: AIRPORTS_RECEIVED,
-        airports
+        type: SET_RENT_PARKING_SPOT_SEARCH_START_DAY,
+        day
     };
 }
 
-export function searchAirports(input: string) {
-    return (dispatch: Dispatch<RentParkingTabActionTypes>) => {
-        axios.get(`${process.env.REACT_APP_HIRECAR_API_URI}/airports${propsToURIParams({ name: input })}`)
-            .then((res: AxiosResponse) => {
-                dispatch(airportsReceived((res.data).airports as Airport[]))
-            })
-            .catch((error: AxiosError) => {
-                console.error(error);
-            });
+export function setRentParkingSearchEndDay(day: string | null): SetRentParkingSearchEndDayAction {
+    return {
+        type: SET_RENT_PARKING_SPOT_SEARCH_END_DAY,
+        day
+    };
+}
+
+export function setRentParkingSearchStartTime(time: string | null): SetRentParkingSearchStartTimeAction {
+    return {
+        type: SET_RENT_PARKING_SPOT_SEARCH_START_TIME,
+        time
+    };
+}
+
+export function setRentParkingSearchEndTime(time: string | null): SetRentParkingSearchEndTimeAction {
+    return {
+        type: SET_RENT_PARKING_SPOT_SEARCH_END_TIME,
+        time
     };
 }
