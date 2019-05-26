@@ -42,12 +42,10 @@ class UserProfileTabCar extends Component<UserProfileTabCarProps> {
         const { valid_form, form_data, editing, submit_form } = this.props.user_profile_tab_car;
         if (!editing && valid_form && prev_props.user_profile_tab_car.valid_form !== valid_form) {
             this.props.onPostUserProfileCarForm(form_data);
-            this.props.fetchUserProfileCars(this.props.user.id);
         }
 
         if (submit_form && editing && valid_form && prev_props.user_profile_tab_car.submit_form !== submit_form) {
             this.props.onPostUpdateUserProfileCarForm(form_data);
-            this.props.fetchUserProfileCars(this.props.user.id);
         }
     }
 
@@ -66,7 +64,7 @@ class UserProfileTabCar extends Component<UserProfileTabCarProps> {
                     />
                 </h2>
                 {saving ? (<p className="error-message">Votre véhicule a été ajouté.</p>) : null}
-                {fetchingCars ? (
+                {fetchingCars && !saving ? (
                     <p>Chargement de vos véhicules...</p>
                 ) : null}
                 {show_form ? (

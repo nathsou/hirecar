@@ -83,16 +83,19 @@ export function resetUserProfileCarForm(): ResetUserProfileCarFormAction {
 }
 
 export function postUserProfileCarForm(data: UserProfileCarFormDataState) {
+    const id = parseInt(data.owner_id);
 
     return (dispatch: Dispatch<UserProfileCarActionTypes>) => {
         dispatch(userProfileCarFormSent());
 
         Axios.post(`${process.env.REACT_APP_HIRECAR_API_URI}/cars`, data)
+
             .then(() => {
                 dispatch(resetUserProfileCarForm());
                 dispatch(setUserProfileCarOwner(data.owner_id));
                 dispatch(userProfileCarFormReceived());
-
+                dispatch(userProfileCarsSent());
+                fetchUserProfileCarsRequest(dispatch, id);
                 setTimeout(() => {
                     dispatch(userProfileCarSaved());
                 }, 2000);
@@ -172,15 +175,7 @@ export function setUserProfileCars(data: UserProfileCarsState): SetUserProfileCa
 export function fetchUserProfileCars(id: number) {
     return (dispatch: Dispatch<UserProfileCarActionTypes>) => {
         dispatch(userProfileCarsSent());
-
-        Axios.get(`${process.env.REACT_APP_HIRECAR_API_URI}/cars/${id}`)
-            .then((res: AxiosResponse) => {
-                dispatch(setUserProfileCars(res.data));
-                dispatch(userProfileCarsReceived());
-            }).catch((error: AxiosError) => {
-                const response = error.response;
-                console.log(response);
-            });
+        fetchUserProfileCarsRequest(dispatch, id);
     }
 }
 
@@ -206,6 +201,7 @@ export function updateUserProfileCarReceived(): UpdateUserProfileCarReceivedActi
 export function postUpdateUserProfileCarForm(data: UserProfileCarFormDataState) {
 
     return (dispatch: Dispatch<UserProfileCarActionTypes>) => {
+        const id = parseInt(data.owner_id);
         dispatch(updateUserProfileCarSent());
 
         Axios.put(`${process.env.REACT_APP_HIRECAR_API_URI}/cars/${data.id}`, data)
@@ -213,6 +209,7 @@ export function postUpdateUserProfileCarForm(data: UserProfileCarFormDataState) 
                 dispatch(resetUserProfileCarForm());
                 dispatch(setUserProfileCarOwner(data.owner_id));
                 dispatch(updateUserProfileCarReceived());
+                fetchUserProfileCarsRequest(dispatch, id);
                 setTimeout(() => {
                     dispatch(userProfileCarSaved());
                 }, 2000);
@@ -221,4 +218,18 @@ export function postUpdateUserProfileCarForm(data: UserProfileCarFormDataState) 
                 console.log(response);
             });
     }
+}
+
+export function fetchUserProfileCarsRequest(
+    dispatch: Dispatch<UserProfileCarActionTypes>,
+    id: number,
+) {
+    Axios.get(`${process.env.REACT_APP_HIRECAR_API_URI}/cars/${id}`)
+        .then((res: AxiosResponse) => {
+            dispatch(setUserProfileCars(res.data));
+            dispatch(userProfileCarsReceived());
+        }).catch((error: AxiosError) => {
+            const response = error.response;
+            console.log(response);
+        });
 }
