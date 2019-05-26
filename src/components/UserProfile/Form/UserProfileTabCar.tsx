@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Form from "react-bootstrap/Form";
-import { toggleUserProfileCarForm, submitUserProfileCarForm, fetchUserProfileCarFeaturesForm, postUserProfileCarForm, fetchUserProfileCars } from "../../../redux/userProfile/userProfileTabCar/actions";
+import { toggleUserProfileCarForm, submitUserProfileCarForm, fetchUserProfileCarFeaturesForm, postUserProfileCarForm, fetchUserProfileCars, postUpdateUserProfileCarForm } from "../../../redux/userProfile/userProfileTabCar/actions";
 import { connect } from "react-redux";
 import { HcState } from "../../../redux/configureStore";
 import { UserProfileTabCarState, UserProfileCarFormDataState } from "../../../redux/userProfile/userProfileTabCar/types";
@@ -20,7 +20,8 @@ interface UserProfileTabCarProps {
     fetchUserProfileCarFeatures: () => void,
     onUserProfileCarSumbit: typeof submitUserProfileCarForm,
     onPostUserProfileCarForm: (data: UserProfileCarFormDataState) => void,
-    fetchUserProfileCars: (id: number) => void
+    fetchUserProfileCars: (id: number) => void,
+    onPostUpdateUserProfileCarForm: (data: UserProfileCarFormDataState) => void
 }
 
 class UserProfileTabCar extends Component<UserProfileTabCarProps> {
@@ -37,16 +38,23 @@ class UserProfileTabCar extends Component<UserProfileTabCarProps> {
     }
 
     public componentDidUpdate(prev_props: Readonly<UserProfileTabCarProps>) {
-        const { valid_form, form_data } = this.props.user_profile_tab_car;
-        if (valid_form && prev_props.user_profile_tab_car.valid_form !== valid_form) {
+
+        const { valid_form, form_data, editing, submit_form } = this.props.user_profile_tab_car;
+        if (!editing && valid_form && prev_props.user_profile_tab_car.valid_form !== valid_form) {
             this.props.onPostUserProfileCarForm(form_data);
+            this.props.fetchUserProfileCars(this.props.user.id);
+        }
+
+        if (submit_form && editing && valid_form && prev_props.user_profile_tab_car.submit_form !== submit_form) {
+            this.props.onPostUpdateUserProfileCarForm(form_data);
             this.props.fetchUserProfileCars(this.props.user.id);
         }
     }
 
     public render() {
 
-        const { show_form, saving, cars_data } = this.props.user_profile_tab_car;
+        const { editing, show_form, saving, cars_data } = this.props.user_profile_tab_car;
+        const { fetching: fetchingCars } = this.props.user_profile_tab_car.cars_data;
         const cars_count = Object.keys(cars_data.cars).length;
         return (
             <Form onSubmit={this.handleCarSubmit}>
@@ -58,20 +66,24 @@ class UserProfileTabCar extends Component<UserProfileTabCarProps> {
                     />
                 </h2>
                 {saving ? (<p className="error-message">Votre véhicule a été ajouté.</p>) : null}
+                {fetchingCars ? (
+                    <p>Chargement de vos véhicules...</p>
+                ) : null}
                 {show_form ? (
                     <div>
                         <UserProfileTabCarInputs />
                         <div style={{ textAlign: "right" }}>
-                            <HcSecondaryButton type="submit">Ajouter</HcSecondaryButton>
+                            <HcSecondaryButton type="submit">{editing ? "Modifier" : "Ajouter"}</HcSecondaryButton>
                         </div>
                     </div>
                 ) : null}
-                {!saving && ! show_form ? <HcCarsList /> : null}
-                {!show_form && !saving && cars_count === 0 ? (
+                {!saving && !show_form ? <HcCarsList /> : null}
+                {!fetchingCars && !show_form && !saving && cars_count === 0 ? (
                     <p>Vous n'avez pas encore déclaré de véhicules ?
                         <span className="link" onClick={this.props.toggleCarForm}> Enregistrez vos véhicules.</span>
                     </p>
                 ) : null}
+
             </Form>
         );
     }
@@ -87,6 +99,7 @@ export default connect(
         fetchUserProfileCarFeatures: () => fetchUserProfileCarFeaturesForm(),
         onUserProfileCarSumbit: () => submitUserProfileCarForm(),
         onPostUserProfileCarForm: (data: UserProfileCarFormDataState) => postUserProfileCarForm(data),
-        fetchUserProfileCars: (id: number) => fetchUserProfileCars(id)
+        fetchUserProfileCars: (id: number) => fetchUserProfileCars(id),
+        onPostUpdateUserProfileCarForm: (data: UserProfileCarFormDataState) => postUpdateUserProfileCarForm(data)
     }
 )(UserProfileTabCar)

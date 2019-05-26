@@ -1,7 +1,7 @@
 import Axios, { AxiosError, AxiosResponse } from "axios";
 import { Dispatch } from "react";
 import { parseIdentifiedType, RawIdentifiedType } from "../../../Utils";
-import { UserProfileCarFeaturesReceivedAction, UserProfileCarFeaturesSentAction, USER_PROFILE_CAR_FEATURES_RECEIVED, USER_PROFILE_CAR_FEATURES_SENT, SetUserProfileCarFeaturesAction, SET_USER_PROFILE_CAR_FEATURES, ToggleUserProfileCarFormAction, TOGGLE_USER_PROFILE_CAR_FORM, UpdateUserProfileCarModelAction, UpdateUserProfileCarPriceAction, UPDATE_USER_PROFILE_CAR_MODEL_INPUT, UPDATE_USER_PROFILE_CAR_PRICE_INPUT, UserProfileCarActionTypes, UserProfileCarFeaturesState, UpdateUserProfileCarGearboxAction, UPDATE_USER_PROFILE_CAR_GEARBOX_SELECT, UpdateUserProfileCarFuelAction, UPDATE_USER_PROFILE_CAR_FUEL_SELECT, UpdateUserProfileCarSeatsAction, UPDATE_USER_PROFILE_CAR_SEATS_SELECT, UpdateUserProfileCarDoorsAction, UPDATE_USER_PROFILE_CAR_DOORS_SELECT, SubmitUserProfileCarAction, SUMBIT_USER_PROFILE_CAR, UserProfileCarSentAction, USER_PROFILE_CAR_FORM_SENT, USER_PROFILE_CAR_FORM_RECEIVED, UserProfileCarReceivedAction, UserProfileCarFormDataState, SET_USER_PROFILE_CAR_OWNER, SetUserProfileCarOwnerAction, ResetUserProfileCarFormAction, RESET_USER_PROFILE_CAR_FORM, UserProfileCarSavedAction, USER_PROFILE_CAR_SAVED, UserProfileCarsSentAction, USER_PROFILE_CARS_SENT, UserProfileCarsReceivedAction, USER_PROFILE_CARS_RECEIVED, SetUserProfileCarsAction, SET_USER_PROFILE_CARS, UserProfileCarsState } from "./types";
+import { UserProfileCarFeaturesReceivedAction, UserProfileCarFeaturesSentAction, USER_PROFILE_CAR_FEATURES_RECEIVED, USER_PROFILE_CAR_FEATURES_SENT, SetUserProfileCarFeaturesAction, SET_USER_PROFILE_CAR_FEATURES, ToggleUserProfileCarFormAction, TOGGLE_USER_PROFILE_CAR_FORM, UpdateUserProfileCarModelAction, UpdateUserProfileCarPriceAction, UPDATE_USER_PROFILE_CAR_MODEL_INPUT, UPDATE_USER_PROFILE_CAR_PRICE_INPUT, UserProfileCarActionTypes, UserProfileCarFeaturesState, UpdateUserProfileCarGearboxAction, UPDATE_USER_PROFILE_CAR_GEARBOX_SELECT, UpdateUserProfileCarFuelAction, UPDATE_USER_PROFILE_CAR_FUEL_SELECT, UpdateUserProfileCarSeatsAction, UPDATE_USER_PROFILE_CAR_SEATS_SELECT, UpdateUserProfileCarDoorsAction, UPDATE_USER_PROFILE_CAR_DOORS_SELECT, SubmitUserProfileCarAction, SUMBIT_USER_PROFILE_CAR, UserProfileCarSentAction, USER_PROFILE_CAR_FORM_SENT, USER_PROFILE_CAR_FORM_RECEIVED, UserProfileCarReceivedAction, UserProfileCarFormDataState, SET_USER_PROFILE_CAR_OWNER, SetUserProfileCarOwnerAction, ResetUserProfileCarFormAction, RESET_USER_PROFILE_CAR_FORM, UserProfileCarSavedAction, USER_PROFILE_CAR_SAVED, UserProfileCarsSentAction, USER_PROFILE_CARS_SENT, UserProfileCarsReceivedAction, USER_PROFILE_CARS_RECEIVED, SetUserProfileCarsAction, SET_USER_PROFILE_CARS, UserProfileCarsState, UpdateUserProfileCarAction, UPDATE_USER_PROFILE_CAR, UPDATE_USER_PROFILE_CAR_RECEIVED, UPDATE_USER_PROFILE_CAR_SENT, UpdateUserProfileCarSentAction, UpdateUserProfileCarReceivedAction } from "./types";
 
 export function toggleUserProfileCarForm(): ToggleUserProfileCarFormAction {
     return {
@@ -86,7 +86,7 @@ export function postUserProfileCarForm(data: UserProfileCarFormDataState) {
 
     return (dispatch: Dispatch<UserProfileCarActionTypes>) => {
         dispatch(userProfileCarFormSent());
-        const id = parseInt(data.owner_id);
+
         Axios.post(`${process.env.REACT_APP_HIRECAR_API_URI}/cars`, data)
             .then(() => {
                 dispatch(resetUserProfileCarForm());
@@ -177,6 +177,45 @@ export function fetchUserProfileCars(id: number) {
             .then((res: AxiosResponse) => {
                 dispatch(setUserProfileCars(res.data));
                 dispatch(userProfileCarsReceived());
+            }).catch((error: AxiosError) => {
+                const response = error.response;
+                console.log(response);
+            });
+    }
+}
+
+export function updateUserProfileCar(id: number): UpdateUserProfileCarAction {
+    return {
+        type: UPDATE_USER_PROFILE_CAR,
+        id
+    }
+}
+
+export function updateUserProfileCarSent(): UpdateUserProfileCarSentAction {
+    return {
+        type: UPDATE_USER_PROFILE_CAR_SENT
+    };
+}
+
+export function updateUserProfileCarReceived(): UpdateUserProfileCarReceivedAction {
+    return {
+        type: UPDATE_USER_PROFILE_CAR_RECEIVED
+    };
+}
+
+export function postUpdateUserProfileCarForm(data: UserProfileCarFormDataState) {
+
+    return (dispatch: Dispatch<UserProfileCarActionTypes>) => {
+        dispatch(updateUserProfileCarSent());
+
+        Axios.put(`${process.env.REACT_APP_HIRECAR_API_URI}/cars/${data.id}`, data)
+            .then(() => {
+                dispatch(resetUserProfileCarForm());
+                dispatch(setUserProfileCarOwner(data.owner_id));
+                dispatch(updateUserProfileCarReceived());
+                setTimeout(() => {
+                    dispatch(userProfileCarSaved());
+                }, 2000);
             }).catch((error: AxiosError) => {
                 const response = error.response;
                 console.log(response);

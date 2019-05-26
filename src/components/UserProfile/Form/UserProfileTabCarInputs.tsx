@@ -34,6 +34,8 @@ class UserProfileTabCarInputs extends Component<UserProfileTabCarProps> {
             seats: defaultSeats,
             doors: defaultDoors
         } = this.props.user_profile_tab_car.form_data;
+        const gearboxId = (defaultGearbox.id).toString();
+        const fuelId = (defaultFuel.id).toString();
         const { model_error: modelError, price_error: priceError } = this.props.user_profile_tab_car.form_errors;
 
         return (
@@ -56,13 +58,13 @@ class UserProfileTabCarInputs extends Component<UserProfileTabCarProps> {
                     <HcSelectFormGroup
                         size="4" controlId="userProfileCarGearbox" className=""
                         label="Boîte de vitesse" name="gearbox"
-                        values={gearbox} value={defaultGearbox}
+                        values={gearbox} value={gearboxId}
                         onChange={this.props.onGearboxChange}
                     />
                     <HcSelectFormGroup
                         size="4" controlId="userProfileCarFuel" className=""
                         label="Carburant" name="fuel"
-                        values={fuel} value={defaultFuel}
+                        values={fuel} value={fuelId}
                         onChange={this.props.onFuelChange}
                     />
                     <HcSelectFormGroup

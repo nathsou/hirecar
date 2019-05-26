@@ -422,7 +422,6 @@ footer p {
 
 .hc-list-item {
     margin-top: 1rem;
-    /* margin-bottom: 2em; */
     display: flex;
     flex-direction: row;
     justify-content: left;
