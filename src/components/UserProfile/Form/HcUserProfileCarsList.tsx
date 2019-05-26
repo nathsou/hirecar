@@ -8,10 +8,13 @@ import HcSecondaryButton from "../../Button/HcSecondaryButton";
 import HcCircleButton from "../../Button/HcCircleButton";
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { updateUserProfileCar } from "../../../redux/userProfile/userProfileTabCar/actions";
 library.add(faTimes);
 
 
-export interface HcUserProfileCarsListProps extends Pick<UserProfileCarsState, 'cars'> { }
+export interface HcUserProfileCarsListProps extends Pick<UserProfileCarsState, 'cars'> {
+    onUserProfileCarChange: (id: number) => void
+}
 
 class HcUserProfileCarsList extends Component<HcUserProfileCarsListProps> {
 
@@ -21,7 +24,7 @@ class HcUserProfileCarsList extends Component<HcUserProfileCarsListProps> {
             const c = car;
             return {
                 title: c.model,
-                features: `${c.gearbox} • ${c.fuel} • ${c.seats} places • ${c.doors} portes`,
+                features: `${c.gearbox.type} • ${c.fuel.type} • ${c.seats} places • ${c.doors} portes`,
                 footer: `${c.price_per_day} € / jour`,
                 id: c.id
             };
@@ -33,7 +36,7 @@ class HcUserProfileCarsList extends Component<HcUserProfileCarsListProps> {
                     (
                         <div key={`car_${i}`} className="hc-user-profile-list-item">
                             <HcListItem {...car} picto={CarPicto} />
-                            <HcSecondaryButton>Modifier</HcSecondaryButton>
+                            <HcSecondaryButton handleClick={() => this.props.onUserProfileCarChange(car.id)}>Modifier</HcSecondaryButton>
                             <HcCircleButton
                                 onClick={() => { }}
                                 icon="times"
@@ -49,6 +52,8 @@ class HcUserProfileCarsList extends Component<HcUserProfileCarsListProps> {
 export default connect(
     (state: HcState) => ({
         cars: state.user_profile_tab_car.cars_data.cars
-    })
+    }), {
+        onUserProfileCarChange: (id: number) => updateUserProfileCar(id)
+    }
 )(HcUserProfileCarsList);
 

@@ -1,12 +1,13 @@
-import { Fuel, Gearbox, Car } from "../../carSearch/types";
+import { Fuel, Gearbox, Car, IdentifiedType } from "../../carSearch/types";
 
 export interface UserProfileCarFormDataState {
-    [index: string]: string;
+    [index: string]: string | IdentifiedType;
+    id: string,
     owner_id: string,
     model: string,
     price_per_day: string,
-    gearbox_id: string,
-    fuel_id: string,
+    gearbox: IdentifiedType,
+    fuel: IdentifiedType,
     seats: string,
     doors: string
 }
@@ -32,17 +33,26 @@ export interface UserProfileTabCarState {
     cars_data: UserProfileCarsState,
     show_form: boolean,
     valid_form: boolean,
+    submit_form: boolean,
     sending: boolean,
     saving: boolean,
+    editing: boolean,
 }
 
 export const defaultUserProfileTabCarState: UserProfileTabCarState = {
     form_data: {
+        id: '',
         owner_id: '',
         model: '',
         price_per_day: '',
-        gearbox_id: '1',
-        fuel_id: '1',
+        gearbox: {
+            id: 1,
+            type: "Automatique"
+        },
+        fuel: {
+            id: 1,
+            type: "Essence"
+        },
         seats: '2',
         doors: '2'
     },
@@ -90,8 +100,10 @@ export const defaultUserProfileTabCarState: UserProfileTabCarState = {
     },
     show_form: false,
     valid_form: false,
+    submit_form: false,
     sending: false,
-    saving: false
+    saving: false,
+    editing: false,
 }
 
 export const TOGGLE_USER_PROFILE_CAR_FORM = "TOGGLE_USER_PROFILE_CAR_FORM";
@@ -198,4 +210,20 @@ export interface SetUserProfileCarsAction {
     data: UserProfileCarsState
 }
 
-export type UserProfileCarActionTypes = ToggleUserProfileCarFormAction | UpdateUserProfileCarModelAction | UpdateUserProfileCarPriceAction | UpdateUserProfileCarGearboxAction | UpdateUserProfileCarFuelAction | UpdateUserProfileCarSeatsAction | UpdateUserProfileCarDoorsAction | SubmitUserProfileCarAction | UserProfileCarSentAction | UserProfileCarReceivedAction | SetUserProfileCarOwnerAction | UserProfileCarFeaturesSentAction | UserProfileCarFeaturesReceivedAction | SetUserProfileCarFeaturesAction | UserProfileCarSavedAction | ResetUserProfileCarFormAction | UserProfileCarsSentAction | UserProfileCarsReceivedAction | SetUserProfileCarsAction;
+export const UPDATE_USER_PROFILE_CAR = "UPDATE_USER_PROFILE_CAR";
+export interface UpdateUserProfileCarAction {
+    type: typeof UPDATE_USER_PROFILE_CAR,
+    id: number
+}
+
+export const UPDATE_USER_PROFILE_CAR_SENT = "UPDATE_USER_PROFILE_CAR_SENT";
+export interface UpdateUserProfileCarSentAction {
+    type: typeof UPDATE_USER_PROFILE_CAR_SENT
+}
+
+export const UPDATE_USER_PROFILE_CAR_RECEIVED = "UPDATE_USER_PROFILE_CAR_RECEIVED";
+export interface UpdateUserProfileCarReceivedAction {
+    type: typeof UPDATE_USER_PROFILE_CAR_RECEIVED
+}
+
+export type UserProfileCarActionTypes = ToggleUserProfileCarFormAction | UpdateUserProfileCarModelAction | UpdateUserProfileCarPriceAction | UpdateUserProfileCarGearboxAction | UpdateUserProfileCarFuelAction | UpdateUserProfileCarSeatsAction | UpdateUserProfileCarDoorsAction | SubmitUserProfileCarAction | UserProfileCarSentAction | UserProfileCarReceivedAction | SetUserProfileCarOwnerAction | UserProfileCarFeaturesSentAction | UserProfileCarFeaturesReceivedAction | SetUserProfileCarFeaturesAction | UserProfileCarSavedAction | ResetUserProfileCarFormAction | UserProfileCarsSentAction | UserProfileCarsReceivedAction | SetUserProfileCarsAction | UpdateUserProfileCarAction | UpdateUserProfileCarSentAction | UpdateUserProfileCarReceivedAction;
