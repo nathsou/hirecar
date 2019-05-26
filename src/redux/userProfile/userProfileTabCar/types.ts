@@ -1,4 +1,4 @@
-import { Fuel, Gearbox } from "../../carSearch/types";
+import { Fuel, Gearbox, Car } from "../../carSearch/types";
 
 export interface UserProfileCarFormDataState {
     [index: string]: string;
@@ -16,7 +16,12 @@ export interface UserProfileCarFeaturesState {
     gearbox: Gearbox[]
 }
 
-export interface UserProfileCarTabState {
+export interface UserProfileCarsState {
+    cars: Car[],
+    fetching: boolean
+}
+
+export interface UserProfileTabCarState {
     form_data: UserProfileCarFormDataState,
     form_errors: {
         model_error: string,
@@ -24,13 +29,14 @@ export interface UserProfileCarTabState {
         [key: string]: string
     },
     car_features: UserProfileCarFeaturesState,
+    cars_data: UserProfileCarsState,
     show_form: boolean,
     valid_form: boolean,
     sending: boolean,
     saving: boolean,
 }
 
-export const defaultUserProfileCarTabState: UserProfileCarTabState = {
+export const defaultUserProfileTabCarState: UserProfileTabCarState = {
     form_data: {
         owner_id: '',
         model: '',
@@ -77,6 +83,10 @@ export const defaultUserProfileCarTabState: UserProfileCarTabState = {
                 type: 'manuelle'
             }
         ]
+    },
+    cars_data: {
+        cars: [],
+        fetching: false
     },
     show_form: false,
     valid_form: false,
@@ -146,14 +156,14 @@ export interface SetUserProfileCarOwnerAction {
     id: string
 }
 
-export const GET_USER_PROFILE_CAR_FEATURES_SENT = "GET_USER_PROFILE_CAR_FEATURES_SENT";
-export interface GetUserProfileCarFeaturesSentAction {
-    type: typeof GET_USER_PROFILE_CAR_FEATURES_SENT
+export const USER_PROFILE_CAR_FEATURES_SENT = "USER_PROFILE_CAR_FEATURES_SENT";
+export interface UserProfileCarFeaturesSentAction {
+    type: typeof USER_PROFILE_CAR_FEATURES_SENT
 }
 
-export const GET_USER_PROFILE_CAR_FEATURES_RECEIVED = "GET_USER_PROFILE_CAR_FEATURES_RECEIVED";
-export interface GetUserProfileCarFeaturesReceivedAction {
-    type: typeof GET_USER_PROFILE_CAR_FEATURES_RECEIVED
+export const USER_PROFILE_CAR_FEATURES_RECEIVED = "USER_PROFILE_CAR_FEATURES_RECEIVED";
+export interface UserProfileCarFeaturesReceivedAction {
+    type: typeof USER_PROFILE_CAR_FEATURES_RECEIVED
 }
 
 export const SET_USER_PROFILE_CAR_FEATURES = "SET_USER_PROFILE_CAR_FEATURES";
@@ -172,5 +182,20 @@ export interface ResetUserProfileCarFormAction {
     type: typeof RESET_USER_PROFILE_CAR_FORM
 }
 
+export const USER_PROFILE_CARS_SENT = "USER_PROFILE_CARS_SENT";
+export interface UserProfileCarsSentAction {
+    type: typeof USER_PROFILE_CARS_SENT
+}
 
-export type UserProfileCarActionTypes = ToggleUserProfileCarFormAction | UpdateUserProfileCarModelAction | UpdateUserProfileCarPriceAction | UpdateUserProfileCarGearboxAction | UpdateUserProfileCarFuelAction | UpdateUserProfileCarSeatsAction | UpdateUserProfileCarDoorsAction | SubmitUserProfileCarAction | UserProfileCarSentAction | UserProfileCarReceivedAction | SetUserProfileCarOwnerAction | GetUserProfileCarFeaturesSentAction | GetUserProfileCarFeaturesReceivedAction | SetUserProfileCarFeaturesAction | UserProfileCarSavedAction | ResetUserProfileCarFormAction;
+export const USER_PROFILE_CARS_RECEIVED = "USER_PROFILE_CARS_RECEIVED";
+export interface UserProfileCarsReceivedAction {
+    type: typeof USER_PROFILE_CARS_RECEIVED
+}
+
+export const SET_USER_PROFILE_CARS = "SET_USER_PROFILE_CARS";
+export interface SetUserProfileCarsAction {
+    type: typeof SET_USER_PROFILE_CARS,
+    data: UserProfileCarsState
+}
+
+export type UserProfileCarActionTypes = ToggleUserProfileCarFormAction | UpdateUserProfileCarModelAction | UpdateUserProfileCarPriceAction | UpdateUserProfileCarGearboxAction | UpdateUserProfileCarFuelAction | UpdateUserProfileCarSeatsAction | UpdateUserProfileCarDoorsAction | SubmitUserProfileCarAction | UserProfileCarSentAction | UserProfileCarReceivedAction | SetUserProfileCarOwnerAction | UserProfileCarFeaturesSentAction | UserProfileCarFeaturesReceivedAction | SetUserProfileCarFeaturesAction | UserProfileCarSavedAction | ResetUserProfileCarFormAction | UserProfileCarsSentAction | UserProfileCarsReceivedAction | SetUserProfileCarsAction;

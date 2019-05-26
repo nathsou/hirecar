@@ -5,9 +5,9 @@ import bcrypt from "bcryptjs";
 import { toggleShowModal } from "../navbar/actions";
 import { setUserLogged } from "../user/actions";
 import { UserDataState } from "../user/types";
-import { setUserProfileInfo } from "../userProfile/userProfileInfoTab/actions";
-import { UserProfileInfoFormDataState } from "../userProfile/userProfileInfoTab/types";
-import { setUserProfileCarOwner } from "../userProfile/userProfileCarTab/actions";
+import { setUserProfileInfo } from "../userProfile/userProfileTabInfo/actions";
+import { UserProfileInfoFormDataState } from "../userProfile/userProfileTabInfo/types";
+import { setUserProfileCarOwner } from "../userProfile/userProfileTabCar/actions";
 
 export function updateSignInEmailInput(value: string): UpdateSignInEmailAction {
     return {

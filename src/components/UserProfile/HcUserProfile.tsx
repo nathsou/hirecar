@@ -8,17 +8,19 @@ import Footer from '../../components/Footer';
 export default class HcUserProfile extends Component {
     public render() {
         return (
-            <main className="bg-img">
-                <Container>
-                    <Row>
-                        <Col lg={12}>
-                            <HcUserProfileTabs />
-                        </Col>
-                    </Row>
+            <div>
+                <main className="bg-img">
+                    <Container>
+                        <Row>
+                            <Col lg={12}>
+                                <HcUserProfileTabs />
+                            </Col>
+                        </Row>
+                    </Container>
 
-                </Container>
+                </main>
                 <Footer />
-            </main>
+            </div>
         )
     }
 }

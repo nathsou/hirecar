@@ -14,10 +14,10 @@ import { UserState, RESET_USER_LOGGED } from './user/types';
 import { userReducer } from './user/reducers';
 import { loadState, saveState } from './localStorage';
 import throttle from "lodash.throttle";
-import { UserProfileInfoTabState } from './userProfile/userProfileInfoTab/types';
-import { userProfileInfoTabReducer } from './userProfile/userProfileInfoTab/reducers';
-import { UserProfileCarTabState } from './userProfile/userProfileCarTab/types';
-import { userProfileCarTabReducer } from './userProfile/userProfileCarTab/reducers';
+import { UserProfileTabInfoState } from './userProfile/userProfileTabInfo/types';
+import { userProfileTabInfoReducer } from './userProfile/userProfileTabInfo/reducers';
+import { UserProfileTabCarState } from './userProfile/userProfileTabCar/types';
+import { userProfileTabCarReducer } from './userProfile/userProfileTabCar/reducers';
 
 export interface HcState {
     user: UserState,
@@ -26,8 +26,8 @@ export interface HcState {
     car_search: CarSearchState,
     rent_tabs: RentTabsState,
     sign_tabs: SignTabsState,
-    user_profile_info_tab: UserProfileInfoTabState,
-    user_profile_car_tab: UserProfileCarTabState
+    user_profile_tab_info: UserProfileTabInfoState,
+    user_profile_tab_car: UserProfileTabCarState
 }
 
 const reducers = combineReducers({
@@ -37,8 +37,8 @@ const reducers = combineReducers({
     car_search: carSearchReducer,
     rent_tabs: rentTabsReducer,
     sign_tabs: signTabsReducer,
-    user_profile_info_tab: userProfileInfoTabReducer,
-    user_profile_car_tab: userProfileCarTabReducer
+    user_profile_tab_info: userProfileTabInfoReducer,
+    user_profile_tab_car: userProfileTabCarReducer
 });
 
 const root_reducer = (state: HcState | undefined, action: Action) => {
@@ -68,7 +68,7 @@ export const store = configureStore();
 store.subscribe(throttle(() => {
     saveState({
         user: store.getState().user,
-        user_profile_info_tab: store.getState().user_profile_info_tab,
-        user_profile_car_tab: store.getState().user_profile_car_tab
+        user_profile_tab_info: store.getState().user_profile_tab_info,
+        user_profile_tab_car: store.getState().user_profile_tab_car
     });
 }, 1000));

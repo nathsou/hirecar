@@ -6,11 +6,13 @@ import Footer from '../components/Footer';
 export default class MainContent extends Component {
     render() {
         return (
-            <main>
-                <HcJumbotron />
-                <Records />
+            <div>
+                <main>
+                    <HcJumbotron />
+                    <Records />
+                </main>
                 <Footer />
-            </main>
+            </div>
         );
     }
 }

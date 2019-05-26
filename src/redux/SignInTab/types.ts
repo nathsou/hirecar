@@ -1,7 +1,7 @@
 import { ToggleSignModalAction } from "../navbar/types";
 import { SetUserLoggedAction } from "../user/types";
-import { SetUserProfileAction } from "../userProfile/userProfileInfoTab/types";
-import { SetUserProfileCarOwnerAction } from "../userProfile/userProfileCarTab/types";
+import { SetUserProfileAction } from "../userProfile/userProfileTabInfo/types";
+import { SetUserProfileCarOwnerAction } from "../userProfile/userProfileTabCar/types";
 
 export interface SignInFormDataState {
     [index: string]: string;

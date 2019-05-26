@@ -76,7 +76,7 @@ a,
 
 .link:hover {
     color: var(--primary-color);
-    transition: all .2s;
+    transition: all .4s;
 }
 
 a:hover {
@@ -191,6 +191,7 @@ main {
 
 .container-tabs.profile {
     margin: 5rem auto 4rem auto;
+    padding: 3rem 5rem 3rem 5rem;
 }
 
 .tab-content {
@@ -198,7 +199,7 @@ main {
 }
 
 .tab-content p {
-    margin: 1.25rem auto 0 auto;
+    margin: .5rem auto 0 auto;
 }
 
 /*** Jumbotron ***/
@@ -312,7 +313,7 @@ select {
 
 .search-page .search-box-container .search-box-form {
     background-color: var(--primary-btn-text-color);
-    padding: 2rem;
+    padding: 2rem 2rem 1rem 2rem;
     border-radius: 6px;
 }
 
@@ -335,7 +336,7 @@ select {
 .bg-img {
     background-image: url("./../img/home-bg-1.jpg");
     background-size: cover;
-    min-height: 80vh;
+    min-height: calc(100vh - (var(--navbar-height) + var(--footer-height)));
 }
 
 .user-profile-text {
@@ -346,18 +347,22 @@ select {
 
 .circle-button {
     display: inline-block;
-    width: 1.5rem;
+    min-width: 1.5rem;
     height: 1.5rem;
     border-radius: 1.5rem;
     text-align: center;
     background-color: var(--secondary-color);
-    color: var(--primary-btn-text-color);
+    color: var(--secondary-btn-text-color);
     margin-left: 1rem;
     cursor: pointer;
     font: .6rem 'Oswald', sans-serif;
     line-height: 1.5rem;
     position: relative;
     bottom: 3px;
+}
+.circle-button:hover {
+    color: var(--dark-grey);
+    transition: all .4s;
 }
 
 .error-message {
@@ -368,6 +373,23 @@ select {
 
 .car-form-container {
     margin-top: 2rem;
+}
+
+.hc-user-profile-list-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0 4rem;
+}
+
+.hc-user-profile-list-item .circle-button {
+    height: 1.875rem;
+    min-width: 1.875rem;
+    bottom: 0;
+    font: .8rem 'Oswald', sans-serif;
+    line-height: 1.875rem;
+    color: var(--primary-btn-text-color);
+    background-color: var(--primary-color);
 }
 
 /*** Footer ***/
@@ -400,7 +422,7 @@ footer p {
 
 .hc-list-item {
     margin-top: 1rem;
-    margin-bottom: 2em;
+    /* margin-bottom: 2em; */
     display: flex;
     flex-direction: row;
     justify-content: left;
@@ -410,7 +432,7 @@ footer p {
     padding: 5px;
 }
 
-.hc-list-item:hover {
+.search-page .hc-list-item:hover {
     border: 2px solid var(--primary-color);
     background-color: rgba(39, 32, 135, 0.1);
 }
@@ -425,6 +447,7 @@ footer p {
     border-top: 2px solid var(--primary-color);
 }
 
+.hc-user-profile-list-item:last-child hr,
 .hc-list-item:last-child hr {
     display: none;
 }
@@ -441,6 +464,7 @@ footer p {
 
 .hc-list-footer {
     color: var(--secondary-color);
+    font-weight: bold;
 }
 
 /* https://www.w3schools.com/howto/howto_css_tooltip.asp */

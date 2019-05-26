@@ -6,12 +6,12 @@ export function userReducer(
 ): UserState {
     switch (action.type) {
         case SET_USER_LOGGED:
-            const { firstname, lastname } = action.user;
+            const { id, firstname, lastname } = action.user;
             return {
                 ...state,
                 logged_in: true,
                 data: {
-                    firstname, lastname
+                    id, firstname, lastname
                 }
             };
         case RESET_USER_LOGGED:

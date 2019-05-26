@@ -1,4 +1,5 @@
 export interface UserDataState {
+    id: number,
     firstname: string,
     lastname: string
 }
@@ -11,6 +12,7 @@ export interface UserState {
 export const defaultUserState: UserState = {
     logged_in: false,
     data: {
+        id: 0,
         firstname: '',
         lastname: ''
     }

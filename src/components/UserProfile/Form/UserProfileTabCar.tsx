@@ -1,0 +1,92 @@
+import React, { Component } from "react";
+import Form from "react-bootstrap/Form";
+import { toggleUserProfileCarForm, submitUserProfileCarForm, fetchUserProfileCarFeaturesForm, postUserProfileCarForm, fetchUserProfileCars } from "../../../redux/userProfile/userProfileTabCar/actions";
+import { connect } from "react-redux";
+import { HcState } from "../../../redux/configureStore";
+import { UserProfileTabCarState, UserProfileCarFormDataState } from "../../../redux/userProfile/userProfileTabCar/types";
+import HcCircleButton from "../../Button/HcCircleButton";
+import HcSecondaryButton from "../../Button/HcSecondaryButton";
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
+import UserProfileTabCarInputs from "./UserProfileTabCarInputs";
+import { UserDataState } from "../../../redux/user/types";
+import HcCarsList from "./HcUserProfileCarsList";
+library.add(faPlus, faMinus);
+
+interface UserProfileTabCarProps {
+    user: UserDataState,
+    user_profile_tab_car: UserProfileTabCarState,
+    toggleCarForm: typeof toggleUserProfileCarForm,
+    fetchUserProfileCarFeatures: () => void,
+    onUserProfileCarSumbit: typeof submitUserProfileCarForm,
+    onPostUserProfileCarForm: (data: UserProfileCarFormDataState) => void,
+    fetchUserProfileCars: (id: number) => void
+}
+
+class UserProfileTabCar extends Component<UserProfileTabCarProps> {
+
+    constructor(props: UserProfileTabCarProps) {
+        super(props)
+        this.props.fetchUserProfileCarFeatures();
+        this.props.fetchUserProfileCars(this.props.user.id);
+    }
+
+    public handleCarSubmit = (e: any) => {
+        e.preventDefault();
+        this.props.onUserProfileCarSumbit();
+    }
+
+    public componentDidUpdate(prev_props: Readonly<UserProfileTabCarProps>) {
+        const { valid_form, form_data } = this.props.user_profile_tab_car;
+        if (valid_form && prev_props.user_profile_tab_car.valid_form !== valid_form) {
+            this.props.onPostUserProfileCarForm(form_data);
+            this.props.fetchUserProfileCars(this.props.user.id);
+        }
+    }
+
+    public render() {
+
+        const { show_form, saving, cars_data } = this.props.user_profile_tab_car;
+        const cars_count = Object.keys(cars_data.cars).length;
+        return (
+            <Form onSubmit={this.handleCarSubmit}>
+                <h2 className="user-profile-text">
+                    Mes voitures enregistrées
+                        <HcCircleButton
+                        onClick={this.props.toggleCarForm}
+                        icon={show_form ? "minus" : "plus"}
+                    />
+                </h2>
+                {saving ? (<p className="error-message">Votre véhicule a été ajouté.</p>) : null}
+                {show_form ? (
+                    <div>
+                        <UserProfileTabCarInputs />
+                        <div style={{ textAlign: "right" }}>
+                            <HcSecondaryButton type="submit">Ajouter</HcSecondaryButton>
+                        </div>
+                    </div>
+                ) : null}
+                {!saving && ! show_form ? <HcCarsList /> : null}
+                {!show_form && !saving && cars_count === 0 ? (
+                    <p>Vous n'avez pas encore déclaré de véhicules ?
+                        <span className="link" onClick={this.props.toggleCarForm}> Enregistrez vos véhicules.</span>
+                    </p>
+                ) : null}
+            </Form>
+        );
+    }
+}
+
+export default connect(
+    (state: HcState) => ({
+        user: state.user.data,
+        user_profile_tab_car: state.user_profile_tab_car
+    }),
+    {
+        toggleCarForm: () => toggleUserProfileCarForm(),
+        fetchUserProfileCarFeatures: () => fetchUserProfileCarFeaturesForm(),
+        onUserProfileCarSumbit: () => submitUserProfileCarForm(),
+        onPostUserProfileCarForm: (data: UserProfileCarFormDataState) => postUserProfileCarForm(data),
+        fetchUserProfileCars: (id: number) => fetchUserProfileCars(id)
+    }
+)(UserProfileTabCar)

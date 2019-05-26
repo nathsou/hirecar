@@ -1,9 +1,9 @@
-import { defaultUserProfileCarTabState, UserProfileCarActionTypes, UserProfileCarTabState, TOGGLE_USER_PROFILE_CAR_FORM, UPDATE_USER_PROFILE_CAR_MODEL_INPUT, UPDATE_USER_PROFILE_CAR_PRICE_INPUT, SET_USER_PROFILE_CAR_FEATURES, UPDATE_USER_PROFILE_CAR_GEARBOX_SELECT, UPDATE_USER_PROFILE_CAR_FUEL_SELECT, UPDATE_USER_PROFILE_CAR_SEATS_SELECT, UPDATE_USER_PROFILE_CAR_DOORS_SELECT, SUMBIT_USER_PROFILE_CAR, USER_PROFILE_CAR_FORM_RECEIVED, USER_PROFILE_CAR_FORM_SENT, SET_USER_PROFILE_CAR_OWNER, RESET_USER_PROFILE_CAR_FORM, USER_PROFILE_CAR_SAVED } from "./types";
+import { defaultUserProfileTabCarState, UserProfileCarActionTypes, UserProfileTabCarState, TOGGLE_USER_PROFILE_CAR_FORM, UPDATE_USER_PROFILE_CAR_MODEL_INPUT, UPDATE_USER_PROFILE_CAR_PRICE_INPUT, SET_USER_PROFILE_CAR_FEATURES, UPDATE_USER_PROFILE_CAR_GEARBOX_SELECT, UPDATE_USER_PROFILE_CAR_FUEL_SELECT, UPDATE_USER_PROFILE_CAR_SEATS_SELECT, UPDATE_USER_PROFILE_CAR_DOORS_SELECT, SUMBIT_USER_PROFILE_CAR, USER_PROFILE_CAR_FORM_RECEIVED, USER_PROFILE_CAR_FORM_SENT, SET_USER_PROFILE_CAR_OWNER, RESET_USER_PROFILE_CAR_FORM, USER_PROFILE_CAR_SAVED, USER_PROFILE_CARS_SENT, SET_USER_PROFILE_CARS, USER_PROFILE_CARS_RECEIVED } from "./types";
 
-export function userProfileCarTabReducer(
-    state = defaultUserProfileCarTabState,
+export function userProfileTabCarReducer(
+    state = defaultUserProfileTabCarState,
     action: UserProfileCarActionTypes
-): UserProfileCarTabState {
+): UserProfileTabCarState {
 
     let isValid = true;
 
@@ -97,7 +97,32 @@ export function userProfileCarTabReducer(
                 saving: false
             };
         case RESET_USER_PROFILE_CAR_FORM:
-            return defaultUserProfileCarTabState
+            const { form_data, form_errors, show_form, valid_form, sending, saving } = defaultUserProfileTabCarState
+            return {
+                ...state,
+                form_data,
+                form_errors,
+                show_form,
+                valid_form,
+                sending,
+                saving
+            }
+        case USER_PROFILE_CARS_SENT:
+            return {
+                ...state,
+                cars_data: { ...state.cars_data, fetching: true }
+            }
+        case SET_USER_PROFILE_CARS:
+            const { cars } = action.data
+            return {
+                ...state,
+                cars_data: { ...state.cars_data, cars }
+            }
+        case USER_PROFILE_CARS_RECEIVED:
+            return {
+                ...state,
+                cars_data: { ...state.cars_data, fetching: false }
+            }
         default:
             return state;
     }

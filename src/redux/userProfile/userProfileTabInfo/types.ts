@@ -11,7 +11,7 @@ export interface UserProfileInfoFormDataState {
     new_password: string,
 }
 
-export interface UserProfileInfoTabState {
+export interface UserProfileTabInfoState {
     form_data: UserProfileInfoFormDataState,
     form_errors: {
         firstname_error: string,
@@ -28,7 +28,7 @@ export interface UserProfileInfoTabState {
     saving: boolean,
 }
 
-export const defaultUserProfileInfoTabState: UserProfileInfoTabState = {
+export const defaultUserProfileTabInfoState: UserProfileTabInfoState = {
     form_data: {
         id: '',
         firstname: '',

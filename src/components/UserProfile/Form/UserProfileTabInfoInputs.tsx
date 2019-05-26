@@ -2,45 +2,29 @@ import React, { Component } from "react";
 import HcInputFormGroup from "../../Form/HcInputFormGroup";
 import { connect } from "react-redux";
 import { HcState } from "../../../redux/configureStore";
-import { updateUserProfileFirstnameInput, updateUserProfileLastnameInput, updateUserProfilePhoneInput, updateUserProfileEmailInput, updateUserProfileNewPasswordInput, updateUserProfilePasswordInput, submitUserProfileInfoForm, postUserProfileInfoForm } from "../../../redux/userProfile/userProfileInfoTab/actions";
-import { UserProfileInfoTabState, UserProfileInfoFormDataState } from "../../../redux/userProfile/userProfileInfoTab/types";
+import { updateUserProfileFirstnameInput, updateUserProfileLastnameInput, updateUserProfilePhoneInput, updateUserProfileEmailInput, updateUserProfileNewPasswordInput, updateUserProfilePasswordInput } from "../../../redux/userProfile/userProfileTabInfo/actions";
+import { UserProfileTabInfoState } from "../../../redux/userProfile/userProfileTabInfo/types";
 import Form from "react-bootstrap/Form";
-import HcSecondaryButton from "../../Button/HcSecondaryButton";
 
-interface UserProfileInfoTabProps {
-    user_profile_info_tab: UserProfileInfoTabState,
+interface UserProfileTabInfoInputsProps {
+    user_profile_tab_info: UserProfileTabInfoState,
     onFirstnameChange: typeof updateUserProfileFirstnameInput,
     onLastnameChange: typeof updateUserProfileLastnameInput,
     onPhoneChange: typeof updateUserProfilePhoneInput,
     onEmailChange: typeof updateUserProfileEmailInput,
     onPasswordChange: typeof updateUserProfilePasswordInput,
     onNewPasswordChange: typeof updateUserProfileNewPasswordInput,
-    onUserProfileInfoSubmit: typeof submitUserProfileInfoForm,
-    onPostUserProfileInfoForm: (data: UserProfileInfoFormDataState) => void
 }
 
-class UserProfileInfoTab extends Component<UserProfileInfoTabProps> {
-
-    public handleInfoSubmit = (e: any) => {
-        const { editing, valid_form, form_data } = this.props.user_profile_info_tab;
-
-        e.preventDefault();
-        this.props.onUserProfileInfoSubmit();
-        if (editing && valid_form) {
-            this.props.onPostUserProfileInfoForm(form_data);
-        }
-    }
+class UserProfileTabInfoInputs extends Component<UserProfileTabInfoInputsProps> {
 
     public render() {
 
-        const { editing, saving } = this.props.user_profile_info_tab;
-        const { firstname, lastname, email, phone, password, new_password } = this.props.user_profile_info_tab.form_data;
-
-        const { firstname_error: firstnameError, lastname_error: lastnameError, email_error: emailError, phone_error: phoneError, password_error: passwordError, new_password_error: newPasswordError } = this.props.user_profile_info_tab.form_errors;
+        const { firstname, lastname, email, phone, password, new_password } = this.props.user_profile_tab_info.form_data;
+        const { firstname_error: firstnameError, lastname_error: lastnameError, email_error: emailError, phone_error: phoneError, password_error: passwordError, new_password_error: newPasswordError } = this.props.user_profile_tab_info.form_errors;
 
         return (
-            <Form onSubmit={this.handleInfoSubmit}>
-                <h2 className="user-profile-text">Information générale</h2>
+            <div>
                 <Form.Row>
                     <HcInputFormGroup
                         size={4} controlId="userProfileFirstname" className={firstnameError}
@@ -81,27 +65,19 @@ class UserProfileInfoTab extends Component<UserProfileInfoTabProps> {
                         value={new_password}
                         onChange={this.props.onNewPasswordChange} />
                 </Form.Row>
-                {saving ? (<p className="error-message">Vos données ont été sauvegardées.</p>) : null}
-                {editing ? (
-                    <div style={{ marginTop: "15px", textAlign: "right" }}>
-                        <HcSecondaryButton type="submit">Enregistrer</HcSecondaryButton>
-                    </div>
-                ) : null}
-            </Form>
+            </div>
         );
     }
 }
 
 export default connect(
-    (state: HcState) => ({ user_profile_info_tab: state.user_profile_info_tab }),
+    (state: HcState) => ({ user_profile_tab_info: state.user_profile_tab_info }),
     {
         onFirstnameChange: (e: any) => updateUserProfileFirstnameInput(e.target.value),
         onLastnameChange: (e: any) => updateUserProfileLastnameInput(e.target.value),
         onPhoneChange: (e: any) => updateUserProfilePhoneInput(e.target.value),
         onEmailChange: (e: any) => updateUserProfileEmailInput(e.target.value),
         onPasswordChange: (e: any) => updateUserProfilePasswordInput(e.target.value),
-        onNewPasswordChange: (e: any) => updateUserProfileNewPasswordInput(e.target.value),
-        onUserProfileInfoSubmit: () => submitUserProfileInfoForm(),
-        onPostUserProfileInfoForm: (data: UserProfileInfoFormDataState) => postUserProfileInfoForm(data),
+        onNewPasswordChange: (e: any) => updateUserProfileNewPasswordInput(e.target.value)
     }
-)(UserProfileInfoTab)
+)(UserProfileTabInfoInputs)
