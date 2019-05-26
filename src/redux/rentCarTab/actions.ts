@@ -7,28 +7,28 @@ export function setCarSearchInput(value: string): SetCarSearchAction {
     };
 }
 
-export function setRentCarSearchStartDay(day: string | null): SetRentCarSearchStartDayAction {
+export function setRentCarSearchStartDay(day: string): SetRentCarSearchStartDayAction {
     return {
         type: SET_RENT_CAR_SEARCH_START_DAY,
         day
     };
 }
 
-export function setRentCarSearchEndDay(day: string | null): SetRentCarSearchEndDayAction {
+export function setRentCarSearchEndDay(day: string): SetRentCarSearchEndDayAction {
     return {
         type: SET_RENT_CAR_SEARCH_END_DAY,
         day
     };
 }
 
-export function setRentCarSearchStartTime(time: string | null): SetRentCarSearchStartTimeAction {
+export function setRentCarSearchStartTime(time: string): SetRentCarSearchStartTimeAction {
     return {
         type: SET_RENT_CAR_SEARCH_START_TIME,
         time
     };
 }
 
-export function setRentCarSearchEndTime(time: string | null): SetRentCarSearchEndTimeAction {
+export function setRentCarSearchEndTime(time: string): SetRentCarSearchEndTimeAction {
     return {
         type: SET_RENT_CAR_SEARCH_END_TIME,
         time

@@ -1,21 +1,21 @@
 
 export interface RentCarTabState {
     car_search_input_value: string,
-    start_day: string | null,
-    start_time: string | null,
-    end_day: string | null,
-    end_time: string | null
+    start_day: string,
+    start_time: string,
+    end_day: string,
+    end_time: string
 }
 
 export const defaultRentCarTabState: RentCarTabState = {
     car_search_input_value: '',
-    start_day: null,
-    start_time: null,
-    end_time: null,
-    end_day: null
+    start_day: '',
+    start_time: '',
+    end_time: '',
+    end_day: ''
 };
 
-export const SET_RENT_CAR_SEARCH_INPUT = "USET_RENT_CAR_SEARCH_INPUT";
+export const SET_RENT_CAR_SEARCH_INPUT = "SET_RENT_CAR_SEARCH_INPUT";
 export const SET_RENT_CAR_SEARCH_START_DAY = "SET_RENT_CAR_SEARCH_START_DAY";
 export const SET_RENT_CAR_SEARCH_END_DAY = "SET_RENT_CAR_SEARCH_END_DAY";
 export const SET_RENT_CAR_SEARCH_START_TIME = "SET_RENT_CAR_SEARCH_START_TIME";
@@ -28,22 +28,22 @@ export interface SetCarSearchAction {
 
 export interface SetRentCarSearchStartDayAction {
     type: typeof SET_RENT_CAR_SEARCH_START_DAY,
-    day: string | null
+    day: string
 }
 
 export interface SetRentCarSearchEndDayAction {
     type: typeof SET_RENT_CAR_SEARCH_END_DAY,
-    day: string | null
+    day: string
 }
 
 export interface SetRentCarSearchStartTimeAction {
     type: typeof SET_RENT_CAR_SEARCH_START_TIME,
-    time: string | null
+    time: string
 }
 
 export interface SetRentCarSearchEndTimeAction {
     type: typeof SET_RENT_CAR_SEARCH_END_TIME,
-    time: string | null
+    time: string
 }
 
 export type RentCarTabActionTypes =

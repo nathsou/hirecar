@@ -14,11 +14,11 @@ class HcCarList extends Component<HcCarListProps> {
 
         const cars: HcListItemProps[] = this.props.car_rentals.map(rental => {
             const c = rental.parking_spot.car;
-            const { start_date, end_date } = rental;
+            let { start_date, end_date } = rental;
             return {
                 title: c.model,
                 features: `${c.fuel.type} - ${c.seats} places - ${c.doors} portes`,
-                footer: `${c.price_per_day} € / jour - ${start_date} > ${end_date}`,
+                footer: `${c.price_per_day} € / jour - ${start_date.slice(0, 16)} > ${end_date.slice(0, 16)}`,
                 id: c.id
             };
         });

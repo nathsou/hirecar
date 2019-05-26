@@ -33,7 +33,8 @@ class HcParkingList extends Component<HcParkingListProps> {
                                 {items.map(item =>
                                     <HcListItem
                                         {...item}
-                                        onHover={setSelectedParkingLot}
+                                        onMouseEnter={setSelectedParkingLot}
+                                        onMouseLeave={() => setSelectedParkingLot(null)}
                                         picto={ParkingPicto}
                                         key={item.title}
                                     />

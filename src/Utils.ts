@@ -4,7 +4,10 @@ import { Airport } from "./redux/rentParkingTab/types";
 
 // object props to x-www-form-urlencoded
 export function propsToURIParams(props: {}): string {
-    return '?' + Object.entries(props).map(([key, val]) => `${key}=${val}`).join('&');
+    return '?' + Object.entries(props)
+        .filter(([_, val]) => val !== undefined && val !== null)
+        .map(([key, val]) => `${key}=${val}`)
+        .join('&');
 }
 
 export function capitalize(str: string): string {
@@ -13,6 +16,11 @@ export function capitalize(str: string): string {
 
 export function emptyLocalStorage() {
     localStorage.setItem('state', '');
+}
+
+export function dayTimeToDate(day: string | null, time: string | null, separator = '-'): string | null {
+    return day !== null && day.trim() !== '' ?
+        `${day.trim()}${(time !== null && time.trim() !== '' ? `${separator}${time.trim()}` : '')}` : null;
 }
 
 export type RawAirport = { [K in keyof Airport]: string };

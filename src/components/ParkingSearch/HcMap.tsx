@@ -8,7 +8,7 @@ import { HcMapViewportProps } from "./HcParkingSearch";
 export interface HcMapProps extends Pick<ParkingSearchState, 'parking_lots' | 'airports'> {
     viewport: HcMapViewportProps,
     onViewportChange: (viewstate: HcMapViewportProps) => void,
-    onParkingLotMarkerClick: (id: number) => void,
+    onParkingLotMarkerClick: (id: number | null) => void,
     onAirportMarkerClick: (id: number) => void
 }
 
@@ -31,11 +31,20 @@ const HcMap: FunctionComponent<HcMapProps> = ({
             mapStyle='mapbox://styles/mapbox/streets-v11'
         >
             {parking_lots.map(p =>
-                <HcMapParkingLotMarker onClick={() => onParkingLotMarkerClick(p.id)} key={p.id} parking_lot={p} />
+                <HcMapParkingLotMarker
+                    onClick={() => onParkingLotMarkerClick(p.id)}
+                    onMouseLeave={() => onParkingLotMarkerClick(null)}
+                    key={p.id}
+                    parking_lot={p}
+                />
             )}
 
             {airports.map(a =>
-                <HcMapAirportLotMarker onClick={() => onAirportMarkerClick(a.id)} key={a.id} airport={a} />
+                <HcMapAirportLotMarker
+                    onClick={() => onAirportMarkerClick(a.id)}
+                    key={a.id}
+                    airport={a}
+                />
             )}
         </ReactMapGL>
     );
