@@ -88,7 +88,8 @@ class HcParkingSearch extends Component<HcParkingSearchProps> {
 
         const { parking_lots, selected_parking_lot } = this.props;
 
-        if (selected_parking_lot !== null && selected_parking_lot !== prev_props.selected_parking_lot) {
+        if (
+            selected_parking_lot !== null && selected_parking_lot !== prev_props.selected_parking_lot) {
             this.flyToSelectedParkingLot();
         } else if (
             (parking_lots.length !== 0) && (
@@ -143,7 +144,7 @@ class HcParkingSearch extends Component<HcParkingSearchProps> {
                                 parking_lots={parking_lots}
                                 airports={airports}
                                 onParkingLotMarkerClick={setSelectedParkingLot}
-                                onAirportMarkerClick={setSelectedParkingLot}
+                                onAirportMarkerClick={() => { }}
                             />
                         </Col>
                     </Row>)

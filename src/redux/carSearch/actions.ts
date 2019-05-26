@@ -17,7 +17,9 @@ export function carRentalsReceived(car_rentals: CarRental[]): CarRentalsReceived
 }
 
 export interface CarSearchParams {
-    airport_name?: string
+    airport_name: string | null,
+    start_date?: string | null,
+    end_date?: string | null
 }
 
 //TODO: Handle request errors

@@ -11,10 +11,10 @@ import HcAirportSearchInput, { HcAirportSearchInputProps } from "./HcAirportSear
 export interface HcParkingSearchBoxProps extends Pick<HcAirportSearchInputProps, 'onInputChange'> {
     box_mode: boolean,
     show_labels: boolean,
-    setStartDay: (day: string | null) => void,
-    setEndDay: (day: string | null) => void,
-    setStartTime: (time: string | null) => void,
-    setEndTime: (time: string | null) => void
+    setStartDay: (day: string) => void,
+    setEndDay: (day: string) => void,
+    setStartTime: (time: string) => void,
+    setEndTime: (time: string) => void
 }
 
 const HcParkingSearchBox: FunctionComponent<HcParkingSearchBoxProps & RentParkingTabState> = (
@@ -109,9 +109,9 @@ const HcParkingSearchBox: FunctionComponent<HcParkingSearchBoxProps & RentParkin
 export default connect(
     (state: HcState) => state.rent_tabs.rent_parking_spot_tab,
     {
-        setStartDay: (day: string | null) => setRentParkingSearchStartDay(day),
-        setEndDay: (day: string | null) => setRentParkingSearchEndDay(day),
-        setStartTime: (time: string | null) => setRentParkingSearchStartTime(time),
-        setEndTime: (time: string | null) => setRentParkingSearchEndTime(time)
+        setStartDay: (day: string) => setRentParkingSearchStartDay(day),
+        setEndDay: (day: string) => setRentParkingSearchEndDay(day),
+        setStartTime: (time: string) => setRentParkingSearchStartTime(time),
+        setEndTime: (time: string) => setRentParkingSearchEndTime(time)
     }
 )(HcParkingSearchBox);

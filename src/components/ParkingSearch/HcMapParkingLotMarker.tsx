@@ -5,10 +5,15 @@ import MarkerImg from "../../res/img/parking_lot_marker.svg";
 
 export interface HcMapParkingLotMarkerProps {
     parking_lot: ParkingLot,
-    onClick?: () => void
+    onClick?: () => void,
+    onMouseLeave?: () => void
 }
 
-const HcMapParkingLotMarker: FunctionComponent<HcMapParkingLotMarkerProps> = ({ parking_lot, onClick }) => {
+const HcMapParkingLotMarker: FunctionComponent<HcMapParkingLotMarkerProps> = ({
+    parking_lot,
+    onClick,
+    onMouseLeave
+}) => {
     return (
         <Marker
             latitude={parking_lot.lat}
@@ -16,7 +21,7 @@ const HcMapParkingLotMarker: FunctionComponent<HcMapParkingLotMarkerProps> = ({ 
             offsetTop={-20}
             offsetLeft={-20}
         >
-            <div className='hc-tooltip' onClick={onClick}>
+            <div className='hc-tooltip' onClick={onClick} onMouseLeave={onMouseLeave}>
                 <img src={MarkerImg} draggable={false} alt={parking_lot.label} />
                 <span className='hc-tooltiptext'>{parking_lot.label}</span>
             </div>
