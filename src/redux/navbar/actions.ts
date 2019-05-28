@@ -1,7 +1,7 @@
-import { ToggleSignModalAction, TOGGLE_SIGN_MODAL } from "./types";
+import { TOGGLE_MODAL, ToggleModalAction } from "./types";
 
-export function toggleShowModal(): ToggleSignModalAction {
+export function toggleShowModal(): ToggleModalAction {
     return {
-        type: TOGGLE_SIGN_MODAL
+        type: TOGGLE_MODAL
     };
 }

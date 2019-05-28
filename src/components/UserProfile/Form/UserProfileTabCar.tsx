@@ -54,6 +54,7 @@ class UserProfileTabCar extends Component<UserProfileTabCarProps> {
         const { editing, show_form, saving, cars_data } = this.props.user_profile_tab_car;
         const { fetching: fetchingCars } = this.props.user_profile_tab_car.cars_data;
         const cars_count = Object.keys(cars_data.cars).length;
+
         return (
             <Form onSubmit={this.handleCarSubmit}>
                 <h2 className="user-profile-text">
@@ -64,9 +65,7 @@ class UserProfileTabCar extends Component<UserProfileTabCarProps> {
                     />
                 </h2>
                 {saving ? (<p className="error-message">Votre véhicule a été ajouté.</p>) : null}
-                {fetchingCars && !saving ? (
-                    <p>Chargement de vos véhicules...</p>
-                ) : null}
+                {fetchingCars && !saving ? (<p>Chargement de vos véhicules...</p>) : null}
                 {show_form ? (
                     <div>
                         <UserProfileTabCarInputs />
@@ -81,7 +80,6 @@ class UserProfileTabCar extends Component<UserProfileTabCarProps> {
                         <span className="link" onClick={this.props.toggleCarForm}> Enregistrez vos véhicules.</span>
                     </p>
                 ) : null}
-
             </Form>
         );
     }

@@ -150,6 +150,9 @@ a:hover {
     border: 2px solid var(--secondary-color);
 }
 
+.btn-hc-primary:hover {
+    color: var(--secondary-btn-text-color);
+}
 
 .fixed-top {
     background-color: var(--primary-btn-text-color);
@@ -272,6 +275,7 @@ select {
 }
 
 /*** Modal ***/
+
 .modal-header {
     border-bottom: none;
     padding-bottom: 0;
@@ -280,6 +284,10 @@ select {
 .modal-body,
 .modal-content .container-tabs {
     padding-top: 0;
+}
+
+.modal-body .tab-content p {
+    margin-top: 1.5rem;
 }
 
 /*** Record ***/

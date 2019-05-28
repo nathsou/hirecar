@@ -6,9 +6,9 @@ export const defaultNavbarState: NavbarState = {
     show_modal: false
 }
 
-export const TOGGLE_SIGN_MODAL = "TOGGLE_SIGN_MODAL";
-export interface ToggleSignModalAction {
-    type: typeof TOGGLE_SIGN_MODAL
+export const TOGGLE_MODAL = "TOGGLE_MODAL";
+export interface ToggleModalAction {
+    type: typeof TOGGLE_MODAL
 }
 
-export type NavbarActionTypes = ToggleSignModalAction;
+export type NavbarActionTypes = ToggleModalAction;

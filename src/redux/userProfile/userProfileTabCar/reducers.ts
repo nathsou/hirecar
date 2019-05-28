@@ -1,4 +1,4 @@
-import { defaultUserProfileTabCarState, UserProfileCarActionTypes, UserProfileTabCarState, TOGGLE_USER_PROFILE_CAR_FORM, UPDATE_USER_PROFILE_CAR_MODEL_INPUT, UPDATE_USER_PROFILE_CAR_PRICE_INPUT, SET_USER_PROFILE_CAR_FEATURES, UPDATE_USER_PROFILE_CAR_GEARBOX_SELECT, UPDATE_USER_PROFILE_CAR_FUEL_SELECT, UPDATE_USER_PROFILE_CAR_SEATS_SELECT, UPDATE_USER_PROFILE_CAR_DOORS_SELECT, SUMBIT_USER_PROFILE_CAR, USER_PROFILE_CAR_FORM_RECEIVED, USER_PROFILE_CAR_FORM_SENT, SET_USER_PROFILE_CAR_OWNER, RESET_USER_PROFILE_CAR_FORM, USER_PROFILE_CAR_SAVED, USER_PROFILE_CARS_SENT, SET_USER_PROFILE_CARS, USER_PROFILE_CARS_RECEIVED, UPDATE_USER_PROFILE_CAR } from "./types";
+import { defaultUserProfileTabCarState, UserProfileCarActionTypes, UserProfileTabCarState, TOGGLE_USER_PROFILE_CAR_FORM, UPDATE_USER_PROFILE_CAR_MODEL_INPUT, UPDATE_USER_PROFILE_CAR_PRICE_INPUT, SET_USER_PROFILE_CAR_FEATURES, UPDATE_USER_PROFILE_CAR_GEARBOX_SELECT, UPDATE_USER_PROFILE_CAR_FUEL_SELECT, UPDATE_USER_PROFILE_CAR_SEATS_SELECT, UPDATE_USER_PROFILE_CAR_DOORS_SELECT, SUMBIT_USER_PROFILE_CAR, USER_PROFILE_CAR_FORM_RECEIVED, USER_PROFILE_CAR_FORM_SENT, SET_USER_PROFILE_CAR_OWNER, RESET_USER_PROFILE_CAR_FORM, USER_PROFILE_CAR_SAVED, USER_PROFILE_CARS_SENT, SET_USER_PROFILE_CARS, USER_PROFILE_CARS_RECEIVED, UPDATE_USER_PROFILE_CAR, DELETE_USER_PROFILE_CAR, DELETE_USER_PROFILE_CAR_SENT, DELETE_USER_PROFILE_CAR_RECEIVED } from "./types";
 
 export function userProfileTabCarReducer(
     state = defaultUserProfileTabCarState,
@@ -162,6 +162,24 @@ export function userProfileTabCarReducer(
                 },
                 editing: true,
                 show_form: true
+            }
+        case DELETE_USER_PROFILE_CAR:
+            return {
+                ...state,
+                show_delete_modal: true,
+                cars_data: { ...state.cars_data, current_car_id: action.id }
+            }
+        case DELETE_USER_PROFILE_CAR_SENT:
+            return {
+                ...state,
+                deleting: true
+            }
+        case DELETE_USER_PROFILE_CAR_RECEIVED:
+            const updated_cars_data = state.cars_data.cars.filter(car => (car.id !== action.id))
+            return {
+                ...state,
+                deleting: false,
+                cars_data: { ...state.cars_data, cars: updated_cars_data }
             }
         default:
             return state;
