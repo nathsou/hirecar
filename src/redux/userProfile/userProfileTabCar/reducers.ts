@@ -1,4 +1,5 @@
-import { defaultUserProfileTabCarState, UserProfileCarActionTypes, UserProfileTabCarState, TOGGLE_USER_PROFILE_CAR_FORM, UPDATE_USER_PROFILE_CAR_MODEL_INPUT, UPDATE_USER_PROFILE_CAR_PRICE_INPUT, SET_USER_PROFILE_CAR_FEATURES, UPDATE_USER_PROFILE_CAR_GEARBOX_SELECT, UPDATE_USER_PROFILE_CAR_FUEL_SELECT, UPDATE_USER_PROFILE_CAR_SEATS_SELECT, UPDATE_USER_PROFILE_CAR_DOORS_SELECT, SUMBIT_USER_PROFILE_CAR, USER_PROFILE_CAR_FORM_RECEIVED, USER_PROFILE_CAR_FORM_SENT, SET_USER_PROFILE_CAR_OWNER, RESET_USER_PROFILE_CAR_FORM, USER_PROFILE_CAR_SAVED, USER_PROFILE_CARS_SENT, SET_USER_PROFILE_CARS, USER_PROFILE_CARS_RECEIVED, UPDATE_USER_PROFILE_CAR, DELETE_USER_PROFILE_CAR, DELETE_USER_PROFILE_CAR_SENT, DELETE_USER_PROFILE_CAR_RECEIVED } from "./types";
+import { defaultUserProfileTabCarState, UserProfileCarActionTypes, UserProfileTabCarState, TOGGLE_USER_PROFILE_CAR_FORM, UPDATE_USER_PROFILE_CAR_MODEL_INPUT, UPDATE_USER_PROFILE_CAR_PRICE_INPUT, SET_USER_PROFILE_CAR_FEATURES, UPDATE_USER_PROFILE_CAR_GEARBOX_SELECT, UPDATE_USER_PROFILE_CAR_FUEL_SELECT, UPDATE_USER_PROFILE_CAR_SEATS_SELECT, UPDATE_USER_PROFILE_CAR_DOORS_SELECT, SUMBIT_USER_PROFILE_CAR, USER_PROFILE_CAR_FORM_RECEIVED, USER_PROFILE_CAR_FORM_SENT, SET_USER_PROFILE_CAR_OWNER, RESET_USER_PROFILE_CAR_FORM, USER_PROFILE_CAR_SAVED, USER_PROFILE_CARS_SENT, SET_USER_PROFILE_CARS, USER_PROFILE_CARS_RECEIVED, UPDATE_USER_PROFILE_CAR, DELETE_USER_PROFILE_CAR, DELETE_USER_PROFILE_CAR_SENT, DELETE_USER_PROFILE_CAR_RECEIVED, UPDATE_USER_PROFILE_CAR_RECEIVED } from "./types";
+import { Car } from "../../carSearch/types";
 
 export function userProfileTabCarReducer(
     state = defaultUserProfileTabCarState,
@@ -35,7 +36,7 @@ export function userProfileTabCarReducer(
                     ...state.form_data,
                     gearbox: {
                         ...state.form_data.gearbox,
-                        id: parseInt(action.value)
+                        id: action.value
                     }
                 },
             };
@@ -46,7 +47,7 @@ export function userProfileTabCarReducer(
                     ...state.form_data,
                     fuel: {
                         ...state.form_data.fuel,
-                        id: parseInt(action.value)
+                        id: action.value
                     }
                 },
             };
@@ -90,7 +91,7 @@ export function userProfileTabCarReducer(
                         (model.length >= 5 ? '' : 'Le nom du modèle doit contenir au moins 5 caractères'),
                     price_error:
                         (price_per_day === '' ? 'Le prix n\'est pas indiqué' : '') ||
-                        (/^\d+([,|.]\d{1,2})?$/.test(price_per_day) ? '' : 'Veuillez entrer un prix valide'),
+                        (/^\d+([,|.]\d{1,2})?$/.test(price_per_day as string) ? '' : 'Veuillez entrer un prix valide'),
                 },
                 submit_form: true
             };
@@ -100,8 +101,14 @@ export function userProfileTabCarReducer(
                 sending: true
             };
         case USER_PROFILE_CAR_FORM_RECEIVED:
+            const car = action.data;
+            const { cars: updated_cars } = state.cars_data;
+
+            car["id"] = action.id;
+            updated_cars.push(car);
             return {
                 ...state,
+                cars_data: { ...state.cars_data, cars: updated_cars },
                 sending: false,
                 saving: true
             };
@@ -128,7 +135,7 @@ export function userProfileTabCarReducer(
                 cars_data: { ...state.cars_data, fetching: true }
             }
         case SET_USER_PROFILE_CARS:
-            const { cars } = action.data
+            const { cars } = action.data;
             return {
                 ...state,
                 cars_data: { ...state.cars_data, cars }
@@ -138,10 +145,11 @@ export function userProfileTabCarReducer(
                 ...state,
                 cars_data: { ...state.cars_data, fetching: false }
             }
+
         case UPDATE_USER_PROFILE_CAR:
             const selected_car = state.cars_data.cars.filter(car => car.id === action.id)[0];
-
             const { id: selectedId, model: selectedModel, price_per_day: selectedPrice, gearbox: selectedGearbox, fuel: selectedFuel, seats: selectedSeats, doors: selectedDoors } = selected_car;
+
             return {
                 ...state,
                 form_data: {
@@ -150,11 +158,11 @@ export function userProfileTabCarReducer(
                     model: selectedModel,
                     price_per_day: (selectedPrice as number).toString(),
                     gearbox: {
-                        id: selectedGearbox.id,
+                        id: (selectedGearbox.id).toString(),
                         type: selectedGearbox.type
                     },
                     fuel: {
-                        id: selectedFuel.id,
+                        id: (selectedFuel.id).toString(),
                         type: selectedFuel.type
                     },
                     seats: selectedSeats.toString(),
@@ -162,6 +170,26 @@ export function userProfileTabCarReducer(
                 },
                 editing: true,
                 show_form: true
+            }
+        case UPDATE_USER_PROFILE_CAR_RECEIVED:
+
+            const current_cars = state.cars_data.cars;
+            const updated_car = action.data;
+
+            const updated_cars_data = current_cars.map(car => {
+                if (car.id == updated_car.id) {
+                    const car_data = {} as Car;
+                    Object.keys(car).forEach(function (key) {
+                        car_data[key as keyof Car] = updated_car[key as keyof Car] as string
+                    });
+                    return car_data;
+                }
+                return car
+            });
+
+            return {
+                ...state,
+                cars_data: { ...state.cars_data, cars: updated_cars_data }
             }
         case DELETE_USER_PROFILE_CAR:
             return {
@@ -175,11 +203,11 @@ export function userProfileTabCarReducer(
                 deleting: true
             }
         case DELETE_USER_PROFILE_CAR_RECEIVED:
-            const updated_cars_data = state.cars_data.cars.filter(car => (car.id !== action.id))
+            const deleted_cars_data = state.cars_data.cars.filter(car => (car.id !== action.id))
             return {
                 ...state,
                 deleting: false,
-                cars_data: { ...state.cars_data, cars: updated_cars_data }
+                cars_data: { ...state.cars_data, cars: deleted_cars_data }
             }
         default:
             return state;

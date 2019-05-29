@@ -3,7 +3,7 @@ import Form from "react-bootstrap/Form";
 import { toggleUserProfileCarForm, submitUserProfileCarForm, fetchUserProfileCarFeaturesForm, postUserProfileCarForm, fetchUserProfileCars, postUpdateUserProfileCarForm } from "../../../redux/userProfile/userProfileTabCar/actions";
 import { connect } from "react-redux";
 import { HcState } from "../../../redux/configureStore";
-import { UserProfileTabCarState, UserProfileCarFormDataState } from "../../../redux/userProfile/userProfileTabCar/types";
+import { UserProfileTabCarState } from "../../../redux/userProfile/userProfileTabCar/types";
 import HcCircleButton from "../../Button/HcCircleButton";
 import HcSecondaryButton from "../../Button/HcSecondaryButton";
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -11,6 +11,8 @@ import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 import UserProfileTabCarInputs from "./UserProfileTabCarInputs";
 import { UserDataState } from "../../../redux/user/types";
 import HcCarsList from "./HcUserProfileCarsList";
+import { Car } from "../../../redux/carSearch/types";
+import { parseCar } from "../../../Utils";
 library.add(faPlus, faMinus);
 
 interface UserProfileTabCarProps {
@@ -19,9 +21,9 @@ interface UserProfileTabCarProps {
     toggleCarForm: typeof toggleUserProfileCarForm,
     fetchUserProfileCarFeatures: () => void,
     onUserProfileCarSumbit: typeof submitUserProfileCarForm,
-    onPostUserProfileCarForm: (data: UserProfileCarFormDataState) => void,
+    onPostUserProfileCarForm: (data: Car) => void,
     fetchUserProfileCars: (id: number) => void,
-    onPostUpdateUserProfileCarForm: (data: UserProfileCarFormDataState) => void
+    onPostUpdateUserProfileCarForm: (data: Car) => void
 }
 
 class UserProfileTabCar extends Component<UserProfileTabCarProps> {
@@ -41,11 +43,11 @@ class UserProfileTabCar extends Component<UserProfileTabCarProps> {
 
         const { valid_form, form_data, editing, submit_form } = this.props.user_profile_tab_car;
         if (!editing && valid_form && prev_props.user_profile_tab_car.valid_form !== valid_form) {
-            this.props.onPostUserProfileCarForm(form_data);
+            this.props.onPostUserProfileCarForm(parseCar(form_data));
         }
 
         if (submit_form && editing && valid_form && prev_props.user_profile_tab_car.submit_form !== submit_form) {
-            this.props.onPostUpdateUserProfileCarForm(form_data);
+            this.props.onPostUpdateUserProfileCarForm(parseCar(form_data));
         }
     }
 
@@ -94,8 +96,8 @@ export default connect(
         toggleCarForm: () => toggleUserProfileCarForm(),
         fetchUserProfileCarFeatures: () => fetchUserProfileCarFeaturesForm(),
         onUserProfileCarSumbit: () => submitUserProfileCarForm(),
-        onPostUserProfileCarForm: (data: UserProfileCarFormDataState) => postUserProfileCarForm(data),
+        onPostUserProfileCarForm: (data: Car) => postUserProfileCarForm(data),
         fetchUserProfileCars: (id: number) => fetchUserProfileCars(id),
-        onPostUpdateUserProfileCarForm: (data: UserProfileCarFormDataState) => postUpdateUserProfileCarForm(data)
+        onPostUpdateUserProfileCarForm: (data: Car) => postUpdateUserProfileCarForm(data)
     }
 )(UserProfileTabCar)

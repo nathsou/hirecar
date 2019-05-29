@@ -1,17 +1,6 @@
-import { Fuel, Gearbox, Car, IdentifiedType } from "../../carSearch/types";
+import { Fuel, Gearbox, Car } from "../../carSearch/types";
 import { ToggleModalAction } from "../../navbar/types";
-
-export interface UserProfileCarFormDataState {
-    [index: string]: string | IdentifiedType;
-    id: string,
-    owner_id: string,
-    model: string,
-    price_per_day: string,
-    gearbox: IdentifiedType,
-    fuel: IdentifiedType,
-    seats: string,
-    doors: string
-}
+import { RawCar } from "../../../Utils";
 
 export interface UserProfileCarFeaturesState {
     fuel: Fuel[],
@@ -25,7 +14,7 @@ export interface UserProfileCarsState {
 }
 
 export interface UserProfileTabCarState {
-    form_data: UserProfileCarFormDataState,
+    form_data: RawCar,
     form_errors: {
         model_error: string,
         price_error: string,
@@ -50,11 +39,11 @@ export const defaultUserProfileTabCarState: UserProfileTabCarState = {
         model: '',
         price_per_day: '',
         gearbox: {
-            id: 1,
+            id: '1',
             type: "Automatique"
         },
         fuel: {
-            id: 1,
+            id: '1',
             type: "Essence"
         },
         seats: '2',
@@ -166,7 +155,9 @@ export interface UserProfileCarSentAction {
 
 export const USER_PROFILE_CAR_FORM_RECEIVED = "USER_PROFILE_CAR_FORM_RECEIVED";
 export interface UserProfileCarReceivedAction {
-    type: typeof USER_PROFILE_CAR_FORM_RECEIVED
+    type: typeof USER_PROFILE_CAR_FORM_RECEIVED,
+    data: Car,
+    id: number
 }
 
 export const SET_USER_PROFILE_CAR_OWNER = "SET_USER_PROFILE_CAR_OWNER";
@@ -230,7 +221,8 @@ export interface UpdateUserProfileCarSentAction {
 
 export const UPDATE_USER_PROFILE_CAR_RECEIVED = "UPDATE_USER_PROFILE_CAR_RECEIVED";
 export interface UpdateUserProfileCarReceivedAction {
-    type: typeof UPDATE_USER_PROFILE_CAR_RECEIVED
+    type: typeof UPDATE_USER_PROFILE_CAR_RECEIVED,
+    data: Car
 }
 
 export const DELETE_USER_PROFILE_CAR = "DELETE_USER_PROFILE_CAR";

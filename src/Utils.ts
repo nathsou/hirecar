@@ -87,7 +87,6 @@ export type RawParkingSpot = {
     )
 };
 
-
 export function parseParkingSpot(spot: RawParkingSpot): ParkingSpot {
     const { id, start_date, end_date, car, parking_lot } = spot;
 

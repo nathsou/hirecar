@@ -51,7 +51,7 @@ class UserProfileTabCarInputs extends Component<UserProfileTabCarProps> {
                         size={4} controlId="userProfileCarPrice" className={priceError}
                         label="Prix en €/jour " type="text"
                         name="price_per_day" placeholder="Prix de la location"
-                        value={price_per_day}
+                        value={price_per_day as string}
                         onChange={this.props.onPriceChange} />
                 </Form.Row>
                 <Form.Row>
@@ -70,13 +70,13 @@ class UserProfileTabCarInputs extends Component<UserProfileTabCarProps> {
                     <HcSelectFormGroup
                         size="2" controlId="userProfileCarSeats" className=""
                         label="Sièges" name="seat"
-                        values={seats} value={defaultSeats}
+                        values={seats} value={defaultSeats.toString()}
                         onChange={this.props.onSeatsChange}
                     />
                     <HcSelectFormGroup
                         size="2" controlId="userProfileCarDoors" className=""
                         label="Portes" name="door"
-                        values={doors} value={defaultDoors}
+                        values={doors} value={defaultDoors.toString()}
                         onChange={this.props.onDoorsChange}
                     />
                 </Form.Row>
