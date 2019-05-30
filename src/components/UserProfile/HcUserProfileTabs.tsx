@@ -6,6 +6,8 @@ import { connect } from "react-redux";
 import { HcState } from "../../redux/configureStore";
 import { ChangeUserProfileTabAction } from "../../redux/userProfileTabs/types";
 import { changeUserProfileTab } from "../../redux/userProfileTabs/actions";
+import HcUserProfileTabSpotRental from "./HcUserProfileTabSpotRental";
+import HcUserProfileTabRentCar from "./HcUserProfileTabRentCar";
 
 interface HcUserProfileTabsProps {
     active_tab_key: string,
@@ -23,19 +25,21 @@ class HcUserProfileTabs extends Component<HcUserProfileTabsProps> {
                             <Nav.Link eventKey="user_profile">Profil</Nav.Link>
                         </Nav.Item>
                         <Nav.Item>
-                            <Nav.Link eventKey="user_profile_parking">Réservations de parkings</Nav.Link>
+                            <Nav.Link eventKey="user_profile_rent_parking">Réservations de parkings</Nav.Link>
                         </Nav.Item>
                         <Nav.Item>
-                            <Nav.Link eventKey="user_profile_car">Réservations de voitures</Nav.Link>
+                            <Nav.Link eventKey="user_profile_rent_car">Réservations de voitures</Nav.Link>
                         </Nav.Item>
                     </Nav>
                     <Tab.Content>
                         <Tab.Pane eventKey="user_profile">
                             <HcUserProfileTab />
                         </Tab.Pane>
-                        <Tab.Pane eventKey="user_profile_parking">
+                        <Tab.Pane eventKey="user_profile_rent_parking">
+                            <HcUserProfileTabSpotRental />
                         </Tab.Pane>
-                        <Tab.Pane eventKey="user_profile_car">
+                        <Tab.Pane eventKey="user_profile_rent_car">
+                            <HcUserProfileTabRentCar/>
                         </Tab.Pane>
                     </Tab.Content>
                 </Tab.Container>

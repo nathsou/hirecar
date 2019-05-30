@@ -3,7 +3,7 @@ import Modal from "react-bootstrap/Modal";
 import HcSignTabs from "./Sign/HcSignTabs";
 import { HcState } from "../redux/configureStore";
 import { connect } from "react-redux";
-import HcCarDelete from "./UserProfile/Form/HcCarDelete";
+import HcCarDelete from "./UserProfile/UserProfileTabCar/HcCarDelete";
 
 interface HcModalProps {
     show: boolean,

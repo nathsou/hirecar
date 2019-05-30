@@ -463,6 +463,7 @@ footer p {
     font: 1.125rem 'Oswald', sans-serif;
     color: var(--primary-color);
     text-transform: inherit;
+    margin-top: .5rem;
 }
 
 .hc-list-item-features {

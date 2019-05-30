@@ -45,7 +45,6 @@ class UserProfileTabCar extends Component<UserProfileTabCarProps> {
         if (!editing && valid_form && prev_props.user_profile_tab_car.valid_form !== valid_form) {
             this.props.onPostUserProfileCarForm(parseCar(form_data));
         }
-
         if (submit_form && editing && valid_form && prev_props.user_profile_tab_car.submit_form !== submit_form) {
             this.props.onPostUpdateUserProfileCarForm(parseCar(form_data));
         }
@@ -54,7 +53,7 @@ class UserProfileTabCar extends Component<UserProfileTabCarProps> {
     public render() {
 
         const { editing, show_form, saving, cars_data } = this.props.user_profile_tab_car;
-        const { fetching: fetchingCars } = this.props.user_profile_tab_car.cars_data;
+        const { fetching: fetching_cars } = this.props.user_profile_tab_car.cars_data;
         const cars_count = Object.keys(cars_data.cars).length;
 
         return (
@@ -67,7 +66,7 @@ class UserProfileTabCar extends Component<UserProfileTabCarProps> {
                     />
                 </h2>
                 {saving ? (<p className="error-message">Votre véhicule a été ajouté.</p>) : null}
-                {fetchingCars && !saving ? (<p>Chargement de vos véhicules...</p>) : null}
+                {fetching_cars && !saving ? (<p>Chargement de vos véhicules...</p>) : null}
                 {show_form ? (
                     <div>
                         <UserProfileTabCarInputs />
@@ -77,7 +76,7 @@ class UserProfileTabCar extends Component<UserProfileTabCarProps> {
                     </div>
                 ) : null}
                 {!saving && !show_form ? <HcCarsList /> : null}
-                {!fetchingCars && !show_form && !saving && cars_count === 0 ? (
+                {!fetching_cars && !show_form && !saving && cars_count === 0 ? (
                     <p>Vous n'avez pas encore déclaré de véhicules ?
                         <span className="link" onClick={this.props.toggleCarForm}> Enregistrez vos véhicules.</span>
                     </p>
