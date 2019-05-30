@@ -30,7 +30,7 @@ class HcCarDelete extends Component<HcCarDeleteProps> {
 
 export default connect(
     (state: HcState) => ({
-        cars_data: state.user_profile_tab_car.cars_data
+        cars_data: state.user_profile_tabs.user_profile_tab_car.cars_data
     }),
     {
         onUserProfileCarDelete: (data: UserProfileCarsState) => postDeleteUserProfileCar(data)

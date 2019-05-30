@@ -29,6 +29,6 @@ class HcModal extends Component<HcModalProps> {
 
 export default connect(
     (state: HcState) => ({
-        user_profile_tab_car_delete: state.user_profile_tab_car.show_delete_modal
+        user_profile_tab_car_delete: state.user_profile_tabs.user_profile_tab_car.show_delete_modal
     })
 )(HcModal)

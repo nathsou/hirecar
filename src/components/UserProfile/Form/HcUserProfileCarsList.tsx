@@ -59,7 +59,7 @@ class HcUserProfileCarsList extends Component<HcUserProfileCarsListProps> {
 export default connect(
     (state: HcState) => ({
         navbar: state.navbar,
-        cars: state.user_profile_tab_car.cars_data.cars
+        cars: state.user_profile_tabs.user_profile_tab_car.cars_data.cars
     }), {
         toggleModal: toggleShowModal,
         onUserProfileCarChange: (id: number) => updateUserProfileCar(id),

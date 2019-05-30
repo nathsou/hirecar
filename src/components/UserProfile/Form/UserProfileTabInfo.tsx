@@ -44,7 +44,9 @@ class UserProfileTabInfo extends Component<UserProfileTabInfoProps> {
 }
 
 export default connect(
-    (state: HcState) => ({ user_profile_tab_info: state.user_profile_tab_info }),
+    (state: HcState) => ({ 
+        user_profile_tab_info: state.user_profile_tabs.user_profile_tab_info 
+    }),
     {
         onUserProfileInfoSubmit: () => submitUserProfileInfoForm(),
         onPostUserProfileInfoForm: (data: UserProfileInfoFormDataState) => postUserProfileInfoForm(data),

@@ -90,7 +90,7 @@ class UserProfileTabCar extends Component<UserProfileTabCarProps> {
 export default connect(
     (state: HcState) => ({
         user: state.user.data,
-        user_profile_tab_car: state.user_profile_tab_car
+        user_profile_tab_car: state.user_profile_tabs.user_profile_tab_car
     }),
     {
         toggleCarForm: () => toggleUserProfileCarForm(),

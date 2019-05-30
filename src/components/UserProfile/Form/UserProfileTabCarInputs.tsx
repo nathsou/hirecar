@@ -100,7 +100,7 @@ class UserProfileTabCarInputs extends Component<UserProfileTabCarProps> {
 
 export default connect(
     (state: HcState) => ({
-        user_profile_tab_car: state.user_profile_tab_car
+        user_profile_tab_car: state.user_profile_tabs.user_profile_tab_car
     }),
     {
         onModelChange: (e: any) => updateUserProfileCarModelInput(e.target.value),

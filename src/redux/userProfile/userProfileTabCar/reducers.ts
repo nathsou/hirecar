@@ -183,7 +183,8 @@ export function userProfileTabCarReducer(
             });
             return {
                 ...state,
-                cars_data: { ...state.cars_data, cars: updated_cars_data }
+                cars_data: { ...state.cars_data, cars: updated_cars_data },
+                editing: false
             }
         case DELETE_USER_PROFILE_CAR:
             return {
