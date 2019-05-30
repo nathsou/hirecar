@@ -8,6 +8,7 @@ import { HcState } from "../../../redux/configureStore";
 import { UserProfileTabCarState } from "../../../redux/userProfile/userProfileTabCar/types";
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
+import { Fuel, Gearbox } from "../../../redux/carSearch/types";
 library.add(faPlus, faMinus);
 
 interface UserProfileTabCarProps {
@@ -21,6 +22,18 @@ interface UserProfileTabCarProps {
 }
 
 class UserProfileTabCarInputs extends Component<UserProfileTabCarProps> {
+
+    private onFuelChange = (e: any): void => {
+        const id = parseInt(e.target.value);
+        const fuel = this.props.user_profile_tab_car.car_features.fuel.find(f => f.id === id) as Fuel;
+        this.props.onFuelChange(fuel);
+    }
+
+    private onGearboxChange = (e: any): void => {
+        const id = parseInt(e.target.value);
+        const gearbox = this.props.user_profile_tab_car.car_features.gearbox.find(g => g.id === id) as Gearbox;
+        this.props.onGearboxChange(gearbox);
+    }
 
     public render() {
 
@@ -51,7 +64,7 @@ class UserProfileTabCarInputs extends Component<UserProfileTabCarProps> {
                         size={4} controlId="userProfileCarPrice" className={priceError}
                         label="Prix en €/jour " type="text"
                         name="price_per_day" placeholder="Prix de la location"
-                        value={price_per_day as string}
+                        value={price_per_day ? price_per_day.toString() : ''}
                         onChange={this.props.onPriceChange} />
                 </Form.Row>
                 <Form.Row>
@@ -59,13 +72,13 @@ class UserProfileTabCarInputs extends Component<UserProfileTabCarProps> {
                         size="4" controlId="userProfileCarGearbox" className=""
                         label="Boîte de vitesse" name="gearbox"
                         values={gearbox} value={gearboxId}
-                        onChange={this.props.onGearboxChange}
+                        onChange={this.onGearboxChange}
                     />
                     <HcSelectFormGroup
                         size="4" controlId="userProfileCarFuel" className=""
                         label="Carburant" name="fuel"
                         values={fuel} value={fuelId}
-                        onChange={this.props.onFuelChange}
+                        onChange={this.onFuelChange}
                     />
                     <HcSelectFormGroup
                         size="2" controlId="userProfileCarSeats" className=""
@@ -92,8 +105,8 @@ export default connect(
     {
         onModelChange: (e: any) => updateUserProfileCarModelInput(e.target.value),
         onPriceChange: (e: any) => updateUserProfileCarPriceInput(e.target.value),
-        onGearboxChange: (e: any) => updateUserProfileCarGearboxSelect(e.target.value),
-        onFuelChange: (e: any) => updateUserProfileCarFuelSelect(e.target.value),
+        onGearboxChange: (gearbox: Gearbox) => updateUserProfileCarGearboxSelect(gearbox),
+        onFuelChange: (fuel: Fuel) => updateUserProfileCarFuelSelect(fuel),
         onSeatsChange: (e: any) => updateUserProfileCarSeatsSelect(e.target.value),
         onDoorsChange: (e: any) => updateUserProfileCarDoorsSelect(e.target.value),
     }

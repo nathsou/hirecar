@@ -374,7 +374,7 @@ select {
 }
 
 .error-message {
-    color: var(--error-pink);
+    color: var(--secondary-color);
     padding-bottom: 2rem;
     font-weight: bold;
 }

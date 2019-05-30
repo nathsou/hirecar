@@ -35,8 +35,8 @@ export function userProfileTabCarReducer(
                 form_data: {
                     ...state.form_data,
                     gearbox: {
-                        ...state.form_data.gearbox,
-                        id: action.value
+                        id: action.gearbox.id.toString(),
+                        type: action.gearbox.type
                     }
                 },
             };
@@ -46,8 +46,8 @@ export function userProfileTabCarReducer(
                 form_data: {
                     ...state.form_data,
                     fuel: {
-                        ...state.form_data.fuel,
-                        id: action.value
+                        id: action.fuel.id.toString(),
+                        type: action.fuel.type
                     }
                 },
             };
@@ -101,10 +101,9 @@ export function userProfileTabCarReducer(
                 sending: true
             };
         case USER_PROFILE_CAR_FORM_RECEIVED:
-            const car = action.data;
+            const car: Car = action.data;
             const { cars: updated_cars } = state.cars_data;
-
-            car["id"] = action.id;
+            car.id = action.id;
             updated_cars.push(car);
             return {
                 ...state,
@@ -132,14 +131,16 @@ export function userProfileTabCarReducer(
         case USER_PROFILE_CARS_SENT:
             return {
                 ...state,
+
                 cars_data: { ...state.cars_data, fetching: true }
             }
+
         case SET_USER_PROFILE_CARS:
-            const { cars } = action.data;
             return {
                 ...state,
-                cars_data: { ...state.cars_data, cars }
+                cars_data: { ...state.cars_data, cars: action.cars }
             }
+
         case USER_PROFILE_CARS_RECEIVED:
             return {
                 ...state,
@@ -172,21 +173,14 @@ export function userProfileTabCarReducer(
                 show_form: true
             }
         case UPDATE_USER_PROFILE_CAR_RECEIVED:
-
             const current_cars = state.cars_data.cars;
             const updated_car = action.data;
-
             const updated_cars_data = current_cars.map(car => {
-                if (car.id == updated_car.id) {
-                    const car_data = {} as Car;
-                    Object.keys(car).forEach(function (key) {
-                        car_data[key as keyof Car] = updated_car[key as keyof Car] as string
-                    });
-                    return car_data;
+                if (car.id === updated_car.id) {
+                    return updated_car;
                 }
                 return car
             });
-
             return {
                 ...state,
                 cars_data: { ...state.cars_data, cars: updated_cars_data }

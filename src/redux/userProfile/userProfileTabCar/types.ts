@@ -122,13 +122,13 @@ export interface UpdateUserProfileCarPriceAction {
 export const UPDATE_USER_PROFILE_CAR_GEARBOX_SELECT = "UPDATE_USER_PROFILE_CAR_GEARBOX_SELECT";
 export interface UpdateUserProfileCarGearboxAction {
     type: typeof UPDATE_USER_PROFILE_CAR_GEARBOX_SELECT,
-    value: string
+    gearbox: Gearbox
 }
 
 export const UPDATE_USER_PROFILE_CAR_FUEL_SELECT = "UPDATE_USER_PROFILE_CAR_FUEL_SELECT";
 export interface UpdateUserProfileCarFuelAction {
     type: typeof UPDATE_USER_PROFILE_CAR_FUEL_SELECT,
-    value: string
+    fuel: Fuel
 }
 
 export const UPDATE_USER_PROFILE_CAR_SEATS_SELECT = "UPDATE_USER_PROFILE_CAR_SEATS_SELECT";
@@ -205,7 +205,7 @@ export interface UserProfileCarsReceivedAction {
 export const SET_USER_PROFILE_CARS = "SET_USER_PROFILE_CARS";
 export interface SetUserProfileCarsAction {
     type: typeof SET_USER_PROFILE_CARS,
-    data: UserProfileCarsState
+    cars: Car[]
 }
 
 export const UPDATE_USER_PROFILE_CAR = "UPDATE_USER_PROFILE_CAR";
