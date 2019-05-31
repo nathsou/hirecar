@@ -10,7 +10,7 @@ export interface UserProfileCarFeaturesState {
 export interface UserProfileCarsState {
     cars: Car[],
     fetching: boolean,
-    current_car_id: number
+    selected_car_id: number
 }
 
 export interface UserProfileTabCarState {
@@ -28,7 +28,7 @@ export interface UserProfileTabCarState {
     sending: boolean,
     saving: boolean,
     editing: boolean,
-    show_delete_modal: boolean,
+    show_delete_car_modal: boolean,
     deleting: boolean
 }
 
@@ -90,7 +90,7 @@ export const defaultUserProfileTabCarState: UserProfileTabCarState = {
     cars_data: {
         cars: [],
         fetching: false,
-        current_car_id: 0,
+        selected_car_id: 0,
     },
     show_form: false,
     valid_form: false,
@@ -98,13 +98,19 @@ export const defaultUserProfileTabCarState: UserProfileTabCarState = {
     sending: false,
     saving: false,
     editing: false,
-    show_delete_modal: false,
+    show_delete_car_modal: false,
     deleting: false
 }
 
-export const TOGGLE_USER_PROFILE_CAR_FORM = "TOGGLE_USER_PROFILE_CAR_FORM";
-export interface ToggleUserProfileCarFormAction {
-    type: typeof TOGGLE_USER_PROFILE_CAR_FORM
+export const USER_PROFILE_CAR_FEATURES_SENT = "USER_PROFILE_CAR_FEATURES_SENT";
+export interface UserProfileCarFeaturesSentAction {
+    type: typeof USER_PROFILE_CAR_FEATURES_SENT
+}
+
+export const USER_PROFILE_CAR_FEATURES_RECEIVED = "USER_PROFILE_CAR_FEATURES_RECEIVED";
+export interface UserProfileCarFeaturesReceivedAction {
+    type: typeof USER_PROFILE_CAR_FEATURES_RECEIVED,
+    data: UserProfileCarFeaturesState
 }
 
 export const UPDATE_USER_PROFILE_CAR_MODEL_INPUT = "UPDATE_USER_PROFILE_CAR_MODEL_INPUT";
@@ -148,6 +154,11 @@ export interface SubmitUserProfileCarAction {
     type: typeof SUMBIT_USER_PROFILE_CAR
 }
 
+export const TOGGLE_USER_PROFILE_CAR_FORM = "TOGGLE_USER_PROFILE_CAR_FORM";
+export interface ToggleUserProfileCarFormAction {
+    type: typeof TOGGLE_USER_PROFILE_CAR_FORM
+}
+
 export const USER_PROFILE_CAR_FORM_SENT = "USER_PROFILE_CAR_FORM_SENT";
 export interface UserProfileCarSentAction {
     type: typeof USER_PROFILE_CAR_FORM_SENT
@@ -164,17 +175,6 @@ export const SET_USER_PROFILE_CAR_OWNER = "SET_USER_PROFILE_CAR_OWNER";
 export interface SetUserProfileCarOwnerAction {
     type: typeof SET_USER_PROFILE_CAR_OWNER,
     id: string
-}
-
-export const USER_PROFILE_CAR_FEATURES_SENT = "USER_PROFILE_CAR_FEATURES_SENT";
-export interface UserProfileCarFeaturesSentAction {
-    type: typeof USER_PROFILE_CAR_FEATURES_SENT
-}
-
-export const USER_PROFILE_CAR_FEATURES_RECEIVED = "USER_PROFILE_CAR_FEATURES_RECEIVED";
-export interface UserProfileCarFeaturesReceivedAction {
-    type: typeof USER_PROFILE_CAR_FEATURES_RECEIVED,
-    data: UserProfileCarFeaturesState
 }
 
 export const USER_PROFILE_CAR_SAVED = "USER_PROFILE_CAR_SAVED";
@@ -221,6 +221,11 @@ export interface DeleteUserProfileCarAction {
     id: number
 }
 
+export const CANCEL_DELETE_USER_PROFILE_CAR = "CANCEL_DELETE_USER_PROFILE_CAR";
+export interface CancelDeleteUserProfileCarAction {
+    type: typeof CANCEL_DELETE_USER_PROFILE_CAR
+}
+
 export const DELETE_USER_PROFILE_CAR_SENT = "DELETE_USER_PROFILE_CAR_SENT";
 export interface DeleteUserProfileCarSentAction {
     type: typeof DELETE_USER_PROFILE_CAR_SENT
@@ -232,4 +237,4 @@ export interface DeleteUserProfileCarReceivedAction {
     id: number
 }
 
-export type UserProfileCarActionTypes = ToggleUserProfileCarFormAction | UpdateUserProfileCarModelAction | UpdateUserProfileCarPriceAction | UpdateUserProfileCarGearboxAction | UpdateUserProfileCarFuelAction | UpdateUserProfileCarSeatsAction | UpdateUserProfileCarDoorsAction | SubmitUserProfileCarAction | UserProfileCarSentAction | UserProfileCarReceivedAction | SetUserProfileCarOwnerAction | UserProfileCarFeaturesSentAction | UserProfileCarFeaturesReceivedAction | UserProfileCarSavedAction | ResetUserProfileCarFormAction | UserProfileCarsSentAction | UserProfileCarsReceivedAction | UpdateUserProfileCarAction | UpdateUserProfileCarSentAction | UpdateUserProfileCarReceivedAction | DeleteUserProfileCarAction | DeleteUserProfileCarSentAction | DeleteUserProfileCarReceivedAction | ToggleModalAction;
+export type UserProfileCarActionTypes = ToggleUserProfileCarFormAction | UpdateUserProfileCarModelAction | UpdateUserProfileCarPriceAction | UpdateUserProfileCarGearboxAction | UpdateUserProfileCarFuelAction | UpdateUserProfileCarSeatsAction | UpdateUserProfileCarDoorsAction | SubmitUserProfileCarAction | UserProfileCarSentAction | UserProfileCarReceivedAction | SetUserProfileCarOwnerAction | UserProfileCarFeaturesSentAction | UserProfileCarFeaturesReceivedAction | UserProfileCarSavedAction | ResetUserProfileCarFormAction | UserProfileCarsSentAction | UserProfileCarsReceivedAction | UpdateUserProfileCarAction | UpdateUserProfileCarSentAction | UpdateUserProfileCarReceivedAction | DeleteUserProfileCarAction | DeleteUserProfileCarSentAction | DeleteUserProfileCarReceivedAction | ToggleModalAction | CancelDeleteUserProfileCarAction;

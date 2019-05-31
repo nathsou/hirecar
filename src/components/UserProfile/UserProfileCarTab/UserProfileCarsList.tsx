@@ -2,25 +2,29 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { HcState } from "../../../redux/configureStore";
 import { UserProfileCarsState, DeleteUserProfileCarAction } from "../../../redux/userProfile/userProfileTabCar/types";
-import HcListItem, { HcListItemProps } from "../../HcListItem";
+import { HcListItemProps } from "../../HcListItem";
 import CarPicto from "../../../res/img/car-picto.svg";
-import HcSecondaryButton from "../../Button/HcSecondaryButton";
-import HcCircleButton from "../../Button/HcCircleButton";
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { updateUserProfileCar, onUserProfileCarDelete } from "../../../redux/userProfile/userProfileTabCar/actions";
 import { toggleShowModal } from "../../../redux/navbar/actions";
 import { ToggleModalAction } from "../../../redux/navbar/types";
+import HcList from "../../HcList";
 library.add(faTimes);
 
 
-export interface HcUserProfileCarsListProps extends Pick<UserProfileCarsState, 'cars'> {
+export interface UserProfileCarsListProps extends Pick<UserProfileCarsState, 'cars'> {
     toggleModal: () => ToggleModalAction,
     onUserProfileCarChange: (id: number) => void,
     onUserProfileCarDelete: (id: number) => DeleteUserProfileCarAction
 }
 
-class HcUserProfileCarsList extends Component<HcUserProfileCarsListProps> {
+class UserProfileCarsList extends Component<UserProfileCarsListProps> {
+
+    public onDelete = (id: number) => {
+        this.props.onUserProfileCarDelete(id);
+        this.props.toggleModal();
+    }
 
     public render() {
 
@@ -35,23 +39,11 @@ class HcUserProfileCarsList extends Component<HcUserProfileCarsListProps> {
         });
 
         return (
-            <div className='hc-user-profile-list'>
-                {cars.map((car, i) =>
-                    (
-                        <div key={`car_${i}`} className="hc-user-profile-list-item">
-                            <HcListItem {...car} picto={CarPicto} />
-                            <HcSecondaryButton handleClick={() => this.props.onUserProfileCarChange(car.id)}>Modifier</HcSecondaryButton>
-                            <HcCircleButton
-                                onClick={() => {
-                                    this.props.onUserProfileCarDelete(car.id);
-                                    this.props.toggleModal();
-                                }}
-                                icon="times"
-                            />
-                        </div>
-                    )
-                )}
-            </div>
+            <HcList
+                items={cars} className="hc-user-profile-list-item" picto={CarPicto} update={true}
+                onUpdate={(id: number) => this.props.onUserProfileCarChange(id)}
+                onDelete={(id: number) => this.onDelete(id)}
+            />
         );
     }
 }
@@ -65,5 +57,5 @@ export default connect(
         onUserProfileCarChange: (id: number) => updateUserProfileCar(id),
         onUserProfileCarDelete: (id: number) => onUserProfileCarDelete(id)
     }
-)(HcUserProfileCarsList);
+)(UserProfileCarsList);
 

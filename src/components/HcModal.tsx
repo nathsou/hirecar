@@ -3,24 +3,29 @@ import Modal from "react-bootstrap/Modal";
 import HcSignTabs from "./Sign/HcSignTabs";
 import { HcState } from "../redux/configureStore";
 import { connect } from "react-redux";
-import HcCarDelete from "./UserProfile/UserProfileTabCar/HcCarDelete";
+import HcCarDelete from "./UserProfile/UserProfileCarTab/UserProfileCarDelete";
+import UserProfileSpotRentalDelete from "./UserProfile/UserProfileSpotRentalTab/UserProfileSpotRentalDelete";
 
 interface HcModalProps {
     show: boolean,
     handleClose: () => void,
-    user_profile_tab_car_delete: boolean
+    logged_in: boolean,
+    show_delete_car_modal: boolean,
+    show_delete_spot_rental_modal: boolean
 }
 
 class HcModal extends Component<HcModalProps> {
 
     render() {
+        const { logged_in, show_delete_car_modal, show_delete_spot_rental_modal } = this.props
+        const default_content = !show_delete_car_modal && !show_delete_spot_rental_modal;
         return (
-            <Modal show={this.props.show} onHide={() => this.props.handleClose()} dialogClassName="modal-50w" aria-labelledby="contained-modal-title-vcenter" centered>
-                <Modal.Header closeButton></Modal.Header>
+            <Modal show={this.props.show} onHide={() => this.props.handleClose()} dialogClassName="modal-50w" aria-labelledby="contained-modal-title-vcenter" centered backdrop='static'>
+                {default_content && <Modal.Header closeButton></Modal.Header>}
                 <Modal.Body>
-                    {this.props.user_profile_tab_car_delete ? (
-                        <HcCarDelete handleClick={this.props.handleClose} />
-                    ) : (<HcSignTabs />)}
+                    {!logged_in && <HcSignTabs />}
+                    {show_delete_car_modal && <HcCarDelete handleClick={this.props.handleClose} />}
+                    {show_delete_spot_rental_modal && <UserProfileSpotRentalDelete handleClick={this.props.handleClose} />}
                 </Modal.Body>
             </Modal>
         );
@@ -29,6 +34,8 @@ class HcModal extends Component<HcModalProps> {
 
 export default connect(
     (state: HcState) => ({
-        user_profile_tab_car_delete: state.user_profile_tabs.user_profile_tab_car.show_delete_modal
+        logged_in: state.user.logged_in,
+        show_delete_car_modal: state.user_profile_tabs.user_profile_tab_car.show_delete_car_modal,
+        show_delete_spot_rental_modal: state.user_profile_tabs.user_profile_tab_spot_rental.show_delete_spot_rental_modal
     })
 )(HcModal)

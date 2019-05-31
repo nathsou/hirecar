@@ -5,7 +5,7 @@ import { postDeleteUserProfileCar, onUserProfileCarDeleteCancel } from "../../..
 import { Car } from "../../../redux/carSearch/types";
 import HcDelete from "../../HcDeleteModalContainer";
 
-export interface HcCarDeleteProps {
+export interface UserProfileCarDeleteProps {
     selected_car_id: number,
     cars: Car[],
     handleClick: () => void,
@@ -14,7 +14,7 @@ export interface HcCarDeleteProps {
 }
 
 
-class HcCarDelete extends Component<HcCarDeleteProps> {
+class UserProfileCarDelete extends Component<UserProfileCarDeleteProps> {
 
     public onCancel = () => {
         this.props.handleClick();
@@ -46,4 +46,4 @@ export default connect(
         onUserProfileCarDelete: (id: number) => postDeleteUserProfileCar(id),
         onUserProfileCarDeleteCancel: () => onUserProfileCarDeleteCancel()
     }
-)(HcCarDelete)
+)(UserProfileCarDelete)

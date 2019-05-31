@@ -30,7 +30,7 @@ class UserProfileTabInfo extends Component<UserProfileTabInfoProps> {
         const { editing, saving } = this.props.user_profile_tab_info;
         return (
             <Form onSubmit={this.handleInfoSubmit}>
-                <h2 className="user-profile-text">Information générale</h2>
+                <h2 className="user-profile-title">Information générale</h2>
                 <UserProfileTabInfoInputs />
                 {saving ? (<p className="error-message">Vos données ont été sauvegardées.</p>) : null}
                 {editing ? (
@@ -44,8 +44,8 @@ class UserProfileTabInfo extends Component<UserProfileTabInfoProps> {
 }
 
 export default connect(
-    (state: HcState) => ({ 
-        user_profile_tab_info: state.user_profile_tabs.user_profile_tab_info 
+    (state: HcState) => ({
+        user_profile_tab_info: state.user_profile_tabs.user_profile_tab_info
     }),
     {
         onUserProfileInfoSubmit: () => submitUserProfileInfoForm(),

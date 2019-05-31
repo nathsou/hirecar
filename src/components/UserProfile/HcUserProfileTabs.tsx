@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import { HcState } from "../../redux/configureStore";
 import { ChangeUserProfileTabAction } from "../../redux/userProfileTabs/types";
 import { changeUserProfileTab } from "../../redux/userProfileTabs/actions";
-import HcUserProfileTabSpotRental from "./HcUserProfileTabSpotRental";
+import HcUserProfileTabSpotRental from "./UserProfileSpotRentalTab/UserProfileTabSpotRental";
 import HcUserProfileTabRentCar from "./HcUserProfileTabRentCar";
 
 interface HcUserProfileTabsProps {
@@ -39,7 +39,7 @@ class HcUserProfileTabs extends Component<HcUserProfileTabsProps> {
                             <HcUserProfileTabSpotRental />
                         </Tab.Pane>
                         <Tab.Pane eventKey="user_profile_rent_car">
-                            <HcUserProfileTabRentCar/>
+                            <HcUserProfileTabRentCar />
                         </Tab.Pane>
                     </Tab.Content>
                 </Tab.Container>

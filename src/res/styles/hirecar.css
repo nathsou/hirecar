@@ -46,11 +46,6 @@
 
 /*** Global ***/
 
-* {
-    margin: 0;
-    padding: 0;
-}
-
 body {
     font: var(--text-font);
 }
@@ -197,6 +192,10 @@ main {
     padding: 3rem 5rem 3rem 5rem;
 }
 
+.container-tabs.delete {
+    margin-top: 1.875rem;
+}
+
 .tab-content {
     margin-top: 1.875rem;
 }
@@ -290,6 +289,14 @@ select {
     margin-top: 1.5rem;
 }
 
+.modal-body .user-profile-title {
+    margin-top: 0;
+}
+
+.modal-body p{
+    line-height: 1.2rem;
+}
+
 /*** Record ***/
 
 .records-container {
@@ -347,7 +354,7 @@ select {
     min-height: calc(100vh - (var(--navbar-height) + var(--footer-height)));
 }
 
-.user-profile-text {
+.user-profile-title {
     font: 1rem 'Oswald', sans-serif;
     color: var(--primary-color);
     margin: 1rem auto;
@@ -398,6 +405,11 @@ select {
     line-height: 1.875rem;
     color: var(--primary-btn-text-color);
     background-color: var(--primary-color);
+}
+
+.hc-user-profile-list-btn {
+    display: flex;
+    flex-direction: row;
 }
 
 /*** Footer ***/

@@ -10,7 +10,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 import UserProfileTabCarInputs from "./UserProfileTabCarInputs";
 import { UserDataState } from "../../../redux/user/types";
-import HcCarsList from "./HcUserProfileCarsList";
+import HcCarsList from "./UserProfileCarsList";
 import { Car } from "../../../redux/carSearch/types";
 import { parseCar } from "../../../Utils";
 library.add(faPlus, faMinus);
@@ -55,18 +55,19 @@ class UserProfileTabCar extends Component<UserProfileTabCarProps> {
         const { editing, show_form, saving, cars_data } = this.props.user_profile_tab_car;
         const { fetching: fetching_cars } = this.props.user_profile_tab_car.cars_data;
         const cars_count = Object.keys(cars_data.cars).length;
+        const fetching = fetching_cars && !saving;
 
         return (
             <Form onSubmit={this.handleCarSubmit}>
-                <h2 className="user-profile-text">
-                    Mes voitures enregistrées
-                        <HcCircleButton
+                <h2 className="user-profile-title">Mes voitures enregistrées
+                    <HcCircleButton
                         onClick={this.props.toggleCarForm}
                         icon={show_form ? "minus" : "plus"}
                     />
                 </h2>
                 {saving ? (<p className="error-message">Votre véhicule a été ajouté.</p>) : null}
-                {fetching_cars && !saving ? (<p>Chargement de vos véhicules...</p>) : null}
+
+                {fetching ? (<p>Chargement de vos véhicules...</p>) : null}
                 {show_form ? (
                     <div>
                         <UserProfileTabCarInputs />

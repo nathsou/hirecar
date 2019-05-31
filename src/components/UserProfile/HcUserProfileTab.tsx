@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import UserProfileTabInfo from "./UserProfileTabInfo/UserProfileTabInfo";
-import UserProfileTabCar from "./UserProfileTabCar/UserProfileTabCar";
+import UserProfileTabInfo from "./UserProfileInfoTab/UserProfileTabInfo";
+import UserProfileTabCar from "./UserProfileCarTab/UserProfileTabCar";
 
 export default class HcUserProfileTab extends Component {
 
