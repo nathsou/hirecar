@@ -1,21 +1,18 @@
 import React, { Component } from "react";
-import Form from 'react-bootstrap/Form';
-import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { capitalize } from "../../Utils";
-import { Gearbox, Fuel } from "../../redux/carSearch/types";
+import Form from 'react-bootstrap/Form';
+import { FormControlProps } from "react-bootstrap/FormControl";
+import Row from 'react-bootstrap/Row';
 
-interface HcSelectFormGroupProps {
-    size: string,
+interface HcSelectFormGroupProps extends Pick<FormControlProps, 'value'> {
     controlId: string,
-    className: string,
+    md?: number,
+    className?: string,
     label: string,
     showLabel?: boolean,
-    name: string,
     as?: typeof Col | typeof Row,
-    value: string,
-    values: (number | Gearbox | Fuel)[],
-    onChange: (event: any) => void
+    options: string[],
+    onChange: (selected_idx: number) => void
 }
 
 export default class HcSelectFormGroup extends Component<HcSelectFormGroupProps> {
@@ -24,19 +21,18 @@ export default class HcSelectFormGroup extends Component<HcSelectFormGroupProps>
 
         const dir = this.props.as ? this.props.as : Col;
         const show_label = this.props.showLabel !== undefined ? this.props.showLabel : true;
-        const values = this.props.values;
+        const options = this.props.options;
 
         return (
-            <Form.Group as={dir} md={this.props.size} controlId={this.props.controlId}>
+            <Form.Group as={dir} md={this.props.md} controlId={this.props.controlId}>
                 {show_label ? <Form.Label className={this.props.className}>{this.props.label}</Form.Label> : null}
                 <Form.Control as="select"
-                    name={this.props.name}
                     value={this.props.value}
-                    onChange={this.props.onChange}
+                    onChange={(e: any) => this.props.onChange(parseInt(e.target.value))}
                 >
-                    {values.map((value, index) =>
-                        (<option value={typeof value === 'number' ? value : value.id} key={index}>
-                            {typeof value === 'number' ? value : capitalize(value.type)}
+                    {options.map((val, idx) =>
+                        (<option value={idx} key={idx}>
+                            {val}
                         </option>)
                     )}
                 </Form.Control>

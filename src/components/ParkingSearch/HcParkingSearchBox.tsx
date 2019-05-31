@@ -3,7 +3,7 @@ import Col from "react-bootstrap/Col";
 import Form from 'react-bootstrap/Form';
 import { connect } from "react-redux";
 import { HcState } from "../../redux/configureStore";
-import { setRentParkingSearchEndDay, setRentParkingSearchStartDay, setRentParkingSearchStartTime, setRentParkingSearchEndTime } from "../../redux/rentParkingTab/actions";
+import { setRentParkingSearchEndDay, setRentParkingSearchEndTime, setRentParkingSearchStartDay, setRentParkingSearchStartTime } from "../../redux/rentParkingTab/actions";
 import { RentParkingTabState } from "../../redux/rentParkingTab/types";
 import HcInputFormGroup from "../Form/HcInputFormGroup";
 import HcAirportSearchInput, { HcAirportSearchInputProps } from "./HcAirportSearchInput";
@@ -11,6 +11,8 @@ import HcAirportSearchInput, { HcAirportSearchInputProps } from "./HcAirportSear
 export interface HcParkingSearchBoxProps extends Pick<HcAirportSearchInputProps, 'onInputChange'> {
     box_mode: boolean,
     show_labels: boolean,
+    show_input?: boolean,
+    validate?: boolean,
     setStartDay: (day: string) => void,
     setEndDay: (day: string) => void,
     setStartTime: (time: string) => void,
@@ -21,6 +23,7 @@ const HcParkingSearchBox: FunctionComponent<HcParkingSearchBoxProps & RentParkin
     {
         box_mode,
         show_labels,
+        show_input,
         children,
         onInputChange,
         setStartDay: setStartDate,
@@ -30,73 +33,85 @@ const HcParkingSearchBox: FunctionComponent<HcParkingSearchBoxProps & RentParkin
         setStartTime,
         setEndTime,
         start_time,
-        end_time
+        end_time,
+        validate,
+        validation
     }) => {
+
+    const {
+        // input_msg,
+        start_day_msg,
+        end_day_msg,
+        start_time_msg,
+        end_time_msg
+    } = validation;
 
     return (
         <div className="search-box-container">
             <Form className="search-box-form">
                 <Form.Row>
 
-                    <Form.Group as={Col} md={box_mode ? 12 : 4} controlId="parkingLocation">
-                        {show_labels ? <Form.Label>Lieu de stationnement</Form.Label> : null}
-                        <HcAirportSearchInput onInputChange={onInputChange} />
-                    </Form.Group>
+                    {(show_input === undefined || show_input === true) ?
+                        <Form.Group as={Col} md={box_mode ? 12 : 4} controlId="parkingLocation">
+                            {show_labels ? <Form.Label>Lieu de stationnement</Form.Label> : null}
+                            <HcAirportSearchInput onInputChange={onInputChange} />
+                        </Form.Group> : null
+                    }
 
                     <HcInputFormGroup
-                        size={box_mode ? 4 : 2}
+                        md={box_mode ? 4 : 2}
                         controlId="parkingStartDate"
-                        className=""
                         label="Début de la location"
                         showLabel={show_labels}
-                        name="parkingStartDate"
                         type="date"
                         placeholder=""
                         value={start_day || ''}
                         as={Col}
                         onChange={e => setStartDate(e.target.value)}
+                        validationMessage={start_day_msg}
+                        validate={validate}
                     />
 
                     <HcInputFormGroup
-                        size={2}
+                        md={2}
                         controlId="parkingStartHour"
-                        className=""
                         label="Heure"
                         showLabel={show_labels}
                         type="time"
-                        name="parkingStartHour"
                         placeholder=""
                         value={start_time || ''}
                         as={Col}
                         onChange={e => setStartTime(e.target.value)}
+                        validationMessage={start_time_msg}
+                        validate={validate}
                     />
 
                     <HcInputFormGroup
-                        size={box_mode ? 4 : 2}
+                        md={box_mode ? 4 : 2}
                         controlId="parkingEndDate"
-                        className=""
                         label="Fin de la location"
                         showLabel={show_labels}
                         type="date"
-                        name="parkingEndDate"
                         placeholder=""
                         value={end_day || ''}
                         as={Col}
                         onChange={e => setEndDate(e.target.value)}
+                        validationMessage={end_day_msg}
+                        validate={validate}
                     />
 
                     <HcInputFormGroup
-                        size={2}
+                        md={2}
                         controlId="parkingEndHour"
-                        className=""
                         label="Heure"
                         showLabel={show_labels}
                         type="time"
-                        name="parkingEndHour"
                         placeholder=""
                         value={end_time || ''}
                         as={Col}
                         onChange={e => setEndTime(e.target.value)}
+                        validationMessage={end_time_msg}
+                        validate={validate}
                     />
                 </Form.Row>
 

@@ -23,28 +23,28 @@ export function updateUserProfileCarPriceInput(value: string): UpdateUserProfile
     };
 }
 
-export function updateUserProfileCarGearboxSelect(value: string): UpdateUserProfileCarGearboxAction {
+export function updateUserProfileCarGearboxSelect(value: number): UpdateUserProfileCarGearboxAction {
     return {
         type: UPDATE_USER_PROFILE_CAR_GEARBOX_SELECT,
         value
     }
 }
 
-export function updateUserProfileCarFuelSelect(value: string): UpdateUserProfileCarFuelAction {
+export function updateUserProfileCarFuelSelect(value: number): UpdateUserProfileCarFuelAction {
     return {
         type: UPDATE_USER_PROFILE_CAR_FUEL_SELECT,
         value
     }
 }
 
-export function updateUserProfileCarSeatsSelect(value: string): UpdateUserProfileCarSeatsAction {
+export function updateUserProfileCarSeatsSelect(value: number): UpdateUserProfileCarSeatsAction {
     return {
         type: UPDATE_USER_PROFILE_CAR_SEATS_SELECT,
         value
     }
 }
 
-export function updateUserProfileCarDoorsSelect(value: string): UpdateUserProfileCarDoorsAction {
+export function updateUserProfileCarDoorsSelect(value: number): UpdateUserProfileCarDoorsAction {
     return {
         type: UPDATE_USER_PROFILE_CAR_DOORS_SELECT,
         value
@@ -214,8 +214,7 @@ export function postUpdateUserProfileCarForm(data: UserProfileCarFormDataState) 
                     dispatch(userProfileCarSaved());
                 }, 2000);
             }).catch((error: AxiosError) => {
-                const response = error.response;
-                console.log(response);
+                console.log(error.response);
             });
     }
 }
@@ -224,12 +223,12 @@ export function fetchUserProfileCarsRequest(
     dispatch: Dispatch<UserProfileCarActionTypes>,
     id: number,
 ) {
+    console.log(`${process.env.REACT_APP_HIRECAR_API_URI}/cars/${id}`);
     Axios.get(`${process.env.REACT_APP_HIRECAR_API_URI}/cars/${id}`)
         .then((res: AxiosResponse) => {
             dispatch(setUserProfileCars(res.data));
             dispatch(userProfileCarsReceived());
         }).catch((error: AxiosError) => {
-            const response = error.response;
-            console.log(response);
+            console.log(error.response);
         });
 }

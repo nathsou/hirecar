@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import HcSecondaryButton from "./Button/HcSecondaryButton";
 
 export interface HcListItemProps {
     picto?: string,
@@ -8,13 +9,25 @@ export interface HcListItemProps {
     id: number,
     onMouseEnter?: (id: number | null) => void,
     onMouseLeave?: (id: number | null) => void,
+    onRentButtonClick?: (id: number | null) => void,
+    show_rent_btn?: boolean
 }
 
 export default class HcListItem extends Component<HcListItemProps> {
 
     public render() {
 
-        const { picto, title, features, footer, onMouseEnter, onMouseLeave, id } = this.props;
+        const {
+            picto,
+            title,
+            features,
+            footer,
+            onMouseEnter,
+            onMouseLeave,
+            id,
+            onRentButtonClick,
+            show_rent_btn
+        } = this.props;
 
         return (
             <div className='hc-list-item'>
@@ -28,6 +41,14 @@ export default class HcListItem extends Component<HcListItemProps> {
                     <p className='hc-list-footer'>{footer}</p>
                     <hr />
                 </div>
+
+                {show_rent_btn !== undefined || show_rent_btn ?
+                    <HcSecondaryButton
+                        handleClick={() => onRentButtonClick !== undefined ? onRentButtonClick(id) : {}}
+                    >
+                        Réserver
+                    </HcSecondaryButton> : null
+                }
             </div>
         );
     }

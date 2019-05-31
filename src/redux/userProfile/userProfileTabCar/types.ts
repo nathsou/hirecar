@@ -126,25 +126,25 @@ export interface UpdateUserProfileCarPriceAction {
 export const UPDATE_USER_PROFILE_CAR_GEARBOX_SELECT = "UPDATE_USER_PROFILE_CAR_GEARBOX_SELECT";
 export interface UpdateUserProfileCarGearboxAction {
     type: typeof UPDATE_USER_PROFILE_CAR_GEARBOX_SELECT,
-    value: string
+    value: number
 }
 
 export const UPDATE_USER_PROFILE_CAR_FUEL_SELECT = "UPDATE_USER_PROFILE_CAR_FUEL_SELECT";
 export interface UpdateUserProfileCarFuelAction {
     type: typeof UPDATE_USER_PROFILE_CAR_FUEL_SELECT,
-    value: string
+    value: number
 }
 
 export const UPDATE_USER_PROFILE_CAR_SEATS_SELECT = "UPDATE_USER_PROFILE_CAR_SEATS_SELECT";
 export interface UpdateUserProfileCarSeatsAction {
     type: typeof UPDATE_USER_PROFILE_CAR_SEATS_SELECT,
-    value: string
+    value: number
 }
 
 export const UPDATE_USER_PROFILE_CAR_DOORS_SELECT = "UPDATE_USER_PROFILE_CAR_DOORS_SELECT";
 export interface UpdateUserProfileCarDoorsAction {
     type: typeof UPDATE_USER_PROFILE_CAR_DOORS_SELECT,
-    value: string
+    value: number
 }
 
 export const SUMBIT_USER_PROFILE_CAR = "SUMBIT_USER_PROFILE_CAR";

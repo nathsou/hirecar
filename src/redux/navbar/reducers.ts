@@ -8,7 +8,7 @@ export function navbarReducer(
         case TOGGLE_SIGN_MODAL:
             return {
                 ...state,
-                show_modal: !state.show_modal
+                show_modal: action.show
             };
 
         default:

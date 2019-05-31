@@ -39,12 +39,11 @@ const HcCarSearchBox: FunctionComponent<HcParkingSearchBoxProps & RentCarTabStat
                     </Form.Group>
 
                     <HcInputFormGroup
-                        size={4}
+                        md={4}
                         controlId="carStartDate"
-                        className=""
+                        validationMessage=""
                         label="Date de départ"
                         showLabel={show_labels}
-                        name="carStartDate"
                         type="date"
                         placeholder=""
                         value={start_day}
@@ -53,13 +52,11 @@ const HcCarSearchBox: FunctionComponent<HcParkingSearchBoxProps & RentCarTabStat
                     />
 
                     <HcInputFormGroup
-                        size={2}
+                        md={2}
                         controlId="carStartHour"
-                        className=""
                         label="Heure"
                         showLabel={show_labels}
                         type="time"
-                        name="carStartHour"
                         placeholder=""
                         value={start_time}
                         as={dir}
@@ -67,13 +64,11 @@ const HcCarSearchBox: FunctionComponent<HcParkingSearchBoxProps & RentCarTabStat
                     />
 
                     <HcInputFormGroup
-                        size={4}
+                        md={4}
                         controlId="carEndDate"
-                        className=""
                         label="Date de retour"
                         showLabel={show_labels}
                         type="date"
-                        name="carEndDate"
                         placeholder=""
                         value={end_day}
                         as={dir}
@@ -81,13 +76,11 @@ const HcCarSearchBox: FunctionComponent<HcParkingSearchBoxProps & RentCarTabStat
                     />
 
                     <HcInputFormGroup
-                        size={2}
+                        md={2}
                         controlId="carEndHour"
-                        className=""
                         label="Heure"
                         showLabel={show_labels}
                         type="time"
-                        name="carEndHour"
                         placeholder=""
                         value={end_time}
                         as={dir}

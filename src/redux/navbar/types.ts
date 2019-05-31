@@ -8,7 +8,8 @@ export const defaultNavbarState: NavbarState = {
 
 export const TOGGLE_SIGN_MODAL = "TOGGLE_SIGN_MODAL";
 export interface ToggleSignModalAction {
-    type: typeof TOGGLE_SIGN_MODAL
+    type: typeof TOGGLE_SIGN_MODAL,
+    show: boolean
 }
 
 export type NavbarActionTypes = ToggleSignModalAction;

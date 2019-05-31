@@ -6,7 +6,11 @@ export interface ParkingSearchState {
     fetching_parking_lots: boolean,
     fetching_airports: boolean,
     viewport: HcMapViewportProps,
-    selected_parking_lot: number | null
+    selected_parking_lot: number | null,
+    rent_modal_parking_lot_id: number | null,
+    selected_user_car_idx: number,
+    awaiting_rental_request_response: boolean,
+    parking_spot_rental_id: number | null
 }
 
 export interface ParkingLot {
@@ -38,7 +42,11 @@ export const defaultParkingSearchState: ParkingSearchState = {
     },
     fetching_parking_lots: false,
     fetching_airports: false,
-    selected_parking_lot: null
+    selected_parking_lot: null,
+    rent_modal_parking_lot_id: null,
+    selected_user_car_idx: 0,
+    awaiting_rental_request_response: false,
+    parking_spot_rental_id: null
 };
 
 export const UPDATE_MAP_VIEWPORT = 'UPDATE_MAP_VIEWPORT';
@@ -47,6 +55,12 @@ export const REQUEST_AIRPORTS = 'REQUEST_AIRPORTS';
 export const PARKINGS_RECEIVED = 'PARKINGS_RECEIVED';
 export const AIRPORTS_RECEIVED = 'AIRPORTS_RECEIVED';
 export const SET_SELECTED_PARKING_LOT = 'SET_SELECTED_PARKING_LOT';
+export const SET_RENT_MODAL_PARKING_LOT = 'SET_RENT_MODAL_PARKING_LOT';
+export const SET_RENT_PARKING_SPOT_USER_CAR_IDX = 'SET_RENT_PARKING_SPOT_USER_CAR_IDX';
+export const REQUEST_PARKING_SPOT_RENTAL = 'REQUEST_PARKING_SPOT_RENTAL';
+export const RENT_PARKING_SPOT_REQUEST_SENT = 'RENT_PARKING_SPOT_REQUEST_SENT';
+export const RENT_PARKING_SPOT_REQUEST_SUCCEEDED = 'RENT_PARKING_SPOT_REQUEST_SUCCEEDED';
+export const RENT_PARKING_SPOT_REQUEST_FAILED = 'RENT_PARKING_SPOT_REQUEST_FAILED';
 
 export interface UpdateMapViewportAction {
     type: typeof UPDATE_MAP_VIEWPORT,
@@ -76,10 +90,38 @@ export interface SetSelectedParkingLotAction {
     parking_lot: number | null
 }
 
+export interface SetRentModalParkingLotAction {
+    type: typeof SET_RENT_MODAL_PARKING_LOT,
+    parking_lot: number | null
+}
+
+export interface SetRentParkingSpotUserCarIdxAction {
+    type: typeof SET_RENT_PARKING_SPOT_USER_CAR_IDX,
+    idx: number
+}
+
+export interface RentParkingSpotRequestSentAction {
+    type: typeof RENT_PARKING_SPOT_REQUEST_SENT
+}
+
+export interface RentParkingSpotRequestSucceededAction {
+    type: typeof RENT_PARKING_SPOT_REQUEST_SUCCEEDED,
+    parking_spot_rental_id: number
+}
+
+export interface RentParkingSpotRequestFailedAction {
+    type: typeof RENT_PARKING_SPOT_REQUEST_FAILED
+}
+
 export type ParkingSearchActionTypes =
     UpdateMapViewportAction |
     RequestParkingsAction |
     ParkingsReceivedAction |
     SetSelectedParkingLotAction |
     RequestAirportsAction |
-    AirportsReceivedAction;
+    AirportsReceivedAction |
+    SetRentModalParkingLotAction |
+    SetRentParkingSpotUserCarIdxAction |
+    RentParkingSpotRequestSentAction |
+    RentParkingSpotRequestSucceededAction |
+    RentParkingSpotRequestFailedAction;

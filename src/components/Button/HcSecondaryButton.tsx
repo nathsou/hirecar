@@ -1,15 +1,26 @@
-import React from 'react';
-import Button from "react-bootstrap/Button";
+import React, { FunctionComponent } from 'react';
+import Button, { ButtonProps } from "react-bootstrap/Button";
 
-export default function (props: any) {
+export interface HcButtonProps extends Pick<ButtonProps, 'type' | 'disabled'> {
+    handleClick?: () => void
+}
 
+const HcSecondaryButton: FunctionComponent<HcButtonProps> = ({
+    type,
+    handleClick,
+    children,
+    disabled
+}) => {
     return (
         <Button
             ///@ts-ignore
             variant='hc-secondary'
-            type={props.type}
-            onClick={() => props.handleClick ? props.handleClick() : {}}>
-            {props.children}
-        </ Button>
+            type={type}
+            disabled={disabled}
+            onClick={() => handleClick ? handleClick() : {}}>
+            {children}
+        </Button>
     );
 }
+
+export default HcSecondaryButton;

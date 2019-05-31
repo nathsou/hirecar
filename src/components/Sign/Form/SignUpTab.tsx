@@ -41,44 +41,44 @@ export class SignUpTab extends Component<SignUpTabProps>{
             <Form onSubmit={this.handleSubmit}>
                 <Form.Row>
                     <HcInputFormGroup
-                        size={6} controlId="fistname" className={firstnameError}
+                        md={6} controlId="fistname" validationMessage={firstnameError}
                         label="Prénom" type="text"
-                        name="firstname" placeholder="Votre prénom"
+                        placeholder="Votre prénom"
                         value={firstname}
                         onChange={this.props.onFirstnameChange} />
                     <HcInputFormGroup
-                        size={6} controlId="lastname" className={lastnameError}
+                        md={6} controlId="lastname" validationMessage={lastnameError}
                         label="Nom" type="text"
-                        name="lastname" placeholder="Votre nom"
+                        placeholder="Votre nom"
                         value={lastname}
                         onChange={this.props.onLastnameChange} />
                 </Form.Row>
                 <Form.Row>
                     <HcInputFormGroup
-                        size={12} controlId="signUpEmail" className={emailError}
+                        md={12} controlId="signUpEmail" validationMessage={emailError}
                         label="Email" type="text"
-                        name="email" placeholder="Veuillez entrer votre email"
+                        placeholder="Veuillez entrer votre email"
                         value={email} onChange={this.props.onEmailChange} />
                 </Form.Row>
                 <Form.Row>
                     <HcInputFormGroup
-                        size={12} controlId="telephone" className={phoneError}
+                        md={12} controlId="telephone" validationMessage={phoneError}
                         label="Téléphone" type="tel"
-                        name="phone" placeholder="Veuillez entrer votre numéro"
+                        placeholder="Veuillez entrer votre numéro"
                         value={phone} onChange={this.props.onPhoneChange} />
                 </Form.Row>
                 <Form.Row>
                     <HcInputFormGroup
-                        size={12} controlId="signUpPassword" className={passwordError}
+                        md={12} controlId="signUpPassword" validationMessage={passwordError}
                         label="Mot de passe" type="password"
-                        name="password" placeholder="Veuillez entrer votre mot de passe"
+                        placeholder="Veuillez entrer votre mot de passe"
                         value={password} onChange={this.props.onPasswordChange} />
                 </Form.Row>
                 <Form.Row>
                     <HcInputFormGroup
-                        size={12} controlId="signUpConfirmPassword" className={confirmPasswordError}
+                        md={12} controlId="signUpConfirmPassword" validationMessage={confirmPasswordError}
                         label="Confirmation du mot de passe" type="password"
-                        name="confirmPassword" placeholder="Veuillez entrer votre mot de passe"
+                        placeholder="Veuillez entrer votre mot de passe"
                         value={confirm_password} onChange={this.props.onConfirmPasswordChange} />
                 </Form.Row>
                 <div style={{ marginTop: "15px" }}>

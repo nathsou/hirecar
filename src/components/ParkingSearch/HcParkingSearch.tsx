@@ -6,12 +6,13 @@ import { connect } from "react-redux";
 import { match, RouteComponentProps, withRouter } from "react-router";
 import WebMercatorViewport, { WebMercatorViewportOptions } from "viewport-mercator-project";
 import { HcState } from "../../redux/configureStore";
-import { fetchParkings, updateViewport, setSelectedParkingLot, fetchAirports } from "../../redux/parkingSearch/actions";
+import { fetchAirports, fetchParkings, setSelectedParkingLot, updateViewport } from "../../redux/parkingSearch/actions";
 import { ParkingLot, ParkingSearchState } from "../../redux/parkingSearch/types";
 import { setAirportSearchInput } from "../../redux/rentParkingTab/actions";
 import HcParkingList from "../HcParkingList";
 import HcMap from "./HcMap";
 import HcParkingSearchBox from "./HcParkingSearchBox";
+import HcRentParkingModal from "./HcRentParkingModal";
 
 interface HcParkingSearchPropsMatchParams {
     airport: string
@@ -125,13 +126,14 @@ class HcParkingSearch extends Component<HcParkingSearchProps> {
                 <HcParkingSearchBox
                     show_labels={true}
                     box_mode={false}
+                    validate={false}
                     onInputChange={this.onInputChange}
                 />
 
                 {this.show_map ?
                     (<Row>
                         <Col lg={5} className="search-list">
-                            <Col lg={{ span: 10, offset: 1 }} className="search-list-container">
+                            <Col lg={12} className="search-list-container">
                                 {(fetching_parking_lots && parking_lots.length === 0) ?
                                     <p>Recherche des parkings en cours...</p> :
                                     <HcParkingList />}
@@ -149,6 +151,8 @@ class HcParkingSearch extends Component<HcParkingSearchProps> {
                         </Col>
                     </Row>)
                     : null}
+
+                <HcRentParkingModal />
             </main >
         );
     }

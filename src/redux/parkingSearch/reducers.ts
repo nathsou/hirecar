@@ -1,4 +1,4 @@
-import { defaultParkingSearchState, ParkingSearchActionTypes, ParkingSearchState, PARKINGS_RECEIVED, REQUEST_PARKINGS, UPDATE_MAP_VIEWPORT, SET_SELECTED_PARKING_LOT, REQUEST_AIRPORTS, AIRPORTS_RECEIVED } from "./types";
+import { AIRPORTS_RECEIVED, defaultParkingSearchState, ParkingSearchActionTypes, ParkingSearchState, PARKINGS_RECEIVED, RENT_PARKING_SPOT_REQUEST_SUCCEEDED, REQUEST_AIRPORTS, REQUEST_PARKINGS, SET_RENT_MODAL_PARKING_LOT, SET_RENT_PARKING_SPOT_USER_CAR_IDX, SET_SELECTED_PARKING_LOT, UPDATE_MAP_VIEWPORT } from "./types";
 
 export function parkingSearchReducer(
     state = defaultParkingSearchState,
@@ -42,6 +42,24 @@ export function parkingSearchReducer(
             return {
                 ...state,
                 selected_parking_lot: action.parking_lot
+            };
+
+        case SET_RENT_MODAL_PARKING_LOT:
+            return {
+                ...state,
+                rent_modal_parking_lot_id: action.parking_lot
+            };
+
+        case SET_RENT_PARKING_SPOT_USER_CAR_IDX:
+            return {
+                ...state,
+                selected_user_car_idx: action.idx
+            };
+
+        case RENT_PARKING_SPOT_REQUEST_SUCCEEDED:
+            return {
+                ...state,
+                parking_spot_rental_id: action.parking_spot_rental_id
             };
 
         default:

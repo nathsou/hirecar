@@ -1,23 +1,23 @@
-import { combineReducers, createStore, applyMiddleware, compose, Action } from 'redux';
+import throttle from "lodash.throttle";
+import { Action, applyMiddleware, combineReducers, compose, createStore } from 'redux';
+import thunkMiddleware from 'redux-thunk';
 import { carSearchReducer } from './carSearch/reducers';
 import { CarSearchState } from './carSearch/types';
+import { loadState, saveState } from './localStorage';
+import { navbarReducer } from './navbar/reducers';
+import { NavbarState } from './navbar/types';
 import { parkingSearchReducer } from './parkingSearch/reducers';
 import { ParkingSearchState } from './parkingSearch/types';
 import { rentTabsReducer } from './rentTabs/reducers';
 import { RentTabsState } from './rentTabs/types';
-import { SignTabsState } from './signTabs/types';
 import { signTabsReducer } from './signTabs/reducers';
-import { NavbarState } from './navbar/types';
-import { navbarReducer } from './navbar/reducers';
-import thunkMiddleware from 'redux-thunk'
-import { UserState, RESET_USER_LOGGED } from './user/types';
+import { SignTabsState } from './signTabs/types';
 import { userReducer } from './user/reducers';
-import { loadState, saveState } from './localStorage';
-import throttle from "lodash.throttle";
-import { UserProfileTabInfoState } from './userProfile/userProfileTabInfo/types';
-import { userProfileTabInfoReducer } from './userProfile/userProfileTabInfo/reducers';
-import { UserProfileTabCarState } from './userProfile/userProfileTabCar/types';
+import { RESET_USER_LOGGED, UserState } from './user/types';
 import { userProfileTabCarReducer } from './userProfile/userProfileTabCar/reducers';
+import { UserProfileTabCarState } from './userProfile/userProfileTabCar/types';
+import { userProfileTabInfoReducer } from './userProfile/userProfileTabInfo/reducers';
+import { UserProfileTabInfoState } from './userProfile/userProfileTabInfo/types';
 
 export interface HcState {
     user: UserState,
@@ -51,14 +51,16 @@ const root_reducer = (state: HcState | undefined, action: Action) => {
 
 const persistedState = loadState();
 
+///@ts-ignore
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+
 export function configureStore() {
     return createStore(
         root_reducer,
         persistedState,
-        compose(
+        composeEnhancers(
             applyMiddleware(thunkMiddleware),
-            ///@ts-ignore
-            window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
         ),
     );
 }

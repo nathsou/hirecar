@@ -27,7 +27,7 @@ interface UserProfileTabCarProps {
 class UserProfileTabCar extends Component<UserProfileTabCarProps> {
 
     constructor(props: UserProfileTabCarProps) {
-        super(props)
+        super(props);
         this.props.fetchUserProfileCarFeatures();
         this.props.fetchUserProfileCars(this.props.user.id);
     }
@@ -50,7 +50,6 @@ class UserProfileTabCar extends Component<UserProfileTabCarProps> {
     }
 
     public render() {
-
         const { editing, show_form, saving, cars_data } = this.props.user_profile_tab_car;
         const { fetching: fetchingCars } = this.props.user_profile_tab_car.cars_data;
         const cars_count = Object.keys(cars_data.cars).length;

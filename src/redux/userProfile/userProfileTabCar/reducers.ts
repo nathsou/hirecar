@@ -35,7 +35,7 @@ export function userProfileTabCarReducer(
                     ...state.form_data,
                     gearbox: {
                         ...state.form_data.gearbox,
-                        id: parseInt(action.value)
+                        id: action.value
                     }
                 },
             };
@@ -46,19 +46,19 @@ export function userProfileTabCarReducer(
                     ...state.form_data,
                     fuel: {
                         ...state.form_data.fuel,
-                        id: parseInt(action.value)
+                        id: action.value
                     }
                 },
             };
         case UPDATE_USER_PROFILE_CAR_SEATS_SELECT:
             return {
                 ...state,
-                form_data: { ...state.form_data, seats: action.value },
+                form_data: { ...state.form_data, seats: action.value.toString() },
             };
         case UPDATE_USER_PROFILE_CAR_DOORS_SELECT:
             return {
                 ...state,
-                form_data: { ...state.form_data, doors: action.value },
+                form_data: { ...state.form_data, doors: action.value.toString() },
             };
         case SET_USER_PROFILE_CAR_OWNER:
             return {

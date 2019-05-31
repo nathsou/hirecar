@@ -17,7 +17,7 @@ export interface RentParkingTabProps extends RentParkingTabState {
 const RentParkingTab: FunctionComponent<RentParkingTabProps> = ({ parking_search_input_value }) => {
 
     return (
-        <HcParkingSearchBox box_mode={true} show_labels={true}>
+        <HcParkingSearchBox box_mode={true} show_labels={true} validate={false}>
             <div style={{ textAlign: "right", marginTop: "15px" }}>
                 <Link to={`parking/${parking_search_input_value}`}>
                     <HcSecondaryButton>Rechercher</HcSecondaryButton>

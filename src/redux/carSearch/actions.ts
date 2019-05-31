@@ -2,6 +2,8 @@ import axios, { AxiosError, AxiosResponse } from "axios";
 import { Dispatch } from "react";
 import { parseCarRental, propsToURIParams, RawCarRental } from "../../Utils";
 import { CarRental, CarRentalSearchActionTypes, CarRentalsReceivedAction, CAR_RENTALS_RECEIVED, RequestCarRentalsAction, REQUEST_CAR_RENTALS } from "./types";
+import throttle from "lodash.throttle";
+import { MIN_API_CALL_DELAY } from "../..";
 
 export function requestCars(): RequestCarRentalsAction {
     return {
@@ -23,7 +25,7 @@ export interface CarSearchParams {
 }
 
 //TODO: Handle request errors
-export function fetchCars(params: CarSearchParams) {
+export const fetchCars = throttle((params: CarSearchParams) => {
     return (dispatch: Dispatch<CarRentalSearchActionTypes>) => {
 
         dispatch(requestCars());
@@ -38,4 +40,4 @@ export function fetchCars(params: CarSearchParams) {
                 console.error(error);
             });
     };
-}
+}, MIN_API_CALL_DELAY);

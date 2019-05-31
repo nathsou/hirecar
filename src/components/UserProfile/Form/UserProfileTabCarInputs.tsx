@@ -42,41 +42,42 @@ class UserProfileTabCarInputs extends Component<UserProfileTabCarProps> {
             <div className="car-form-container">
                 <Form.Row>
                     <HcInputFormGroup
-                        size={6} controlId="userProfileCarModel" className={modelError}
+                        md={6} controlId="userProfileCarModel" validationMessage={modelError}
                         label="Modèle" type="text"
-                        name="model" placeholder="Nom du modèle de la voiture"
+                        placeholder="Nom du modèle de la voiture"
                         value={model}
                         onChange={this.props.onModelChange} />
                     <HcInputFormGroup
-                        size={4} controlId="userProfileCarPrice" className={priceError}
+                        md={4} controlId="userProfileCarPrice" validationMessage={priceError}
                         label="Prix en €/jour " type="text"
-                        name="price_per_day" placeholder="Prix de la location"
+                        placeholder="Prix de la location"
                         value={price_per_day}
                         onChange={this.props.onPriceChange} />
                 </Form.Row>
                 <Form.Row>
                     <HcSelectFormGroup
-                        size="4" controlId="userProfileCarGearbox" className=""
-                        label="Boîte de vitesse" name="gearbox"
-                        values={gearbox} value={gearboxId}
+                        md={4} controlId="userProfileCarGearbox" className=""
+                        label="Boîte de vitesse"
+                        options={gearbox.map(g => g.type)}
+                        value={gearboxId}
                         onChange={this.props.onGearboxChange}
                     />
                     <HcSelectFormGroup
-                        size="4" controlId="userProfileCarFuel" className=""
-                        label="Carburant" name="fuel"
-                        values={fuel} value={fuelId}
+                        md={4} controlId="userProfileCarFuel" className=""
+                        label="Carburant"
+                        options={fuel.map(f => f.type)} value={fuelId}
                         onChange={this.props.onFuelChange}
                     />
                     <HcSelectFormGroup
-                        size="2" controlId="userProfileCarSeats" className=""
-                        label="Sièges" name="seat"
-                        values={seats} value={defaultSeats}
+                        md={2} controlId="userProfileCarSeats" className=""
+                        label="Sièges"
+                        options={seats.map(s => s.toString())} value={defaultSeats}
                         onChange={this.props.onSeatsChange}
                     />
                     <HcSelectFormGroup
-                        size="2" controlId="userProfileCarDoors" className=""
-                        label="Portes" name="door"
-                        values={doors} value={defaultDoors}
+                        md={2} controlId="userProfileCarDoors" className=""
+                        label="Portes"
+                        options={doors.map(d => d.toString())} value={defaultDoors}
                         onChange={this.props.onDoorsChange}
                     />
                 </Form.Row>

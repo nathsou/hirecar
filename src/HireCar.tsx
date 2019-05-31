@@ -15,7 +15,7 @@ export default class HireCar extends Component {
         <BrowserRouter>
           <HcNavbar />
           <Route exact path='/' component={MainContent} />
-          <Route exact path='/parking/:airport?' component={HcParkingSearch} />
+          <Route exact path='/parking/:airport?/:start?/:end?' component={HcParkingSearch} />
           <Route exact path='/voiture/:airport?/:start?/:end?' component={HcCarSearch} />
           <Route exact path='/profil' component={HcUserProfile} />
         </BrowserRouter>

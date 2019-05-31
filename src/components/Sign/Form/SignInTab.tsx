@@ -25,7 +25,7 @@ class SignInTab extends Component<SignInTabProps> {
 
     public componentDidUpdate(prev_props: Readonly<SignInTabProps>) {
         const { validForm } = this.props;
-        if (validForm && prev_props.validForm !== validForm) {
+        if (validForm && !prev_props.validForm) {
             this.props.onPostSignInForm(this.props.form_data);
         }
     }
@@ -37,16 +37,18 @@ class SignInTab extends Component<SignInTabProps> {
             <Form onSubmit={this.handleSubmit}>
                 <Form.Row>
                     <HcInputFormGroup
-                        size={12} controlId="signInEmail" className={email_error}
+                        md={12} controlId="signInEmail"
+                        validationMessage={email_error}
                         label="Email" type="text"
-                        name="email" placeholder="Veuillez entrer votre email"
+                        placeholder="Veuillez entrer votre email"
                         value={email} onChange={this.props.onEmailChange} />
                 </Form.Row>
                 <Form.Row>
                     <HcInputFormGroup
-                        size={12} controlId="signInPassword" className={password_error}
+                        md={12} controlId="signInPassword"
+                        validationMessage={password_error}
                         label="Mot de passe" type="password"
-                        name="password" placeholder="Veuillez entrer votre mot de passe"
+                        placeholder="Veuillez entrer votre mot de passe"
                         value={password} onChange={this.props.onPasswordChange} />
                 </Form.Row>
                 <div style={{ marginTop: "15px" }}>

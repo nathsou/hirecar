@@ -27,41 +27,41 @@ class UserProfileTabInfoInputs extends Component<UserProfileTabInfoInputsProps> 
             <div>
                 <Form.Row>
                     <HcInputFormGroup
-                        size={4} controlId="userProfileFirstname" className={firstnameError}
+                        md={4} controlId="userProfileFirstname" validationMessage={firstnameError}
                         label="Prénom" type="text"
-                        name="firstname" placeholder="Veuillez entrer votre prénom"
+                        placeholder="Veuillez entrer votre prénom"
                         value={firstname}
                         onChange={this.props.onFirstnameChange} />
                     <HcInputFormGroup
-                        size={4} controlId="userProfileLastname" className={lastnameError}
+                        md={4} controlId="userProfileLastname" validationMessage={lastnameError}
                         label="Nom" type="text"
-                        name="lastname" placeholder="Veuillez entrer votre nom"
+                        placeholder="Veuillez entrer votre nom"
                         value={lastname}
                         onChange={this.props.onLastnameChange} />
                     <HcInputFormGroup
-                        size={4} controlId="userProfilePhone" className={phoneError}
+                        md={4} controlId="userProfilePhone" validationMessage={phoneError}
                         label="Téléphone" type="tel"
-                        name="phone" placeholder="Veuillez entrer votre numéro"
+                        placeholder="Veuillez entrer votre numéro"
                         value={phone}
                         onChange={this.props.onPhoneChange} />
                 </Form.Row>
                 <Form.Row>
                     <HcInputFormGroup
-                        size={4} controlId="userProfileEmail" className={emailError}
+                        md={4} controlId="userProfileEmail" validationMessage={emailError}
                         label="Email" type="text"
-                        name="email" placeholder="Veuillez entrer votre email"
+                        placeholder="Veuillez entrer votre email"
                         value={email}
                         onChange={this.props.onEmailChange} />
                     <HcInputFormGroup
-                        size={4} controlId="userProfilePassword" className={passwordError}
+                        md={4} controlId="userProfilePassword" validationMessage={passwordError}
                         label="Mot de passe actuel" type="password"
-                        name="password" placeholder="Entrez votre mot de passe actuel"
+                        placeholder="Entrez votre mot de passe actuel"
                         value={password}
                         onChange={this.props.onPasswordChange} />
                     <HcInputFormGroup
-                        size={4} controlId="userProfileNewPassword" className={newPasswordError}
+                        md={4} controlId="userProfileNewPassword" validationMessage={newPasswordError}
                         label="Nouveau mot de passe" type="password"
-                        name="new_password" placeholder="Entrez votre nouveau mot de passe"
+                        placeholder="Entrez votre nouveau mot de passe"
                         value={new_password}
                         onChange={this.props.onNewPasswordChange} />
                 </Form.Row>

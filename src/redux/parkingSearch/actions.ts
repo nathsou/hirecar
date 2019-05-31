@@ -1,9 +1,11 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
+import throttle from "lodash.throttle";
 import { Dispatch } from "redux";
+import { MIN_API_CALL_DELAY } from '../..';
 import { HcMapViewportProps } from "../../components/ParkingSearch/HcParkingSearch";
 import { parseAirport, parseParkingLot, propsToURIParams, RawAirport, RawParkingLot } from "../../Utils";
 import { Airport } from "../rentParkingTab/types";
-import { AIRPORTS_RECEIVED, ParkingLot, ParkingSearchActionTypes, ParkingsReceivedAction, PARKINGS_RECEIVED, RequestAirportsAction, RequestParkingsAction, REQUEST_AIRPORTS, REQUEST_PARKINGS, SetSelectedParkingLotAction, SET_SELECTED_PARKING_LOT, UpdateMapViewportAction, UPDATE_MAP_VIEWPORT, AirportsReceivedAction } from "./types";
+import { AirportsReceivedAction, AIRPORTS_RECEIVED, ParkingLot, ParkingSearchActionTypes, ParkingsReceivedAction, PARKINGS_RECEIVED, RentParkingSpotRequestFailedAction, RentParkingSpotRequestSentAction, RentParkingSpotRequestSucceededAction, RENT_PARKING_SPOT_REQUEST_FAILED, RENT_PARKING_SPOT_REQUEST_SENT, RENT_PARKING_SPOT_REQUEST_SUCCEEDED, RequestAirportsAction, RequestParkingsAction, REQUEST_AIRPORTS, REQUEST_PARKINGS, SetRentModalParkingLotAction, SetRentParkingSpotUserCarIdxAction, SetSelectedParkingLotAction, SET_RENT_MODAL_PARKING_LOT, SET_RENT_PARKING_SPOT_USER_CAR_IDX, SET_SELECTED_PARKING_LOT, UpdateMapViewportAction, UPDATE_MAP_VIEWPORT } from "./types";
 
 export function updateViewport(viewport: HcMapViewportProps): UpdateMapViewportAction {
     return {
@@ -45,12 +47,70 @@ export function setSelectedParkingLot(parking_lot: number | null): SetSelectedPa
     };
 }
 
+export function setRentModalParkingLot(parking_spot: number | null): SetRentModalParkingLotAction {
+    return {
+        type: SET_RENT_MODAL_PARKING_LOT,
+        parking_lot: parking_spot
+    };
+}
+
+export function setRentParkingSpotUserCarIdx(idx: number): SetRentParkingSpotUserCarIdxAction {
+    return {
+        type: SET_RENT_PARKING_SPOT_USER_CAR_IDX,
+        idx
+    };
+}
+
+export function rentParkingSpotRequestSent(): RentParkingSpotRequestSentAction {
+    return {
+        type: RENT_PARKING_SPOT_REQUEST_SENT
+    };
+}
+
+export function rentParkingSpotRequestSucceeded(id: number): RentParkingSpotRequestSucceededAction {
+    return {
+        type: RENT_PARKING_SPOT_REQUEST_SUCCEEDED,
+        parking_spot_rental_id: id
+    };
+}
+
+
+export function rentParkingSpotRequestFailed(): RentParkingSpotRequestFailedAction {
+    return {
+        type: RENT_PARKING_SPOT_REQUEST_FAILED
+    };
+}
+
+export interface ParkingSpotRentalRequestData {
+    parking_lot_id: number,
+    car_id: number,
+    start_date: string,
+    end_date: string
+}
+
+export const sendRentParkingSpotRequest = throttle((data: ParkingSpotRentalRequestData) => {
+    return async (dispatch: Dispatch<ParkingSearchActionTypes>) => {
+        dispatch(rentParkingSpotRequestSent());
+
+        const uri = `${process.env.REACT_APP_HIRECAR_API_URI}/parking_spot_rentals`;
+
+        try {
+            const res = await axios.post(uri, data);
+            const id = res.data.id as number;
+            dispatch(rentParkingSpotRequestSucceeded(id));
+        } catch {
+            dispatch(rentParkingSpotRequestFailed());
+        }
+    };
+
+}, MIN_API_CALL_DELAY);
+
 export interface ParkingSearchParams {
     airport_name?: string
 }
 
 //TODO: Handle request errors
-export function fetchParkings(params: ParkingSearchParams) {
+export const fetchParkings = throttle((params: ParkingSearchParams) => {
     return (dispatch: Dispatch<ParkingSearchActionTypes>) => {
 
         dispatch(requestParkings());
@@ -65,13 +125,13 @@ export function fetchParkings(params: ParkingSearchParams) {
                 console.error(error);
             });
     };
-}
+}, MIN_API_CALL_DELAY);
 
 export interface AirportSearchParams {
     name: string
 }
 
-export function fetchAirports(params: AirportSearchParams) {
+export const fetchAirports = throttle((params: AirportSearchParams) => {
     return (dispatch: Dispatch<ParkingSearchActionTypes>) => {
 
         dispatch(requestAirports());
@@ -86,4 +146,4 @@ export function fetchAirports(params: AirportSearchParams) {
                 console.error(error);
             });
     };
-}
+}, MIN_API_CALL_DELAY);

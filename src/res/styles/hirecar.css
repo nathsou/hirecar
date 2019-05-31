@@ -360,6 +360,7 @@ select {
     position: relative;
     bottom: 3px;
 }
+
 .circle-button:hover {
     color: var(--dark-grey);
     transition: all .4s;
@@ -513,6 +514,10 @@ footer p {
 
 .hc-map {
     min-height: 100%;
+}
+
+.hc-modal-title {
+    color: var(--primary-color)
 }
 
 

@@ -96,7 +96,7 @@ export function postSignInForm(data: SignInFormDataState) {
                         dispatch(setUserLogged(sent_data));
                         dispatch(setUserProfileInfo(user_profile_data));
                         dispatch(setUserProfileCarOwner(user_profile_data.id));
-                        dispatch(toggleShowModal());
+                        dispatch(toggleShowModal(false));
                         dispatch(resetSignUpForm());
                         dispatch(signUpFormReceived());
 

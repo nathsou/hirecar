@@ -13,11 +13,12 @@ import HcPrimaryButton from "./Button/HcPrimaryButton";
 import { UserState, ResetUserLoggedAction } from "../redux/user/types";
 import { resetUserLogged } from "../redux/user/actions";
 import { emptyLocalStorage } from "../Utils";
+import HcSignTabs from "./Sign/HcSignTabs";
 
 interface HcNavbarProps extends RouteComponentProps {
     navbar: NavbarState,
     user: UserState,
-    toggleModal: () => ToggleSignModalAction,
+    toggleModal: (show: boolean) => ToggleSignModalAction,
     resetUser: () => ResetUserLoggedAction
 }
 
@@ -56,14 +57,21 @@ class HcNavbar extends Component<HcNavbarProps> {
                                 </NavLink>
                             ) : null}
                             <Nav.Item>
-                                <HcSecondaryButton handleClick={logged_in ? this.loggedOut : this.props.toggleModal}>
+                                <HcSecondaryButton handleClick={logged_in ? this.loggedOut : () => this.props.toggleModal(true)}>
                                     {logged_in ? "Déconnexion" : "Connexion"}
                                 </HcSecondaryButton>
                             </Nav.Item>
                         </Nav>
                     </Navbar.Collapse>
                 </Navbar>
-                <HcModal show={this.props.navbar.show_modal} handleClose={this.props.toggleModal} />
+
+                <HcModal
+                    show={this.props.navbar.show_modal}
+                    handleClose={() => this.props.toggleModal(false)}
+                >
+                    <HcSignTabs />
+                </HcModal>
+
             </header>
         );
     }

@@ -4,15 +4,15 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 
 interface HcInputFormGroupProps {
-    size: number,
+    md?: number,
     controlId: string,
-    className: string,
+    validationMessage?: string,
     label: string,
     showLabel?: boolean,
     type: string,
-    name: string,
     placeholder: string,
     value: string,
+    validate?: boolean,
     as?: typeof Col | typeof Row,
     onChange: (event: any) => void
 }
@@ -22,19 +22,20 @@ export default class HcInputFormGroup extends Component<HcInputFormGroupProps> {
 
         const dir = this.props.as ? this.props.as : Col;
         const show_label = this.props.showLabel !== undefined ? this.props.showLabel : true;
+        const { validationMessage } = this.props;
+        const validate = this.props.validate !== undefined ? this.props.validate : true;
 
         return (
-            <Form.Group as={dir} md={this.props.size} controlId={this.props.controlId}>
-                {show_label ? <Form.Label className={this.props.className}>{this.props.label}</Form.Label> : null}
+            <Form.Group as={dir} md={this.props.md} controlId={this.props.controlId}>
+                {show_label ? <Form.Label className={validationMessage}>{this.props.label}</Form.Label> : null}
                 <Form.Control
-                    className={`form-control ${this.props.className ? 'is-invalid' : ''}`}
+                    className={`form-control ${validationMessage ? 'is-invalid' : ''}`}
                     type={this.props.type}
-                    name={this.props.name}
                     placeholder={this.props.placeholder}
                     value={this.props.value}
                     onChange={this.props.onChange}
                 />
-                {this.props.className ? <div className='invalid-feedback'>{this.props.className}</div> : null}
+                {validate && validationMessage ? <div className='invalid-feedback'>{validationMessage}</div> : null}
             </Form.Group>
         );
     }
