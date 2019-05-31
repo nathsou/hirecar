@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { HcState } from "../../../redux/configureStore";
-import { submitUserProfileInfoForm, postUserProfileInfoForm } from "../../../redux/userProfile/userProfileTabInfo/actions";
-import { UserProfileTabInfoState, UserProfileInfoFormDataState } from "../../../redux/userProfile/userProfileTabInfo/types";
+import { submitUserProfileInfoForm, postUserProfileInfoForm } from "../../../redux/userProfile/userProfileInfoTab/actions";
+import { UserProfileTabInfoState, UserProfileInfoFormDataState } from "../../../redux/userProfile/userProfileInfoTab/types";
 import Form from "react-bootstrap/Form";
 import HcSecondaryButton from "../../Button/HcSecondaryButton";
 import UserProfileTabInfoInputs from "./UserProfileTabInfoInputs";
@@ -30,7 +30,7 @@ class UserProfileTabInfo extends Component<UserProfileTabInfoProps> {
         const { editing, saving } = this.props.user_profile_tab_info;
         return (
             <Form onSubmit={this.handleInfoSubmit}>
-                <h2 className="user-profile-text">Information générale</h2>
+                <h2 className="user-profile-title">Information générale</h2>
                 <UserProfileTabInfoInputs />
                 {saving ? (<p className="error-message">Vos données ont été sauvegardées.</p>) : null}
                 {editing ? (
@@ -44,7 +44,9 @@ class UserProfileTabInfo extends Component<UserProfileTabInfoProps> {
 }
 
 export default connect(
-    (state: HcState) => ({ user_profile_tab_info: state.user_profile_tab_info }),
+    (state: HcState) => ({
+        user_profile_tab_info: state.user_profile_tabs.user_profile_tab_info
+    }),
     {
         onUserProfileInfoSubmit: () => submitUserProfileInfoForm(),
         onPostUserProfileInfoForm: (data: UserProfileInfoFormDataState) => postUserProfileInfoForm(data),

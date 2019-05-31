@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import HcInputFormGroup from "../../Form/HcInputFormGroup";
 import { connect } from "react-redux";
 import { HcState } from "../../../redux/configureStore";
-import { updateUserProfileFirstnameInput, updateUserProfileLastnameInput, updateUserProfilePhoneInput, updateUserProfileEmailInput, updateUserProfileNewPasswordInput, updateUserProfilePasswordInput } from "../../../redux/userProfile/userProfileTabInfo/actions";
-import { UserProfileTabInfoState } from "../../../redux/userProfile/userProfileTabInfo/types";
+import { updateUserProfileFirstnameInput, updateUserProfileLastnameInput, updateUserProfilePhoneInput, updateUserProfileEmailInput, updateUserProfileNewPasswordInput, updateUserProfilePasswordInput } from "../../../redux/userProfile/userProfileInfoTab/actions";
+import { UserProfileTabInfoState } from "../../../redux/userProfile/userProfileInfoTab/types";
 import Form from "react-bootstrap/Form";
 
 interface UserProfileTabInfoInputsProps {
@@ -71,7 +71,7 @@ class UserProfileTabInfoInputs extends Component<UserProfileTabInfoInputsProps> 
 }
 
 export default connect(
-    (state: HcState) => ({ user_profile_tab_info: state.user_profile_tab_info }),
+    (state: HcState) => ({ user_profile_tab_info: state.user_profile_tabs.user_profile_tab_info }),
     {
         onFirstnameChange: (e: any) => updateUserProfileFirstnameInput(e.target.value),
         onLastnameChange: (e: any) => updateUserProfileLastnameInput(e.target.value),

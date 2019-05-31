@@ -1,14 +1,20 @@
 import React, { Component } from "react";
 import Modal, { ModalProps } from "react-bootstrap/Modal";
 import ModalTitle from "react-bootstrap/ModalTitle";
+import { connect } from "react-redux";
+import { HcState } from "../redux/configureStore";
 
 export interface HcModalProps extends Pick<ModalProps, 'size'> {
     title?: string,
     show: boolean,
-    handleClose: () => void
+    handleClose: () => void,
+    logged_in: boolean,
+    show_delete_car_modal: boolean,
+    show_delete_spot_rental_modal: boolean,
+    show_delete_car_rental_modal: boolean
 }
 
-export default class HcModal extends Component<HcModalProps> {
+class HcModal extends Component<HcModalProps> {
 
     public render() {
 
@@ -34,3 +40,12 @@ export default class HcModal extends Component<HcModalProps> {
         );
     }
 }
+
+export default connect(
+    (state: HcState) => ({
+        logged_in: state.user.logged_in,
+        show_delete_car_modal: state.user_profile_tabs.user_profile_tab_car.show_delete_car_modal,
+        show_delete_spot_rental_modal: state.user_profile_tabs.user_profile_tab_spot_rental.show_delete_spot_rental_modal,
+        show_delete_car_rental_modal: state.user_profile_tabs.user_profile_car_rental_tab.show_delete_car_rental_modal
+    })
+)(HcModal)

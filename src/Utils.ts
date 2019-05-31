@@ -14,6 +14,25 @@ export function capitalize(str: string): string {
     return `${str[0].toUpperCase()}${str.slice(1).toLowerCase()}`;
 }
 
+export function convertDate(date: string): string {
+    const parsed_date = parseDate(date);
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return parsed_date.toLocaleDateString('fr-FR', options);
+}
+
+export function diffDays(start_date: string, end_date: string): number {
+    const one_day = 24 * 60 * 60 * 1000; // hours * minutes * seconds * milliseconds
+    const parsed_start_date = parseDate(start_date);
+    const parsed_end_date = parseDate(end_date);
+    return Math.round(Math.abs((parsed_start_date.getTime() - parsed_end_date.getTime()) / (one_day))) + 1;
+}
+
+export function parseDate(date: string): Date {
+    const date_part = date.split(' ')[0];
+    const date_items = date_part.split('-').map(date => parseInt(date));
+    return new Date(Date.UTC(date_items[0], date_items[1] - 1, date_items[2]));
+}
+
 export function emptyLocalStorage() {
     localStorage.setItem('state', '');
 }
@@ -74,7 +93,7 @@ export function parseCar(car: RawCar): Car {
         seats: parseInt(seats),
         doors: parseInt(doors),
         owner_id: parseInt(owner_id),
-        price_per_day: price_per_day !== undefined ? parseFloat(price_per_day) : undefined,
+        price_per_day: parseFloat(price_per_day),
         gearbox: parseIdentifiedType(gearbox),
         fuel: parseIdentifiedType(fuel)
     };
@@ -86,7 +105,6 @@ export type RawParkingSpot = {
         (K extends 'parking_lot' ? RawParkingLot : string)
     )
 };
-
 
 export function parseParkingSpot(spot: RawParkingSpot): ParkingSpot {
     const { id, start_date, end_date, car, parking_lot } = spot;

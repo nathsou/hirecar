@@ -3,7 +3,6 @@ import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import HcSecondaryButton from "./Button/HcSecondaryButton";
 import Logo from "./Logo";
-import HcModal from './HcModal';
 import { NavLink, withRouter, RouteComponentProps } from 'react-router-dom';
 import { ToggleSignModalAction, NavbarState } from "../redux/navbar/types";
 import { connect } from "react-redux";
@@ -14,6 +13,7 @@ import { UserState, ResetUserLoggedAction } from "../redux/user/types";
 import { resetUserLogged } from "../redux/user/actions";
 import { emptyLocalStorage } from "../Utils";
 import HcSignTabs from "./Sign/HcSignTabs";
+import HcModal from "./HcModal";
 
 interface HcNavbarProps extends RouteComponentProps {
     navbar: NavbarState,

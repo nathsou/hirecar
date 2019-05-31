@@ -2,12 +2,13 @@ import React, { Component } from "react";
 import Form from "react-bootstrap/Form";
 import HcInputFormGroup from "../../Form/HcInputFormGroup";
 import HcSelectFormGroup from "../../Form/HcSelectFormGroup";
-import { updateUserProfileCarModelInput, updateUserProfileCarPriceInput, updateUserProfileCarGearboxSelect, updateUserProfileCarFuelSelect, updateUserProfileCarSeatsSelect, updateUserProfileCarDoorsSelect } from "../../../redux/userProfile/userProfileTabCar/actions";
+import { updateUserProfileCarModelInput, updateUserProfileCarPriceInput, updateUserProfileCarGearboxSelect, updateUserProfileCarFuelSelect, updateUserProfileCarSeatsSelect, updateUserProfileCarDoorsSelect } from "../../../redux/userProfile/userProfileCarTab/actions";
 import { connect } from "react-redux";
 import { HcState } from "../../../redux/configureStore";
-import { UserProfileTabCarState } from "../../../redux/userProfile/userProfileTabCar/types";
+import { UserProfileTabCarState } from "../../../redux/userProfile/userProfileCarTab/types";
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
+import { Fuel, Gearbox } from "../../../redux/carSearch/types";
 library.add(faPlus, faMinus);
 
 interface UserProfileTabCarProps {
@@ -21,6 +22,16 @@ interface UserProfileTabCarProps {
 }
 
 class UserProfileTabCarInputs extends Component<UserProfileTabCarProps> {
+
+    private onFuelChange = (id: number): void => {
+        const fuel = this.props.user_profile_tab_car.car_features.fuel.find(f => f.id === id) as Fuel;
+        this.props.onFuelChange(fuel.id);
+    }
+
+    private onGearboxChange = (id: number): void => {
+        const gearbox = this.props.user_profile_tab_car.car_features.gearbox.find(g => g.id === id) as Gearbox;
+        this.props.onGearboxChange(gearbox.id);
+    }
 
     public render() {
 
@@ -60,13 +71,13 @@ class UserProfileTabCarInputs extends Component<UserProfileTabCarProps> {
                         label="Boîte de vitesse"
                         options={gearbox.map(g => g.type)}
                         value={gearboxId}
-                        onChange={this.props.onGearboxChange}
+                        onChange={this.onGearboxChange}
                     />
                     <HcSelectFormGroup
                         md={4} controlId="userProfileCarFuel" className=""
                         label="Carburant"
                         options={fuel.map(f => f.type)} value={fuelId}
-                        onChange={this.props.onFuelChange}
+                        onChange={this.onFuelChange}
                     />
                     <HcSelectFormGroup
                         md={2} controlId="userProfileCarSeats" className=""
@@ -88,14 +99,14 @@ class UserProfileTabCarInputs extends Component<UserProfileTabCarProps> {
 
 export default connect(
     (state: HcState) => ({
-        user_profile_tab_car: state.user_profile_tab_car
+        user_profile_tab_car: state.user_profile_tabs.user_profile_tab_car
     }),
     {
         onModelChange: (e: any) => updateUserProfileCarModelInput(e.target.value),
         onPriceChange: (e: any) => updateUserProfileCarPriceInput(e.target.value),
-        onGearboxChange: (e: any) => updateUserProfileCarGearboxSelect(e.target.value),
-        onFuelChange: (e: any) => updateUserProfileCarFuelSelect(e.target.value),
-        onSeatsChange: (e: any) => updateUserProfileCarSeatsSelect(e.target.value),
-        onDoorsChange: (e: any) => updateUserProfileCarDoorsSelect(e.target.value),
+        onGearboxChange: (gearbox_id: number) => updateUserProfileCarGearboxSelect(gearbox_id),
+        onFuelChange: (fuel_id: number) => updateUserProfileCarFuelSelect(fuel_id),
+        onSeatsChange: (id: number) => updateUserProfileCarSeatsSelect(id),
+        onDoorsChange: (id: number) => updateUserProfileCarDoorsSelect(id),
     }
-)(UserProfileTabCarInputs)
+)(UserProfileTabCarInputs);

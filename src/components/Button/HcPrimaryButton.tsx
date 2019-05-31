@@ -3,7 +3,12 @@ import Button from "react-bootstrap/Button";
 
 export default function (props: any) {
   return (
-    ///@ts-ignore
-    <Button variant='hc-primary' outlined={props.outlined}>{props.children}</Button>
+    <Button
+      ///@ts-ignore
+      variant='hc-primary'
+      onClick={() => props.handleClick ? props.handleClick() : {}}
+      outlined={props.outlined}>
+      {props.children}
+    </Button>
   );
 }

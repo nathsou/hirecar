@@ -3,6 +3,7 @@ import HcSecondaryButton from "./Button/HcSecondaryButton";
 
 export interface HcListItemProps {
     picto?: string,
+    header?: string,
     title: string,
     features: string,
     footer: string,
@@ -26,8 +27,10 @@ export default class HcListItem extends Component<HcListItemProps> {
             onMouseLeave,
             id,
             onRentButtonClick,
+            header,
             show_rent_btn
         } = this.props;
+
 
         return (
             <div className='hc-list-item'>
@@ -36,6 +39,7 @@ export default class HcListItem extends Component<HcListItemProps> {
                     onMouseEnter={() => onMouseEnter ? onMouseEnter(id) : {}}
                     onMouseLeave={() => onMouseLeave ? onMouseLeave(id) : {}}
                 >
+                    {header ? (<p>{header}</p>) : null}
                     <h2 className='hc-list-item-title'>{title}</h2>
                     <p className='hc-list-item-features'>{features}</p>
                     <p className='hc-list-footer'>{footer}</p>

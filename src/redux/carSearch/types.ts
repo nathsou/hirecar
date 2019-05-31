@@ -6,7 +6,7 @@ export interface Car {
     seats: number;
     doors: number;
     owner_id: number;
-    price_per_day?: number;
+    price_per_day: number;
     gearbox: Gearbox;
     fuel: Fuel;
 }

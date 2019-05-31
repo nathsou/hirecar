@@ -4,8 +4,6 @@ import { HcState } from "../../redux/configureStore";
 import { setRentModalParkingLot, setRentParkingSpotUserCarIdx, sendRentParkingSpotRequest, ParkingSpotRentalRequestData } from "../../redux/parkingSearch/actions";
 import { ParkingLot, ParkingSearchState } from "../../redux/parkingSearch/types";
 import { UserState } from "../../redux/user/types";
-import { fetchUserProfileCars } from "../../redux/userProfile/userProfileTabCar/actions";
-import { UserProfileCarsState } from "../../redux/userProfile/userProfileTabCar/types";
 import HcSecondaryButton from "../Button/HcSecondaryButton";
 import HcModal from "../HcModal";
 import HcSignTabs from "../Sign/HcSignTabs";
@@ -13,6 +11,8 @@ import HcParkingSearchBox from "./HcParkingSearchBox";
 import HcSelectFormGroup from "../Form/HcSelectFormGroup";
 import { checkRentParkingSpotForm } from "../../redux/rentParkingTab/actions";
 import { RentParkingTabState } from "../../redux/rentParkingTab/types";
+import { UserProfileCarsState } from "../../redux/userProfile/userProfileCarTab/types";
+import { fetchUserProfileCarRentals } from "../../redux/userProfile/userProfileCarRentalTab/actions";
 
 export interface HcRentParkingModalProps extends ParkingSearchState {
     setModalParkingLot: (id: number | null) => void,
@@ -153,13 +153,13 @@ class HcRentParkingModal extends Component<HcRentParkingModalProps> {
 export default connect(
     (state: HcState) => ({
         ...state.parking_search,
-        user_cars: state.user_profile_tab_car.cars_data,
+        user_cars: state.user_profile_tabs.user_profile_tab_car.cars_data,
         user: state.user,
         form: state.rent_tabs.rent_parking_spot_tab
     }),
     {
         setModalParkingLot: (id: number | null) => setRentModalParkingLot(id),
-        fetchUserProfileCars: (id: number) => fetchUserProfileCars(id),
+        fetchUserProfileCars: (id: number) => fetchUserProfileCarRentals(id),
         checkForm: () => checkRentParkingSpotForm(),
         setCarIdx: (idx: number) => setRentParkingSpotUserCarIdx(idx),
         sendRentParkingSpotRequest: (data: ParkingSpotRentalRequestData) => sendRentParkingSpotRequest(data)
