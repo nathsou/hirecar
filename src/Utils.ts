@@ -24,12 +24,13 @@ export function diffDays(start_date: string, end_date: string): number {
     const one_day = 24 * 60 * 60 * 1000; // hours * minutes * seconds * milliseconds
     const parsed_start_date = parseDate(start_date);
     const parsed_end_date = parseDate(end_date);
-    return Math.round(Math.abs((parsed_start_date.getTime() - parsed_end_date.getTime()) / (one_day)));
+    return Math.round(Math.abs((parsed_start_date.getTime() - parsed_end_date.getTime()) / (one_day))) + 1;
 }
 
 export function parseDate(date: string): Date {
-    const date_items = date.split('-').map(date => parseInt(date));
-    return new Date(Date.UTC(date_items[0], date_items[1], date_items[2]));
+    const date_part = date.split(' ')[0];
+    const date_items = date_part.split('-').map(date => parseInt(date));
+    return new Date(Date.UTC(date_items[0], date_items[1] - 1, date_items[2]));
 }
 
 export function emptyLocalStorage() {

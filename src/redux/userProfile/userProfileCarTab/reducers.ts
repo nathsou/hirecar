@@ -23,11 +23,11 @@ export function userProfileTabCarReducer(
                 form_errors: { ...state.form_errors, model_error: isValid ? '' : 'Le nom du modèle doit contenir au moins 5 caractères' }
             };
         case UPDATE_USER_PROFILE_CAR_PRICE_INPUT:
-            isValid = /^\d+([,|.]\d{1,2})?$/.test(action.value);
+            isValid = /^([1-9]\d*)?(\.\d{1,2})?$/.test(action.value);
             return {
                 ...state,
                 form_data: { ...state.form_data, price_per_day: action.value },
-                form_errors: { ...state.form_errors, price_error: isValid ? '' : 'Veuillez entrer un prix valide' }
+                form_errors: { ...state.form_errors, price_error: isValid ? '' : 'Veuillez entrer un prix valide jusqu\'à 2 chiffres après la virgule.' }
             };
         case UPDATE_USER_PROFILE_CAR_GEARBOX_SELECT:
             return {
@@ -91,7 +91,7 @@ export function userProfileTabCarReducer(
                         (model.length >= 5 ? '' : 'Le nom du modèle doit contenir au moins 5 caractères'),
                     price_error:
                         (price_per_day === '' ? 'Le prix n\'est pas indiqué' : '') ||
-                        (/^\d+([,|.]\d{1,2})?$/.test(price_per_day as string) ? '' : 'Veuillez entrer un prix valide'),
+                        (/^([1-9]\d*)?(\.\d{1,2})?$/.test(price_per_day) ? '' : 'Veuillez entrer un prix valide jusqu\'à 2 chiffres après la virgule.'),
                 },
                 submit_form: true
             };
