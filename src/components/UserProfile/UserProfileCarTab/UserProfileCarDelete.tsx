@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { HcState } from "../../../redux/configureStore";
 import { connect } from "react-redux";
-import { postDeleteUserProfileCar, onUserProfileCarDeleteCancel } from "../../../redux/userProfile/userProfileTabCar/actions";
+import { postDeleteUserProfileCar, onUserProfileCarDeleteCancel } from "../../../redux/userProfile/userProfileCarTab/actions";
 import { Car } from "../../../redux/carSearch/types";
 import HcDelete from "../../HcDeleteModalContainer";
 
@@ -30,7 +30,7 @@ class UserProfileCarDelete extends Component<UserProfileCarDeleteProps> {
         const question = `Voulez-vous vraiment supprimer votre ${selected_car.model} ?`;
         return (
             <HcDelete
-                title="Supression d'un véhicule" question={question}
+                title="Suppression d'un véhicule" question={question}
                 onConfirm={this.onConfirm} onCancel={this.onCancel}
             />
         );

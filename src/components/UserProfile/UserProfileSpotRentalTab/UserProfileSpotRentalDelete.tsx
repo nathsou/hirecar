@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { HcState } from "../../../redux/configureStore";
 import { connect } from "react-redux";
 import { ParkingSpot } from "../../../redux/carSearch/types";
-import { postDeleteUserProfileSpotRental, onUserProfileSpotRentalDeleteCancel } from "../../../redux/userProfile/userProfileTabSpotRental/actions";
-import HcDelete from "../../HcDeleteModalContainer";
+import { postDeleteUserProfileSpotRental, onUserProfileSpotRentalDeleteCancel } from "../../../redux/userProfile/userProfileSpotRentalTab/actions";
+import HcDeleteModalContainer from "../../HcDeleteModalContainer";
 
 export interface UserProfileSpotRentalDeleteProps {
     selected_spot_id: number,
@@ -30,8 +30,8 @@ class UserProfileSpotRentalDelete extends Component<UserProfileSpotRentalDeleteP
         const selected_spot_rental = spot_rentals.filter(spot => spot.id === selected_spot_id)[0];
         const question = `Voulez-vous vraiment supprimer votre réservation à ${selected_spot_rental.parking_lot.label} pour votre ${selected_spot_rental.car.model} ?`;
         return (
-            <HcDelete
-                title="Supression d'une réservation de parking" question={question}
+            <HcDeleteModalContainer
+                title="Suppression d'une réservation de parking" question={question}
                 onConfirm={this.onConfirm} onCancel={this.onCancel}
             />
         );

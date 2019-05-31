@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { HcState } from "../../../redux/configureStore";
-import { submitUserProfileInfoForm, postUserProfileInfoForm } from "../../../redux/userProfile/userProfileTabInfo/actions";
-import { UserProfileTabInfoState, UserProfileInfoFormDataState } from "../../../redux/userProfile/userProfileTabInfo/types";
+import { submitUserProfileInfoForm, postUserProfileInfoForm } from "../../../redux/userProfile/userProfileInfoTab/actions";
+import { UserProfileTabInfoState, UserProfileInfoFormDataState } from "../../../redux/userProfile/userProfileInfoTab/types";
 import Form from "react-bootstrap/Form";
 import HcSecondaryButton from "../../Button/HcSecondaryButton";
 import UserProfileTabInfoInputs from "./UserProfileTabInfoInputs";

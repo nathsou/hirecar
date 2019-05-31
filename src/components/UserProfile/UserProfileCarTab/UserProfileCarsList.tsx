@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { HcState } from "../../../redux/configureStore";
-import { UserProfileCarsState, DeleteUserProfileCarAction } from "../../../redux/userProfile/userProfileTabCar/types";
+import { UserProfileCarsState, DeleteUserProfileCarAction } from "../../../redux/userProfile/userProfileCarTab/types";
 import { HcListItemProps } from "../../HcListItem";
 import CarPicto from "../../../res/img/car-picto.svg";
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { updateUserProfileCar, onUserProfileCarDelete } from "../../../redux/userProfile/userProfileTabCar/actions";
+import { updateUserProfileCar, onUserProfileCarDelete } from "../../../redux/userProfile/userProfileCarTab/actions";
 import { toggleShowModal } from "../../../redux/navbar/actions";
 import { ToggleModalAction } from "../../../redux/navbar/types";
 import HcList from "../../HcList";

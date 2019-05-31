@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import Form from "react-bootstrap/Form";
-import { toggleUserProfileCarForm, submitUserProfileCarForm, fetchUserProfileCarFeaturesForm, postUserProfileCarForm, fetchUserProfileCars, postUpdateUserProfileCarForm } from "../../../redux/userProfile/userProfileTabCar/actions";
+import { toggleUserProfileCarForm, submitUserProfileCarForm, fetchUserProfileCarFeaturesForm, postUserProfileCarForm, fetchUserProfileCars, postUpdateUserProfileCarForm } from "../../../redux/userProfile/userProfileCarTab/actions";
 import { connect } from "react-redux";
 import { HcState } from "../../../redux/configureStore";
-import { UserProfileTabCarState } from "../../../redux/userProfile/userProfileTabCar/types";
+import { UserProfileTabCarState } from "../../../redux/userProfile/userProfileCarTab/types";
 import HcCircleButton from "../../Button/HcCircleButton";
 import HcSecondaryButton from "../../Button/HcSecondaryButton";
 import { library } from '@fortawesome/fontawesome-svg-core';
