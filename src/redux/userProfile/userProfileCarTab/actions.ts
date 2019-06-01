@@ -160,9 +160,11 @@ export function userProfileCarsReceived(cars: Car[]): UserProfileCarsReceivedAct
 }
 
 export function fetchUserProfileCars(id: number) {
+
     return (dispatch: Dispatch<UserProfileCarActionTypes>) => {
         dispatch(userProfileCarsSent());
-        Axios.get(`${process.env.REACT_APP_HIRECAR_API_URI}/cars/${id}`)
+
+        Axios.get(`${process.env.REACT_APP_HIRECAR_API_URI}/cars?owner_id=${id}`)
             .then((res: AxiosResponse) => {
                 const parsed_cars = (res.data.cars as RawCar[]).map(parseCar);
                 dispatch(userProfileCarsReceived(parsed_cars));
@@ -249,19 +251,6 @@ export function postDeleteUserProfileCar(id: number) {
                 console.log(error.response);
             });
     }
-}
-
-export function fetchUserProfileCarsRequest(
-    dispatch: Dispatch<UserProfileCarActionTypes>,
-    id: number,
-) {
-    console.log(`${process.env.REACT_APP_HIRECAR_API_URI}/cars/${id}`);
-    Axios.get(`${process.env.REACT_APP_HIRECAR_API_URI}/cars/${id}`)
-        .then((res: AxiosResponse) => {
-            dispatch(userProfileCarsReceived(res.data));
-        }).catch((error: AxiosError) => {
-            console.log(error.response);
-        });
 }
 
 export function toggleUserProfileCarModal(show: boolean): ToggleUserProfileCarModalAction {
