@@ -5,7 +5,7 @@ import { MIN_API_CALL_DELAY } from '../..';
 import { HcMapViewportProps } from "../../components/ParkingSearch/HcParkingSearch";
 import { parseAirport, parseParkingLot, propsToURIParams, RawAirport, RawParkingLot } from "../../Utils";
 import { Airport } from "../rentParkingTab/types";
-import { AirportsReceivedAction, AIRPORTS_RECEIVED, ParkingLot, ParkingSearchActionTypes, ParkingsReceivedAction, PARKINGS_RECEIVED, RentParkingSpotRequestFailedAction, RentParkingSpotRequestSentAction, RentParkingSpotRequestSucceededAction, RENT_PARKING_SPOT_REQUEST_FAILED, RENT_PARKING_SPOT_REQUEST_SENT, RENT_PARKING_SPOT_REQUEST_SUCCEEDED, RequestAirportsAction, RequestParkingsAction, REQUEST_AIRPORTS, REQUEST_PARKINGS, SetRentModalParkingLotAction, SetRentParkingSpotUserCarIdxAction, SetSelectedParkingLotAction, SET_RENT_MODAL_PARKING_LOT, SET_RENT_PARKING_SPOT_USER_CAR_IDX, SET_SELECTED_PARKING_LOT, UpdateMapViewportAction, UPDATE_MAP_VIEWPORT } from "./types";
+import { AirportsReceivedAction, AIRPORTS_RECEIVED, ParkingLot, ParkingSearchActionTypes, ParkingsReceivedAction, PARKINGS_RECEIVED, RentParkingSpotRequestFailedAction, RentParkingSpotRequestSentAction, RentParkingSpotRequestSucceededAction, RENT_PARKING_SPOT_REQUEST_FAILED, RENT_PARKING_SPOT_REQUEST_SENT, RENT_PARKING_SPOT_REQUEST_SUCCEEDED, RequestAirportsAction, RequestParkingsAction, REQUEST_AIRPORTS, REQUEST_PARKINGS, SetRentModalParkingLotAction, SetRentParkingSpotUserCarIdAction, SetSelectedParkingLotAction, SET_RENT_MODAL_PARKING_LOT, SET_RENT_PARKING_SPOT_USER_CAR_IDX, SET_SELECTED_PARKING_LOT, UpdateMapViewportAction, UPDATE_MAP_VIEWPORT } from "./types";
 
 export function updateViewport(viewport: HcMapViewportProps): UpdateMapViewportAction {
     return {
@@ -54,10 +54,10 @@ export function setRentModalParkingLot(parking_spot: number | null): SetRentModa
     };
 }
 
-export function setRentParkingSpotUserCarIdx(idx: number): SetRentParkingSpotUserCarIdxAction {
+export function setRentParkingSpotUserCarId(id: number): SetRentParkingSpotUserCarIdAction {
     return {
         type: SET_RENT_PARKING_SPOT_USER_CAR_IDX,
-        idx
+        id: id
     };
 }
 

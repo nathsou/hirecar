@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { HcState } from "../../redux/configureStore";
-import { setRentModalParkingLot, setRentParkingSpotUserCarIdx, sendRentParkingSpotRequest, ParkingSpotRentalRequestData } from "../../redux/parkingSearch/actions";
+import { setRentModalParkingLot, setRentParkingSpotUserCarId, sendRentParkingSpotRequest, ParkingSpotRentalRequestData } from "../../redux/parkingSearch/actions";
 import { ParkingLot, ParkingSearchState } from "../../redux/parkingSearch/types";
 import { UserState } from "../../redux/user/types";
 import HcSecondaryButton from "../Button/HcSecondaryButton";
@@ -18,7 +18,7 @@ export interface HcRentParkingModalProps extends ParkingSearchState {
     setModalParkingLot: (id: number | null) => void,
     fetchUserProfileCars: (id: number) => void,
     checkForm: () => void,
-    setCarIdx: (idx: number) => void,
+    setCarId: (id: number) => void,
     sendRentParkingSpotRequest: (data: ParkingSpotRentalRequestData) => void,
     user_cars: UserProfileCarsState,
     user: UserState,
@@ -37,6 +37,9 @@ class HcRentParkingModal extends Component<HcRentParkingModalProps> {
     private fetchCars = () => {
         if (!this.cars_fetched && this.props.user.logged_in) {
             this.props.fetchUserProfileCars(this.props.user.data.id);
+            if (this.props.user_cars.cars.length !== 0) {
+                this.props.setCarId(this.props.user_cars.cars[0].id);
+            }
             this.cars_fetched = true;
         }
     }
@@ -64,7 +67,7 @@ class HcRentParkingModal extends Component<HcRentParkingModalProps> {
 
         const data: ParkingSpotRentalRequestData = {
             parking_lot_id: this.props.rent_modal_parking_lot_id as number,
-            car_id: this.props.user_cars.cars[this.props.selected_user_car_idx].id,
+            car_id: this.props.selected_user_car_id,
             start_date: `${start_day} ${start_time}`,
             end_date: `${end_day} ${end_time}`
         };
@@ -81,8 +84,8 @@ class HcRentParkingModal extends Component<HcRentParkingModalProps> {
             user,
             user_cars,
             form,
-            selected_user_car_idx,
-            setCarIdx,
+            selected_user_car_id,
+            setCarId,
             awaiting_rental_request_response,
             parking_spot_rental_id
         } = this.props;
@@ -127,11 +130,11 @@ class HcRentParkingModal extends Component<HcRentParkingModalProps> {
                                 {user_cars.fetching ?
                                     <p>Chargement de vos voitures en cours...</p>
                                     : (<HcSelectFormGroup
-                                        value={selected_user_car_idx.toString()}
+                                        value={selected_user_car_id.toString()}
                                         options={user_cars.cars.map(c => ({ id: c.id, text: c.model }))}
                                         controlId='userCars'
                                         label='Véhicule à laisser'
-                                        onChange={setCarIdx}
+                                        onChange={setCarId}
                                     />)
                                 }
 
@@ -162,7 +165,7 @@ export default connect(
         setModalParkingLot: (id: number | null) => setRentModalParkingLot(id),
         fetchUserProfileCars: (id: number) => fetchUserProfileCarRentals(id),
         checkForm: () => checkRentParkingSpotForm(),
-        setCarIdx: (idx: number) => setRentParkingSpotUserCarIdx(idx),
+        setCarId: (idx: number) => setRentParkingSpotUserCarId(idx),
         sendRentParkingSpotRequest: (data: ParkingSpotRentalRequestData) => sendRentParkingSpotRequest(data)
     }
 )(HcRentParkingModal);

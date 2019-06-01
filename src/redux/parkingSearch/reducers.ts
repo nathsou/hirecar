@@ -53,7 +53,7 @@ export function parkingSearchReducer(
         case SET_RENT_PARKING_SPOT_USER_CAR_IDX:
             return {
                 ...state,
-                selected_user_car_idx: action.idx
+                selected_user_car_id: action.id
             };
 
         case RENT_PARKING_SPOT_REQUEST_SUCCEEDED:

@@ -8,7 +8,7 @@ export interface ParkingSearchState {
     viewport: HcMapViewportProps,
     selected_parking_lot: number | null,
     rent_modal_parking_lot_id: number | null,
-    selected_user_car_idx: number,
+    selected_user_car_id: number,
     awaiting_rental_request_response: boolean,
     parking_spot_rental_id: number | null
 }
@@ -44,7 +44,7 @@ export const defaultParkingSearchState: ParkingSearchState = {
     fetching_airports: false,
     selected_parking_lot: null,
     rent_modal_parking_lot_id: null,
-    selected_user_car_idx: 0,
+    selected_user_car_id: 0,
     awaiting_rental_request_response: false,
     parking_spot_rental_id: null
 };
@@ -95,9 +95,9 @@ export interface SetRentModalParkingLotAction {
     parking_lot: number | null
 }
 
-export interface SetRentParkingSpotUserCarIdxAction {
+export interface SetRentParkingSpotUserCarIdAction {
     type: typeof SET_RENT_PARKING_SPOT_USER_CAR_IDX,
-    idx: number
+    id: number
 }
 
 export interface RentParkingSpotRequestSentAction {
@@ -121,7 +121,7 @@ export type ParkingSearchActionTypes =
     RequestAirportsAction |
     AirportsReceivedAction |
     SetRentModalParkingLotAction |
-    SetRentParkingSpotUserCarIdxAction |
+    SetRentParkingSpotUserCarIdAction |
     RentParkingSpotRequestSentAction |
     RentParkingSpotRequestSucceededAction |
     RentParkingSpotRequestFailedAction;
