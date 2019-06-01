@@ -1,12 +1,22 @@
 import { ToggleSignModalAction } from "../navbar/types";
 import { SetUserLoggedAction } from "../user/types";
-import { SetUserProfileAction } from "../userProfile/userProfileInfoTab/types";
+import { SetUserProfileAction, ToggleUserProfilePasswordInputAction } from "../userProfile/userProfileInfoTab/types";
 import { SetUserProfileCarOwnerAction } from "../userProfile/userProfileCarTab/types";
+import { GoogleLoginResponse } from "react-google-login";
+import { IdentifiedType } from "../carSearch/types";
 
 export interface SignInFormDataState {
-    [index: string]: string;
+    [index: string]: string | IdentifiedType;
     email: string,
-    password: string
+    password: string,
+    login: IdentifiedType
+}
+
+export interface GoogleSignInState {
+    firstname: string,
+    lastname: string,
+    email: string,
+    login: IdentifiedType
 }
 
 export interface SignInTabState {
@@ -16,19 +26,35 @@ export interface SignInTabState {
         password_error: string,
         [key: string]: string
     },
-    validForm: boolean
+    validForm: boolean,
+    google_data: GoogleSignInState,
+    sending: boolean
 }
 
 export const defaultSignInTabState: SignInTabState = {
     form_data: {
         email: '',
         password: '',
+        login: {
+            id: 1,
+            type: "HireCar"
+        }
     },
     form_errors: {
         email_error: '',
         password_error: '',
     },
-    validForm: false
+    validForm: false,
+    google_data: {
+        firstname: '',
+        lastname: '',
+        email: '',
+        login: {
+            id: 2,
+            type: "Google"
+        }
+    },
+    sending: false
 }
 
 export const UPDATE_SIGNIN_EMAIL_INPUT = "UPDATE_SIGNIN_EMAIL_INPUT";
@@ -75,4 +101,33 @@ export interface ResetSignInAction {
     type: typeof RESET_SIGNIN_FORM
 }
 
-export type SignInActionTypes = UpdateSignInEmailAction | UpdateSignInPasswordAction | UpdateSignInEmailErrorAction | UpdateSignInPasswordErrorAction | SubmitSignInAction | SignInSentAction | SignInReceivedAction | ResetSignInAction | ToggleSignModalAction | SetUserLoggedAction | SetUserProfileAction | SetUserProfileCarOwnerAction;
+export const SET_GOOGLE_SIGNIN = "SET_GOOGLE_SIGNIN";
+export interface SetGoogleSignInAction {
+    type: typeof SET_GOOGLE_SIGNIN,
+    data: GoogleLoginResponse
+}
+
+export const GOOGLE_SIGNIN_SENT = "GOOGLE_SIGNIN_SENT";
+export interface GoogleSignInSentAction {
+    type: typeof GOOGLE_SIGNIN_SENT
+}
+
+export const GOOGLE_SIGNIN_RECEIVED = "GOOGLE_SIGNIN_RECEIVED";
+export interface GoogleSignInReceivedAction {
+    type: typeof GOOGLE_SIGNIN_RECEIVED
+}
+
+export type SignInActionTypes =
+    UpdateSignInEmailAction |
+    UpdateSignInPasswordAction |
+    UpdateSignInEmailErrorAction | UpdateSignInPasswordErrorAction |
+    SubmitSignInAction |
+    SignInSentAction |
+    SignInReceivedAction |
+    ResetSignInAction | ToggleSignModalAction |
+    SetUserLoggedAction |
+    SetUserProfileAction |
+    SetUserProfileCarOwnerAction |
+    SetGoogleSignInAction | GoogleSignInSentAction |
+    GoogleSignInReceivedAction |
+    ToggleUserProfilePasswordInputAction;

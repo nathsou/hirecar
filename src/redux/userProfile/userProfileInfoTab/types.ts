@@ -26,6 +26,7 @@ export interface UserProfileTabInfoState {
     sending: boolean,
     editing: boolean,
     saving: boolean,
+    show_password_input: boolean
 }
 
 export const defaultUserProfileTabInfoState: UserProfileTabInfoState = {
@@ -49,7 +50,8 @@ export const defaultUserProfileTabInfoState: UserProfileTabInfoState = {
     valid_form: false,
     sending: false,
     editing: false,
-    saving: false
+    saving: false,
+    show_password_input: false
 }
 
 export const SET_USER_PROFILE = "SET_USER_PROFILE";
@@ -125,4 +127,24 @@ export interface ResetUserProfilePasswordAction {
     type: typeof RESET_USER_PROFILE_PASSWORD
 }
 
-export type UserProfileInfoActionTypes = SetUserProfileAction | UpdateUserProfileFirstnameAction | UpdateUserProfileLastnameAction | UpdateUserProfileEmailAction | UpdateUserProfilePhoneAction | UpdateUserProfilePasswordAction | UpdateUserProfileNewPasswordAction | UpdateUserProfilePasswordErrorAction | SubmitUserProfileInfoAction | UserProfileInfoSentAction | UserProfileInfoReceivedAction | SetUserLoggedAction | UserProfileInfoSavedAction | ResetUserProfilePasswordAction;
+export const TOGGLE_USER_PROFILE_PASSWORD_INPUT = "TOGGLE_USER_PROFILE_PASSWORD_INPUT";
+export interface ToggleUserProfilePasswordInputAction {
+    type: typeof TOGGLE_USER_PROFILE_PASSWORD_INPUT
+}
+
+export type UserProfileInfoActionTypes =
+    SetUserProfileAction |
+    UpdateUserProfileFirstnameAction |
+    UpdateUserProfileLastnameAction |
+    UpdateUserProfileEmailAction |
+    UpdateUserProfilePhoneAction |
+    UpdateUserProfilePasswordAction |
+    UpdateUserProfileNewPasswordAction |
+    UpdateUserProfilePasswordErrorAction |
+    SubmitUserProfileInfoAction |
+    UserProfileInfoSentAction |
+    UserProfileInfoReceivedAction |
+    SetUserLoggedAction |
+    UserProfileInfoSavedAction |
+    ResetUserProfilePasswordAction |
+    ToggleUserProfilePasswordInputAction;

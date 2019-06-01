@@ -1,6 +1,7 @@
 import { Car, IdentifiedType, ParkingSpot, CarRental } from "./redux/carSearch/types";
 import { ParkingLot } from "./redux/parkingSearch/types";
 import { Airport } from "./redux/rentParkingTab/types";
+import { GoogleLoginResponseOffline } from "react-google-login";
 
 // object props to x-www-form-urlencoded
 export function propsToURIParams(props: {}): string {
@@ -138,4 +139,8 @@ export function parseCarRental(rental: RawCarRental): CarRental {
         user_id: parseInt(user_id),
         parking_spot: parseParkingSpot(parking_spot)
     };
+}
+
+export function isGoogleLoginResponseOffline(res: any): res is GoogleLoginResponseOffline {
+    return typeof res.code === 'string';
 }

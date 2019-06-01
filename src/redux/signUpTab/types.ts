@@ -1,13 +1,15 @@
 import { ChangeSignTabAction } from "../signTabs/types";
+import { IdentifiedType } from "../carSearch/types";
 
 export interface SignUpFormDataState {
-    [index: string]: string;
+    [index: string]: string | IdentifiedType;
     firstname: string,
     lastname: string,
     email: string,
     phone: string,
     password: string,
-    confirm_password: string
+    confirm_password: string,
+    login: IdentifiedType
 }
 
 export interface SignUpTabState {
@@ -33,6 +35,10 @@ export const defaultSignUpTabState: SignUpTabState = {
         phone: '',
         password: '',
         confirm_password: '',
+        login: {
+            id: 1,
+            type: "HireCar"
+        }
     },
     form_errors: {
         firstname_error: '',

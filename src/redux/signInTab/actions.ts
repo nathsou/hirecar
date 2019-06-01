@@ -1,13 +1,15 @@
-import { UpdateSignInEmailAction, UPDATE_SIGNIN_EMAIL_INPUT, UpdateSignInPasswordAction, UPDATE_SIGNIN_PASSWORD_INPUT, SubmitSignInAction, SUBMIT_SIGNIN_FORM, SignInSentAction, SIGNIN_FORM_SENT, SIGNIN_FORM_RECEIVED, SignInReceivedAction, SignInActionTypes, SignInFormDataState, UpdateSignInPasswordErrorAction, UPDATE_SIGNIN_PASSWORD_ERROR, UpdateSignInEmailErrorAction, UPDATE_SIGNIN_EMAIL_ERROR, ResetSignInAction, RESET_SIGNIN_FORM } from "./types";
+import { UpdateSignInEmailAction, UPDATE_SIGNIN_EMAIL_INPUT, UpdateSignInPasswordAction, UPDATE_SIGNIN_PASSWORD_INPUT, SubmitSignInAction, SUBMIT_SIGNIN_FORM, SignInSentAction, SIGNIN_FORM_SENT, SIGNIN_FORM_RECEIVED, SignInReceivedAction, SignInActionTypes, SignInFormDataState, UpdateSignInPasswordErrorAction, UPDATE_SIGNIN_PASSWORD_ERROR, UpdateSignInEmailErrorAction, UPDATE_SIGNIN_EMAIL_ERROR, ResetSignInAction, RESET_SIGNIN_FORM, GoogleSignInState, SET_GOOGLE_SIGNIN, SetGoogleSignInAction } from "./types";
 import { Dispatch } from "react";
 import Axios, { AxiosResponse, AxiosError } from "axios";
 import bcrypt from "bcryptjs";
 import { setUserLogged } from "../user/actions";
 import { UserDataState } from "../user/types";
-import { setUserProfileInfo } from "../userProfile/userProfileInfoTab/actions";
+import { setUserProfileInfo, toggleUserProfilePasswordInput } from "../userProfile/userProfileInfoTab/actions";
 import { UserProfileInfoFormDataState } from "../userProfile/userProfileInfoTab/types";
 import { setUserProfileCarOwner } from "../userProfile/userProfileCarTab/actions";
 import { toggleSignModal } from "../navbar/actions";
+import { GoogleLoginResponse } from "react-google-login";
+import { IdentifiedType } from "../carSearch/types";
 
 export function updateSignInEmailInput(value: string): UpdateSignInEmailAction {
     return {
@@ -64,14 +66,13 @@ export function resetSignUpForm(): ResetSignInAction {
 export function postSignInForm(data: SignInFormDataState) {
     const salt = (process.env.REACT_APP_BCRYPT_SALT as string).replace(/_/g, '$');
 
-
     return (dispatch: Dispatch<SignInActionTypes>) => {
         dispatch(signInFormSent());
 
         bcrypt.hash(data.password, salt as string)
             .then(hashed_pwd => {
 
-                const user_data: { [index: string]: string; } = {};
+                const user_data: { [index: string]: string | IdentifiedType; } = {};
 
                 Object.keys(data).forEach(key => {
                     user_data[key] = key === 'password' ? hashed_pwd : data[key];
@@ -98,6 +99,7 @@ export function postSignInForm(data: SignInFormDataState) {
                         dispatch(setUserProfileCarOwner(user_profile_data.id));
                         dispatch(toggleSignModal(false));
                         dispatch(resetSignUpForm());
+                        dispatch(toggleUserProfilePasswordInput());
                         dispatch(signUpFormReceived());
 
                     }).catch((error: AxiosError) => {
@@ -113,5 +115,56 @@ export function postSignInForm(data: SignInFormDataState) {
                         }
                     });
             })
+    }
+}
+
+export function setGoogleSignIn(data: GoogleLoginResponse): SetGoogleSignInAction {
+    return {
+        type: SET_GOOGLE_SIGNIN,
+        data
+    }
+}
+
+export function googleSignUpSent(): SignInSentAction {
+    return {
+        type: SIGNIN_FORM_SENT
+    };
+}
+
+export function googleSignUpReceived(): SignInReceivedAction {
+    return {
+        type: SIGNIN_FORM_RECEIVED
+    };
+}
+
+export function postGoogleSignIn(data: GoogleSignInState) {
+
+    return (dispatch: Dispatch<SignInActionTypes>) => {
+        dispatch(googleSignUpSent());
+
+        Axios.post(`${process.env.REACT_APP_HIRECAR_API_URI}/login`, data)
+            .then((res: AxiosResponse) => {
+
+                const sent_data = {} as UserDataState;
+                Object.keys(res.data).forEach(key => {
+                    sent_data[key as keyof UserDataState] = res.data[key];
+                });
+
+                const user_profile_data = {} as UserProfileInfoFormDataState;
+                Object.keys(res.data).forEach(key => {
+                    const value = res.data[key] === null ? '' : res.data[key];
+                    user_profile_data[key as keyof UserProfileInfoFormDataState] = value;
+                });
+
+                dispatch(setUserLogged(sent_data));
+                dispatch(setUserProfileInfo(user_profile_data));
+                dispatch(setUserProfileCarOwner(user_profile_data.id));
+                dispatch(toggleSignModal(false));
+                dispatch(googleSignUpReceived());
+
+            }).catch((error: AxiosError) => {
+                const response = error.response;
+                console.log(response)
+            });
     }
 }

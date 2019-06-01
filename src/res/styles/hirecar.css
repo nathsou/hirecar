@@ -269,6 +269,12 @@ select {
     background-repeat: no-repeat;
 }
 
+.signin-form {
+    padding-bottom: 1.5rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--light-grey);
+}
+
 /*** Modal ***/
 
 .modal-header {
@@ -330,7 +336,6 @@ select {
 
 .search-page .search-list {
     background-color: var(--primary-btn-text-color);
-    /* background-image: url("./../img/home-bg-1.jpg"); */
     padding: 2rem;
 }
 
@@ -344,6 +349,7 @@ select {
 }
 
 /*** User Profile ***/
+
 .bg-img {
     background-image: url("./../img/home-bg-1.jpg");
     background-size: cover;

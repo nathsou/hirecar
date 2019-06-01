@@ -19,7 +19,6 @@ interface UserProfileTabInfoInputsProps {
 class UserProfileTabInfoInputs extends Component<UserProfileTabInfoInputsProps> {
 
     public render() {
-
         const { firstname, lastname, email, phone, password, new_password } = this.props.user_profile_tab_info.form_data;
         const { firstname_error: firstnameError, lastname_error: lastnameError, email_error: emailError, phone_error: phoneError, password_error: passwordError, new_password_error: newPasswordError } = this.props.user_profile_tab_info.form_errors;
 
@@ -52,12 +51,14 @@ class UserProfileTabInfoInputs extends Component<UserProfileTabInfoInputsProps> 
                         placeholder="Veuillez entrer votre email"
                         value={email}
                         onChange={this.props.onEmailChange} />
-                    <HcInputFormGroup
-                        md={4} controlId="userProfilePassword" validationMessage={passwordError}
-                        label="Mot de passe actuel" type="password"
-                        placeholder="Entrez votre mot de passe actuel"
-                        value={password}
-                        onChange={this.props.onPasswordChange} />
+                    {this.props.user_profile_tab_info.show_password_input ? (
+                        <HcInputFormGroup
+                            md={4} controlId="userProfilePassword" validationMessage={passwordError}
+                            label="Mot de passe actuel" type="password"
+                            placeholder="Entrez votre mot de passe actuel"
+                            value={password}
+                            onChange={this.props.onPasswordChange} />
+                    ) : null}
                     <HcInputFormGroup
                         md={4} controlId="userProfileNewPassword" validationMessage={newPasswordError}
                         label="Nouveau mot de passe" type="password"

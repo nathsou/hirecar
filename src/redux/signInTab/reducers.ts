@@ -1,4 +1,4 @@
-import { defaultSignInTabState, RESET_SIGNIN_FORM, SignInActionTypes, SignInTabState, SUBMIT_SIGNIN_FORM, UPDATE_SIGNIN_EMAIL_ERROR, UPDATE_SIGNIN_EMAIL_INPUT, UPDATE_SIGNIN_PASSWORD_ERROR, UPDATE_SIGNIN_PASSWORD_INPUT } from "./types";
+import { defaultSignInTabState, RESET_SIGNIN_FORM, SignInActionTypes, SignInTabState, SUBMIT_SIGNIN_FORM, UPDATE_SIGNIN_EMAIL_ERROR, UPDATE_SIGNIN_EMAIL_INPUT, UPDATE_SIGNIN_PASSWORD_ERROR, UPDATE_SIGNIN_PASSWORD_INPUT, SET_GOOGLE_SIGNIN, GOOGLE_SIGNIN_SENT, GOOGLE_SIGNIN_RECEIVED } from "./types";
 
 export function signInTabReducer(
     state = defaultSignInTabState,
@@ -50,6 +50,27 @@ export function signInTabReducer(
                         (password.length >= 3 ? '' : 'Le mot de passe contient au moins 3 caractères')
                 }
             };
+        case SET_GOOGLE_SIGNIN:
+            const profile = action.data.getBasicProfile();
+            return {
+                ...state,
+                google_data: {
+                    ...state.google_data,
+                    firstname: profile.getGivenName(),
+                    lastname: profile.getFamilyName(),
+                    email: profile.getEmail()
+                }
+            }
+        case GOOGLE_SIGNIN_SENT:
+            return {
+                ...state,
+                sending: true
+            }
+        case GOOGLE_SIGNIN_RECEIVED:
+            return {
+                ...state,
+                sending: false
+            }
         case RESET_SIGNIN_FORM:
             return defaultSignInTabState
         default:
