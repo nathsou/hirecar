@@ -128,12 +128,13 @@ class HcRentParkingModal extends Component<HcRentParkingModalProps> {
                                     <p>Chargement de vos voitures en cours...</p>
                                     : (<HcSelectFormGroup
                                         value={selected_user_car_idx.toString()}
-                                        options={user_cars.cars.map(c => c.model)}
+                                        options={user_cars.cars.map(c => ({ id: c.id, text: c.model }))}
                                         controlId='userCars'
                                         label='Véhicule à laisser'
                                         onChange={setCarIdx}
                                     />)
                                 }
+
                                 <HcSecondaryButton
                                     disabled={!form.valid_form}
                                     handleClick={this.sendRentalRequest}

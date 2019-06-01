@@ -69,26 +69,26 @@ class UserProfileTabCarInputs extends Component<UserProfileTabCarProps> {
                     <HcSelectFormGroup
                         md={4} controlId="userProfileCarGearbox" className=""
                         label="Boîte de vitesse"
-                        options={gearbox.map(g => g.type)}
+                        options={gearbox.map(g => ({ id: g.id, text: g.type }))}
                         value={gearboxId}
                         onChange={this.onGearboxChange}
                     />
                     <HcSelectFormGroup
                         md={4} controlId="userProfileCarFuel" className=""
                         label="Carburant"
-                        options={fuel.map(f => f.type)} value={fuelId}
+                        options={fuel.map(f => ({ id: f.id, text: f.type }))} value={fuelId}
                         onChange={this.onFuelChange}
                     />
                     <HcSelectFormGroup
                         md={2} controlId="userProfileCarSeats" className=""
                         label="Sièges"
-                        options={seats.map(s => s.toString())} value={defaultSeats}
+                        options={seats.map((s) => ({ id: s, text: s.toString() }))} value={defaultSeats}
                         onChange={this.props.onSeatsChange}
                     />
                     <HcSelectFormGroup
                         md={2} controlId="userProfileCarDoors" className=""
                         label="Portes"
-                        options={doors.map(d => d.toString())} value={defaultDoors}
+                        options={doors.map((d) => ({ id: d, text: d.toString() }))} value={defaultDoors}
                         onChange={this.props.onDoorsChange}
                     />
                 </Form.Row>

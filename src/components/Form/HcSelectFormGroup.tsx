@@ -11,7 +11,7 @@ interface HcSelectFormGroupProps extends Pick<FormControlProps, 'value'> {
     label: string,
     showLabel?: boolean,
     as?: typeof Col | typeof Row,
-    options: string[],
+    options: { id: number, text: string }[],
     onChange: (selected_idx: number) => void
 }
 
@@ -30,9 +30,9 @@ export default class HcSelectFormGroup extends Component<HcSelectFormGroupProps>
                     value={this.props.value}
                     onChange={(e: any) => this.props.onChange(parseInt(e.target.value))}
                 >
-                    {options.map((val, idx) =>
-                        (<option value={idx} key={idx}>
-                            {val}
+                    {options.map((optn) =>
+                        (<option value={optn.id} key={optn.id}>
+                            {optn.text}
                         </option>)
                     )}
                 </Form.Control>

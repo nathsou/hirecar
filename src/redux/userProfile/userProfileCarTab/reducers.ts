@@ -1,5 +1,5 @@
 import { defaultUserProfileTabCarState, UserProfileCarActionTypes, UserProfileTabCarState, TOGGLE_USER_PROFILE_CAR_FORM, UPDATE_USER_PROFILE_CAR_MODEL_INPUT, UPDATE_USER_PROFILE_CAR_PRICE_INPUT, UPDATE_USER_PROFILE_CAR_GEARBOX_SELECT, UPDATE_USER_PROFILE_CAR_FUEL_SELECT, UPDATE_USER_PROFILE_CAR_SEATS_SELECT, UPDATE_USER_PROFILE_CAR_DOORS_SELECT, SUMBIT_USER_PROFILE_CAR, USER_PROFILE_CAR_FORM_RECEIVED, USER_PROFILE_CAR_FORM_SENT, SET_USER_PROFILE_CAR_OWNER, RESET_USER_PROFILE_CAR_FORM, USER_PROFILE_CAR_SAVED, USER_PROFILE_CARS_SENT, USER_PROFILE_CARS_RECEIVED, UPDATE_USER_PROFILE_CAR, DELETE_USER_PROFILE_CAR, DELETE_USER_PROFILE_CAR_SENT, DELETE_USER_PROFILE_CAR_RECEIVED, UPDATE_USER_PROFILE_CAR_RECEIVED, USER_PROFILE_CAR_FEATURES_RECEIVED, CANCEL_DELETE_USER_PROFILE_CAR, TOGGLE_USER_PROFILE_CAR_MODAL } from "./types";
-import { Car } from "../../carSearch/types";
+import { Car, Fuel, Gearbox } from "../../carSearch/types";
 
 export function userProfileTabCarReducer(
     state = defaultUserProfileTabCarState,
@@ -30,24 +30,28 @@ export function userProfileTabCarReducer(
                 form_errors: { ...state.form_errors, price_error: isValid ? '' : 'Veuillez entrer un prix valide jusqu\'à 2 chiffres après la virgule.' }
             };
         case UPDATE_USER_PROFILE_CAR_GEARBOX_SELECT:
+            const updated_gearbox = state.car_features.gearbox.find(g => g.id === action.value) as Gearbox;
             return {
                 ...state,
                 form_data: {
                     ...state.form_data,
                     gearbox: {
                         ...state.form_data.gearbox,
-                        id: action.value.toString()
+                        id: action.value.toString(),
+                        type: updated_gearbox.type
                     }
                 },
             };
         case UPDATE_USER_PROFILE_CAR_FUEL_SELECT:
+            const updated_fuel = state.car_features.fuel.find(f => f.id === action.value) as Fuel;
             return {
                 ...state,
                 form_data: {
                     ...state.form_data,
                     fuel: {
                         ...state.form_data.fuel,
-                        id: action.value.toString()
+                        id: action.value.toString(),
+                        type: updated_fuel.type
                     }
                 },
             };
