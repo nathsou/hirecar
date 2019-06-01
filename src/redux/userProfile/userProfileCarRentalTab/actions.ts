@@ -1,9 +1,8 @@
-import { UserProfileCarRentalsSentAction, USER_PROFILE_CAR_RENTALS_SENT, USER_PROFILE_CAR_RENTALS_RECEIVED, UserProfileCarRentalsReceivedAction, UserProfileCarRentalsActionTypes, DeleteUserProfileCarRentalAction, DELETE_USER_PROFILE_CAR_RENTAL, CancelDeleteUserProfileCarRentalAction, CANCEL_DELETE_USER_PROFILE_CAR_RENTAL, DELETE_USER_PROFILE_CAR_RENTAL_SENT, DeleteUserProfileCarRentalSentAction, DeleteUserProfileCarRentalReceivedAction, DELETE_USER_PROFILE_CAR_RENTAL_RECEIVED } from "./types";
+import { UserProfileCarRentalsSentAction, USER_PROFILE_CAR_RENTALS_SENT, USER_PROFILE_CAR_RENTALS_RECEIVED, UserProfileCarRentalsReceivedAction, UserProfileCarRentalsActionTypes, DeleteUserProfileCarRentalAction, DELETE_USER_PROFILE_CAR_RENTAL, CancelDeleteUserProfileCarRentalAction, CANCEL_DELETE_USER_PROFILE_CAR_RENTAL, DELETE_USER_PROFILE_CAR_RENTAL_SENT, DeleteUserProfileCarRentalSentAction, DeleteUserProfileCarRentalReceivedAction, DELETE_USER_PROFILE_CAR_RENTAL_RECEIVED, ToggleUserProfileCarRentalModalAction, TOGGLE_USER_PROFILE_CAR_RENTAL_MODAL } from "./types";
 import { CarRental } from "../../carSearch/types";
 import Axios, { AxiosResponse, AxiosError } from "axios";
 import { Dispatch } from "react";
 import { RawCarRental, parseCarRental } from "../../../Utils";
-import { toggleShowModal } from "../../navbar/actions";
 
 export function userProfileCarRentalsSent(): UserProfileCarRentalsSentAction {
     return {
@@ -67,11 +66,17 @@ export function postDeleteUserProfileCarRental(id: number) {
 
         Axios.delete(`${process.env.REACT_APP_HIRECAR_API_URI}/car_rentals/${id}`)
             .then(() => {
-                dispatch(toggleShowModal(false));
                 dispatch(deleteUserProfileCarRentalReceived(id));
             }).catch((error: AxiosError) => {
                 const response = error.response;
                 console.log(response);
             })
     }
+}
+
+export function toggleUserProfileCarRentalModal(show: boolean): ToggleUserProfileCarRentalModalAction {
+    return {
+        type: TOGGLE_USER_PROFILE_CAR_RENTAL_MODAL,
+        show
+    };
 }

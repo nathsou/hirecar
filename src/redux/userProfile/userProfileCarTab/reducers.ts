@@ -1,4 +1,4 @@
-import { defaultUserProfileTabCarState, UserProfileCarActionTypes, UserProfileTabCarState, TOGGLE_USER_PROFILE_CAR_FORM, UPDATE_USER_PROFILE_CAR_MODEL_INPUT, UPDATE_USER_PROFILE_CAR_PRICE_INPUT, UPDATE_USER_PROFILE_CAR_GEARBOX_SELECT, UPDATE_USER_PROFILE_CAR_FUEL_SELECT, UPDATE_USER_PROFILE_CAR_SEATS_SELECT, UPDATE_USER_PROFILE_CAR_DOORS_SELECT, SUMBIT_USER_PROFILE_CAR, USER_PROFILE_CAR_FORM_RECEIVED, USER_PROFILE_CAR_FORM_SENT, SET_USER_PROFILE_CAR_OWNER, RESET_USER_PROFILE_CAR_FORM, USER_PROFILE_CAR_SAVED, USER_PROFILE_CARS_SENT, USER_PROFILE_CARS_RECEIVED, UPDATE_USER_PROFILE_CAR, DELETE_USER_PROFILE_CAR, DELETE_USER_PROFILE_CAR_SENT, DELETE_USER_PROFILE_CAR_RECEIVED, UPDATE_USER_PROFILE_CAR_RECEIVED, USER_PROFILE_CAR_FEATURES_RECEIVED, CANCEL_DELETE_USER_PROFILE_CAR } from "./types";
+import { defaultUserProfileTabCarState, UserProfileCarActionTypes, UserProfileTabCarState, TOGGLE_USER_PROFILE_CAR_FORM, UPDATE_USER_PROFILE_CAR_MODEL_INPUT, UPDATE_USER_PROFILE_CAR_PRICE_INPUT, UPDATE_USER_PROFILE_CAR_GEARBOX_SELECT, UPDATE_USER_PROFILE_CAR_FUEL_SELECT, UPDATE_USER_PROFILE_CAR_SEATS_SELECT, UPDATE_USER_PROFILE_CAR_DOORS_SELECT, SUMBIT_USER_PROFILE_CAR, USER_PROFILE_CAR_FORM_RECEIVED, USER_PROFILE_CAR_FORM_SENT, SET_USER_PROFILE_CAR_OWNER, RESET_USER_PROFILE_CAR_FORM, USER_PROFILE_CAR_SAVED, USER_PROFILE_CARS_SENT, USER_PROFILE_CARS_RECEIVED, UPDATE_USER_PROFILE_CAR, DELETE_USER_PROFILE_CAR, DELETE_USER_PROFILE_CAR_SENT, DELETE_USER_PROFILE_CAR_RECEIVED, UPDATE_USER_PROFILE_CAR_RECEIVED, USER_PROFILE_CAR_FEATURES_RECEIVED, CANCEL_DELETE_USER_PROFILE_CAR, TOGGLE_USER_PROFILE_CAR_MODAL } from "./types";
 import { Car } from "../../carSearch/types";
 
 export function userProfileTabCarReducer(
@@ -187,14 +187,7 @@ export function userProfileTabCarReducer(
         case DELETE_USER_PROFILE_CAR:
             return {
                 ...state,
-                show_delete_car_modal: true,
                 cars_data: { ...state.cars_data, selected_car_id: action.id }
-            }
-        case CANCEL_DELETE_USER_PROFILE_CAR:
-            return {
-                ...state,
-                deleting: false,
-                show_delete_car_modal: false
             }
         case DELETE_USER_PROFILE_CAR_SENT:
             return {
@@ -208,6 +201,16 @@ export function userProfileTabCarReducer(
                 deleting: false,
                 show_delete_car_modal: false,
                 cars_data: { ...state.cars_data, cars: deleted_cars_data }
+            }
+        case TOGGLE_USER_PROFILE_CAR_MODAL:
+            return {
+                ...state,
+                show_delete_car_modal: action.show
+            }
+        case CANCEL_DELETE_USER_PROFILE_CAR:
+            return {
+                ...state,
+                show_delete_car_modal: !state.show_delete_car_modal
             }
         default:
             return state;

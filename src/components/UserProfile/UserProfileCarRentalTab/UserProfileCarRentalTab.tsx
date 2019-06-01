@@ -2,21 +2,20 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { HcState } from "../../../redux/configureStore";
 import { withRouter, RouteComponentProps } from "react-router";
-import { fetchUserProfileCarRentals, onUserProfileCarRentalDelete } from "../../../redux/userProfile/userProfileCarRentalTab/actions";
+import { fetchUserProfileCarRentals, onUserProfileCarRentalDelete, toggleUserProfileCarRentalModal } from "../../../redux/userProfile/userProfileCarRentalTab/actions";
 import { UserDataState } from "../../../redux/user/types";
-import { UserProfileCarRentalTabState } from "../../../redux/userProfile/userProfileCarRentalTab/types";
+import { UserProfileCarRentalTabState, ToggleUserProfileCarRentalModalAction } from "../../../redux/userProfile/userProfileCarRentalTab/types";
 import { HcListItemProps } from "../../HcListItem";
 import { diffDays, convertDate } from "../../../Utils";
 import HcList from "../../HcList";
 import CarPicto from "../../../res/img/car-picto.svg";
-import { toggleShowModal } from "../../../redux/navbar/actions";
-import { ToggleSignModalAction } from "../../../redux/navbar/types";
+import UserProfileDeleteCarRentalModal from "./UserProfileDeleteCarRentalModal";
 
 interface UserProfileCarRentalTabProps extends RouteComponentProps {
     user: UserDataState,
     user_profile_car_rental_tab: UserProfileCarRentalTabState
     fetchUserProfileCarRentals: (id: number) => void,
-    toggleModal: (show: boolean) => ToggleSignModalAction,
+    toggleUserProfileCarRentalModal: (show: boolean) => ToggleUserProfileCarRentalModalAction,
     onUserProfileCarRentalDelete: (selected_spot_rental_id: number) => void
 }
 
@@ -29,12 +28,12 @@ class UserProfileCarRentalTab extends Component<UserProfileCarRentalTabProps> {
 
     public onDelete = (id: number) => {
         this.props.onUserProfileCarRentalDelete(id);
-        this.props.toggleModal(false);
+        this.props.toggleUserProfileCarRentalModal(true);
     }
 
     public render() {
 
-        const { fetching, car_rentals } = this.props.user_profile_car_rental_tab;
+        const { fetching, car_rentals, show_delete_car_rental_modal } = this.props.user_profile_car_rental_tab;
         const spots_count = Object.keys(car_rentals).length;
 
         const spots: HcListItemProps[] = car_rentals.map(car => {
@@ -61,6 +60,7 @@ class UserProfileCarRentalTab extends Component<UserProfileCarRentalTabProps> {
                         <span className="link" onClick={() => this.props.history.push('/voiture')}> Réservez dès maintenant.</span>
                     </p>
                 ) : null}
+                {show_delete_car_rental_modal ? <UserProfileDeleteCarRentalModal /> : null}
             </div>
         );
     }
@@ -74,7 +74,7 @@ export default
                 user_profile_car_rental_tab: state.user_profile_tabs.user_profile_car_rental_tab
             }), {
                 fetchUserProfileCarRentals: (id: number) => fetchUserProfileCarRentals(id),
-                toggleModal: (show: boolean) => toggleShowModal(show),
+                toggleUserProfileCarRentalModal: toggleUserProfileCarRentalModal,
                 onUserProfileCarRentalDelete: (id: number) => onUserProfileCarRentalDelete(id)
             }
         )(UserProfileCarRentalTab)

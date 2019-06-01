@@ -1,9 +1,8 @@
-import { USER_PROFILE_SPOT_RENTALS_SENT, USER_PROFILE_SPOT_RENTALS_RECEIVED, UserProfileSpotRentalsActionTypes, UserProfileSpotRentalsSentAction, UserProfileSpotRentalsReceivedAction, DeleteUserProfileSpotRentalAction, DELETE_USER_PROFILE_SPOT_RENTAL, DeleteUserProfileSpotRentalSentAction, DELETE_USER_PROFILE_SPOT_RENTAL_SENT, DeleteUserProfileSpotRentalReceivedAction, DELETE_USER_PROFILE_SPOT_RENTAL_RECEIVED, CancelDeleteUserProfileSpotRentalAction, CANCEL_DELETE_USER_PROFILE_SPOT_RENTAL } from "./types";
+import { USER_PROFILE_SPOT_RENTALS_SENT, USER_PROFILE_SPOT_RENTALS_RECEIVED, UserProfileSpotRentalsActionTypes, UserProfileSpotRentalsSentAction, UserProfileSpotRentalsReceivedAction, DeleteUserProfileSpotRentalAction, DELETE_USER_PROFILE_SPOT_RENTAL, DeleteUserProfileSpotRentalSentAction, DELETE_USER_PROFILE_SPOT_RENTAL_SENT, DeleteUserProfileSpotRentalReceivedAction, DELETE_USER_PROFILE_SPOT_RENTAL_RECEIVED, CancelDeleteUserProfileSpotRentalAction, CANCEL_DELETE_USER_PROFILE_SPOT_RENTAL, ToggleUserProfileSpotRentalModalAction, TOGGLE_USER_PROFILE_SPOT_RENTAL_MODAL } from "./types";
 import { Dispatch } from "react";
 import Axios, { AxiosResponse, AxiosError } from "axios";
 import { RawParkingSpot, parseParkingSpot } from "../../../Utils";
 import { ParkingSpot } from "../../carSearch/types";
-import { toggleShowModal } from "../../navbar/actions";
 
 export function userProfileParkingSpotRentalsSent(): UserProfileSpotRentalsSentAction {
     return {
@@ -67,11 +66,17 @@ export function postDeleteUserProfileSpotRental(id: number) {
 
         Axios.delete(`${process.env.REACT_APP_HIRECAR_API_URI}/parking_spot_rentals/${id}`)
             .then(() => {
-                dispatch(toggleShowModal(false));
                 dispatch(deleteUserProfileSpotRentalReceived(id));
             }).catch((error: AxiosError) => {
                 const response = error.response;
                 console.log(response);
             })
     }
+}
+
+export function toggleUserProfileSpotRentalModal(show: boolean): ToggleUserProfileSpotRentalModalAction {
+    return {
+        type: TOGGLE_USER_PROFILE_SPOT_RENTAL_MODAL,
+        show
+    };
 }

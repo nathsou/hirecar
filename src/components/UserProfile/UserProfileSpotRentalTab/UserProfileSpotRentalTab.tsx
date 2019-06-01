@@ -2,34 +2,34 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { HcState } from "../../../redux/configureStore";
 import { UserDataState } from "../../../redux/user/types";
-import { fetchUserProfileParkingSpotRentals, onUserProfileSpotRentalDelete } from "../../../redux/userProfile/userProfileSpotRentalTab/actions";
-import { UserProfileTabSpotRentalState } from "../../../redux/userProfile/userProfileSpotRentalTab/types";
+import { fetchUserProfileParkingSpotRentals, onUserProfileSpotRentalDelete, toggleUserProfileSpotRentalModal } from "../../../redux/userProfile/userProfileSpotRentalTab/actions";
+import { UserProfileTabSpotRentalState, ToggleUserProfileSpotRentalModalAction } from "../../../redux/userProfile/userProfileSpotRentalTab/types";
 import { HcListItemProps } from "../../HcListItem";
 import ParkingPicto from "../../../res/img/parking-picto.svg";
 import { withRouter, RouteComponentProps } from "react-router";
 import { convertDate, diffDays } from "../../../Utils";
-import { ToggleSignModalAction } from "../../../redux/navbar/types";
-import { toggleShowModal } from "../../../redux/navbar/actions";
 import HcList from "../../HcList";
+import UserProfileDeleteSpotRentalModal from "./UserProfileDeleteSpotRentalModal";
 
-interface UserProfileTabSpotRentalProps extends RouteComponentProps {
+interface UserProfileSpotRentalTabProps extends RouteComponentProps {
+    show_delete_spot_rental_modal: boolean,
     user: UserDataState,
     user_profile_tab_spot_rental: UserProfileTabSpotRentalState,
     fetchUserProfileSpotRentals: (id: number) => void,
-    toggleModal: (show: boolean) => ToggleSignModalAction,
+    toggleUserProfileSpotRentalModal: (show: boolean) => ToggleUserProfileSpotRentalModalAction,
     onUserProfileSpotRentalDelete: (selected_spot_rental_id: number) => void
 }
 
-class UserProfileTabSpotRental extends Component<UserProfileTabSpotRentalProps> {
+class UserProfileSpotRentalTab extends Component<UserProfileSpotRentalTabProps> {
 
-    constructor(props: UserProfileTabSpotRentalProps) {
+    constructor(props: UserProfileSpotRentalTabProps) {
         super(props);
         this.props.fetchUserProfileSpotRentals(this.props.user.id);
     }
 
     public onDelete = (id: number) => {
         this.props.onUserProfileSpotRentalDelete(id);
-        this.props.toggleModal(true);
+        this.props.toggleUserProfileSpotRentalModal(true);
     }
 
     public render() {
@@ -60,6 +60,7 @@ class UserProfileTabSpotRental extends Component<UserProfileTabSpotRentalProps> 
                         <span className="link" onClick={() => this.props.history.push('/parking')}> Réservez dès maintenant.</span>
                     </p>
                 ) : null}
+                {this.props.show_delete_spot_rental_modal ? <UserProfileDeleteSpotRentalModal/> : null}
             </div>
         );
     }
@@ -70,11 +71,12 @@ export default
         connect(
             (state: HcState) => ({
                 user: state.user.data,
-                user_profile_tab_spot_rental: state.user_profile_tabs.user_profile_tab_spot_rental
+                user_profile_tab_spot_rental: state.user_profile_tabs.user_profile_tab_spot_rental,
+                show_delete_spot_rental_modal: state.user_profile_tabs.user_profile_tab_spot_rental.show_delete_spot_rental_modal
             }), {
                 fetchUserProfileSpotRentals: (id: number) => fetchUserProfileParkingSpotRentals(id),
-                toggleModal: toggleShowModal,
+                toggleUserProfileSpotRentalModal: toggleUserProfileSpotRentalModal,
                 onUserProfileSpotRentalDelete: (id: number) => onUserProfileSpotRentalDelete(id)
             }
-        )(UserProfileTabSpotRental)
+        )(UserProfileSpotRentalTab)
     )

@@ -1,5 +1,4 @@
 import { ParkingSpot } from "../../carSearch/types";
-import { ToggleSignModalAction } from "../../navbar/types";
 
 export interface UserProfileTabSpotRentalState {
     parking_spot_rentals: ParkingSpot[],
@@ -50,4 +49,16 @@ export interface DeleteUserProfileSpotRentalReceivedAction {
     id: number
 }
 
-export type UserProfileSpotRentalsActionTypes = UserProfileSpotRentalsSentAction | UserProfileSpotRentalsReceivedAction | DeleteUserProfileSpotRentalAction | DeleteUserProfileSpotRentalSentAction | DeleteUserProfileSpotRentalReceivedAction | ToggleSignModalAction | CancelDeleteUserProfileSpotRentalAction;
+export const TOGGLE_USER_PROFILE_SPOT_RENTAL_MODAL = "TOGGLE_USER_PROFILE_SPOT_RENTAL_MODAL";
+export interface ToggleUserProfileSpotRentalModalAction {
+    type: typeof TOGGLE_USER_PROFILE_SPOT_RENTAL_MODAL,
+    show: boolean
+}
+export type UserProfileSpotRentalsActionTypes =
+    UserProfileSpotRentalsSentAction |
+    UserProfileSpotRentalsReceivedAction |
+    DeleteUserProfileSpotRentalAction |
+    DeleteUserProfileSpotRentalSentAction |
+    DeleteUserProfileSpotRentalReceivedAction |
+    ToggleUserProfileSpotRentalModalAction |
+    CancelDeleteUserProfileSpotRentalAction;

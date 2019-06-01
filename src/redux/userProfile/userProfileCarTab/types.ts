@@ -1,6 +1,5 @@
 import { RawCar } from "../../../Utils";
 import { Car, Fuel, Gearbox } from "../../carSearch/types";
-import { ToggleSignModalAction } from "../../navbar/types";
 
 export interface UserProfileCarFeaturesState {
     fuel: Fuel[],
@@ -237,8 +236,14 @@ export interface DeleteUserProfileCarReceivedAction {
     id: number
 }
 
+export const TOGGLE_USER_PROFILE_CAR_MODAL = "TOGGLE_USER_PROFILE_CAR_MODAL";
+export interface ToggleUserProfileCarModalAction {
+    type: typeof TOGGLE_USER_PROFILE_CAR_MODAL,
+    show: boolean
+}
 
-export type UserProfileCarActionTypes = ToggleUserProfileCarFormAction |
+export type UserProfileCarActionTypes =
+    ToggleUserProfileCarFormAction |
     UpdateUserProfileCarModelAction |
     UpdateUserProfileCarPriceAction |
     UpdateUserProfileCarGearboxAction |
@@ -261,5 +266,5 @@ export type UserProfileCarActionTypes = ToggleUserProfileCarFormAction |
     DeleteUserProfileCarAction |
     DeleteUserProfileCarSentAction |
     DeleteUserProfileCarReceivedAction |
-    ToggleSignModalAction |
-    CancelDeleteUserProfileCarAction;
+    CancelDeleteUserProfileCarAction |
+    ToggleUserProfileCarModalAction;

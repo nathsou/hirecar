@@ -7,7 +7,7 @@ import { NavLink, withRouter, RouteComponentProps } from 'react-router-dom';
 import { ToggleSignModalAction, NavbarState } from "../redux/navbar/types";
 import { connect } from "react-redux";
 import { HcState } from "../redux/configureStore";
-import { toggleShowModal } from "../redux/navbar/actions";
+import { toggleSignModal } from "../redux/navbar/actions";
 import HcPrimaryButton from "./Button/HcPrimaryButton";
 import { UserState, ResetUserLoggedAction } from "../redux/user/types";
 import { resetUserLogged } from "../redux/user/actions";
@@ -18,7 +18,7 @@ import HcModal from "./HcModal";
 interface HcNavbarProps extends RouteComponentProps {
     navbar: NavbarState,
     user: UserState,
-    toggleModal: (show: boolean) => ToggleSignModalAction,
+    toggleSignModal: (show: boolean) => ToggleSignModalAction,
     resetUser: () => ResetUserLoggedAction
 }
 
@@ -57,7 +57,7 @@ class HcNavbar extends Component<HcNavbarProps> {
                                 </NavLink>
                             ) : null}
                             <Nav.Item>
-                                <HcSecondaryButton handleClick={logged_in ? this.loggedOut : () => this.props.toggleModal(true)}>
+                                <HcSecondaryButton handleClick={logged_in ? this.loggedOut : () => this.props.toggleSignModal(true)}>
                                     {logged_in ? "Déconnexion" : "Connexion"}
                                 </HcSecondaryButton>
                             </Nav.Item>
@@ -67,7 +67,7 @@ class HcNavbar extends Component<HcNavbarProps> {
 
                 <HcModal
                     show={this.props.navbar.show_modal}
-                    handleClose={() => this.props.toggleModal(false)}
+                    handleClose={() => this.props.toggleSignModal(false)}
                 >
                     <HcSignTabs />
                 </HcModal>
@@ -82,7 +82,7 @@ export default
         connect(
             (state: HcState) => ({ navbar: state.navbar, user: state.user }),
             {
-                toggleModal: toggleShowModal,
+                toggleSignModal: toggleSignModal,
                 resetUser: resetUserLogged
             }
         )(HcNavbar)

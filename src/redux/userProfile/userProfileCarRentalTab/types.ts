@@ -1,5 +1,4 @@
 import { CarRental } from "../../carSearch/types";
-import { ToggleSignModalAction } from "../../navbar/types";
 
 export interface UserProfileCarRentalTabState {
     car_rentals: CarRental[],
@@ -50,4 +49,17 @@ export interface DeleteUserProfileCarRentalReceivedAction {
     id: number
 }
 
-export type UserProfileCarRentalsActionTypes = UserProfileCarRentalsSentAction | UserProfileCarRentalsReceivedAction | DeleteUserProfileCarRentalAction | CancelDeleteUserProfileCarRentalAction | DeleteUserProfileCarRentalSentAction | DeleteUserProfileCarRentalReceivedAction | ToggleSignModalAction;
+export const TOGGLE_USER_PROFILE_CAR_RENTAL_MODAL = "TOGGLE_USER_PROFILE_CAR_RENTAL_MODAL";
+export interface ToggleUserProfileCarRentalModalAction {
+    type: typeof TOGGLE_USER_PROFILE_CAR_RENTAL_MODAL,
+    show: boolean
+}
+
+export type UserProfileCarRentalsActionTypes =
+    UserProfileCarRentalsSentAction |
+    UserProfileCarRentalsReceivedAction |
+    DeleteUserProfileCarRentalAction |
+    CancelDeleteUserProfileCarRentalAction |
+    DeleteUserProfileCarRentalSentAction |
+    DeleteUserProfileCarRentalReceivedAction |
+    ToggleUserProfileCarRentalModalAction;
