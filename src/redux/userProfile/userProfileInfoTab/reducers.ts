@@ -1,4 +1,4 @@
-import { UserProfileInfoActionTypes, UPDATE_USER_PROFILE_FIRSTNAME_INPUT, UserProfileTabInfoState, defaultUserProfileTabInfoState, SET_USER_PROFILE, UPDATE_USER_PROFILE_LASTNAME_INPUT, UPDATE_USER_PROFILE_EMAIL_INPUT, UPDATE_USER_PROFILE_PHONE_INPUT, SUMBIT_USER_PROFILE_INFO, USER_PROFILE_INFO_FORM_SENT, USER_PROFILE_INFO_FORM_RECEIVED, UPDATE_USER_PROFILE_NEW_PASSWORD_INPUT, USER_PROFILE_INFO_SAVED, UPDATE_USER_PROFILE_PASSWORD_INPUT, UPDATE_USER_PROFILE_PASSWORD_ERROR, RESET_USER_PROFILE_PASSWORD, TOGGLE_USER_PROFILE_PASSWORD_INPUT } from "./types";
+import { UserProfileInfoActionTypes, UPDATE_USER_PROFILE_FIRSTNAME_INPUT, UserProfileTabInfoState, defaultUserProfileTabInfoState, SET_USER_PROFILE, UPDATE_USER_PROFILE_LASTNAME_INPUT, UPDATE_USER_PROFILE_EMAIL_INPUT, UPDATE_USER_PROFILE_PHONE_INPUT, SUMBIT_USER_PROFILE_INFO, USER_PROFILE_INFO_FORM_SENT, USER_PROFILE_INFO_FORM_RECEIVED, UPDATE_USER_PROFILE_NEW_PASSWORD_INPUT, USER_PROFILE_INFO_SAVED, UPDATE_USER_PROFILE_PASSWORD_INPUT, UPDATE_USER_PROFILE_PASSWORD_ERROR, RESET_USER_PROFILE_PASSWORD, WEBSERVICE_SIGNIN } from "./types";
 
 export function userProfileTabInfoReducer(
     state = defaultUserProfileTabInfoState,
@@ -84,7 +84,7 @@ export function userProfileTabInfoReducer(
                     lastname,
                     email,
                     phone,
-                    state.show_password_input ? password : null
+                    state.web_service_signin ? password : null
                 ].every(field => field !== ''));
             return {
                 ...state,
@@ -104,7 +104,7 @@ export function userProfileTabInfoReducer(
                         (phone === '' ? 'Le téléphone n\'est pas indiqué' : '') ||
                         (/(\d\d){4}\d\d/.test(phone) ? '' : 'Veuillez entrer un numéro valide'),
                     password_error:
-                        state.show_password_input ? (
+                        state.web_service_signin ? (
                             (password === '' ? 'Le mot de passe n\'est pas indiqué' : '') ||
                             (password.length >= 3 ? '' : 'Le mot de passe contient au moins 3 caractères')
                         ) : ''
@@ -132,10 +132,10 @@ export function userProfileTabInfoReducer(
                 ...state,
                 form_data: { ...state.form_data, password: '', new_password: '' }
             }
-        case TOGGLE_USER_PROFILE_PASSWORD_INPUT:
+        case WEBSERVICE_SIGNIN:
             return {
                 ...state,
-                show_password_input: !state.show_password_input
+                web_service_signin: !state.web_service_signin
             }
         default:
             return state;

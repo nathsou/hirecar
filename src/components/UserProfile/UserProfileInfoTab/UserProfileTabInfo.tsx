@@ -27,18 +27,22 @@ class UserProfileTabInfo extends Component<UserProfileTabInfoProps> {
 
     public render() {
 
-        const { editing, saving } = this.props.user_profile_tab_info;
+        const { editing, saving, web_service_signin } = this.props.user_profile_tab_info;
         return (
-            <Form onSubmit={this.handleInfoSubmit}>
-                <h2 className="user-profile-title">Information générale</h2>
-                <UserProfileTabInfoInputs />
-                {saving ? (<p className="error-message">Vos données ont été sauvegardées.</p>) : null}
-                {editing ? (
-                    <div style={{ marginTop: "15px", textAlign: "right" }}>
-                        <HcSecondaryButton type="submit">Enregistrer</HcSecondaryButton>
-                    </div>
+            <div>
+                {web_service_signin ? (
+                    <Form onSubmit={this.handleInfoSubmit}>
+                        <h2 className="user-profile-title">Information générale</h2>
+                        <UserProfileTabInfoInputs />
+                        {saving ? (<p className="error-message">Vos données ont été sauvegardées.</p>) : null}
+                        {editing ? (
+                            <div style={{ marginTop: "15px", textAlign: "right" }}>
+                                <HcSecondaryButton type="submit">Enregistrer</HcSecondaryButton>
+                            </div>
+                        ) : null}
+                    </Form>
                 ) : null}
-            </Form>
+            </div>
         );
     }
 }

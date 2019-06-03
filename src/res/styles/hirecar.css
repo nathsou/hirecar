@@ -192,6 +192,10 @@ main {
     padding: 3rem 5rem 3rem 5rem;
 }
 
+.container-tabs.profile .tab-content {
+    margin-top: 2.5rem;
+}
+
 .tab-content {
     margin-top: 1.875rem;
 }

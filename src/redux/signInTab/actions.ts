@@ -4,7 +4,7 @@ import Axios, { AxiosResponse, AxiosError } from "axios";
 import bcrypt from "bcryptjs";
 import { setUserLogged } from "../user/actions";
 import { UserDataState } from "../user/types";
-import { setUserProfileInfo, toggleUserProfilePasswordInput } from "../userProfile/userProfileInfoTab/actions";
+import { setUserProfileInfo, webServiceSignIn } from "../userProfile/userProfileInfoTab/actions";
 import { UserProfileInfoFormDataState } from "../userProfile/userProfileInfoTab/types";
 import { setUserProfileCarOwner } from "../userProfile/userProfileCarTab/actions";
 import { toggleSignModal } from "../navbar/actions";
@@ -99,7 +99,7 @@ export function postSignInForm(data: SignInFormDataState) {
                         dispatch(setUserProfileCarOwner(user_profile_data.id));
                         dispatch(toggleSignModal(false));
                         dispatch(resetSignUpForm());
-                        dispatch(toggleUserProfilePasswordInput());
+                        dispatch(webServiceSignIn());
                         dispatch(signUpFormReceived());
 
                     }).catch((error: AxiosError) => {

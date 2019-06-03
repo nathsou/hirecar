@@ -26,7 +26,7 @@ export interface UserProfileTabInfoState {
     sending: boolean,
     editing: boolean,
     saving: boolean,
-    show_password_input: boolean
+    web_service_signin: boolean
 }
 
 export const defaultUserProfileTabInfoState: UserProfileTabInfoState = {
@@ -51,7 +51,7 @@ export const defaultUserProfileTabInfoState: UserProfileTabInfoState = {
     sending: false,
     editing: false,
     saving: false,
-    show_password_input: false
+    web_service_signin: false
 }
 
 export const SET_USER_PROFILE = "SET_USER_PROFILE";
@@ -127,9 +127,9 @@ export interface ResetUserProfilePasswordAction {
     type: typeof RESET_USER_PROFILE_PASSWORD
 }
 
-export const TOGGLE_USER_PROFILE_PASSWORD_INPUT = "TOGGLE_USER_PROFILE_PASSWORD_INPUT";
-export interface ToggleUserProfilePasswordInputAction {
-    type: typeof TOGGLE_USER_PROFILE_PASSWORD_INPUT
+export const WEBSERVICE_SIGNIN = "WEBSERVICE_SIGNIN";
+export interface WebServiceSignInAction {
+    type: typeof WEBSERVICE_SIGNIN
 }
 
 export type UserProfileInfoActionTypes =
@@ -147,4 +147,4 @@ export type UserProfileInfoActionTypes =
     SetUserLoggedAction |
     UserProfileInfoSavedAction |
     ResetUserProfilePasswordAction |
-    ToggleUserProfilePasswordInputAction;
+    WebServiceSignInAction;

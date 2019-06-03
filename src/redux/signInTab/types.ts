@@ -1,6 +1,6 @@
 import { ToggleSignModalAction } from "../navbar/types";
 import { SetUserLoggedAction } from "../user/types";
-import { SetUserProfileAction, ToggleUserProfilePasswordInputAction } from "../userProfile/userProfileInfoTab/types";
+import { SetUserProfileAction, WebServiceSignInAction } from "../userProfile/userProfileInfoTab/types";
 import { SetUserProfileCarOwnerAction } from "../userProfile/userProfileCarTab/types";
 import { GoogleLoginResponse } from "react-google-login";
 import { IdentifiedType } from "../carSearch/types";
@@ -130,4 +130,4 @@ export type SignInActionTypes =
     SetUserProfileCarOwnerAction |
     SetGoogleSignInAction | GoogleSignInSentAction |
     GoogleSignInReceivedAction |
-    ToggleUserProfilePasswordInputAction;
+    WebServiceSignInAction;
