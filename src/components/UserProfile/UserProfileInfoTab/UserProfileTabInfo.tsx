@@ -27,7 +27,7 @@ class UserProfileTabInfo extends Component<UserProfileTabInfoProps> {
 
     public render() {
 
-        const { editing, saving, web_service_signin } = this.props.user_profile_tab_info;
+        const { editing, saving, social_media_signin: web_service_signin } = this.props.user_profile_tab_info;
         return (
             <div>
                 {web_service_signin ? (

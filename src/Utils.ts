@@ -144,3 +144,12 @@ export function parseCarRental(rental: RawCarRental): CarRental {
 export function isGoogleLoginResponseOffline(res: any): res is GoogleLoginResponseOffline {
     return typeof res.code === 'string';
 }
+
+export interface ReactFacebookLoginNameInfo {
+    id: string;
+    accessToken: string;
+    name?: string;
+    first_name?: string;
+    last_name?: string;
+    email?: string;
+}

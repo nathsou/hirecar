@@ -1,15 +1,16 @@
-import { UpdateSignInEmailAction, UPDATE_SIGNIN_EMAIL_INPUT, UpdateSignInPasswordAction, UPDATE_SIGNIN_PASSWORD_INPUT, SubmitSignInAction, SUBMIT_SIGNIN_FORM, SignInSentAction, SIGNIN_FORM_SENT, SIGNIN_FORM_RECEIVED, SignInReceivedAction, SignInActionTypes, SignInFormDataState, UpdateSignInPasswordErrorAction, UPDATE_SIGNIN_PASSWORD_ERROR, UpdateSignInEmailErrorAction, UPDATE_SIGNIN_EMAIL_ERROR, ResetSignInAction, RESET_SIGNIN_FORM, GoogleSignInState, SET_GOOGLE_SIGNIN, SetGoogleSignInAction } from "./types";
+import { UpdateSignInEmailAction, UPDATE_SIGNIN_EMAIL_INPUT, UpdateSignInPasswordAction, UPDATE_SIGNIN_PASSWORD_INPUT, SubmitSignInAction, SUBMIT_SIGNIN_FORM, SignInSentAction, SIGNIN_FORM_SENT, SIGNIN_FORM_RECEIVED, SignInReceivedAction, SignInActionTypes, SignInFormDataState, UpdateSignInPasswordErrorAction, UPDATE_SIGNIN_PASSWORD_ERROR, UpdateSignInEmailErrorAction, UPDATE_SIGNIN_EMAIL_ERROR, ResetSignInAction, RESET_SIGNIN_FORM, SocialMediaSignInState, SET_GOOGLE_SIGNIN, SetGoogleSignInAction, SetFacebookSignInAction, SET_FACEBOOK_SIGNIN, SOCIAL_MEDIA_SIGNIN_SENT, SOCIAL_MEDIA_SIGNIN_RECEIVED, SocialMediaSignInSentAction, SocialMediaSignInReceivedAction } from "./types";
 import { Dispatch } from "react";
 import Axios, { AxiosResponse, AxiosError } from "axios";
 import bcrypt from "bcryptjs";
 import { setUserLogged } from "../user/actions";
 import { UserDataState } from "../user/types";
-import { setUserProfileInfo, webServiceSignIn } from "../userProfile/userProfileInfoTab/actions";
+import { setUserProfileInfo, socialMediaSignIn } from "../userProfile/userProfileInfoTab/actions";
 import { UserProfileInfoFormDataState } from "../userProfile/userProfileInfoTab/types";
 import { setUserProfileCarOwner } from "../userProfile/userProfileCarTab/actions";
 import { toggleSignModal } from "../navbar/actions";
 import { GoogleLoginResponse } from "react-google-login";
 import { IdentifiedType } from "../carSearch/types";
+import { ReactFacebookLoginNameInfo } from "../../Utils";
 
 export function updateSignInEmailInput(value: string): UpdateSignInEmailAction {
     return {
@@ -99,7 +100,7 @@ export function postSignInForm(data: SignInFormDataState) {
                         dispatch(setUserProfileCarOwner(user_profile_data.id));
                         dispatch(toggleSignModal(false));
                         dispatch(resetSignUpForm());
-                        dispatch(webServiceSignIn());
+                        dispatch(socialMediaSignIn());
                         dispatch(signUpFormReceived());
 
                     }).catch((error: AxiosError) => {
@@ -125,22 +126,22 @@ export function setGoogleSignIn(data: GoogleLoginResponse): SetGoogleSignInActio
     }
 }
 
-export function googleSignUpSent(): SignInSentAction {
+export function socialMediaSignInSent(): SocialMediaSignInSentAction {
     return {
-        type: SIGNIN_FORM_SENT
+        type: SOCIAL_MEDIA_SIGNIN_SENT
     };
 }
 
-export function googleSignUpReceived(): SignInReceivedAction {
+export function socialMediaSignInReceived(): SocialMediaSignInReceivedAction {
     return {
-        type: SIGNIN_FORM_RECEIVED
+        type: SOCIAL_MEDIA_SIGNIN_RECEIVED
     };
 }
 
-export function postGoogleSignIn(data: GoogleSignInState) {
+export function postGoogleSignIn(data: SocialMediaSignInState) {
 
     return (dispatch: Dispatch<SignInActionTypes>) => {
-        dispatch(googleSignUpSent());
+        dispatch(socialMediaSignInSent());
 
         Axios.post(`${process.env.REACT_APP_HIRECAR_API_URI}/login`, data)
             .then((res: AxiosResponse) => {
@@ -160,7 +161,46 @@ export function postGoogleSignIn(data: GoogleSignInState) {
                 dispatch(setUserProfileInfo(user_profile_data));
                 dispatch(setUserProfileCarOwner(user_profile_data.id));
                 dispatch(toggleSignModal(false));
-                dispatch(googleSignUpReceived());
+                dispatch(socialMediaSignInReceived());
+
+            }).catch((error: AxiosError) => {
+                const response = error.response;
+                console.log(response)
+            });
+    }
+}
+
+export function setFacebookSignIn(data: ReactFacebookLoginNameInfo): SetFacebookSignInAction {
+    return {
+        type: SET_FACEBOOK_SIGNIN,
+        data
+    }
+}
+
+export function postFacebookSignIn(data: SocialMediaSignInState) {
+
+    return (dispatch: Dispatch<SignInActionTypes>) => {
+        dispatch(socialMediaSignInSent());
+
+        Axios.post(`${process.env.REACT_APP_HIRECAR_API_URI}/login`, data)
+            .then((res: AxiosResponse) => {
+
+                const sent_data = {} as UserDataState;
+                Object.keys(res.data).forEach(key => {
+                    sent_data[key as keyof UserDataState] = res.data[key];
+                });
+
+                const user_profile_data = {} as UserProfileInfoFormDataState;
+                Object.keys(res.data).forEach(key => {
+                    const value = res.data[key] === null ? '' : res.data[key];
+                    user_profile_data[key as keyof UserProfileInfoFormDataState] = value;
+                });
+
+                dispatch(setUserLogged(sent_data));
+                dispatch(setUserProfileInfo(user_profile_data));
+                dispatch(setUserProfileCarOwner(user_profile_data.id));
+                dispatch(toggleSignModal(false));
+                dispatch(socialMediaSignInReceived());
 
             }).catch((error: AxiosError) => {
                 const response = error.response;

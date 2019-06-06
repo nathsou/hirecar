@@ -1,9 +1,10 @@
 import { ToggleSignModalAction } from "../navbar/types";
 import { SetUserLoggedAction } from "../user/types";
-import { SetUserProfileAction, WebServiceSignInAction } from "../userProfile/userProfileInfoTab/types";
+import { SetUserProfileAction, SocialMediaSignInAction } from "../userProfile/userProfileInfoTab/types";
 import { SetUserProfileCarOwnerAction } from "../userProfile/userProfileCarTab/types";
 import { GoogleLoginResponse } from "react-google-login";
 import { IdentifiedType } from "../carSearch/types";
+import { ReactFacebookLoginNameInfo } from "../../Utils";
 
 export interface SignInFormDataState {
     [index: string]: string | IdentifiedType;
@@ -12,12 +13,13 @@ export interface SignInFormDataState {
     login: IdentifiedType
 }
 
-export interface GoogleSignInState {
+export interface SocialMediaSignInState {
     firstname: string,
     lastname: string,
     email: string,
     login: IdentifiedType
 }
+
 
 export interface SignInTabState {
     form_data: SignInFormDataState,
@@ -27,7 +29,8 @@ export interface SignInTabState {
         [key: string]: string
     },
     validForm: boolean,
-    google_data: GoogleSignInState,
+    google_data: SocialMediaSignInState,
+    facebook_data: SocialMediaSignInState,
     sending: boolean
 }
 
@@ -52,6 +55,15 @@ export const defaultSignInTabState: SignInTabState = {
         login: {
             id: 2,
             type: "Google"
+        }
+    },
+    facebook_data: {
+        firstname: '',
+        lastname: '',
+        email: '',
+        login: {
+            id: 3,
+            type: "Facebook"
         }
     },
     sending: false
@@ -107,14 +119,20 @@ export interface SetGoogleSignInAction {
     data: GoogleLoginResponse
 }
 
-export const GOOGLE_SIGNIN_SENT = "GOOGLE_SIGNIN_SENT";
-export interface GoogleSignInSentAction {
-    type: typeof GOOGLE_SIGNIN_SENT
+export const SOCIAL_MEDIA_SIGNIN_SENT = "SOCIAL_MEDIA_SIGNIN_SENT";
+export interface SocialMediaSignInSentAction {
+    type: typeof SOCIAL_MEDIA_SIGNIN_SENT
 }
 
-export const GOOGLE_SIGNIN_RECEIVED = "GOOGLE_SIGNIN_RECEIVED";
-export interface GoogleSignInReceivedAction {
-    type: typeof GOOGLE_SIGNIN_RECEIVED
+export const SOCIAL_MEDIA_SIGNIN_RECEIVED = "SOCIAL_MEDIA_SIGNIN_RECEIVED";
+export interface SocialMediaSignInReceivedAction {
+    type: typeof SOCIAL_MEDIA_SIGNIN_RECEIVED
+}
+
+export const SET_FACEBOOK_SIGNIN = "SET_FACEBOOK_SIGNIN";
+export interface SetFacebookSignInAction {
+    type: typeof SET_FACEBOOK_SIGNIN,
+    data: ReactFacebookLoginNameInfo
 }
 
 export type SignInActionTypes =
@@ -128,6 +146,7 @@ export type SignInActionTypes =
     SetUserLoggedAction |
     SetUserProfileAction |
     SetUserProfileCarOwnerAction |
-    SetGoogleSignInAction | GoogleSignInSentAction |
-    GoogleSignInReceivedAction |
-    WebServiceSignInAction;
+    SetGoogleSignInAction | SocialMediaSignInSentAction |
+    SocialMediaSignInReceivedAction |
+    SocialMediaSignInAction |
+    SetFacebookSignInAction;

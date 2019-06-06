@@ -1,4 +1,4 @@
-import { UpdateUserProfileFirstnameAction, UPDATE_USER_PROFILE_FIRSTNAME_INPUT, SET_USER_PROFILE, SetUserProfileAction, UserProfileInfoFormDataState, UpdateUserProfileLastnameAction, UPDATE_USER_PROFILE_LASTNAME_INPUT, UpdateUserProfilePhoneAction, UPDATE_USER_PROFILE_PHONE_INPUT, UpdateUserProfileEmailAction, UPDATE_USER_PROFILE_EMAIL_INPUT, UserProfileInfoActionTypes, UserProfileInfoReceivedAction, USER_PROFILE_INFO_FORM_RECEIVED, UserProfileInfoSentAction, USER_PROFILE_INFO_FORM_SENT, SubmitUserProfileInfoAction, SUMBIT_USER_PROFILE_INFO, UPDATE_USER_PROFILE_NEW_PASSWORD_INPUT, UpdateUserProfileNewPasswordAction, UserProfileInfoSavedAction, USER_PROFILE_INFO_SAVED, UpdateUserProfilePasswordAction, UPDATE_USER_PROFILE_PASSWORD_INPUT, UPDATE_USER_PROFILE_PASSWORD_ERROR, UpdateUserProfilePasswordErrorAction, ResetUserProfilePasswordAction, RESET_USER_PROFILE_PASSWORD, WebServiceSignInAction, WEBSERVICE_SIGNIN } from "./types";
+import { UpdateUserProfileFirstnameAction, UPDATE_USER_PROFILE_FIRSTNAME_INPUT, SET_USER_PROFILE, SetUserProfileAction, UserProfileInfoFormDataState, UpdateUserProfileLastnameAction, UPDATE_USER_PROFILE_LASTNAME_INPUT, UpdateUserProfilePhoneAction, UPDATE_USER_PROFILE_PHONE_INPUT, UpdateUserProfileEmailAction, UPDATE_USER_PROFILE_EMAIL_INPUT, UserProfileInfoActionTypes, UserProfileInfoReceivedAction, USER_PROFILE_INFO_FORM_RECEIVED, UserProfileInfoSentAction, USER_PROFILE_INFO_FORM_SENT, SubmitUserProfileInfoAction, SUMBIT_USER_PROFILE_INFO, UPDATE_USER_PROFILE_NEW_PASSWORD_INPUT, UpdateUserProfileNewPasswordAction, UserProfileInfoSavedAction, USER_PROFILE_INFO_SAVED, UpdateUserProfilePasswordAction, UPDATE_USER_PROFILE_PASSWORD_INPUT, UPDATE_USER_PROFILE_PASSWORD_ERROR, UpdateUserProfilePasswordErrorAction, ResetUserProfilePasswordAction, RESET_USER_PROFILE_PASSWORD, SOCIAL_MEDIA_SIGNIN, SocialMediaSignInAction } from "./types";
 import { Dispatch } from "react";
 import Axios, { AxiosError } from "axios";
 import bcrypt from "bcryptjs";
@@ -155,8 +155,8 @@ export function sentUserProfileForm(
         });
 }
 
-export function webServiceSignIn(): WebServiceSignInAction {
+export function socialMediaSignIn(): SocialMediaSignInAction {
     return {
-        type: WEBSERVICE_SIGNIN
+        type: SOCIAL_MEDIA_SIGNIN
     }
 }

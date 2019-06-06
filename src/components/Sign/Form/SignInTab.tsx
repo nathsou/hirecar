@@ -2,22 +2,20 @@ import React, { Component } from "react";
 import Form from 'react-bootstrap/Form';
 import HcSecondaryButton from "../../Button/HcSecondaryButton";
 import HcInputFormGroup from "../../Form/HcInputFormGroup";
-import { SignInTabState, SignInFormDataState, GoogleSignInState } from "../../../redux/signInTab/types";
-import { updateSignInEmailInput, updateSignInPasswordInput, submitSignInForm, postSignInForm, postGoogleSignIn, setGoogleSignIn } from "../../../redux/signInTab/actions";
+import { SignInTabState, SignInFormDataState } from "../../../redux/signInTab/types";
+import { updateSignInEmailInput, updateSignInPasswordInput, submitSignInForm, postSignInForm } from "../../../redux/signInTab/actions";
 import { connect } from "react-redux";
 import { HcState } from "../../../redux/configureStore";
 import { changeSignTab } from "../../../redux/signTabs/actions";
-import { GoogleLogin, GoogleLoginResponse, GoogleLoginResponseOffline } from 'react-google-login';
-import { isGoogleLoginResponseOffline } from "../../../Utils";
+import GoogleSignIn from "../GoogleSignIn";
+import FacebookSignIn from "../FacebookSignIn";
 
 interface SignInTabProps extends SignInTabState {
     onEmailChange: typeof updateSignInEmailInput,
     onPasswordChange: typeof updateSignInPasswordInput,
     onSignInSubmit: typeof submitSignInForm,
     onTabChange: typeof changeSignTab,
-    onPostSignInForm: (data: SignInFormDataState) => void,
-    setGoogleSignIn: (data: GoogleLoginResponse) => void,
-    onPostGoogleSignIn: (data: GoogleSignInState) => void
+    onPostSignInForm: (data: SignInFormDataState) => void
 }
 
 class SignInTab extends Component<SignInTabProps> {
@@ -34,19 +32,7 @@ class SignInTab extends Component<SignInTabProps> {
         }
     }
 
-    public googleSuccessfulResponse = (response: GoogleLoginResponse | GoogleLoginResponseOffline) => {
-        if (!isGoogleLoginResponseOffline(response)) {
-            this.props.setGoogleSignIn(response);
-            this.props.onPostGoogleSignIn(this.props.google_data);
-        }
-    };
-
-    public googleFailedResponse = (error: any) => {
-        console.log(error);
-    };
-
     public render() {
-        const google_client_id = process.env.REACT_APP_GOOGLE_CLIENT_ID as string;
         const { email_error, password_error } = this.props.form_errors;
         const { email, password } = this.props.form_data;
 
@@ -76,14 +62,11 @@ class SignInTab extends Component<SignInTabProps> {
                     <span className="link" onClick={() => { this.props.onTabChange('sign_up') }}> Enregistrez-vous.</span>
                     </p>
                 </Form>
-                <GoogleLogin style={{ textAlign: "right" }}
-                    clientId={google_client_id}
-                    buttonText="Se connecter avec Google"
-                    onSuccess={this.googleSuccessfulResponse}
-                    onFailure={this.googleFailedResponse}
-                    cookiePolicy={'single_host_origin'}
-                />
-            </div>
+                <div className="social-media-button-container">
+                    <GoogleSignIn />
+                    <FacebookSignIn />
+                </div>
+            </div >
         );
     }
 }
@@ -95,8 +78,6 @@ export default connect(
         onPasswordChange: (e: any) => updateSignInPasswordInput(e.target.value),
         onSignInSubmit: () => submitSignInForm(),
         onTabChange: (active_tab_key: string) => changeSignTab(active_tab_key),
-        onPostSignInForm: (data: SignInFormDataState) => postSignInForm(data),
-        setGoogleSignIn: (data: GoogleLoginResponse) => setGoogleSignIn(data),
-        onPostGoogleSignIn: (data: GoogleSignInState) => postGoogleSignIn(data)
+        onPostSignInForm: (data: SignInFormDataState) => postSignInForm(data)
     }
 )(SignInTab);
