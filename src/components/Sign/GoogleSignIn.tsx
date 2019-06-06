@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { postGoogleSignIn, setGoogleSignIn } from "../../redux/signInTab/actions";
+import { setGoogleSignIn, postSocialMediaSignIn } from "../../redux/signInTab/actions";
 import { connect } from "react-redux";
 import { GoogleLogin, GoogleLoginResponse, GoogleLoginResponseOffline } from 'react-google-login';
 import { HcState } from "../../redux/configureStore";
@@ -9,7 +9,7 @@ import { SocialMediaSignInState } from "../../redux/signInTab/types";
 interface GoogleSignInProps {
     google_data: SocialMediaSignInState,
     setGoogleSignIn: (data: GoogleLoginResponse) => void,
-    onPostGoogleSignIn: (data: SocialMediaSignInState) => void
+    onPostSocialMediaSignIn: (data: SocialMediaSignInState) => void
 }
 
 class GoogleSignIn extends Component<GoogleSignInProps> {
@@ -17,7 +17,7 @@ class GoogleSignIn extends Component<GoogleSignInProps> {
     public googleSuccessfulResponse = (response: GoogleLoginResponse | GoogleLoginResponseOffline) => {
         if (!isGoogleLoginResponseOffline(response)) {
             this.props.setGoogleSignIn(response);
-            this.props.onPostGoogleSignIn(this.props.google_data);
+            this.props.onPostSocialMediaSignIn(this.props.google_data);
         }
     };
 
@@ -46,6 +46,6 @@ export default connect(
     }),
     {
         setGoogleSignIn: (data: GoogleLoginResponse) => setGoogleSignIn(data),
-        onPostGoogleSignIn: (data: SocialMediaSignInState) => postGoogleSignIn(data)
+        onPostSocialMediaSignIn: (data: SocialMediaSignInState) => postSocialMediaSignIn(data)
     }
 )(GoogleSignIn);

@@ -4,19 +4,19 @@ import FacebookLogin, { ReactFacebookFailureResponse } from 'react-facebook-logi
 import { HcState } from "../../redux/configureStore";
 import { ReactFacebookLoginNameInfo } from "../../Utils";
 import { SocialMediaSignInState } from "../../redux/signInTab/types";
-import { setFacebookSignIn, postFacebookSignIn } from "../../redux/signInTab/actions";
+import { setFacebookSignIn, postSocialMediaSignIn } from "../../redux/signInTab/actions";
 
 interface FacebookSignInProps {
     facebook_data: SocialMediaSignInState,
     setFacebookSignIn: (data: ReactFacebookLoginNameInfo) => void,
-    onPostFacebookSignIn: (data: SocialMediaSignInState) => void
+    onPostSocialMediaSignIn: (data: SocialMediaSignInState) => void
 }
 
 class FacebookSignIn extends Component<FacebookSignInProps> {
 
     public facebookSuccessfulResponse = (response: ReactFacebookLoginNameInfo) => {
         this.props.setFacebookSignIn(response);
-        this.props.onPostFacebookSignIn(this.props.facebook_data);
+        this.props.onPostSocialMediaSignIn(this.props.facebook_data);
     };
 
     public facebookFailedResponse = (error: ReactFacebookFailureResponse) => {
@@ -44,6 +44,6 @@ export default connect(
     }),
     {
         setFacebookSignIn: (data: ReactFacebookLoginNameInfo) => setFacebookSignIn(data),
-        onPostFacebookSignIn: (data: SocialMediaSignInState) => postFacebookSignIn(data)
+        onPostSocialMediaSignIn: (data: SocialMediaSignInState) => postSocialMediaSignIn(data)
     }
 )(FacebookSignIn);

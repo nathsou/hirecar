@@ -74,7 +74,6 @@ export function postSignInForm(data: SignInFormDataState) {
             .then(hashed_pwd => {
 
                 const user_data: { [index: string]: string | IdentifiedType; } = {};
-
                 Object.keys(data).forEach(key => {
                     user_data[key] = key === 'password' ? hashed_pwd : data[key];
                 });
@@ -94,11 +93,10 @@ export function postSignInForm(data: SignInFormDataState) {
                         filtered_keys.forEach(key => {
                             user_profile_data[key as keyof UserProfileInfoFormDataState] = res.data[key];
                         });
-
+                        dispatch(toggleSignModal(false));
                         dispatch(setUserLogged(sent_data));
                         dispatch(setUserProfileInfo(user_profile_data));
                         dispatch(setUserProfileCarOwner(user_profile_data.id));
-                        dispatch(toggleSignModal(false));
                         dispatch(resetSignUpForm());
                         dispatch(socialMediaSignIn());
                         dispatch(signUpFormReceived());
@@ -126,6 +124,13 @@ export function setGoogleSignIn(data: GoogleLoginResponse): SetGoogleSignInActio
     }
 }
 
+export function setFacebookSignIn(data: ReactFacebookLoginNameInfo): SetFacebookSignInAction {
+    return {
+        type: SET_FACEBOOK_SIGNIN,
+        data
+    }
+}
+
 export function socialMediaSignInSent(): SocialMediaSignInSentAction {
     return {
         type: SOCIAL_MEDIA_SIGNIN_SENT
@@ -138,7 +143,7 @@ export function socialMediaSignInReceived(): SocialMediaSignInReceivedAction {
     };
 }
 
-export function postGoogleSignIn(data: SocialMediaSignInState) {
+export function postSocialMediaSignIn(data: SocialMediaSignInState) {
 
     return (dispatch: Dispatch<SignInActionTypes>) => {
         dispatch(socialMediaSignInSent());
@@ -156,50 +161,10 @@ export function postGoogleSignIn(data: SocialMediaSignInState) {
                     const value = res.data[key] === null ? '' : res.data[key];
                     user_profile_data[key as keyof UserProfileInfoFormDataState] = value;
                 });
-
+                dispatch(toggleSignModal(false));
                 dispatch(setUserLogged(sent_data));
                 dispatch(setUserProfileInfo(user_profile_data));
                 dispatch(setUserProfileCarOwner(user_profile_data.id));
-                dispatch(toggleSignModal(false));
-                dispatch(socialMediaSignInReceived());
-
-            }).catch((error: AxiosError) => {
-                const response = error.response;
-                console.log(response)
-            });
-    }
-}
-
-export function setFacebookSignIn(data: ReactFacebookLoginNameInfo): SetFacebookSignInAction {
-    return {
-        type: SET_FACEBOOK_SIGNIN,
-        data
-    }
-}
-
-export function postFacebookSignIn(data: SocialMediaSignInState) {
-
-    return (dispatch: Dispatch<SignInActionTypes>) => {
-        dispatch(socialMediaSignInSent());
-
-        Axios.post(`${process.env.REACT_APP_HIRECAR_API_URI}/login`, data)
-            .then((res: AxiosResponse) => {
-
-                const sent_data = {} as UserDataState;
-                Object.keys(res.data).forEach(key => {
-                    sent_data[key as keyof UserDataState] = res.data[key];
-                });
-
-                const user_profile_data = {} as UserProfileInfoFormDataState;
-                Object.keys(res.data).forEach(key => {
-                    const value = res.data[key] === null ? '' : res.data[key];
-                    user_profile_data[key as keyof UserProfileInfoFormDataState] = value;
-                });
-
-                dispatch(setUserLogged(sent_data));
-                dispatch(setUserProfileInfo(user_profile_data));
-                dispatch(setUserProfileCarOwner(user_profile_data.id));
-                dispatch(toggleSignModal(false));
                 dispatch(socialMediaSignInReceived());
 
             }).catch((error: AxiosError) => {

@@ -61,16 +61,6 @@ export function signInTabReducer(
                     email: profile.getEmail()
                 }
             }
-        case SOCIAL_MEDIA_SIGNIN_SENT:
-            return {
-                ...state,
-                sending: true
-            }
-        case SOCIAL_MEDIA_SIGNIN_RECEIVED:
-            return {
-                ...state,
-                sending: false
-            }
         case SET_FACEBOOK_SIGNIN:
             const { first_name: fbFirstname, last_name: fbLastname, email: fbEmail } = action.data;
             return {
@@ -81,6 +71,16 @@ export function signInTabReducer(
                     lastname: fbLastname ? fbLastname : '',
                     email: fbEmail ? fbEmail : ''
                 }
+            }
+        case SOCIAL_MEDIA_SIGNIN_SENT:
+            return {
+                ...state,
+                sending: true
+            }
+        case SOCIAL_MEDIA_SIGNIN_RECEIVED:
+            return {
+                ...state,
+                sending: false
             }
         case RESET_SIGNIN_FORM:
             return defaultSignInTabState

@@ -20,7 +20,6 @@ export interface SocialMediaSignInState {
     login: IdentifiedType
 }
 
-
 export interface SignInTabState {
     form_data: SignInFormDataState,
     form_errors: {
@@ -119,6 +118,12 @@ export interface SetGoogleSignInAction {
     data: GoogleLoginResponse
 }
 
+export const SET_FACEBOOK_SIGNIN = "SET_FACEBOOK_SIGNIN";
+export interface SetFacebookSignInAction {
+    type: typeof SET_FACEBOOK_SIGNIN,
+    data: ReactFacebookLoginNameInfo
+}
+
 export const SOCIAL_MEDIA_SIGNIN_SENT = "SOCIAL_MEDIA_SIGNIN_SENT";
 export interface SocialMediaSignInSentAction {
     type: typeof SOCIAL_MEDIA_SIGNIN_SENT
@@ -127,12 +132,6 @@ export interface SocialMediaSignInSentAction {
 export const SOCIAL_MEDIA_SIGNIN_RECEIVED = "SOCIAL_MEDIA_SIGNIN_RECEIVED";
 export interface SocialMediaSignInReceivedAction {
     type: typeof SOCIAL_MEDIA_SIGNIN_RECEIVED
-}
-
-export const SET_FACEBOOK_SIGNIN = "SET_FACEBOOK_SIGNIN";
-export interface SetFacebookSignInAction {
-    type: typeof SET_FACEBOOK_SIGNIN,
-    data: ReactFacebookLoginNameInfo
 }
 
 export type SignInActionTypes =
