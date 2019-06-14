@@ -60,18 +60,22 @@ class HcParkingSearch extends Component<HcParkingSearchProps> {
         let max_lng = -Infinity, max_lat = -Infinity;
 
         parking_lots.forEach(({ lat, lng }) => {
-            if (lat < min_lat) min_lat = lat;
-            if (lat > max_lat) max_lat = lat;
-            if (lng < min_lng) min_lng = lng;
-            if (lng > max_lng) max_lng = lng;
+            if (lat !== undefined && lng !== undefined) {
+                if (lat < min_lat) min_lat = lat;
+                if (lat > max_lat) max_lat = lat;
+                if (lng < min_lng) min_lng = lng;
+                if (lng > max_lng) max_lng = lng;
+            }
         });
 
-        const vp = new WebMercatorViewport(viewport as WebMercatorViewportOptions);
-        const { longitude, latitude, zoom } = vp.fitBounds(
-            [[min_lng, min_lat], [max_lng, max_lat]]
-        );
+        if (min_lng !== Infinity && max_lng !== -Infinity && min_lat !== Infinity && max_lat !== -Infinity) {
+            const vp = new WebMercatorViewport(viewport as WebMercatorViewportOptions);
+            const { longitude, latitude, zoom } = vp.fitBounds(
+                [[min_lng, min_lat], [max_lng, max_lat]]
+            );
 
-        this.flyTo(latitude, longitude, zoom - 1, 2500);
+            this.flyTo(latitude, longitude, zoom - 1, 2500);
+        }
     }
 
     public flyToSelectedParkingLot = () => {
@@ -79,7 +83,9 @@ class HcParkingSearch extends Component<HcParkingSearchProps> {
         const selected = parking_lots.find(p => p.id === selected_parking_lot);
         if (selected !== undefined) {
             const { lat, lng } = selected;
-            this.flyTo(lat, lng, 17, 1000);
+            if (lat && lng) {
+                this.flyTo(lat, lng, 17, 1000);
+            }
         }
     }
 

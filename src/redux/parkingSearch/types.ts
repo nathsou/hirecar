@@ -16,8 +16,8 @@ export interface ParkingSearchState {
 export interface ParkingLot {
     id: number;
     label: string;
-    lat: number;
-    lng: number;
+    lat?: number;
+    lng?: number;
     capacity: number;
     price_per_day: number;
     airport: Airport;

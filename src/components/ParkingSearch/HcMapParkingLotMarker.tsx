@@ -16,8 +16,8 @@ const HcMapParkingLotMarker: FunctionComponent<HcMapParkingLotMarkerProps> = ({
 }) => {
     return (
         <Marker
-            latitude={parking_lot.lat}
-            longitude={parking_lot.lng}
+            latitude={parking_lot.lat ? parking_lot.lat : 0}
+            longitude={parking_lot.lng ? parking_lot.lng : 0}
             offsetTop={-20}
             offsetLeft={-20}
         >

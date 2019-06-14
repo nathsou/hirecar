@@ -30,14 +30,18 @@ const HcMap: FunctionComponent<HcMapProps> = ({
             mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_API_KEY}
             mapStyle='mapbox://styles/mapbox/streets-v11'
         >
-            {parking_lots.map(p =>
-                <HcMapParkingLotMarker
-                    onClick={() => onParkingLotMarkerClick(p.id)}
-                    onMouseLeave={() => onParkingLotMarkerClick(null)}
-                    key={p.id}
-                    parking_lot={p}
-                />
-            )}
+            {parking_lots.map(p => {
+                if (p.lat !== undefined && p.lng !== undefined) {
+                    return (
+                        <HcMapParkingLotMarker
+                            onClick={() => onParkingLotMarkerClick(p.id)}
+                            onMouseLeave={() => onParkingLotMarkerClick(null)}
+                            key={p.id}
+                            parking_lot={p}
+                        />
+                    );
+                }
+            })}
 
             {airports.map(a =>
                 <HcMapAirportLotMarker

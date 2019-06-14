@@ -66,9 +66,9 @@ export function parseParkingLot(parking_lot: RawParkingLot): ParkingLot {
     return {
         id: parseInt(id),
         label,
-        lat: parseFloat(lat),
-        lng: parseFloat(lng),
-        capacity: parseInt(capacity),
+        lat: lat !== undefined ? parseFloat(lat) : undefined,
+        lng: lng !== undefined ? parseFloat(lng) : undefined,
+        capacity: typeof capacity === 'number' ? parseInt(capacity) : -1,
         price_per_day: parseFloat(price_per_day),
         airport: parseAirport(airport)
     };
