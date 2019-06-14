@@ -20,14 +20,14 @@ export default class HcPaypal extends Component<HcPaypalProps>{
     // @ts-ignore
     public successPaiment = (paiement) => {
         console.log(JSON.stringify(paiement));
-        const site = process.env.REACT_APP_HIRECARAPI+`/verify_paiement?mail=${this.props.email}&name=${this.props.name}&price=${this.props.prix}`;
-        const req= new XMLHttpRequest();
-        req.open('POST',site,false);
+        const site = process.env.REACT_APP_HIRECARAPI + `/verify_paiement?mail=${this.props.email}&name=${this.props.name}&price=${this.props.prix}`;
+        const req = new XMLHttpRequest();
+        req.open('POST', site, false);
         req.send(JSON.stringify(paiement));
-        if (req.status === 200){
+        if (req.status === 200) {
             //TODO complete in case of succeed Action
         } else {
             //TODO complete in case of unpaid error given by data trasnmitted to the serveur
         }
-
+    }
 }
