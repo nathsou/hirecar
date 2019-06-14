@@ -28,6 +28,15 @@ class HcNavbar extends Component<HcNavbarProps> {
         this.props.history.push("/");
         this.props.resetUser();
         emptyLocalStorage();
+
+        ///@ts-ignore
+        if (window.gapi) {
+            ///@ts-ignore
+            const auth2 = window.gapi.auth2.getAuthInstance()
+            if (auth2 != null) {
+                auth2.signOut().then(auth2.disconnect())
+            }
+        }
     }
 
     public render() {

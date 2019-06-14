@@ -1,18 +1,19 @@
+import { google } from "googleapis";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { HcState } from "../../redux/configureStore";
-import { setRentModalParkingLot, setRentParkingSpotUserCarId, sendRentParkingSpotRequest, ParkingSpotRentalRequestData } from "../../redux/parkingSearch/actions";
+import { ParkingSpotRentalRequestData, sendRentParkingSpotRequest, setRentModalParkingLot, setRentParkingSpotUserCarId } from "../../redux/parkingSearch/actions";
 import { ParkingLot, ParkingSearchState } from "../../redux/parkingSearch/types";
+import { checkRentParkingSpotForm } from "../../redux/rentParkingTab/actions";
+import { RentParkingTabState } from "../../redux/rentParkingTab/types";
 import { UserState } from "../../redux/user/types";
+import { fetchUserProfileCarRentals } from "../../redux/userProfile/userProfileCarRentalTab/actions";
+import { UserProfileCarsState } from "../../redux/userProfile/userProfileCarTab/types";
 import HcSecondaryButton from "../Button/HcSecondaryButton";
+import HcSelectFormGroup from "../Form/HcSelectFormGroup";
 import HcModal from "../HcModal";
 import HcSignTabs from "../Sign/HcSignTabs";
 import HcParkingSearchBox from "./HcParkingSearchBox";
-import HcSelectFormGroup from "../Form/HcSelectFormGroup";
-import { checkRentParkingSpotForm } from "../../redux/rentParkingTab/actions";
-import { RentParkingTabState } from "../../redux/rentParkingTab/types";
-import { UserProfileCarsState } from "../../redux/userProfile/userProfileCarTab/types";
-import { fetchUserProfileCarRentals } from "../../redux/userProfile/userProfileCarRentalTab/actions";
 
 export interface HcRentParkingModalProps extends ParkingSearchState {
     setModalParkingLot: (id: number | null) => void,
@@ -43,6 +44,87 @@ class HcRentParkingModal extends Component<HcRentParkingModalProps> {
             this.cars_fetched = true;
         }
     }
+
+    public componentDidMount = () => {
+        this.insertEvent();
+    }
+
+    public insertEvent() {
+
+        const oauth_client_id = process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID;
+        const oauth_secret_id = process.env.REACT_APP_GOOGLE_OAUTH_SECRET_ID;
+        const redirect_uri = 'http://localhost:3000/parking'
+
+        const oauth2Client = new google.auth.OAuth2(
+            oauth_client_id,
+            oauth_secret_id,
+            redirect_uri
+        );
+
+        const scopes = [
+            'https://www.googleapis.com/auth/calendar.events'
+        ];
+
+        const uri = oauth2Client.generateAuthUrl({
+            access_type: 'offline',
+            scope: scopes
+        });
+
+        console.log(uri);
+        const first_part_code = window.location.search.split('code=') ? window.location.search.split('code=').pop() : '';
+        const code = first_part_code ? first_part_code.split('&')[0] : '';
+
+        if (code) {
+            oauth2Client.getToken(code).then(({ tokens }) => {
+                console.log(tokens);
+                oauth2Client.setCredentials(tokens);
+
+            });
+        }
+
+        oauth2Client.on('tokens', (tokens) => {
+            if (tokens.refresh_token) {
+                // store the refresh_token in my database!
+                console.log(tokens.refresh_token);
+            }
+            console.log(tokens.access_token);
+        });
+
+        oauth2Client.setCredentials({
+            refresh_token: `STORED_REFRESH_TOKEN`
+        });
+
+        var event = {
+            'summary': 'Google I/O 2015',
+            'location': '800 Howard St., San Francisco, CA 94103',
+            'description': 'A chance to hear more about Google\'s developer products.',
+            'start': {
+                'dateTime': '2019-06-11T09:00:00-07:00',
+                'timeZone': 'America/Los_Angeles'
+            },
+            'end': {
+                'dateTime': '2019-06-13T17:00:00-07:00',
+                'timeZone': 'America/Los_Angeles'
+            }
+        };
+
+        function insertEvent(auth: any) {
+            var calendar = google.calendar('v3');
+            calendar.events.insert({
+                auth: auth,
+                calendarId: 'primary',
+                requestBody: event
+            }, function (err: any) {
+                if (err) {
+                    console.log('The API returned an error: ' + err);
+                    return;
+                }
+            });
+        }
+        insertEvent(oauth2Client);
+
+    }
+
 
     public componentDidUpdate(prev_props: Readonly<HcRentParkingModalProps>): void {
         if (
@@ -116,7 +198,12 @@ class HcRentParkingModal extends Component<HcRentParkingModalProps> {
                 {awaiting_rental_request_response ?
                     <p>Spinner</p>
                     : parking_spot_rental_id !== null ?
-                        <p>Votre location a été enregistrée</p>
+                        (<div>
+                            <p>Votre location a été enregistrée</p>
+                            <HcSecondaryButton handleClick={() => { }}>
+                                Ajouter la réservation dans Google Calendar
+                            </HcSecondaryButton>
+                        </div>)
                         : (!user.logged_in ?
                             <HcSignTabs />
                             : (<div>
