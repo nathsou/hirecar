@@ -46,7 +46,7 @@ class HcRentParkingModal extends Component<HcRentParkingModalProps> {
     }
 
     public componentDidMount = () => {
-        this.insertEvent();
+        //this.insertEvent();
     }
 
     public insertEvent() {

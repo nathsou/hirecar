@@ -2,7 +2,7 @@ import { UserProfileCarRentalsSentAction, USER_PROFILE_CAR_RENTALS_SENT, USER_PR
 import { CarRental } from "../../carSearch/types";
 import Axios, { AxiosResponse, AxiosError } from "axios";
 import { Dispatch } from "react";
-import { RawCarRental, parseCarRental } from "../../../Utils";
+import { RawCarRental, parseCarRental, resToJSON } from "../../../Utils";
 
 export function userProfileCarRentalsSent(): UserProfileCarRentalsSentAction {
     return {
@@ -23,7 +23,7 @@ export function fetchUserProfileCarRentals(id: number) {
 
         Axios.get(`${process.env.REACT_APP_HIRECAR_API_URI}/car_rentals?user_id=${id}`)
             .then((res: AxiosResponse) => {
-                const car_rentals = (res.data).car_rentals as RawCarRental[];
+                const car_rentals = resToJSON(res).car_rentals as RawCarRental[];
                 const parsed_car_rentals = car_rentals.map(parseCarRental);
                 dispatch(userProfileCarRentalsReceived(parsed_car_rentals));
             }).catch((error: AxiosError) => {

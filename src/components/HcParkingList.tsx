@@ -6,7 +6,6 @@ import { setRentModalParkingLot, setSelectedParkingLot } from "../redux/parkingS
 import { ParkingSearchState } from "../redux/parkingSearch/types";
 import ParkingPicto from "../res/img/parking-picto.svg";
 import HcListItem from "./HcListItem";
-import YAML from 'yaml';
 
 export interface HcParkingListProps extends Pick<ParkingSearchState, 'parking_lots'> {
     setSelectedParkingLot: (pl: number | null) => void,

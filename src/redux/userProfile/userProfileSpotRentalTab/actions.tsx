@@ -1,7 +1,7 @@
 import { USER_PROFILE_SPOT_RENTALS_SENT, USER_PROFILE_SPOT_RENTALS_RECEIVED, UserProfileSpotRentalsActionTypes, UserProfileSpotRentalsSentAction, UserProfileSpotRentalsReceivedAction, DeleteUserProfileSpotRentalAction, DELETE_USER_PROFILE_SPOT_RENTAL, DeleteUserProfileSpotRentalSentAction, DELETE_USER_PROFILE_SPOT_RENTAL_SENT, DeleteUserProfileSpotRentalReceivedAction, DELETE_USER_PROFILE_SPOT_RENTAL_RECEIVED, CancelDeleteUserProfileSpotRentalAction, CANCEL_DELETE_USER_PROFILE_SPOT_RENTAL, ToggleUserProfileSpotRentalModalAction, TOGGLE_USER_PROFILE_SPOT_RENTAL_MODAL } from "./types";
 import { Dispatch } from "react";
 import Axios, { AxiosResponse, AxiosError } from "axios";
-import { RawParkingSpot, parseParkingSpot } from "../../../Utils";
+import { RawParkingSpot, parseParkingSpot, resToJSON } from "../../../Utils";
 import { ParkingSpot } from "../../carSearch/types";
 
 export function userProfileParkingSpotRentalsSent(): UserProfileSpotRentalsSentAction {
@@ -23,7 +23,7 @@ export function fetchUserProfileParkingSpotRentals(id: number) {
 
         Axios.get(`${process.env.REACT_APP_HIRECAR_API_URI}/parking_spot_rentals?owner_id=${id}`)
             .then((res: AxiosResponse) => {
-                const spot_rentals = (res.data).parking_spot_rentals as RawParkingSpot[];
+                const spot_rentals = resToJSON(res).parking_spot_rentals as RawParkingSpot[];
                 const parsed_spot_rentals = spot_rentals.map(parseParkingSpot);
                 dispatch(userProfileSpotRentalsReceived(parsed_spot_rentals));
             }).catch((error: AxiosError) => {

@@ -40,6 +40,8 @@ const HcMap: FunctionComponent<HcMapProps> = ({
                             parking_lot={p}
                         />
                     );
+                } else {
+                    return null;
                 }
             })}
 

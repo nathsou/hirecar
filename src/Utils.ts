@@ -2,6 +2,8 @@ import { Car, IdentifiedType, ParkingSpot, CarRental } from "./redux/carSearch/t
 import { ParkingLot } from "./redux/parkingSearch/types";
 import { Airport } from "./redux/rentParkingTab/types";
 import { GoogleLoginResponseOffline } from "react-google-login";
+import { AxiosResponse } from "axios";
+import YAML from 'yaml';
 
 // object props to x-www-form-urlencoded
 export function propsToURIParams(props: {}): string {
@@ -152,4 +154,13 @@ export interface ReactFacebookLoginNameInfo {
     first_name?: string;
     last_name?: string;
     email?: string;
+}
+
+export function resToJSON(res: AxiosResponse) {
+    const content_type = res.headers['content-type'];
+
+    if (content_type && content_type === 'application/yaml') {
+        return YAML.parse(res.data);
+    }
+    return res.data; // return JSON
 }

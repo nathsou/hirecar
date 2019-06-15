@@ -3,7 +3,7 @@ import throttle from "lodash.throttle";
 import { Dispatch } from "redux";
 import { MIN_API_CALL_DELAY } from '../..';
 import { HcMapViewportProps } from "../../components/ParkingSearch/HcParkingSearch";
-import { parseAirport, parseParkingLot, propsToURIParams, RawAirport, RawParkingLot } from "../../Utils";
+import { parseAirport, parseParkingLot, propsToURIParams, RawAirport, RawParkingLot, resToJSON } from "../../Utils";
 import { Airport } from "../rentParkingTab/types";
 import { AirportsReceivedAction, AIRPORTS_RECEIVED, ParkingLot, ParkingSearchActionTypes, ParkingsReceivedAction, PARKINGS_RECEIVED, RentParkingSpotRequestFailedAction, RentParkingSpotRequestSentAction, RentParkingSpotRequestSucceededAction, RENT_PARKING_SPOT_REQUEST_FAILED, RENT_PARKING_SPOT_REQUEST_SENT, RENT_PARKING_SPOT_REQUEST_SUCCEEDED, RequestAirportsAction, RequestParkingsAction, REQUEST_AIRPORTS, REQUEST_PARKINGS, SetRentModalParkingLotAction, SetRentParkingSpotUserCarIdAction, SetSelectedParkingLotAction, SET_RENT_MODAL_PARKING_LOT, SET_RENT_PARKING_SPOT_USER_CAR_IDX, SET_SELECTED_PARKING_LOT, UpdateMapViewportAction, UPDATE_MAP_VIEWPORT } from "./types";
 
@@ -116,7 +116,7 @@ export const fetchParkings = throttle((params: ParkingSearchParams) => {
         dispatch(requestParkings());
         axios.get(`${process.env.REACT_APP_HIRECAR_API_URI}/parking_lots${propsToURIParams(params)}`)
             .then((res: AxiosResponse) => {
-                const parkings = (res.data).parking_lots as RawParkingLot[];
+                const parkings = resToJSON(res).parking_lots as RawParkingLot[];
                 const parsed_parkings = parkings.map(parseParkingLot);
 
                 dispatch(parkingsReceived(parsed_parkings));
@@ -137,7 +137,7 @@ export const fetchAirports = throttle((params: AirportSearchParams) => {
         dispatch(requestAirports());
         axios.get(`${process.env.REACT_APP_HIRECAR_API_URI}/airports${propsToURIParams(params)}`)
             .then((res: AxiosResponse) => {
-                const airports = (res.data).airports as RawAirport[];
+                const airports = resToJSON(res).airports as RawAirport[];
                 const parsed_airports = airports.map(parseAirport);
 
                 dispatch(airportsReceived(parsed_airports));
