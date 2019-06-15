@@ -85,7 +85,10 @@ export interface ParkingSpotRentalRequestData {
     parking_lot_id: number,
     car_id: number,
     start_date: string,
-    end_date: string
+    end_date: string,
+    firstname: string,
+    lastname: string,
+    email: string,
 }
 
 export const sendRentParkingSpotRequest = throttle((data: ParkingSpotRentalRequestData) => {

@@ -23,7 +23,8 @@ export interface HcRentParkingModalProps extends ParkingSearchState {
     sendRentParkingSpotRequest: (data: ParkingSpotRentalRequestData) => void,
     user_cars: UserProfileCarsState,
     user: UserState,
-    form: RentParkingTabState
+    form: RentParkingTabState,
+    email: string
 }
 
 class HcRentParkingModal extends Component<HcRentParkingModalProps> {
@@ -125,7 +126,6 @@ class HcRentParkingModal extends Component<HcRentParkingModalProps> {
 
     }
 
-
     public componentDidUpdate(prev_props: Readonly<HcRentParkingModalProps>): void {
         if (
             prev_props.rent_modal_parking_lot_id === null &&
@@ -146,14 +146,17 @@ class HcRentParkingModal extends Component<HcRentParkingModalProps> {
     public sendRentalRequest = () => {
 
         const { start_day, start_time, end_day, end_time } = this.props.form;
+        const { firstname, lastname } = this.props.user.data;
 
         const data: ParkingSpotRentalRequestData = {
             parking_lot_id: this.props.rent_modal_parking_lot_id as number,
             car_id: this.props.selected_user_car_id,
             start_date: `${start_day} ${start_time}`,
-            end_date: `${end_day} ${end_time}`
+            end_date: `${end_day} ${end_time}`,
+            email: this.props.email,
+            firstname,
+            lastname
         };
-
         this.props.sendRentParkingSpotRequest(data);
     }
 
@@ -246,7 +249,8 @@ export default connect(
         ...state.parking_search,
         user_cars: state.user_profile_tabs.user_profile_tab_car.cars_data,
         user: state.user,
-        form: state.rent_tabs.rent_parking_spot_tab
+        form: state.rent_tabs.rent_parking_spot_tab,
+        email: state.user_profile_tabs.user_profile_tab_info.form_data.email
     }),
     {
         setModalParkingLot: (id: number | null) => setRentModalParkingLot(id),
