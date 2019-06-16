@@ -14,7 +14,7 @@ import HcSelectFormGroup from "../Form/HcSelectFormGroup";
 import HcModal from "../HcModal";
 import HcSignTabs from "../Sign/HcSignTabs";
 import HcParkingSearchBox from "./HcParkingSearchBox";
-import { HcRentParkingBtn } from "./HcRentParkingBtn";
+import HcRentParkingBtn from "./HcRentParkingBtn";
 
 export interface HcRentParkingModalProps extends ParkingSearchState {
     setModalParkingLot: (id: number | null) => void,
@@ -38,6 +38,7 @@ class HcRentParkingModal extends Component<HcRentParkingModalProps> {
     }
 
     private fetchCars = () => {
+        console.log('cars fetched: ' + this.cars_fetched);
         if (!this.cars_fetched && this.props.user.logged_in) {
             this.props.fetchUserProfileCars(this.props.user.data.id);
             if (this.props.user_cars.cars.length !== 0) {
@@ -63,9 +64,7 @@ class HcRentParkingModal extends Component<HcRentParkingModalProps> {
             redirect_uri
         );
 
-        const scopes = [
-            'https://www.googleapis.com/auth/calendar.events'
-        ];
+        const scopes = ['https://www.googleapis.com/auth/calendar.events'];
 
         const uri = oauth2Client.generateAuthUrl({
             access_type: 'offline',
@@ -236,7 +235,11 @@ class HcRentParkingModal extends Component<HcRentParkingModalProps> {
                                     Réserver {total_cost !== null ? `pour ${total_cost} €` : ''}
                                 </HcSecondaryButton> */}
 
-                                <HcRentParkingBtn cost={total_cost} />
+                                <HcRentParkingBtn
+                                    cost={total_cost}
+                                    disabled={!form.valid_form}
+                                    onSuccess={details => console.log(details)}
+                                />
                             </div>)
                         )
                 }
