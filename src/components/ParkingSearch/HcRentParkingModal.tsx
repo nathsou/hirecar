@@ -14,6 +14,7 @@ import HcSelectFormGroup from "../Form/HcSelectFormGroup";
 import HcModal from "../HcModal";
 import HcSignTabs from "../Sign/HcSignTabs";
 import HcParkingSearchBox from "./HcParkingSearchBox";
+import { HcRentParkingBtn } from "./HcRentParkingBtn";
 
 export interface HcRentParkingModalProps extends ParkingSearchState {
     setModalParkingLot: (id: number | null) => void,
@@ -46,14 +47,14 @@ class HcRentParkingModal extends Component<HcRentParkingModalProps> {
     }
 
     public componentDidMount = () => {
-        //this.insertEvent();
+        this.insertEvent();
     }
 
     public insertEvent() {
 
         const oauth_client_id = process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID;
         const oauth_secret_id = process.env.REACT_APP_GOOGLE_OAUTH_SECRET_ID;
-        const redirect_uri = 'http://localhost:3000/parking'
+        const redirect_uri = `${process.env.REACT_APP_HIRECAR_API_URI}/parking`;
 
         const oauth2Client = new google.auth.OAuth2(
             oauth_client_id,
@@ -177,14 +178,14 @@ class HcRentParkingModal extends Component<HcRentParkingModalProps> {
         }
 
         const parking_lot = parking_lots.find(p => p.id === rent_modal_parking_lot_id) as ParkingLot;
-        let total_cost = null;
+        let total_cost = 0;
 
         if (form.valid_form) {
             const { start_day, start_time, end_day, end_time } = form;
             const days = (new Date(`${end_day} ${end_time}`).getTime() -
                 new Date(`${start_day} ${start_time}`).getTime()) / (3600 * 24 * 1000);
 
-            total_cost = (days * parking_lot.price_per_day).toFixed(2);
+            total_cost = (days * parking_lot.price_per_day);
         }
 
         return (
@@ -225,12 +226,14 @@ class HcRentParkingModal extends Component<HcRentParkingModalProps> {
                                     />)
                                 }
 
-                                <HcSecondaryButton
+                                {/* <HcSecondaryButton
                                     disabled={!form.valid_form}
                                     handleClick={this.sendRentalRequest}
                                 >
                                     Réserver {total_cost !== null ? `pour ${total_cost} €` : ''}
-                                </HcSecondaryButton>
+                                </HcSecondaryButton> */}
+
+                                <HcRentParkingBtn cost={total_cost} />
                             </div>)
                         )
                 }

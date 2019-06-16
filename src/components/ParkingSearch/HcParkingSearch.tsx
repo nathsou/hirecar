@@ -133,6 +133,7 @@ class HcParkingSearch extends Component<HcParkingSearchProps> {
                     show_labels={true}
                     box_mode={false}
                     validate={false}
+                    init={true}
                     onInputChange={this.onInputChange}
                 />
 
