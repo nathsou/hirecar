@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { AsyncScriptLoaderHOCProps, withScriptLoader } from "./AsyncScriptLoaderHOC";
-import HcSecondaryButton from "../Button/HcSecondaryButton";
 
 declare const paypal: any;
 
@@ -52,7 +51,7 @@ class HcRentParkingBtn extends Component<HcRentParkingBtnProps> {
     public render() {
         const { scripts_loaded_successfully: loaded, disabled, cost } = this.props;
         return loaded ? <div style={{ display: disabled ? 'none' : 'block' }} id='rent-parking-paypal'>
-            <h3>Total: {cost}€</h3>
+            <h4>Total: {cost}€</h4>
         </div > : 'loading';
     }
 }

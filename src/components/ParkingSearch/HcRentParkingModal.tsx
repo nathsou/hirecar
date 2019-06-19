@@ -238,7 +238,11 @@ class HcRentParkingModal extends Component<HcRentParkingModalProps> {
                                 <HcRentParkingBtn
                                     cost={total_cost}
                                     disabled={!form.valid_form}
-                                    onSuccess={details => console.log(details)}
+                                    onSuccess={details => {
+                                        this.sendRentalRequest();
+                                        this.props.setModalParkingLot(null);
+                                        console.log(details);
+                                    }}
                                 />
                             </div>)
                         )
