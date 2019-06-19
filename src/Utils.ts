@@ -70,7 +70,7 @@ export function parseParkingLot(parking_lot: RawParkingLot): ParkingLot {
         label,
         lat: lat !== undefined ? parseFloat(lat) : undefined,
         lng: lng !== undefined ? parseFloat(lng) : undefined,
-        capacity: typeof capacity === 'number' ? parseInt(capacity) : -1,
+        capacity: typeof capacity === 'string' ? parseInt(capacity) : -1,
         price_per_day: parseFloat(price_per_day),
         airport: parseAirport(airport)
     };

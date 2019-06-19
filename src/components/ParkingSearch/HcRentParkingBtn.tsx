@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { AsyncScriptLoaderHOCProps, withScriptLoader } from "./AsyncScriptLoaderHOC";
-import HcSecondaryButton from "../Button/HcSecondaryButton";
 
 declare const paypal: any;
 

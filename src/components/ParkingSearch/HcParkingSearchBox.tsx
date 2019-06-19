@@ -1,4 +1,4 @@
-import React, { FunctionComponent, Component } from "react";
+import React, { Component } from "react";
 import Col from "react-bootstrap/Col";
 import Form from 'react-bootstrap/Form';
 import { connect } from "react-redux";
