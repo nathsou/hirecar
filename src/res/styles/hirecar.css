@@ -394,10 +394,36 @@ select {
     min-height: calc(100vh - (var(--navbar-height) + var(--footer-height)));
 }
 
-.user-profile-title {
+.hc-modal-title.modal-title.h4 {
+    text-transform: uppercase;
+    font: 1rem 'Oswald', sans-serif;
+    color: var(--primary-color);
+    padding: 1.875rem;
+}
+
+#rent-parking-paypal h3 {
+    font: 1.25rem 'Oswald', sans-serif;
+    color: var(--secondary-color);
+    text-align: left;
+    margin-bottom: 1rem;
+}
+
+.paypal-button-container.paypal-button-layout-horizontal.paypal-button-shape-rect.paypal-button-number-single.paypal-button-env-sandbox {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+}
+
+.paypal-button.paypal-button-number-0.paypal-button-layout-horizontal.paypal-button-shape-rect.paypal-button-number-single.paypal-button-env-sandbox.paypal-button-label-pay.paypal-button-color-blue.paypal-logo-color-white {
+    width: 200px;
+    font: 1.25rem 'Oswald', sans-serif;
+}
+
+.user-profile-title  {
     font: 1rem 'Oswald', sans-serif;
     color: var(--primary-color);
     margin: 1rem auto;
+    
 }
 
 .circle-button {

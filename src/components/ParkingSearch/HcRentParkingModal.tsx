@@ -1,4 +1,3 @@
-import { google } from "googleapis";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { HcState } from "../../redux/configureStore";
@@ -46,84 +45,6 @@ class HcRentParkingModal extends Component<HcRentParkingModalProps> {
             }
             this.cars_fetched = true;
         }
-    }
-
-    public componentDidMount = () => {
-        this.insertEvent();
-    }
-
-    public insertEvent() {
-
-        const oauth_client_id = process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID;
-        const oauth_secret_id = process.env.REACT_APP_GOOGLE_OAUTH_SECRET_ID;
-        const redirect_uri = `${process.env.REACT_APP_HIRECAR_API_URI}/parking`;
-
-        const oauth2Client = new google.auth.OAuth2(
-            oauth_client_id,
-            oauth_secret_id,
-            redirect_uri
-        );
-
-        const scopes = ['https://www.googleapis.com/auth/calendar.events'];
-
-        const uri = oauth2Client.generateAuthUrl({
-            access_type: 'offline',
-            scope: scopes
-        });
-
-        console.log(uri);
-        const first_part_code = window.location.search.split('code=') ? window.location.search.split('code=').pop() : '';
-        const code = first_part_code ? first_part_code.split('&')[0] : '';
-
-        if (code) {
-            oauth2Client.getToken(code).then(({ tokens }) => {
-                console.log(tokens);
-                oauth2Client.setCredentials(tokens);
-
-            });
-        }
-
-        oauth2Client.on('tokens', (tokens) => {
-            if (tokens.refresh_token) {
-                // store the refresh_token in my database!
-                console.log(tokens.refresh_token);
-            }
-            console.log(tokens.access_token);
-        });
-
-        oauth2Client.setCredentials({
-            refresh_token: `STORED_REFRESH_TOKEN`
-        });
-
-        var event = {
-            'summary': 'Google I/O 2015',
-            'location': '800 Howard St., San Francisco, CA 94103',
-            'description': 'A chance to hear more about Google\'s developer products.',
-            'start': {
-                'dateTime': '2019-06-11T09:00:00-07:00',
-                'timeZone': 'America/Los_Angeles'
-            },
-            'end': {
-                'dateTime': '2019-06-13T17:00:00-07:00',
-                'timeZone': 'America/Los_Angeles'
-            }
-        };
-
-        function insertEvent(auth: any) {
-            var calendar = google.calendar('v3');
-            calendar.events.insert({
-                auth: auth,
-                calendarId: 'primary',
-                requestBody: event
-            }, function (err: any) {
-                if (err) {
-                    console.log('The API returned an error: ' + err);
-                    return;
-                }
-            });
-        }
-        insertEvent(oauth2Client);
-
     }
 
     public componentDidUpdate(prev_props: Readonly<HcRentParkingModalProps>): void {
@@ -198,55 +119,53 @@ class HcRentParkingModal extends Component<HcRentParkingModalProps> {
                 title={user.logged_in ? `Location de ${parking_lot.label}` : ''}
             >
 
-                {awaiting_rental_request_response ?
-                    <p>Spinner</p>
-                    : parking_spot_rental_id !== null ?
-                        (<div>
-                            <p>Votre location a été enregistrée</p>
-                            <HcSecondaryButton handleClick={() => { }}>
-                                Ajouter la réservation dans Google Calendar
-                            </HcSecondaryButton>
-                        </div>)
-                        : (!user.logged_in ?
-                            <HcSignTabs />
-                            : (<div>
-                                <HcParkingSearchBox
-                                    validate={true}
-                                    show_input={false}
-                                    show_labels={true}
-                                    box_mode={true}
-                                />
+                <div className="container-tabs delete">
+                    {awaiting_rental_request_response ?
+                        <p>Spinner</p>
+                        : parking_spot_rental_id !== null ?
+                            (<div>
+                                <p>Votre location a été enregistrée.</p>
+                            </div>)
+                            : (!user.logged_in ?
+                                <HcSignTabs />
+                                : (<div>
+                                    <HcParkingSearchBox
+                                        validate={true}
+                                        show_input={false}
+                                        show_labels={true}
+                                        box_mode={true}
+                                    />
 
-                                {user_cars.fetching ?
-                                    <p>Chargement de vos voitures en cours...</p>
-                                    : (<HcSelectFormGroup
-                                        value={selected_user_car_id.toString()}
-                                        options={user_cars.cars.map(c => ({ id: c.id, text: c.model }))}
-                                        controlId='userCars'
-                                        label='Véhicule à laisser'
-                                        onChange={setCarId}
-                                    />)
-                                }
+                                    {user_cars.fetching ?
+                                        <p>Chargement de vos voitures en cours...</p>
+                                        : (<HcSelectFormGroup
+                                            value={selected_user_car_id.toString()}
+                                            options={user_cars.cars.map(c => ({ id: c.id, text: c.model }))}
+                                            controlId='userCars'
+                                            label='Véhicule à laisser'
+                                            onChange={setCarId}
+                                        />)
+                                    }
 
-                                {/* <HcSecondaryButton
+                                    {/* <HcSecondaryButton
                                     disabled={!form.valid_form}
                                     handleClick={this.sendRentalRequest}
                                 >
                                     Réserver {total_cost !== null ? `pour ${total_cost} €` : ''}
                                 </HcSecondaryButton> */}
 
-                                <HcRentParkingBtn
-                                    cost={total_cost}
-                                    disabled={!form.valid_form}
-                                    onSuccess={details => {
-                                        this.sendRentalRequest();
-                                        this.props.setModalParkingLot(null);
-                                        console.log(details);
-                                    }}
-                                />
-                            </div>)
-                        )
-                }
+                                    <HcRentParkingBtn
+                                        cost={total_cost}
+                                        disabled={!form.valid_form}
+                                        onSuccess={(details) => {
+                                            console.log(details);
+                                            this.sendRentalRequest();
+                                        }}
+                                    />
+                                </div>)
+                            )
+                    }
+                </div>
 
             </HcModal>
         );
