@@ -39,12 +39,6 @@ class UserProfileAdminTab extends Component<UserProfileAdminTabProps> {
                     {fetching_parking_lots ? (<p> Chargement des sites de parking...</p >) : (
                         <UserProfileAdminParkingList />
                     )}
-                    {/* {!fetching_parking_lots && spots_count === 0 ? (
-                        <p>Vous n'avez pas encore réservé de véhicules pour votre prochain départ ?
-                        <span className="link" onClick={() => this.props.history.push('/voiture')}> Réservez dès maintenant.</span>
-                        </p>
-                    ) : null}
-                    {show_delete_car_rental_modal ? <UserProfileDeleteCarRentalModal /> : null} */}
                 </div>
             </Form>
         );
@@ -53,7 +47,7 @@ class UserProfileAdminTab extends Component<UserProfileAdminTabProps> {
 
 export default connect(
     (state: HcState) => ({
-        user_profile_admin_tab: state.user_profile_tabs.user_profile_admin_tab
+        user_profile_admin_tab: state.user_profile_tabs.user_profile_admin_tab,
     }),
     {
         fetchAdminParkingLots: () => fetchAdminParkingLots()

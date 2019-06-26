@@ -1,29 +1,30 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { HcState } from "../../../redux/configureStore";
-import { DeleteUserProfileCarAction, ToggleUserProfileCarModalAction } from "../../../redux/userProfile/userProfileCarTab/types";
 import { HcListItemProps } from "../../HcListItem";
 import PlanePicto from "../../../res/img/plane-picto.svg";
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { updateUserProfileCar, onUserProfileCarDelete, toggleUserProfileCarModal } from "../../../redux/userProfile/userProfileCarTab/actions";
 import HcList from "../../HcList";
-import { UserProfileAdminTabState } from "../../../redux/userProfile/userProfileAdminTab/types";
+import { UserProfileAdminTabState, AdminDeleteParkingAction, ToggleAdminParkingModalAction } from "../../../redux/userProfile/userProfileAdminTab/types";
+import { onAdminParkingDelete, toggleAdminParkingModal } from "../../../redux/userProfile/userProfileAdminTab/actions";
+import UserProfileAdminDeleteParkingModal from "./UserProfileAdminDeleteParkingModal";
 library.add(faTimes);
 
 
 export interface UserProfileAdminParkingListProps extends Pick<UserProfileAdminTabState, 'parking_lots'> {
-    // show_delete_car_modal: boolean,
-    // toggleUserProfileCarModal: (show: boolean) => ToggleUserProfileCarModalAction,
+    show_admin_delete_parking_modal: boolean,
+    toggleAdminParkingModal: (show: boolean) => ToggleAdminParkingModalAction,
     // onUserProfileAdminParkingChange: (id: number) => void,
-    // onUserProfileCarDelete: (id: number) => DeleteUserProfileCarAction
+    onAdminParkingDelete: (id: number) => AdminDeleteParkingAction
 }
 
 class UserProfileAdminParkingList extends Component<UserProfileAdminParkingListProps> {
 
     public onDelete = (id: number) => {
-        // this.props.onUserProfileCarDelete(id);
-        // this.props.toggleUserProfileCarModal(true);
+        this.props.onAdminParkingDelete(id);
+        this.props.toggleAdminParkingModal(true);
     }
 
     public render() {
@@ -46,7 +47,7 @@ class UserProfileAdminParkingList extends Component<UserProfileAdminParkingListP
                     // onUpdate={(id: number) => this.props.onUserProfileAdminParkingChange(id)}
                     onDelete={(id: number) => this.onDelete(id)}
                 />
-                {/* {this.props.show_delete_car_modal ? <UserProfileDeleteCarModal /> : null} */}
+                {this.props.show_admin_delete_parking_modal ? <UserProfileAdminDeleteParkingModal /> : null}
             </div>
         );
     }
@@ -54,11 +55,12 @@ class UserProfileAdminParkingList extends Component<UserProfileAdminParkingListP
 
 export default connect(
     (state: HcState) => ({
+        show_admin_delete_parking_modal: state.user_profile_tabs.user_profile_admin_tab.show_admin_delete_parking_modal,
         parking_lots: state.user_profile_tabs.user_profile_admin_tab.parking_lots
     }), {
-        // toggleUserProfileCarModal: toggleUserProfileCarModal,
+        toggleAdminParkingModal: toggleAdminParkingModal,
         onUserProfileAdminParkingChange: (id: number) => updateUserProfileCar(id),
-        onUserProfileCarDelete: (id: number) => onUserProfileCarDelete(id)
+        onAdminParkingDelete: (id: number) => onAdminParkingDelete(id)
     }
 )(UserProfileAdminParkingList);
 
