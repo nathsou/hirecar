@@ -2,12 +2,14 @@ import { UserProfileTabInfoState, defaultUserProfileTabInfoState } from "../user
 import { UserProfileTabCarState, defaultUserProfileTabCarState } from "../userProfile/userProfileCarTab/types";
 import { UserProfileTabSpotRentalState, defaultUserProfileTabSpotRentalState } from "../userProfile/userProfileSpotRentalTab/types";
 import { UserProfileCarRentalTabState, defaultUserProfileCarRentalTabState } from "../userProfile/userProfileCarRentalTab/types";
+import { UserProfileAdminTabState, defaultUserProfileAdminTabState } from "../userProfile/userProfileAdminTab/types";
 
 export interface UserProfileTabsState {
     user_profile_tab_info: UserProfileTabInfoState,
     user_profile_tab_car: UserProfileTabCarState,
     user_profile_tab_spot_rental: UserProfileTabSpotRentalState,
-    user_profile_car_rental_tab: UserProfileCarRentalTabState
+    user_profile_car_rental_tab: UserProfileCarRentalTabState,
+    user_profile_admin_tab: UserProfileAdminTabState
     active_tab_key: string
 }
 
@@ -16,6 +18,7 @@ export const defaultUserProfileTabsState: UserProfileTabsState = {
     user_profile_tab_car: defaultUserProfileTabCarState,
     user_profile_tab_spot_rental: defaultUserProfileTabSpotRentalState,
     user_profile_car_rental_tab: defaultUserProfileCarRentalTabState,
+    user_profile_admin_tab: defaultUserProfileAdminTabState,
     active_tab_key: 'user_profile'
 }
 

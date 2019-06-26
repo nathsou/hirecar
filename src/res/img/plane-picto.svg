@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="79.22" height="76" viewBox="0 0 79.22 76">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_18" data-name="Rectangle 18" width="79.22" height="37.862" rx="10" transform="translate(416 184)" fill="#fff" stroke="#707070" stroke-width="1"/>
+    </clipPath>
+  </defs>
+  <g id="Icon_car" data-name="Icon car" transform="translate(-535 -599)">
+    <circle id="Ellipse_3" data-name="Ellipse 3" cx="38" cy="38" r="38" transform="translate(537 599)" fill="#272087"/>
+    <g id="Groupe_de_masques_2" data-name="Groupe de masques 2" transform="translate(119 434.589)" clip-path="url(#clip-path)">
+      <g id="plane" transform="translate(436.679 184)">
+        <g id="Groupe_5" data-name="Groupe 5" transform="translate(0 0)">
+          <path id="Tracé_23" data-name="Tracé 23" d="M36.793,1.069a3.652,3.652,0,0,0-5.218.054L23.819,9.206,4.89,2.942.917,6.915l15.777,9.714L8.711,24.948l-5.12-.841L0,27.7l7.527,2.636,2.636,7.527,3.591-3.591-.841-5.12,8.319-7.983,9.714,15.777,3.973-3.973L28.657,14.043l8.082-7.756A3.652,3.652,0,0,0,36.793,1.069Z" transform="translate(0 0)" fill="#fff"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>
