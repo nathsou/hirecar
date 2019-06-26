@@ -303,40 +303,6 @@ select {
     line-height: 1.2rem;
 }
 
-.my-facebook-button-class {
-    background-color: var(--primary-btn-text-color); 
-    display: inline-flex; 
-    align-items: center; 
-    color: rgba(0, 0, 0, 0.54); 
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 2px 2px 0px, rgba(0, 0, 0, 0.24) 0px 0px 1px 0px; 
-    border-radius: 2px; 
-    border: 1px solid transparent; 
-    font-size: 14px; 
-    font-family: Roboto, sans-serif;
-}
-
-.my-facebook-button-class .fa {
-    margin-right: 10px; 
-    padding: 10px; 
-    font-size: 1.5rem;
-    color: #365898;
-}
-
-.social-media-button-container {
-    display: flex;
-    flex-direction: row;
-}
-
-.social-media-button-container button {
-    height: 60px;
-    text-align: left;
-}
-
-.social-media-button-container:last-child button.my-facebook-button-class {
-    margin-left: 15px;
-}
-
-
 /*** Record ***/
 
 .records-container {
@@ -408,22 +374,10 @@ select {
     margin-bottom: 1rem;
 }
 
-.paypal-button-container.paypal-button-layout-horizontal.paypal-button-shape-rect.paypal-button-number-single.paypal-button-env-sandbox {
-    display: flex;
-    flex-direction: row;
-    justify-content: start;
-}
-
-.paypal-button.paypal-button-number-0.paypal-button-layout-horizontal.paypal-button-shape-rect.paypal-button-number-single.paypal-button-env-sandbox.paypal-button-label-pay.paypal-button-color-blue.paypal-logo-color-white {
-    width: 200px;
-    font: 1.25rem 'Oswald', sans-serif;
-}
-
 .user-profile-title  {
     font: 1rem 'Oswald', sans-serif;
     color: var(--primary-color);
     margin: 1rem auto;
-    
 }
 
 .circle-button {

@@ -1,4 +1,4 @@
-import { UpdateSignInEmailAction, UPDATE_SIGNIN_EMAIL_INPUT, UpdateSignInPasswordAction, UPDATE_SIGNIN_PASSWORD_INPUT, SubmitSignInAction, SUBMIT_SIGNIN_FORM, SignInSentAction, SIGNIN_FORM_SENT, SIGNIN_FORM_RECEIVED, SignInReceivedAction, SignInActionTypes, SignInFormDataState, UpdateSignInPasswordErrorAction, UPDATE_SIGNIN_PASSWORD_ERROR, UpdateSignInEmailErrorAction, UPDATE_SIGNIN_EMAIL_ERROR, ResetSignInAction, RESET_SIGNIN_FORM, SocialMediaSignInState, SET_GOOGLE_SIGNIN, SetGoogleSignInAction, SetFacebookSignInAction, SET_FACEBOOK_SIGNIN, SOCIAL_MEDIA_SIGNIN_SENT, SOCIAL_MEDIA_SIGNIN_RECEIVED, SocialMediaSignInSentAction, SocialMediaSignInReceivedAction } from "./types";
+import { UpdateSignInEmailAction, UPDATE_SIGNIN_EMAIL_INPUT, UpdateSignInPasswordAction, UPDATE_SIGNIN_PASSWORD_INPUT, SubmitSignInAction, SUBMIT_SIGNIN_FORM, SignInSentAction, SIGNIN_FORM_SENT, SIGNIN_FORM_RECEIVED, SignInReceivedAction, SignInActionTypes, SignInFormDataState, UpdateSignInPasswordErrorAction, UPDATE_SIGNIN_PASSWORD_ERROR, UpdateSignInEmailErrorAction, UPDATE_SIGNIN_EMAIL_ERROR, ResetSignInAction, RESET_SIGNIN_FORM, SocialMediaSignInState, SET_GOOGLE_SIGNIN, SetGoogleSignInAction, SOCIAL_MEDIA_SIGNIN_SENT, SOCIAL_MEDIA_SIGNIN_RECEIVED, SocialMediaSignInSentAction, SocialMediaSignInReceivedAction } from "./types";
 import { Dispatch } from "react";
 import Axios, { AxiosResponse, AxiosError } from "axios";
 import bcrypt from "bcryptjs";
@@ -10,7 +10,6 @@ import { setUserProfileCarOwner } from "../userProfile/userProfileCarTab/actions
 import { toggleSignModal } from "../navbar/actions";
 import { GoogleLoginResponse } from "react-google-login";
 import { IdentifiedType } from "../carSearch/types";
-import { ReactFacebookLoginNameInfo } from "../../Utils";
 
 export function updateSignInEmailInput(value: string): UpdateSignInEmailAction {
     return {
@@ -120,13 +119,6 @@ export function postSignInForm(data: SignInFormDataState) {
 export function setGoogleSignIn(data: GoogleLoginResponse): SetGoogleSignInAction {
     return {
         type: SET_GOOGLE_SIGNIN,
-        data
-    }
-}
-
-export function setFacebookSignIn(data: ReactFacebookLoginNameInfo): SetFacebookSignInAction {
-    return {
-        type: SET_FACEBOOK_SIGNIN,
         data
     }
 }

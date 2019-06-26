@@ -1,4 +1,4 @@
-import { defaultSignInTabState, RESET_SIGNIN_FORM, SignInActionTypes, SignInTabState, SUBMIT_SIGNIN_FORM, UPDATE_SIGNIN_EMAIL_ERROR, UPDATE_SIGNIN_EMAIL_INPUT, UPDATE_SIGNIN_PASSWORD_ERROR, UPDATE_SIGNIN_PASSWORD_INPUT, SET_GOOGLE_SIGNIN, SOCIAL_MEDIA_SIGNIN_SENT, SOCIAL_MEDIA_SIGNIN_RECEIVED, SET_FACEBOOK_SIGNIN } from "./types";
+import { defaultSignInTabState, RESET_SIGNIN_FORM, SignInActionTypes, SignInTabState, SUBMIT_SIGNIN_FORM, UPDATE_SIGNIN_EMAIL_ERROR, UPDATE_SIGNIN_EMAIL_INPUT, UPDATE_SIGNIN_PASSWORD_ERROR, UPDATE_SIGNIN_PASSWORD_INPUT, SET_GOOGLE_SIGNIN, SOCIAL_MEDIA_SIGNIN_SENT, SOCIAL_MEDIA_SIGNIN_RECEIVED } from "./types";
 
 export function signInTabReducer(
     state = defaultSignInTabState,
@@ -59,17 +59,6 @@ export function signInTabReducer(
                     firstname: profile.getGivenName(),
                     lastname: profile.getFamilyName(),
                     email: profile.getEmail()
-                }
-            }
-        case SET_FACEBOOK_SIGNIN:
-            const { first_name: fbFirstname, last_name: fbLastname, email: fbEmail } = action.data;
-            return {
-                ...state,
-                facebook_data: {
-                    ...state.facebook_data,
-                    firstname: fbFirstname ? fbFirstname : '',
-                    lastname: fbLastname ? fbLastname : '',
-                    email: fbEmail ? fbEmail : ''
                 }
             }
         case SOCIAL_MEDIA_SIGNIN_SENT:

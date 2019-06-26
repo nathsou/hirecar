@@ -50,9 +50,10 @@ class HcRentParkingBtn extends Component<HcRentParkingBtnProps> {
 
     public render() {
         const { scripts_loaded_successfully: loaded, disabled, cost } = this.props;
-        return loaded ? <div style={{ display: disabled ? 'none' : 'block' }} id='rent-parking-paypal'>
-            <h4>Total: {cost}€</h4>
-        </div > : 'loading';
+        return loaded ?
+            (<div style={{ display: disabled ? 'none' : 'flex', width: "200px", flexDirection: 'column', justifyContent: 'flex-end' }} id='rent-parking-paypal'>
+                <h3>Total: {cost.toFixed(2)}€</h3>
+            </div>) : 'Loading...';
     }
 }
 

@@ -8,7 +8,6 @@ import { connect } from "react-redux";
 import { HcState } from "../../../redux/configureStore";
 import { changeSignTab } from "../../../redux/signTabs/actions";
 import GoogleSignIn from "../GoogleSignIn";
-import FacebookSignIn from "../FacebookSignIn";
 
 interface SignInTabProps extends SignInTabState {
     onEmailChange: typeof updateSignInEmailInput,
@@ -64,7 +63,6 @@ class SignInTab extends Component<SignInTabProps> {
                 </Form>
                 <div className="social-media-button-container">
                     <GoogleSignIn />
-                    <FacebookSignIn />
                 </div>
             </div >
         );

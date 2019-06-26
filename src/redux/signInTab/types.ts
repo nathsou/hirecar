@@ -4,8 +4,6 @@ import { SetUserProfileAction, SocialMediaSignInAction } from "../userProfile/us
 import { SetUserProfileCarOwnerAction } from "../userProfile/userProfileCarTab/types";
 import { GoogleLoginResponse } from "react-google-login";
 import { IdentifiedType } from "../carSearch/types";
-import { ReactFacebookLoginNameInfo } from "../../Utils";
-
 export interface SignInFormDataState {
     [index: string]: string | IdentifiedType;
     email: string,
@@ -28,8 +26,7 @@ export interface SignInTabState {
         [key: string]: string
     },
     validForm: boolean,
-    google_data: SocialMediaSignInState,
-    facebook_data: SocialMediaSignInState,
+    google_data: SocialMediaSignInState
     sending: boolean
 }
 
@@ -54,15 +51,6 @@ export const defaultSignInTabState: SignInTabState = {
         login: {
             id: 2,
             type: "Google"
-        }
-    },
-    facebook_data: {
-        firstname: '',
-        lastname: '',
-        email: '',
-        login: {
-            id: 3,
-            type: "Facebook"
         }
     },
     sending: false
@@ -118,12 +106,6 @@ export interface SetGoogleSignInAction {
     data: GoogleLoginResponse
 }
 
-export const SET_FACEBOOK_SIGNIN = "SET_FACEBOOK_SIGNIN";
-export interface SetFacebookSignInAction {
-    type: typeof SET_FACEBOOK_SIGNIN,
-    data: ReactFacebookLoginNameInfo
-}
-
 export const SOCIAL_MEDIA_SIGNIN_SENT = "SOCIAL_MEDIA_SIGNIN_SENT";
 export interface SocialMediaSignInSentAction {
     type: typeof SOCIAL_MEDIA_SIGNIN_SENT
@@ -147,5 +129,4 @@ export type SignInActionTypes =
     SetUserProfileCarOwnerAction |
     SetGoogleSignInAction | SocialMediaSignInSentAction |
     SocialMediaSignInReceivedAction |
-    SocialMediaSignInAction |
-    SetFacebookSignInAction;
+    SocialMediaSignInAction;
