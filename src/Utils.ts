@@ -13,6 +13,21 @@ export function propsToURIParams(props: {}): string {
         .join('&');
 }
 
+export function getDefaultRentDates() {
+    const now = Date.now();
+    const tomorrow = new Date(now + 24 * 3600 * 1000).toISOString().split('T')[0];
+    const in_two_weeks = new Date(now + 15 * 24 * 3600 * 1000).toISOString().split('T')[0];
+    const start_time = '08:00:00';
+    const end_time = '17:30:00';
+
+    return {
+        start_date: tomorrow,
+        start_time,
+        end_date: in_two_weeks,
+        end_time
+    };
+}
+
 export function capitalize(str: string): string {
     return `${str[0].toUpperCase()}${str.slice(1).toLowerCase()}`;
 }
@@ -121,14 +136,6 @@ export function parseParkingSpot(spot: RawParkingSpot): ParkingSpot {
     };
 }
 
-/*
-   id: number;
-    start_date: string;
-    end_date: string;
-    user_id: number;
-    parking_spot: ParkingSpot;
-*/
-
 export type RawCarRental = { [K in keyof CarRental]: K extends 'parking_spot' ? RawParkingSpot : string };
 
 export function parseCarRental(rental: RawCarRental): CarRental {
@@ -147,20 +154,12 @@ export function isGoogleLoginResponseOffline(res: any): res is GoogleLoginRespon
     return typeof res.code === 'string';
 }
 
-export interface ReactFacebookLoginNameInfo {
-    id: string;
-    accessToken: string;
-    name?: string;
-    first_name?: string;
-    last_name?: string;
-    email?: string;
-}
-
 export function resToJSON(res: AxiosResponse) {
     const content_type = res.headers['content-type'];
 
     if (content_type && content_type === 'application/yaml') {
         return YAML.parse(res.data);
     }
+
     return res.data; // return JSON
 }

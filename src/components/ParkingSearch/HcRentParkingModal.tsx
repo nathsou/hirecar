@@ -133,6 +133,7 @@ class HcRentParkingModal extends Component<HcRentParkingModalProps> {
                                         show_input={false}
                                         show_labels={true}
                                         box_mode={true}
+                                        labels_type='parking_lots'
                                     />
 
                                     {user_cars.fetching ?

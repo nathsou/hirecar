@@ -33,7 +33,8 @@ export class RentCarTab extends Component<RentCarTabProps> {
         const { onCarSearchChange } = this.props;
 
         return (
-            <HcCarSearchBox show_labels={true} box_mode={true} onInputChange={onCarSearchChange}>
+            <HcCarSearchBox labels_type='parking_spots' show_labels={true} box_mode={true} onInputChange={onCarSearchChange}
+            >
                 <div style={{ textAlign: "right", marginTop: "15px" }}>
                     <Link to={`voiture/${this.formatParams()}`}>
                         <HcSecondaryButton>Rechercher</HcSecondaryButton>

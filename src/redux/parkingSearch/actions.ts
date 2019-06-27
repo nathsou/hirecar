@@ -5,7 +5,7 @@ import { MIN_API_CALL_DELAY } from '../..';
 import { HcMapViewportProps } from "../../components/ParkingSearch/HcParkingSearch";
 import { parseAirport, parseParkingLot, propsToURIParams, RawAirport, RawParkingLot, resToJSON } from "../../Utils";
 import { Airport } from "../rentParkingTab/types";
-import { AirportsReceivedAction, AIRPORTS_RECEIVED, ParkingLot, ParkingSearchActionTypes, ParkingsReceivedAction, PARKINGS_RECEIVED, RentParkingSpotRequestFailedAction, RentParkingSpotRequestSentAction, RentParkingSpotRequestSucceededAction, RENT_PARKING_SPOT_REQUEST_FAILED, RENT_PARKING_SPOT_REQUEST_SENT, RENT_PARKING_SPOT_REQUEST_SUCCEEDED, RequestAirportsAction, RequestParkingsAction, REQUEST_AIRPORTS, REQUEST_PARKINGS, SetRentModalParkingLotAction, SetRentParkingSpotUserCarIdAction, SetSelectedParkingLotAction, SET_RENT_MODAL_PARKING_LOT, SET_RENT_PARKING_SPOT_USER_CAR_IDX, SET_SELECTED_PARKING_LOT, UpdateMapViewportAction, UPDATE_MAP_VIEWPORT } from "./types";
+import { AirportsReceivedAction, AIRPORTS_RECEIVED, ParkingLot, ParkingSearchActionTypes, ParkingsReceivedAction, PARKINGS_RECEIVED, RentParkingSpotRequestFailedAction, RentParkingSpotRequestSentAction, RentParkingSpotRequestSucceededAction, INSERT_PARKING_SPOT_RENTAL_REQUEST_FAILED, INSERT_PARKING_SPOT_RENTAL_REQUEST_SENT, INSERT_PARKING_SPOT_RENTAL_REQUEST_SUCCEEDED, RequestAirportsAction, RequestParkingsAction, REQUEST_AIRPORTS, REQUEST_PARKINGS, SetRentModalParkingLotAction, SetRentParkingSpotUserCarIdAction, SetSelectedParkingLotAction, SET_RENT_MODAL_PARKING_LOT, SET_RENT_PARKING_SPOT_USER_CAR_IDX, SET_SELECTED_PARKING_LOT, UpdateMapViewportAction, UPDATE_MAP_VIEWPORT } from "./types";
 
 export function updateViewport(viewport: HcMapViewportProps): UpdateMapViewportAction {
     return {
@@ -63,13 +63,13 @@ export function setRentParkingSpotUserCarId(id: number): SetRentParkingSpotUserC
 
 export function rentParkingSpotRequestSent(): RentParkingSpotRequestSentAction {
     return {
-        type: RENT_PARKING_SPOT_REQUEST_SENT
+        type: INSERT_PARKING_SPOT_RENTAL_REQUEST_SENT
     };
 }
 
 export function rentParkingSpotRequestSucceeded(id: number): RentParkingSpotRequestSucceededAction {
     return {
-        type: RENT_PARKING_SPOT_REQUEST_SUCCEEDED,
+        type: INSERT_PARKING_SPOT_RENTAL_REQUEST_SUCCEEDED,
         parking_spot_rental_id: id
     };
 }
@@ -77,7 +77,7 @@ export function rentParkingSpotRequestSucceeded(id: number): RentParkingSpotRequ
 
 export function rentParkingSpotRequestFailed(): RentParkingSpotRequestFailedAction {
     return {
-        type: RENT_PARKING_SPOT_REQUEST_FAILED
+        type: INSERT_PARKING_SPOT_RENTAL_REQUEST_FAILED
     };
 }
 
@@ -107,6 +107,16 @@ export const sendRentParkingSpotRequest = throttle((data: ParkingSpotRentalReque
     };
 
 }, MIN_API_CALL_DELAY);
+
+export interface ParkingSpotRentalsSearchParams {
+    airport_name?: string,
+    airport_id?: number,
+    owner_id?: number,
+    car_id?: number,
+    id: number,
+    start_date: string,
+    end_date: string,
+}
 
 export interface ParkingSearchParams {
     airport_name?: string

@@ -7,6 +7,7 @@ import { setRentParkingSearchEndDay, setRentParkingSearchEndTime, setRentParking
 import { RentParkingTabState } from "../../redux/rentParkingTab/types";
 import HcInputFormGroup from "../Form/HcInputFormGroup";
 import HcAirportSearchInput, { HcAirportSearchInputProps } from "./HcAirportSearchInput";
+import { getDefaultRentDates } from "../../Utils";
 
 export interface HcParkingSearchBoxProps extends Pick<HcAirportSearchInputProps, 'onInputChange'> {
     box_mode: boolean,
@@ -14,6 +15,7 @@ export interface HcParkingSearchBoxProps extends Pick<HcAirportSearchInputProps,
     show_input?: boolean,
     validate?: boolean,
     init?: boolean,
+    labels_type: 'parking_lots' | 'parking_spots'
     setStartDay: (day: string) => void,
     setEndDay: (day: string) => void,
     setStartTime: (time: string) => void,
@@ -26,14 +28,13 @@ class HcParkingSearchBox extends Component<HcParkingSearchBoxProps & RentParking
         super(props);
 
         if (props.init) {
-            const now = Date.now();
-            const tomorrow = new Date(now + 24 * 3600 * 1000).toISOString().split('T')[0];
-            const in_two_weeks = new Date(now + 15 * 24 * 3600 * 1000).toISOString().split('T')[0];
 
-            props.setStartDay(tomorrow);
-            props.setStartTime('08:00:00');
-            props.setEndDay(in_two_weeks);
-            props.setEndTime('17:30:00');
+            const { start_date, start_time, end_date, end_time } = getDefaultRentDates();
+
+            props.setStartDay(start_date);
+            props.setStartTime(start_time);
+            props.setEndDay(end_date);
+            props.setEndTime(end_time);
         }
     }
 
@@ -54,7 +55,8 @@ class HcParkingSearchBox extends Component<HcParkingSearchBoxProps & RentParking
             start_time,
             end_time,
             validate,
-            validation
+            validation,
+            labels_type
         } = this.props;
 
         const {
@@ -65,6 +67,12 @@ class HcParkingSearchBox extends Component<HcParkingSearchBoxProps & RentParking
             end_time_msg
         } = validation;
 
+        const labels = {
+            airport: labels_type === 'parking_lots' ? 'Lieu de stationnement' : 'Aéroport de départ',
+            start: labels_type === 'parking_lots' ? 'Début de la location' : 'Date de départ',
+            end: labels_type === 'parking_lots' ? 'Fin de la location' : 'Date de retour'
+        };
+
         return (
             <div className="search-box-container">
                 <Form className="search-box-form">
@@ -72,7 +80,7 @@ class HcParkingSearchBox extends Component<HcParkingSearchBoxProps & RentParking
 
                         {(show_input === undefined || show_input === true) ?
                             <Form.Group as={Col} md={box_mode ? 12 : 4} controlId="parkingLocation">
-                                {show_labels ? <Form.Label>Lieu de stationnement</Form.Label> : null}
+                                {show_labels ? <Form.Label>{labels.airport}</Form.Label> : null}
                                 <HcAirportSearchInput onInputChange={onInputChange} />
                             </Form.Group> : null
                         }
@@ -80,7 +88,7 @@ class HcParkingSearchBox extends Component<HcParkingSearchBoxProps & RentParking
                         <HcInputFormGroup
                             md={box_mode ? 4 : 2}
                             controlId="parkingStartDate"
-                            label="Début de la location"
+                            label={labels.start}
                             showLabel={show_labels}
                             type="date"
                             placeholder=""
@@ -108,7 +116,7 @@ class HcParkingSearchBox extends Component<HcParkingSearchBoxProps & RentParking
                         <HcInputFormGroup
                             md={box_mode ? 4 : 2}
                             controlId="parkingEndDate"
-                            label="Fin de la location"
+                            label={labels.end}
                             showLabel={show_labels}
                             type="date"
                             placeholder=""
