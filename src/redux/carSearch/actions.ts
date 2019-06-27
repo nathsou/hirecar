@@ -47,7 +47,7 @@ export function rentCarRequestSent(): RentCarRequestSentAction {
 export function rentCarRequestSucceeded(id: number): RentCarRequestSucceededAction {
     return {
         type: INSERT_CAR_RENTAL_REQUEST_SUCCEEDED,
-        parking_spot_rental_id: id
+        car_rental_id: id
     };
 }
 
@@ -106,13 +106,10 @@ export const fetchParkingSpots = throttle((params: ParkingSpotSearchParams) => {
 }, MIN_API_CALL_DELAY);
 
 export interface CarRentalRequestData {
-    parking_lot_id: number,
-    car_id: number,
     start_date: string,
     end_date: string,
-    firstname: string,
-    lastname: string,
-    email: string,
+    user_id: number,
+    parking_spot_id: number
 }
 
 export const sendRentCarRequest = throttle((data: CarRentalRequestData) => {

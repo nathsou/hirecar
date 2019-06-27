@@ -41,6 +41,8 @@ export interface CarSearchState {
     fetching_cars: boolean,
     fetching_spots: boolean,
     rent_modal_parking_spot_id: number | null,
+    awaiting_rental_request_response: boolean,
+    inserted_car_rental_id: number | null
 }
 
 export const defaultCarSearchState: CarSearchState = {
@@ -48,7 +50,9 @@ export const defaultCarSearchState: CarSearchState = {
     parking_spots: [],
     fetching_cars: false,
     fetching_spots: false,
-    rent_modal_parking_spot_id: null
+    rent_modal_parking_spot_id: null,
+    awaiting_rental_request_response: false,
+    inserted_car_rental_id: null
 };
 
 export const REQUEST_CAR_RENTALS = 'REQUEST_CAR_RENTALS';
@@ -90,7 +94,7 @@ export interface RentCarRequestSentAction {
 
 export interface RentCarRequestSucceededAction {
     type: typeof INSERT_CAR_RENTAL_REQUEST_SUCCEEDED,
-    parking_spot_rental_id: number
+    car_rental_id: number
 }
 
 export interface RentCarRequestFailedAction {

@@ -29,6 +29,7 @@ interface HcCarSearchProps extends RouteComponentProps, CarSearchState, RentCarT
     setStartTime: (time: string) => void,
     setEndTime: (time: string) => void,
     fetchParkingSpotRentals: (params: ParkingSpotSearchParams) => void,
+    onParkingSearchChange: (value: string) => void,
     match: match<HcCarSearchPropsMatchParams>
 }
 
@@ -36,14 +37,32 @@ class HcCarSearch extends Component<HcCarSearchProps> {
 
     constructor(props: HcCarSearchProps) {
         super(props);
+
+        // const airport = props.match.params.airport || '';
+        // if (airport !== '') {
+        //     this.props.onParkingSearchChange(airport);
+        //     this.onInputChange();
+        // }
     }
 
-    private onInputChange = (input: string): void => {
+    public componentDidUpdate(prev_props: HcCarSearchProps) {
+        const props = this.props;
+        if (
+            (prev_props.start_day !== props.start_day) ||
+            (prev_props.end_day !== props.end_day) ||
+            (prev_props.start_time !== props.start_time) ||
+            (prev_props.end_time !== props.end_time)
+        ) {
+            this.onInputChange();
+        }
+    }
+
+    private onInputChange = (inp?: string): void => {
+
+        const input = inp || this.props.form.parking_search_input_value;
 
         if (input !== undefined) {
             const { start_day, start_time, end_day, end_time } = this.props.form;
-            // const start = dayTimeToDate(start_day, start_time);
-            // const end = dayTimeToDate(end_day, end_time);
 
             this.props.fetchParkingSpotRentals({
                 airport_name: input,
@@ -63,11 +82,12 @@ class HcCarSearch extends Component<HcCarSearchProps> {
                     box_mode={false}
                     validate={false}
                     init={true}
+                    min_day={new Date().toISOString()}
                     labels_type='parking_spots'
                     onInputChange={this.onInputChange}
                 />
                 <HcCarList />
-                <HcRentCarModal />
+                <HcRentCarModal onUpdate={() => { this.onInputChange(); }} />
             </main>
         );
     }
@@ -78,7 +98,7 @@ export default
         connect(
             (state: HcState) => ({
                 ...state.car_search,
-                ...state.rent_tabs.rent_car_tab,
+                ...state.rent_tabs.rent_parking_spot_tab,
                 form: state.rent_tabs.rent_parking_spot_tab,
                 airport_input: state.rent_tabs.rent_parking_spot_tab.parking_search_input_value
             }),
@@ -89,7 +109,8 @@ export default
                 setStartDay: (day: string) => setRentCarSearchStartDay(day),
                 setEndDay: (day: string) => setRentCarSearchEndDay(day),
                 setStartTime: (time: string) => setRentCarSearchStartTime(time),
-                setEndTime: (time: string) => setRentCarSearchEndTime(time)
+                setEndTime: (time: string) => setRentCarSearchEndTime(time),
+                onParkingSearchChange: (value: string) => setAirportSearchInput(value)
             }
         )(HcCarSearch)
     );

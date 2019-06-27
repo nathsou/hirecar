@@ -1,4 +1,4 @@
-import { AIRPORTS_RECEIVED, defaultParkingSearchState, ParkingSearchActionTypes, ParkingSearchState, PARKINGS_RECEIVED, INSERT_PARKING_SPOT_RENTAL_REQUEST_SUCCEEDED, REQUEST_AIRPORTS, REQUEST_PARKINGS, SET_RENT_MODAL_PARKING_LOT, SET_RENT_PARKING_SPOT_USER_CAR_IDX, SET_SELECTED_PARKING_LOT, UPDATE_MAP_VIEWPORT } from "./types";
+import { AIRPORTS_RECEIVED, defaultParkingSearchState, ParkingSearchActionTypes, ParkingSearchState, PARKINGS_RECEIVED, INSERT_PARKING_SPOT_RENTAL_REQUEST_SUCCEEDED, REQUEST_AIRPORTS, REQUEST_PARKINGS, SET_RENT_MODAL_PARKING_LOT, SET_RENT_PARKING_SPOT_USER_CAR_IDX, SET_SELECTED_PARKING_LOT, UPDATE_MAP_VIEWPORT, INSERT_PARKING_SPOT_RENTAL_REQUEST_SENT, INSERT_PARKING_SPOT_RENTAL_REQUEST_FAILED } from "./types";
 
 export function parkingSearchReducer(
     state = defaultParkingSearchState,
@@ -59,7 +59,20 @@ export function parkingSearchReducer(
         case INSERT_PARKING_SPOT_RENTAL_REQUEST_SUCCEEDED:
             return {
                 ...state,
-                parking_spot_rental_id: action.parking_spot_rental_id
+                parking_spot_rental_id: action.parking_spot_rental_id,
+                awaiting_rental_request_response: false
+            };
+
+        case INSERT_PARKING_SPOT_RENTAL_REQUEST_SENT:
+            return {
+                ...state,
+                awaiting_rental_request_response: true
+            };
+
+        case INSERT_PARKING_SPOT_RENTAL_REQUEST_FAILED:
+            return {
+                ...state,
+                awaiting_rental_request_response: false
             };
 
         default:

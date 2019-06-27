@@ -54,6 +54,9 @@ class HcParkingSearch extends Component<HcParkingSearchProps> {
     }
 
     public flyToParkingLots = (parking_lots: ParkingLot[]) => {
+
+        if (parking_lots.length === 0) return;
+
         const { viewport } = this.props;
 
         let min_lng = Infinity, min_lat = Infinity;
@@ -69,12 +72,19 @@ class HcParkingSearch extends Component<HcParkingSearchProps> {
         });
 
         if (min_lng !== Infinity && max_lng !== -Infinity && min_lat !== Infinity && max_lat !== -Infinity) {
-            const vp = new WebMercatorViewport(viewport as WebMercatorViewportOptions);
-            const { longitude, latitude, zoom } = vp.fitBounds(
-                [[min_lng, min_lat], [max_lng, max_lat]]
-            );
+            try {
+                const vp = new WebMercatorViewport(viewport as WebMercatorViewportOptions);
+                const { longitude, latitude, zoom } = vp.fitBounds(
+                    [[min_lng, min_lat], [max_lng, max_lat]]
+                );
 
-            this.flyTo(latitude, longitude, zoom - 1, 2500);
+                if (latitude && longitude && zoom) {
+                    this.flyTo(latitude, longitude, zoom - 1, 2500);
+                }
+
+            } catch (e) {
+                console.log(viewport);
+            }
         }
     }
 

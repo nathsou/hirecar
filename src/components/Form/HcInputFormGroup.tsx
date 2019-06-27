@@ -12,6 +12,8 @@ interface HcInputFormGroupProps {
     type: string,
     placeholder: string,
     value: string,
+    min?: string | number | undefined,
+    max?: string | number | undefined,
     validate?: boolean,
     as?: typeof Col | typeof Row,
     onChange: (event: any) => void
@@ -24,6 +26,7 @@ export default class HcInputFormGroup extends Component<HcInputFormGroupProps> {
         const show_label = this.props.showLabel !== undefined ? this.props.showLabel : true;
         const { validationMessage } = this.props;
         const validate = this.props.validate !== undefined ? this.props.validate : true;
+        const { min, max } = this.props;
 
         return (
             <Form.Group as={dir} md={this.props.md} controlId={this.props.controlId}>
@@ -33,6 +36,8 @@ export default class HcInputFormGroup extends Component<HcInputFormGroupProps> {
                     type={this.props.type}
                     placeholder={this.props.placeholder}
                     value={this.props.value}
+                    min={min}
+                    max={max}
                     onChange={this.props.onChange}
                 />
                 {validate && validationMessage ? <div className='invalid-feedback'>{validationMessage}</div> : null}

@@ -14,8 +14,14 @@ export interface HcParkingSearchBoxProps extends Pick<HcAirportSearchInputProps,
     show_labels: boolean,
     show_input?: boolean,
     validate?: boolean,
+    min_day?: string,
+    max_day?: string,
     init?: boolean,
-    labels_type: 'parking_lots' | 'parking_spots'
+    labels_type: 'parking_lots' | 'parking_spots',
+    onStartDateChange?: (date: string) => void,
+    onStartTimeChange?: (time: string) => void,
+    onEndTimeChange?: (time: string) => void,
+    onEndDateChange?: (date: string) => void,
     setStartDay: (day: string) => void,
     setEndDay: (day: string) => void,
     setStartTime: (time: string) => void,
@@ -56,7 +62,13 @@ class HcParkingSearchBox extends Component<HcParkingSearchBoxProps & RentParking
             end_time,
             validate,
             validation,
-            labels_type
+            labels_type,
+            onStartDateChange,
+            onStartTimeChange,
+            onEndDateChange,
+            onEndTimeChange,
+            min_day,
+            max_day,
         } = this.props;
 
         const {
@@ -92,9 +104,18 @@ class HcParkingSearchBox extends Component<HcParkingSearchBoxProps & RentParking
                             showLabel={show_labels}
                             type="date"
                             placeholder=""
+                            min={min_day}
+                            max={end_day}
                             value={start_day || ''}
+
                             as={Col}
-                            onChange={e => setStartDate(e.target.value)}
+                            onChange={e => {
+                                const date = e.target.value;
+                                if (onStartDateChange) {
+                                    onStartDateChange(date);
+                                }
+                                setStartDate(date);
+                            }}
                             validationMessage={start_day_msg}
                             validate={validate}
                         />
@@ -108,7 +129,13 @@ class HcParkingSearchBox extends Component<HcParkingSearchBoxProps & RentParking
                             placeholder=""
                             value={start_time || ''}
                             as={Col}
-                            onChange={e => setStartTime(e.target.value)}
+                            onChange={e => {
+                                const time = e.target.value;
+                                if (onStartTimeChange) {
+                                    onStartTimeChange(time);
+                                }
+                                setStartTime(time);
+                            }}
                             validationMessage={start_time_msg}
                             validate={validate}
                         />
@@ -121,8 +148,16 @@ class HcParkingSearchBox extends Component<HcParkingSearchBoxProps & RentParking
                             type="date"
                             placeholder=""
                             value={end_day || ''}
+                            min={start_day}
+                            max={max_day}
                             as={Col}
-                            onChange={e => setEndDate(e.target.value)}
+                            onChange={e => {
+                                const date = e.target.value;
+                                if (onEndDateChange) {
+                                    onEndDateChange(date);
+                                }
+                                setEndDate(date);
+                            }}
                             validationMessage={end_day_msg}
                             validate={validate}
                         />
@@ -136,7 +171,13 @@ class HcParkingSearchBox extends Component<HcParkingSearchBoxProps & RentParking
                             placeholder=""
                             value={end_time || ''}
                             as={Col}
-                            onChange={e => setEndTime(e.target.value)}
+                            onChange={e => {
+                                const time = e.target.value;
+                                if (onEndTimeChange) {
+                                    onEndTimeChange(time);
+                                }
+                                setEndTime(time);
+                            }}
                             validationMessage={end_time_msg}
                             validate={validate}
                         />

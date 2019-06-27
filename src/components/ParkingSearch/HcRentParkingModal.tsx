@@ -119,10 +119,10 @@ class HcRentParkingModal extends Component<HcRentParkingModalProps> {
 
                 <div className="container-tabs delete">
                     {awaiting_rental_request_response ?
-                        <p>Spinner</p>
+                        <p>Vérifications en cours..</p>
                         : parking_spot_rental_id !== null ?
                             (<div>
-                                <p>Votre location a été enregistrée.</p>
+                                <p>Votre location a bien été enregistrée !</p>
                             </div>)
                             : (!user.logged_in ?
                                 <HcSignTabs />
