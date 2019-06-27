@@ -5,7 +5,7 @@ import { HcListItemProps } from "../../HcListItem";
 import PlanePicto from "../../../res/img/plane-picto.svg";
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { updateUserProfileCar, onUserProfileCarDelete, toggleUserProfileCarModal } from "../../../redux/userProfile/userProfileCarTab/actions";
+import { updateUserProfileCar } from "../../../redux/userProfile/userProfileCarTab/actions";
 import HcList from "../../HcList";
 import { UserProfileAdminTabState, AdminDeleteParkingAction, ToggleAdminParkingModalAction } from "../../../redux/userProfile/userProfileAdminTab/types";
 import { onAdminParkingDelete, toggleAdminParkingModal } from "../../../redux/userProfile/userProfileAdminTab/actions";

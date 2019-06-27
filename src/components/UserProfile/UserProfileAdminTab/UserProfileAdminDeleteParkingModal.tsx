@@ -26,19 +26,18 @@ class UserProfileAdminDeleteParkingModal extends Component<UserProfileAdminDelet
                 show={this.props.show_admin_delete_parking_modal}
                 handleClose={() => this.props.onAdminParkingDeleteCancel()}
             >
-                {
-                    error ? (
-                        <div>
-                            <h2 className="user-profile-title">Suppression non autorisé du site de parking</h2>
-                            <p>{error}</p>
-                        </div>
-                    ) : (
-                            <HcDeleteModalContainer
-                                title="Suppression d'un site de parking" question={question}
-                                onConfirm={() => this.props.postAdminDeleteParking(this.props.selected_parking_id)}
-                                onCancel={() => this.props.onAdminParkingDeleteCancel()}
-                            />
-                        )
+                {error ? (
+                    <div>
+                        <h2 className="user-profile-title">Suppression non autorisée du site de parking</h2>
+                        <p>{error}</p>
+                    </div>
+                ) : (
+                        <HcDeleteModalContainer
+                            title="Suppression d'un site de parking" question={question}
+                            onConfirm={() => this.props.postAdminDeleteParking(this.props.selected_parking_id)}
+                            onCancel={() => this.props.onAdminParkingDeleteCancel()}
+                        />
+                    )
                 }
             </HcModal>
         );
