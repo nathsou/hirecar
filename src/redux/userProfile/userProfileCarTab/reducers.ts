@@ -186,7 +186,8 @@ export function userProfileTabCarReducer(
                 ...state,
                 form_data: { ...state.form_data, owner_id: (updated_car.owner_id).toString() },
                 cars_data: { ...state.cars_data, cars: updated_cars_data },
-                editing: false
+                editing: false,
+                saving: true
             }
         case DELETE_USER_PROFILE_CAR:
             return {

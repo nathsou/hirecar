@@ -1,4 +1,4 @@
-import { defaultUserProfileAdminTabState, UserProfileAdminActionTypes, UserProfileAdminTabState, ADMIN_REQUEST_PARKINGS, ADMIN_PARKINGS_RECEIVED, TOGGLE_ADMIN_PARKING_MODAL, ADMIN_DELETE_PARKING, CANCEL_ADMIN_DELETE_PARKING, ADMIN_DELETE_PARKING_RECEIVED, ADMIN_DELETE_PARKING_SENT, ADMIN_DELETE_PARKING_ERROR_MSG, TOGGLE_ADMIN_PARKING_FORM, UPDATE_ADMIN_PARKING_LABEL_INPUT, UPDATE_ADMIN_PARKING_LAT_INPUT, UPDATE_ADMIN_PARKING_LNG_INPUT, UPDATE_ADMIN_PARKING_PRICE_INPUT, UPDATE_ADMIN_PARKING_CAPACITY_INPUT, UPDATE_ADMIN_PARKING_AIRPORT_SELECT, ADMIN_AIRPORTS_RECEIVED, SUMBIT_ADMIN_PARKING, ADMIN_PARKING_FORM_SENT, ADMIN_PARKING_FORM_RECEIVED, RESET_ADMIN_PARKING_FORM, ADMIN_PARKING_SAVED } from "./types";
+import { defaultUserProfileAdminTabState, UserProfileAdminActionTypes, UserProfileAdminTabState, ADMIN_REQUEST_PARKINGS, ADMIN_PARKINGS_RECEIVED, TOGGLE_ADMIN_PARKING_MODAL, ADMIN_DELETE_PARKING, CANCEL_ADMIN_DELETE_PARKING, ADMIN_DELETE_PARKING_RECEIVED, ADMIN_DELETE_PARKING_SENT, ADMIN_DELETE_PARKING_ERROR_MSG, TOGGLE_ADMIN_PARKING_FORM, UPDATE_ADMIN_PARKING_LABEL_INPUT, UPDATE_ADMIN_PARKING_LAT_INPUT, UPDATE_ADMIN_PARKING_LNG_INPUT, UPDATE_ADMIN_PARKING_PRICE_INPUT, UPDATE_ADMIN_PARKING_CAPACITY_INPUT, UPDATE_ADMIN_PARKING_AIRPORT_SELECT, ADMIN_AIRPORTS_RECEIVED, SUMBIT_ADMIN_PARKING, ADMIN_PARKING_FORM_SENT, ADMIN_PARKING_FORM_RECEIVED, RESET_ADMIN_PARKING_FORM, ADMIN_PARKING_SAVED, ADMIN_UPDATE_PARKING, ADMIN_UPDATED_PARKING_FORM_RECEIVED } from "./types";
 import { Airport, ParkingLot } from "../../parkingSearch/types";
 
 export function userProfileAdminTabReducer(
@@ -166,7 +166,7 @@ export function userProfileAdminTabReducer(
                 saving: false
             };
         case RESET_ADMIN_PARKING_FORM:
-            const { form_data, form_errors, show_form, valid_form, sending, submit_form } = defaultUserProfileAdminTabState
+            const { form_data, form_errors, show_form, valid_form, sending, submit_form, saving } = defaultUserProfileAdminTabState
             return {
                 ...state,
                 form_data,
@@ -174,7 +174,53 @@ export function userProfileAdminTabReducer(
                 show_form,
                 valid_form,
                 sending,
+                saving,
                 submit_form
+            }
+        case ADMIN_UPDATE_PARKING:
+            const selected_parking = state.parking_lots.filter(p => p.id === action.id)[0];
+            const {
+                id: selectedId,
+                label: selectedLabel,
+                lat: selectedLat,
+                lng: selectedLng,
+                price_per_day: selectedPrice,
+                capacity: selectedCapacity,
+                airport: selectedAirport } = selected_parking;
+            return {
+                ...state,
+                form_data: {
+                    ...state.form_data,
+                    id: selectedId.toString(),
+                    label: selectedLabel,
+                    lat: selectedLat ? selectedLat.toString() : '',
+                    lng: selectedLng ? selectedLng.toString() : '',
+                    capacity: selectedCapacity.toString(),
+                    price_per_day: selectedPrice ? selectedPrice.toString() : '',
+                    airport: {
+                        id: (selectedAirport.id).toString(),
+                        name: (selectedAirport.name).toString(),
+                        lat: (selectedAirport.lat).toString(),
+                        lng: (selectedAirport.lng).toString(),
+                    }
+                },
+                editing: true,
+                show_form: true
+            }
+        case ADMIN_UPDATED_PARKING_FORM_RECEIVED:
+            const current_parkings = state.parking_lots;
+            const updated_parking = action.data;
+            const updated_parkings_data = current_parkings.map(car => {
+                if (car.id === updated_parking.id) {
+                    return updated_parking;
+                }
+                return car
+            });
+            return {
+                ...state,
+                parking_lots: updated_parkings_data,
+                editing: false,
+                saving: true
             }
         default:
             return state;

@@ -3,7 +3,7 @@ import Form from "react-bootstrap/Form";
 import HcCircleButton from "../../Button/HcCircleButton";
 import { connect } from "react-redux";
 import { HcState } from "../../../redux/configureStore";
-import { fetchAdminParkingLots, toggleAdminParkingForm, fetchAdminAirports, submitAdminParkingForm, postUserAdminParkingForm } from "../../../redux/userProfile/userProfileAdminTab/actions";
+import { fetchAdminParkingLots, toggleAdminParkingForm, fetchAdminAirports, submitAdminParkingForm, postAdminParkingForm, postUpdatedAdminParkingForm } from "../../../redux/userProfile/userProfileAdminTab/actions";
 import { UserProfileAdminTabState } from "../../../redux/userProfile/userProfileAdminTab/types";
 import UserProfileAdminParkingList from "./UserProfileAdminParkingList";
 import UserProfileAdminTabParkingInputs from "./UserProfileAdminTabParkingInputs";
@@ -18,7 +18,8 @@ interface UserProfileAdminTabProps {
     fetchAirports: () => void,
     toggleAdminParkingForm: typeof toggleAdminParkingForm,
     submitAdminParkingForm: typeof submitAdminParkingForm,
-    postUserAdminParkingForm: (data: ParkingLot) => void
+    postAdminParkingForm: (data: ParkingLot) => void,
+    postUpdatedAdminParkingForm: (data: ParkingLot) => void
 }
 
 class UserProfileAdminTab extends Component<UserProfileAdminTabProps> {
@@ -37,8 +38,12 @@ class UserProfileAdminTab extends Component<UserProfileAdminTabProps> {
     public componentDidUpdate(prev_props: Readonly<UserProfileAdminTabProps>) {
 
         const { valid_form, form_data, editing, submit_form } = this.props.user_profile_admin_tab;
+
         if (!editing && valid_form && prev_props.user_profile_admin_tab.valid_form !== valid_form) {
-            this.props.postUserAdminParkingForm(parseParkingLot(form_data));
+            this.props.postAdminParkingForm(parseParkingLot(form_data));
+        }
+        if (submit_form && editing && valid_form && prev_props.user_profile_admin_tab.submit_form !== submit_form) {
+            this.props.postUpdatedAdminParkingForm(parseParkingLot(form_data));
         }
     }
 
@@ -54,7 +59,7 @@ class UserProfileAdminTab extends Component<UserProfileAdminTabProps> {
                         icon={show_form ? "minus" : "plus"}
                     />
                 </h2>
-                {saving ? (<p className="error-message">Votre véhicule a été ajouté.</p>) : null}
+                {saving ? (<p className="error-message">Votre site parking a été enregistré.</p>) : null}
 
                 {fetching_parking_lots && !saving ? (<p> Chargement des sites de parking...</p >) : null}
                 {!saving && !show_form ? <UserProfileAdminParkingList /> : null}
@@ -80,6 +85,7 @@ export default connect(
         fetchAirports: () => fetchAdminAirports(),
         toggleAdminParkingForm: () => toggleAdminParkingForm(),
         submitAdminParkingForm: () => submitAdminParkingForm(),
-        postUserAdminParkingForm: (data: ParkingLot) => postUserAdminParkingForm(data)
+        postAdminParkingForm: (data: ParkingLot) => postAdminParkingForm(data),
+        postUpdatedAdminParkingForm: (data: ParkingLot) => postUpdatedAdminParkingForm(data)
     }
 )(UserProfileAdminTab)

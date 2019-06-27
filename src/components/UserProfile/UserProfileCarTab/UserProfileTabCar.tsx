@@ -64,7 +64,7 @@ class UserProfileTabCar extends Component<UserProfileTabCarProps> {
                         icon={show_form ? "minus" : "plus"}
                     />
                 </h2>
-                {saving ? (<p className="error-message">Votre véhicule a été ajouté.</p>) : null}
+                {saving ? (<p className="error-message">Votre véhicule a été enregistré.</p>) : null}
 
                 {fetching ? (<p>Chargement de vos véhicules...</p>) : null}
                 {show_form ? (

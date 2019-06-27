@@ -188,6 +188,23 @@ export interface ResetAdminParkingFormAction {
     type: typeof RESET_ADMIN_PARKING_FORM
 }
 
+export const ADMIN_UPDATE_PARKING = "ADMIN_UPDATE_PARKING";
+export interface AdminUpdateParkingAction {
+    type: typeof ADMIN_UPDATE_PARKING,
+    id: number
+}
+
+export const ADMIN_UPDATED_PARKING_FORM_SENT = "ADMIN_UPDATED_PARKING_FORM_SENT";
+export interface AdminUpdatedParkingSentAction {
+    type: typeof ADMIN_UPDATED_PARKING_FORM_SENT
+}
+
+export const ADMIN_UPDATED_PARKING_FORM_RECEIVED = "ADMIN_UPDATED_PARKING_FORM_RECEIVED";
+export interface AdminUpdatedParkingReceivedAction {
+    type: typeof ADMIN_UPDATED_PARKING_FORM_RECEIVED,
+    data: ParkingLot
+}
+
 export type UserProfileAdminActionTypes =
     AdminRequestParkingsAction |
     AdminParkingsReceivedAction |
@@ -210,4 +227,7 @@ export type UserProfileAdminActionTypes =
     AdminParkingSentAction |
     AdminParkingReceivedAction |
     ResetAdminParkingFormAction |
-    AdminParkingSavedAction;
+    AdminParkingSavedAction |
+    AdminUpdateParkingAction |
+    AdminUpdatedParkingSentAction |
+    AdminUpdatedParkingReceivedAction;

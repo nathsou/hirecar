@@ -1,4 +1,4 @@
-import { AdminRequestParkingsAction, ADMIN_REQUEST_PARKINGS, AdminParkingsReceivedAction, ADMIN_PARKINGS_RECEIVED, UserProfileAdminActionTypes, ADMIN_DELETE_PARKING, AdminDeleteParkingAction, TOGGLE_ADMIN_PARKING_MODAL, ToggleAdminParkingModalAction, CancelAdminDeleteParkingAction, CANCEL_ADMIN_DELETE_PARKING, AdminDeleteParkingSentAction, AdminDeleteParkingReceivedAction, ADMIN_DELETE_PARKING_SENT, ADMIN_DELETE_PARKING_RECEIVED, AdminDeleteParkingErrorAction, ADMIN_DELETE_PARKING_ERROR_MSG, TOGGLE_ADMIN_PARKING_FORM, ToggleAdminParkingFormAction, UPDATE_ADMIN_PARKING_LABEL_INPUT, UpdateAdminParkingLabelAction, UpdateAdminParkingLatAction, UpdateAdminParkingLngAction, UPDATE_ADMIN_PARKING_LAT_INPUT, UPDATE_ADMIN_PARKING_LNG_INPUT, UpdateAdminParkingCapacityAction, UPDATE_ADMIN_PARKING_CAPACITY_INPUT, UpdateAdminParkingPriceAction, UPDATE_ADMIN_PARKING_PRICE_INPUT, UPDATE_ADMIN_PARKING_AIRPORT_SELECT, UpdateAdminParkingAirportAction, ADMIN_REQUEST_AIRPORTS, AdminRequestAirportsAction, AdminAirportsReceivedAction, ADMIN_AIRPORTS_RECEIVED, SubmitAdminParkingAction, SUMBIT_ADMIN_PARKING, AdminParkingSentAction, ADMIN_PARKING_FORM_SENT, ADMIN_PARKING_FORM_RECEIVED, AdminParkingReceivedAction, ResetAdminParkingFormAction, RESET_ADMIN_PARKING_FORM, AdminParkingSavedAction, ADMIN_PARKING_SAVED } from "./types";
+import { AdminRequestParkingsAction, ADMIN_REQUEST_PARKINGS, AdminParkingsReceivedAction, ADMIN_PARKINGS_RECEIVED, UserProfileAdminActionTypes, ADMIN_DELETE_PARKING, AdminDeleteParkingAction, TOGGLE_ADMIN_PARKING_MODAL, ToggleAdminParkingModalAction, CancelAdminDeleteParkingAction, CANCEL_ADMIN_DELETE_PARKING, AdminDeleteParkingSentAction, AdminDeleteParkingReceivedAction, ADMIN_DELETE_PARKING_SENT, ADMIN_DELETE_PARKING_RECEIVED, AdminDeleteParkingErrorAction, ADMIN_DELETE_PARKING_ERROR_MSG, TOGGLE_ADMIN_PARKING_FORM, ToggleAdminParkingFormAction, UPDATE_ADMIN_PARKING_LABEL_INPUT, UpdateAdminParkingLabelAction, UpdateAdminParkingLatAction, UpdateAdminParkingLngAction, UPDATE_ADMIN_PARKING_LAT_INPUT, UPDATE_ADMIN_PARKING_LNG_INPUT, UpdateAdminParkingCapacityAction, UPDATE_ADMIN_PARKING_CAPACITY_INPUT, UpdateAdminParkingPriceAction, UPDATE_ADMIN_PARKING_PRICE_INPUT, UPDATE_ADMIN_PARKING_AIRPORT_SELECT, UpdateAdminParkingAirportAction, ADMIN_REQUEST_AIRPORTS, AdminRequestAirportsAction, AdminAirportsReceivedAction, ADMIN_AIRPORTS_RECEIVED, SubmitAdminParkingAction, SUMBIT_ADMIN_PARKING, AdminParkingSentAction, ADMIN_PARKING_FORM_SENT, ADMIN_PARKING_FORM_RECEIVED, AdminParkingReceivedAction, ResetAdminParkingFormAction, RESET_ADMIN_PARKING_FORM, AdminParkingSavedAction, ADMIN_PARKING_SAVED, AdminUpdateParkingAction, ADMIN_UPDATE_PARKING, AdminUpdatedParkingSentAction, ADMIN_UPDATED_PARKING_FORM_SENT, AdminUpdatedParkingReceivedAction, ADMIN_UPDATED_PARKING_FORM_RECEIVED } from "./types";
 import { ParkingLot } from "../../parkingSearch/types";
 import { Dispatch } from "react";
 import Axios, { AxiosResponse, AxiosError } from "axios";
@@ -203,7 +203,7 @@ export function resetAdminParkingForm(): ResetAdminParkingFormAction {
     };
 }
 
-export function postUserAdminParkingForm(data: ParkingLot) {
+export function postAdminParkingForm(data: ParkingLot) {
 
     return (dispatch: Dispatch<UserProfileAdminActionTypes>) => {
         dispatch(adminParkingFormSent());
@@ -224,3 +224,43 @@ export function postUserAdminParkingForm(data: ParkingLot) {
             });
     }
 }
+
+export function onAdminParkingChange(id: number): AdminUpdateParkingAction {
+    return {
+        type: ADMIN_UPDATE_PARKING,
+        id
+    };
+}
+
+export function adminUpdatedParkingFormSent(): AdminUpdatedParkingSentAction {
+    return {
+        type: ADMIN_UPDATED_PARKING_FORM_SENT
+    };
+}
+
+export function adminUpdatedParkingFormReceived(data: ParkingLot): AdminUpdatedParkingReceivedAction {
+    return {
+        type: ADMIN_UPDATED_PARKING_FORM_RECEIVED,
+        data
+    };
+}
+
+export function postUpdatedAdminParkingForm(data: ParkingLot) {
+    return (dispatch: Dispatch<UserProfileAdminActionTypes>) => {
+
+        dispatch(adminUpdatedParkingFormSent());
+
+        Axios.put(`${process.env.REACT_APP_HIRECAR_API_URI}/parking_lots/${data.id}`, data)
+            .then(() => {
+                dispatch(resetAdminParkingForm());
+                dispatch(adminUpdatedParkingFormReceived(data));
+                setTimeout(() => {
+                    dispatch(adminParkingSaved());
+                }, 1000);
+            }).catch((error: AxiosError) => {
+                const response = error.response;
+                console.log(response);
+            });
+    }
+}
+

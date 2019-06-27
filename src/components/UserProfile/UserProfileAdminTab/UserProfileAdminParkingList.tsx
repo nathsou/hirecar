@@ -5,10 +5,9 @@ import { HcListItemProps } from "../../HcListItem";
 import PlanePicto from "../../../res/img/plane-picto.svg";
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { updateUserProfileCar } from "../../../redux/userProfile/userProfileCarTab/actions";
 import HcList from "../../HcList";
 import { UserProfileAdminTabState, AdminDeleteParkingAction, ToggleAdminParkingModalAction } from "../../../redux/userProfile/userProfileAdminTab/types";
-import { onAdminParkingDelete, toggleAdminParkingModal } from "../../../redux/userProfile/userProfileAdminTab/actions";
+import { onAdminParkingDelete, toggleAdminParkingModal, onAdminParkingChange } from "../../../redux/userProfile/userProfileAdminTab/actions";
 import UserProfileAdminDeleteParkingModal from "./UserProfileAdminDeleteParkingModal";
 library.add(faTimes);
 
@@ -16,7 +15,7 @@ library.add(faTimes);
 export interface UserProfileAdminParkingListProps extends Pick<UserProfileAdminTabState, 'parking_lots'> {
     show_admin_delete_parking_modal: boolean,
     toggleAdminParkingModal: (show: boolean) => ToggleAdminParkingModalAction,
-    // onUserProfileAdminParkingChange: (id: number) => void,
+    onAdminParkingChange: (id: number) => void,
     onAdminParkingDelete: (id: number) => AdminDeleteParkingAction
 }
 
@@ -43,8 +42,7 @@ class UserProfileAdminParkingList extends Component<UserProfileAdminParkingListP
             <div>
                 <HcList
                     items={parkings_lots} className="hc-user-profile-list-item" picto={PlanePicto} update={true}
-                    onUpdate={() => { }}
-                    // onUpdate={(id: number) => this.props.onUserProfileAdminParkingChange(id)}
+                    onUpdate={(id: number) => this.props.onAdminParkingChange(id)}
                     onDelete={(id: number) => this.onDelete(id)}
                 />
                 {this.props.show_admin_delete_parking_modal ? <UserProfileAdminDeleteParkingModal /> : null}
@@ -59,7 +57,7 @@ export default connect(
         parking_lots: state.user_profile_tabs.user_profile_admin_tab.parking_lots
     }), {
         toggleAdminParkingModal: toggleAdminParkingModal,
-        onUserProfileAdminParkingChange: (id: number) => updateUserProfileCar(id),
+        onAdminParkingChange: (id: number) => onAdminParkingChange(id),
         onAdminParkingDelete: (id: number) => onAdminParkingDelete(id)
     }
 )(UserProfileAdminParkingList);
