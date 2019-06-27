@@ -85,7 +85,7 @@ export function postSignInForm(data: SignInFormDataState) {
 
                         const sent_data = {} as UserDataState;
                         filtered_keys.forEach(key => {
-                            sent_data[key as keyof UserDataState] = res.data[key];
+                            key === "admin" ? sent_data["admin"] = parseInt(res.data[key]) : sent_data[key as keyof UserDataState] = res.data[key];
                         });
 
                         const user_profile_data = {} as UserProfileInfoFormDataState;

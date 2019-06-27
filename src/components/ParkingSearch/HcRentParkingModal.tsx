@@ -115,7 +115,6 @@ class HcRentParkingModal extends Component<HcRentParkingModalProps> {
                 show={true}
                 size={'lg'}
                 handleClose={() => setModalParkingLot(null)}
-                title={user.logged_in ? `Location de ${parking_lot.label}` : ''}
             >
 
                 <div className="container-tabs delete">
@@ -128,6 +127,7 @@ class HcRentParkingModal extends Component<HcRentParkingModalProps> {
                             : (!user.logged_in ?
                                 <HcSignTabs />
                                 : (<div>
+                                    {user.logged_in ? (<h2 className="user-profile-title">{`Location de ${parking_lot.label}`}</h2>) : ''}
                                     <HcParkingSearchBox
                                         validate={true}
                                         show_input={false}

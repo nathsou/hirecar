@@ -8,9 +8,11 @@ import { ChangeUserProfileTabAction } from "../../redux/userProfileTabs/types";
 import { changeUserProfileTab } from "../../redux/userProfileTabs/actions";
 import UserProfileCarRentalTab from "./UserProfileCarRentalTab/UserProfileCarRentalTab";
 import UserProfileSpotRentalTab from "./UserProfileSpotRentalTab/UserProfileSpotRentalTab";
+import UserProfileAdminTab from "./UserProfileAdminTab/UserProfileAdminTab";
 
 interface HcUserProfileTabsProps {
     active_tab_key: string,
+    admin: number,
     onSelect: (activeKey: string) => ChangeUserProfileTabAction
 }
 
@@ -30,6 +32,11 @@ class HcUserProfileTabs extends Component<HcUserProfileTabsProps> {
                         <Nav.Item>
                             <Nav.Link eventKey="user_profile_car_rental">Réservations de voitures</Nav.Link>
                         </Nav.Item>
+                        {(this.props.admin === 1) ? (
+                            <Nav.Item>
+                                <Nav.Link eventKey="user_profile_admin">Admin</Nav.Link>
+                            </Nav.Item>
+                        ) : null}
                     </Nav>
                     <Tab.Content>
                         <Tab.Pane eventKey="user_profile">
@@ -41,6 +48,9 @@ class HcUserProfileTabs extends Component<HcUserProfileTabsProps> {
                         <Tab.Pane eventKey="user_profile_car_rental">
                             <UserProfileCarRentalTab />
                         </Tab.Pane>
+                        <Tab.Pane eventKey="user_profile_admin">
+                            <UserProfileAdminTab />
+                        </Tab.Pane>
                     </Tab.Content>
                 </Tab.Container>
             </div>
@@ -49,7 +59,10 @@ class HcUserProfileTabs extends Component<HcUserProfileTabsProps> {
 }
 
 export default connect(
-    (state: HcState) => ({ active_tab_key: state.user_profile_tabs.active_tab_key }),
+    (state: HcState) => ({
+        active_tab_key: state.user_profile_tabs.active_tab_key,
+        admin: state.user.data.admin
+    }),
     {
         onSelect: changeUserProfileTab
     }
