@@ -55,17 +55,17 @@ class UserProfileAdminTab extends Component<UserProfileAdminTabProps> {
                     />
                 </h2>
                 {saving ? (<p className="error-message">Votre véhicule a été ajouté.</p>) : null}
-                <div>
-                    {fetching_parking_lots ? (<p> Chargement des sites de parking...</p >) : null}
-                    {show_form ? (
-                        <div>
-                            <UserProfileAdminTabParkingInputs />
-                            <div style={{ textAlign: "right" }}>
-                                <HcSecondaryButton type="submit">{editing ? "Modifier" : "Ajouter"}</HcSecondaryButton>
-                            </div>
+
+                {fetching_parking_lots && !saving ? (<p> Chargement des sites de parking...</p >) : null}
+                {!saving && !show_form ? <UserProfileAdminParkingList /> : null}
+                {show_form ? (
+                    <div>
+                        <UserProfileAdminTabParkingInputs />
+                        <div style={{ textAlign: "right" }}>
+                            <HcSecondaryButton type="submit">{editing ? "Modifier" : "Ajouter"}</HcSecondaryButton>
                         </div>
-                    ) : <UserProfileAdminParkingList />}
-                </div>
+                    </div>
+                ) : null}
             </Form>
         );
     }

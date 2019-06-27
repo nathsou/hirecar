@@ -37,12 +37,12 @@ class UserProfileSpotRentalTab extends Component<UserProfileSpotRentalTabProps> 
         const spots_count = Object.keys(parking_spot_rentals).length;
 
         const spots: HcListItemProps[] = parking_spot_rentals.map(spot => {
-            const s = spot, total_price = diffDays(s.start_date, s.end_date) * s.car.price_per_day;
+            const s = spot, diff_days = diffDays(s.start_date, s.end_date), total_price = diff_days * s.parking_lot.price_per_day;
             return {
-                header: `Du ${convertDate(s.start_date)} au ${convertDate(s.end_date)}`,
+                header: `Du ${convertDate(s.start_date)} au ${convertDate(s.end_date)} • ${diff_days} jours`,
                 title: s.parking_lot.label,
                 features: `${s.car.model} | ${s.car.gearbox.type} • ${s.car.fuel.type} • ${s.car.seats} places • ${s.car.doors} portes`,
-                footer: `${total_price} € • ${s.car.price_per_day} € / jour`,
+                footer: `${total_price} € • ${s.parking_lot.price_per_day} € / jour`,
                 id: s.id
             };
         });
@@ -60,7 +60,7 @@ class UserProfileSpotRentalTab extends Component<UserProfileSpotRentalTabProps> 
                         <span className="link" onClick={() => this.props.history.push('/parking')}> Réservez dès maintenant.</span>
                     </p>
                 ) : null}
-                {this.props.show_delete_spot_rental_modal ? <UserProfileDeleteSpotRentalModal/> : null}
+                {this.props.show_delete_spot_rental_modal ? <UserProfileDeleteSpotRentalModal /> : null}
             </div>
         );
     }

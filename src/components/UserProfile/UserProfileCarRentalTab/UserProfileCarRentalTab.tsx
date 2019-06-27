@@ -37,9 +37,9 @@ class UserProfileCarRentalTab extends Component<UserProfileCarRentalTabProps> {
         const spots_count = Object.keys(car_rentals).length;
 
         const spots: HcListItemProps[] = car_rentals.map(car => {
-            const c = car, total_price = diffDays(c.start_date, c.end_date) * c.parking_spot.car.price_per_day;
+            const c = car, diff_days = diffDays(c.start_date, c.end_date), total_price = diff_days * c.parking_spot.car.price_per_day;
             return {
-                header: `Du ${convertDate(c.start_date)} au ${convertDate(c.end_date)}`,
+                header: `Du ${convertDate(c.start_date)} au ${convertDate(c.end_date)} • ${diff_days} jours`,
                 title: c.parking_spot.car.model,
                 features: `${c.parking_spot.car.gearbox.type} • ${c.parking_spot.car.fuel.type} • ${c.parking_spot.car.seats} places • ${c.parking_spot.car.doors} portes`,
                 footer: `${total_price} € • ${c.parking_spot.car.price_per_day} € / jour`,
